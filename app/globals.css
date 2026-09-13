@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   VoltCraft — "Blueprint" design system
+   A drawing-sheet grid, prussian ink, and the red of a live conductor.
+   ------------------------------------------------------------------ */
+
+:root {
+  /* surfaces */
+  --vc-ground: #e6eaec;
+  --vc-sheet: #f7f8f8;
+  --vc-raised: #ffffff;
+  /* type */
+  --vc-ink: #0e2233;
+  --vc-muted: #4e6577;
+  --vc-faint: #7a8c9a;
+  /* structure */
+  --vc-line: #c3ccd2;
+  --vc-hairline: rgba(14, 34, 51, 0.07);
+  /* accents — live conductor red, earth green */
+  --vc-live: #d6332a;
+  --vc-live-hover: #b92920;
+  --vc-live-ink: #ffffff;
+  --vc-earth: #2c6b4f;
+  --vc-warn: #9a6212;
+  /* inverted block (used for the dark case panels) */
+  --vc-block: #0e2233;
+  --vc-block-ink: #e4ebf0;
+  --vc-block-muted: #9fb3c2;
+  --vc-block-line: rgba(255, 255, 255, 0.14);
+  /* The dark block sits on a light ground, so it needs no outline. */
+  --vc-block-edge: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --vc-ground: #0b1620;
+    --vc-sheet: #10202c;
+    --vc-raised: #162936;
+    --vc-ink: #e3ebf0;
+    --vc-muted: #93aabb;
+    --vc-faint: #6d8598;
+    --vc-line: #233d4f;
+    --vc-hairline: rgba(255, 255, 255, 0.05);
+    --vc-live: #ff5a4d;
+    --vc-live-hover: #ff7568;
+    --vc-live-ink: #240705;
+    --vc-earth: #4bae7e;
+    --vc-warn: #d8a04a;
+    --vc-block: #061019;
+    --vc-block-ink: #e3ebf0;
+    --vc-block-muted: #93aabb;
+    --vc-block-line: rgba(255, 255, 255, 0.12);
+    /* On a dark ground it would otherwise dissolve into the page. */
+    --vc-block-edge: rgba(255, 255, 255, 0.1);
+  }
+}
+
+:root[data-theme="dark"] {
+  --vc-ground: #0b1620;
+  --vc-sheet: #10202c;
+  --vc-raised: #162936;
+  --vc-ink: #e3ebf0;
+  --vc-muted: #93aabb;
+  --vc-faint: #6d8598;
+  --vc-line: #233d4f;
+  --vc-hairline: rgba(255, 255, 255, 0.05);
+  --vc-live: #ff5a4d;
+  --vc-live-hover: #ff7568;
+  --vc-live-ink: #240705;
+  --vc-earth: #4bae7e;
+  --vc-warn: #d8a04a;
+  --vc-block: #061019;
+  --vc-block-ink: #e3ebf0;
+  --vc-block-muted: #93aabb;
+  --vc-block-line: rgba(255, 255, 255, 0.12);
+  --vc-block-edge: rgba(255, 255, 255, 0.1);
+}
+
+@theme inline {
+  --color-ground: var(--vc-ground);
+  --color-sheet: var(--vc-sheet);
+  --color-raised: var(--vc-raised);
+  --color-ink: var(--vc-ink);
+  --color-muted: var(--vc-muted);
+  --color-faint: var(--vc-faint);
+  --color-line: var(--vc-line);
+  --color-hairline: var(--vc-hairline);
+  --color-live: var(--vc-live);
+  --color-live-hover: var(--vc-live-hover);
+  --color-live-ink: var(--vc-live-ink);
+  --color-earth: var(--vc-earth);
+  --color-warn: var(--vc-warn);
+  --color-block: var(--vc-block);
+  --color-block-ink: var(--vc-block-ink);
+  --color-block-muted: var(--vc-block-muted);
+  --color-block-line: var(--vc-block-line);
+  --color-block-edge: var(--vc-block-edge);
+
+  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-public-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius-sheet: 1px;
+}
+
+@layer base {
+  html {
+    color-scheme: light;
+  }
+  :root[data-theme="dark"],
+  :root:not([data-theme="light"]) {
+    color-scheme: light dark;
+  }
+  body {
+    background-color: var(--vc-ground);
+    color: var(--vc-ink);
+    font-family: var(--font-public-sans), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection {
+    background: var(--vc-live);
+    color: var(--vc-live-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--vc-live);
+    outline-offset: 2px;
+  }
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  /* the drawing-sheet grid that the whole site sits on */
+  .vc-grid-ground {
+    background-image:
+      repeating-linear-gradient(0deg, var(--vc-hairline) 0 1px, transparent 1px 88px),
+      repeating-linear-gradient(90deg, var(--vc-hairline) 0 1px, transparent 1px 88px);
+  }
+  /* uppercase mono label — figure marks, table headers, eyebrows */
+  .vc-fig {
+    font-family: var(--font-mono);
+    font-size: 0.656rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  /* dimension line: a rule with a centred caption, like a drawing measurement */
+  .vc-dim {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+  }
+  .vc-dim::before,
+  .vc-dim::after {
+    content: "";
+    height: 1px;
+    flex: 1;
+    background: var(--vc-line);
+  }
+  /* the logo is black artwork — flip it for the dark sheet */
+  .vc-logo-mark {
+    filter: none;
+  }
+  :root[data-theme="dark"] .vc-logo-mark {
+    filter: invert(1);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .vc-logo-mark {
+      filter: invert(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
