@@ -23,14 +23,14 @@ export const KITS: Kit[] = [
     blurb:
       "Reads its surroundings, sleeps between readings and pushes over Wi-Fi. Runs for weeks on one cell, and every part is on the shelf today.",
     lines: [
-      { slug: "esp32-wroom-32-dev-board", qty: 1, why: "Wi-Fi and deep sleep" },
-      { slug: "dht22-temperature-humidity", qty: 1, why: "Temperature and humidity" },
-      { slug: "oled-096-i2c", qty: 1, why: "On-device readout" },
-      { slug: "18650-cell-3400mah", qty: 1, why: "Protected cell" },
-      { slug: "tp4056-charger-module-5pack", qty: 1, why: "USB-C charging" },
+      { slug: "esp32-wroom-development-board", qty: 1, why: "Wi-Fi and deep sleep" },
+      { slug: "dht22-temperature-humidity-sensor", qty: 1, why: "Temperature and humidity" },
+      { slug: "soil-moisture-sensor", qty: 1, why: "What the node is actually watching" },
+      { slug: "oled-096-i2c-display", qty: 1, why: "On-device readout" },
+      { slug: "tp4056-charging-module", qty: 1, why: "USB-C charging" },
+      { slug: "lm2596-buck-converter", qty: 1, why: "Clean 3.3 V rail" },
       { slug: "breadboard-830-point", qty: 1, why: "Build it before you solder it" },
-      { slug: "jumper-wire-set-120", qty: 1, why: "Wiring" },
-      { slug: "abs-project-enclosure", qty: 1, why: "So it survives outdoors" },
+      { slug: "jumper-wires-male-female", qty: 1, why: "Wiring" },
     ],
   },
 ];

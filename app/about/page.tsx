@@ -48,8 +48,8 @@ export default function AboutPage() {
         <p className="mt-6 max-w-[58ch] text-[1.05rem] leading-[1.7] text-muted">
           Building hardware in Nigeria has a specific tax on it, and it is not money — it is time.
           A part that costs a few thousand naira can cost you six weeks. VoltCraft exists to remove
-          that gap: {getProducts().length} lines of dev boards, components, sensors, test gear and
-          bench tools, held locally, priced in naira, and moving the same day you order.
+          that gap: {getProducts().length} lines of sensors, microcontrollers, displays, actuators
+          and components, held locally, priced in naira, and moving the same day you order.
         </p>
       </div>
 

@@ -3,7 +3,7 @@ export const SITE = {
   name: "VoltCraft",
   tagline: "Hack it. Build it. Craft it.",
   description:
-    "Engineering tools, dev boards, components and test gear for makers, students and builders in Nigeria. Stocked in Kaduna, delivered nationwide.",
+    "Sensors, microcontrollers, displays, actuators and the components that go with them — for makers, students and builders in Nigeria. Stocked in Kaduna, delivered nationwide.",
   url: "https://voltcraft.org.ng",
   quoteUrl: "https://quote.voltcraft.org.ng",
   email: "sales@voltcraft.org.ng",
@@ -16,7 +16,7 @@ export const SITE = {
     { days: "Saturday", time: "09:00 – 14:00" },
     { days: "Sunday", time: "Closed" },
   ],
-  freeDeliveryThreshold: 150_000,
+  freeDeliveryThreshold: 25_000,
   socials: [
     { label: "Instagram", href: "https://instagram.com/" },
     { label: "X", href: "https://x.com/" },

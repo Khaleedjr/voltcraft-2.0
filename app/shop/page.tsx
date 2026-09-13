@@ -9,7 +9,7 @@ import { getProducts, searchProducts } from "@/lib/catalogue";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Dev boards, components, sensors, test gear, soldering kit and bench tools — held in Kaduna, delivered across Nigeria.",
+    "Sensors, microcontrollers, displays, actuators, connectors and components — held in Kaduna, delivered across Nigeria.",
 };
 
 export default async function ShopPage({ searchParams }: PageProps<"/shop">) {

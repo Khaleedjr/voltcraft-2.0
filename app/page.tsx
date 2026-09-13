@@ -57,14 +57,14 @@ export default function HomePage() {
             </div>
             <div>
               <p className="max-w-[46ch] text-[1.02rem] leading-[1.68] text-muted">
-                VoltCraft stocks dev boards, components, test gear and the bench tools that go with
-                them — held in Kaduna, shipped nationwide in 24 to 48 hours. Order today, solder this
-                weekend.
+                Sensors, microcontrollers, displays, actuators and the small parts that hold a build
+                together — held in Kaduna, shipped nationwide in 24 to 48 hours. Order today, solder
+                this weekend.
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-4">
                 <ButtonLink href="/shop">Browse the catalogue</ButtonLink>
-                <ButtonLink href="/shop/test-measurement" variant="underline">
-                  Test &amp; measurement →
+                <ButtonLink href="/shop/sensors" variant="underline">
+                  Sensors →
                 </ButtonLink>
               </div>
             </div>
@@ -100,7 +100,7 @@ export default function HomePage() {
         <Section>
           <SectionHeading
             fig="Section 01"
-            title="Eight aisles, stocked for people who finish things"
+            title="Nine aisles, stocked for people who finish things"
             lede="Sorted the way a build goes: brain, senses, power, and the bench you put it together on."
             action={
               <Link href="/shop" className="border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
