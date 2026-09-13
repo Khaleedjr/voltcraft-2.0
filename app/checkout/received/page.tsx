@@ -18,7 +18,7 @@ export default async function OrderReceivedPage({
     <Container>
       <div className="py-16 sm:py-24">
         <Fig>Order received</Fig>
-        <h1 className="mt-4 max-w-[18ch] font-display text-[clamp(2.3rem,5.6vw,4rem)] leading-[1.04] tracking-[-0.022em]">
+        <h1 className="mt-4 max-w-[18ch] font-display text-[clamp(1.95rem,4.6vw,3.2rem)] leading-[1.07] tracking-[-0.022em]">
           Got it. We&apos;ll call to confirm.
         </h1>
         <p className="mt-6 max-w-[52ch] text-[1rem] leading-[1.7] text-muted">

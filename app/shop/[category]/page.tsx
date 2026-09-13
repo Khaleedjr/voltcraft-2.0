@@ -43,7 +43,7 @@ export default async function CategoryPage({
         </nav>
 
         <Fig>{found.note}</Fig>
-        <h1 className="mt-3 max-w-[20ch] font-display text-4xl leading-[1.06] tracking-[-0.02em] sm:text-5xl">
+        <h1 className="mt-3 max-w-[20ch] font-display text-[2rem] leading-[1.08] tracking-[-0.025em] sm:text-[2.6rem]">
           {found.name}
         </h1>
         <p className="mt-4 max-w-[54ch] text-[0.98rem] leading-relaxed text-muted">{found.blurb}</p>

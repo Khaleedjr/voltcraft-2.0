@@ -14,7 +14,7 @@ export default function ContactPage() {
     <Container>
       <div className="py-12 sm:py-16">
         <Fig>Contact</Fig>
-        <h1 className="mt-4 max-w-[16ch] font-display text-[clamp(2.4rem,6vw,4.2rem)] leading-[1.04] tracking-[-0.022em]">
+        <h1 className="mt-4 max-w-[16ch] font-display text-[clamp(2rem,5vw,3.4rem)] leading-[1.06] tracking-[-0.022em]">
           Ask before you order. It&apos;s faster.
         </h1>
         <p className="mt-6 max-w-[54ch] text-[1.02rem] leading-[1.7] text-muted">

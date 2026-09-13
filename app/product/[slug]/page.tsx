@@ -70,7 +70,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
 
           <div>
             <Fig>{category?.name ?? "Catalogue"}</Fig>
-            <h1 className="mt-3 font-display text-[clamp(2rem,4.4vw,3.1rem)] leading-[1.06] tracking-[-0.02em]">
+            <h1 className="mt-3 font-display text-[clamp(1.7rem,3.6vw,2.5rem)] leading-[1.1] tracking-[-0.02em]">
               {product.name}
             </h1>
             <p className="mt-4 max-w-[48ch] text-[1rem] leading-[1.68] text-muted">
@@ -78,7 +78,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
             </p>
 
             <div className="mt-7 flex flex-wrap items-baseline gap-x-4 gap-y-2">
-              <span className="font-display text-[2.6rem] leading-none tracking-[-0.02em] tabular-nums">
+              <span className="font-display text-[2.1rem] leading-none tracking-[-0.025em] tabular-nums">
                 {formatNaira(product.price)}
               </span>
               {product.compareAt ? (
@@ -130,7 +130,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
         <section className="mt-14 grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div>
             <Fig>Specification</Fig>
-            <h2 className="mt-3 font-display text-3xl leading-tight tracking-[-0.02em]">
+            <h2 className="mt-3 font-display text-[1.6rem] leading-tight tracking-[-0.022em]">
               The numbers that decide it
             </h2>
             <p className="mt-4 max-w-[40ch] text-[0.92rem] leading-relaxed text-muted">
@@ -180,7 +180,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
         {related.length ? (
           <section className="mt-16 border-t border-line pt-10">
             <Fig>Same aisle</Fig>
-            <h2 className="mt-3 font-display text-3xl leading-tight tracking-[-0.02em]">
+            <h2 className="mt-3 font-display text-[1.6rem] leading-tight tracking-[-0.022em]">
               Usually bought alongside
             </h2>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

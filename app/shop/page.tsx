@@ -25,7 +25,7 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
     <Container>
       <div className="py-10 sm:py-14">
         <Fig>{query ? "Search results" : "Catalogue"}</Fig>
-        <h1 className="mt-3 max-w-[20ch] font-display text-4xl leading-[1.06] tracking-[-0.02em] sm:text-5xl">
+        <h1 className="mt-3 max-w-[20ch] font-display text-[2rem] leading-[1.08] tracking-[-0.025em] sm:text-[2.6rem]">
           {query ? (
             <>
               Results for <em className="text-live">{query}</em>
@@ -53,7 +53,7 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
 
         {products.length === 0 ? (
           <div className="mt-12 border border-line bg-sheet p-10 text-center">
-            <p className="font-display text-2xl tracking-[-0.015em]">Nothing matched that.</p>
+            <p className="font-display text-[1.3rem] tracking-[-0.018em]">Nothing matched that.</p>
             <p className="mx-auto mt-3 max-w-[46ch] text-[0.92rem] leading-relaxed text-muted">
               Try a broader term — a part number, a family like <em>esp32</em>, or what the thing
               does, like <em>distance</em>. If we should be stocking it, tell us and we&apos;ll look

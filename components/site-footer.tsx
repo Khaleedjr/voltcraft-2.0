@@ -18,7 +18,7 @@ export function SiteFooter() {
               alt={SITE.name}
               width={1600}
               height={1143}
-              className="vc-logo-mark h-20 w-auto"
+              className="h-20 w-auto"
             />
             <p className="mt-4 max-w-[34ch] text-[0.88rem] leading-relaxed text-muted">
               {SITE.description}

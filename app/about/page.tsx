@@ -42,7 +42,7 @@ export default function AboutPage() {
     <Container>
       <div className="py-12 sm:py-16">
         <Fig>About VoltCraft</Fig>
-        <h1 className="mt-4 max-w-[17ch] font-display text-[clamp(2.4rem,6vw,4.4rem)] leading-[1.03] tracking-[-0.022em]">
+        <h1 className="mt-4 max-w-[17ch] font-display text-[clamp(2rem,5vw,3.5rem)] leading-[1.06] tracking-[-0.022em]">
           Parts on a shelf beat parts in <em className="not-italic text-live">transit</em>.
         </h1>
         <p className="mt-6 max-w-[58ch] text-[1.05rem] leading-[1.7] text-muted">
@@ -57,7 +57,7 @@ export default function AboutPage() {
         <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
           <div>
             <Fig>How we work</Fig>
-            <h2 className="mt-3 max-w-[16ch] font-display text-3xl leading-[1.08] tracking-[-0.02em] sm:text-4xl">
+            <h2 className="mt-3 max-w-[16ch] font-display text-[1.65rem] leading-[1.14] tracking-[-0.022em] sm:text-[2.05rem]">
               Four rules the catalogue follows
             </h2>
           </div>
@@ -66,7 +66,7 @@ export default function AboutPage() {
               <li key={p.fig} className="grid gap-2 border-b border-line py-6 sm:grid-cols-[3.5rem_1fr] sm:gap-6">
                 <span className="vc-fig text-live sm:pt-1.5">{p.fig}</span>
                 <div>
-                  <h3 className="font-display text-[1.5rem] leading-tight tracking-[-0.015em]">
+                  <h3 className="font-display text-[1.2rem] leading-snug tracking-[-0.015em]">
                     {p.title}
                   </h3>
                   <p className="mt-2 max-w-[58ch] text-[0.92rem] leading-relaxed text-muted">
@@ -84,7 +84,7 @@ export default function AboutPage() {
           <Fig tone="block" className="text-live">
             The tagline, unpacked
           </Fig>
-          <h2 className="mt-4 max-w-[24ch] font-display text-[1.9rem] leading-[1.12] tracking-[-0.015em] sm:text-[2.6rem]">
+          <h2 className="mt-4 max-w-[24ch] font-display text-[1.55rem] leading-[1.15] tracking-[-0.02em] sm:text-[2.1rem]">
             {SITE.tagline}
           </h2>
           <div className="mt-8 grid gap-8 sm:grid-cols-3">
@@ -94,7 +94,7 @@ export default function AboutPage() {
               ["Craft it", "Then make it something you would put your name on and hand to someone."],
             ].map(([t, d]) => (
               <div key={t} className="border-t border-block-line pt-4">
-                <h3 className="font-display text-[1.4rem] tracking-[-0.015em]">{t}</h3>
+                <h3 className="font-display text-[1.15rem] tracking-[-0.015em]">{t}</h3>
                 <p className="mt-2 text-[0.9rem] leading-relaxed text-block-muted">{d}</p>
               </div>
             ))}
@@ -104,7 +104,7 @@ export default function AboutPage() {
 
       <Section>
         <Fig>Next step</Fig>
-        <h2 className="mt-3 max-w-[20ch] font-display text-3xl leading-[1.08] tracking-[-0.02em] sm:text-[2.6rem]">
+        <h2 className="mt-3 max-w-[20ch] font-display text-[1.65rem] leading-[1.14] tracking-[-0.022em] sm:text-[2.1rem]">
           Come and see what&apos;s on the shelf.
         </h2>
         <div className="mt-7 flex flex-wrap gap-4">

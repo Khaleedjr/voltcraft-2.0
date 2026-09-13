@@ -28,7 +28,7 @@ export default function DeliveryPage() {
     <Container>
       <div className="py-12 sm:py-16">
         <Fig>Delivery &amp; returns</Fig>
-        <h1 className="mt-4 max-w-[18ch] font-display text-[clamp(2.3rem,5.6vw,4rem)] leading-[1.04] tracking-[-0.022em]">
+        <h1 className="mt-4 max-w-[18ch] font-display text-[clamp(1.95rem,4.6vw,3.2rem)] leading-[1.07] tracking-[-0.022em]">
           How it gets to you, and what happens if it&apos;s wrong.
         </h1>
         <p className="mt-6 max-w-[56ch] text-[1.02rem] leading-[1.7] text-muted">
@@ -40,7 +40,7 @@ export default function DeliveryPage() {
 
       <Section>
         <Fig>Table 1 — Delivery estimates</Fig>
-        <h2 className="mt-3 font-display text-3xl leading-tight tracking-[-0.02em]">
+        <h2 className="mt-3 font-display text-[1.6rem] leading-tight tracking-[-0.022em]">
           Time from dispatch
         </h2>
         <div className="mt-7 overflow-x-auto border border-line bg-sheet">
@@ -79,7 +79,7 @@ export default function DeliveryPage() {
         <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
             <Fig>Returns</Fig>
-            <h2 className="mt-3 font-display text-[1.9rem] leading-tight tracking-[-0.02em]">
+            <h2 className="mt-3 font-display text-[1.5rem] leading-tight tracking-[-0.02em]">
               Seven days, unopened or faulty
             </h2>
             <ul className="mt-5 grid gap-3 text-[0.93rem] leading-relaxed text-muted">
@@ -102,7 +102,7 @@ export default function DeliveryPage() {
           </div>
           <div>
             <Fig>Damaged in transit</Fig>
-            <h2 className="mt-3 font-display text-[1.9rem] leading-tight tracking-[-0.02em]">
+            <h2 className="mt-3 font-display text-[1.5rem] leading-tight tracking-[-0.02em]">
               Tell us within 48 hours
             </h2>
             <p className="mt-5 max-w-[48ch] text-[0.93rem] leading-relaxed text-muted">

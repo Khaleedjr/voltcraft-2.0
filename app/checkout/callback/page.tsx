@@ -49,7 +49,7 @@ export default async function PaymentCallbackPage({
         {paid ? <ClearCart /> : null}
 
         <Fig>{paid ? "Payment confirmed" : "Payment status"}</Fig>
-        <h1 className="mt-4 max-w-[18ch] font-display text-[clamp(2.3rem,5.6vw,4rem)] leading-[1.04] tracking-[-0.022em]">
+        <h1 className="mt-4 max-w-[18ch] font-display text-[clamp(1.95rem,4.6vw,3.2rem)] leading-[1.07] tracking-[-0.022em]">
           {paid ? "Paid. We're packing it." : "We couldn't confirm that payment."}
         </h1>
         <p className="mt-6 max-w-[54ch] text-[1rem] leading-[1.7] text-muted">

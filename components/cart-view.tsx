@@ -19,7 +19,7 @@ export function CartView() {
   if (order.items.length === 0) {
     return (
       <div className="border border-line bg-sheet p-10 text-center">
-        <p className="font-display text-3xl tracking-[-0.02em]">Nothing in the cart yet.</p>
+        <p className="font-display text-[1.6rem] tracking-[-0.022em]">Nothing in the cart yet.</p>
         <p className="mx-auto mt-3 max-w-[44ch] text-[0.93rem] leading-relaxed text-muted">
           Pick up a board, a sensor and the jumper wires you keep losing.
         </p>
@@ -45,7 +45,7 @@ export function CartView() {
                 <Link href={`/product/${product.slug}`} className="text-[0.95rem] font-semibold leading-snug hover:text-live">
                   {product.name}
                 </Link>
-                <span className="font-display text-xl tabular-nums">{formatNaira(lineTotal)}</span>
+                <span className="font-display text-[1.15rem] tabular-nums">{formatNaira(lineTotal)}</span>
               </div>
               <p className="vc-fig text-faint">
                 {product.sku} · {formatNaira(product.price)} each
@@ -104,7 +104,7 @@ export function CartView() {
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-4 border-t border-line pt-4">
             <dt className="font-semibold">Total</dt>
-            <dd className="font-display text-3xl tabular-nums">{formatNaira(order.total)}</dd>
+            <dd className="font-display text-[1.6rem] tabular-nums">{formatNaira(order.total)}</dd>
           </div>
         </dl>
 

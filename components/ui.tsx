@@ -108,7 +108,7 @@ export function SectionHeading({
     <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-4">
       <div className="max-w-[46ch]">
         <Fig>{fig}</Fig>
-        <h2 className="mt-3 font-display text-3xl leading-[1.08] tracking-[-0.02em] sm:text-4xl">
+        <h2 className="mt-3 font-display text-[1.65rem] leading-[1.14] tracking-[-0.022em] sm:text-[2.05rem]">
           {title}
         </h2>
         {lede ? <p className="mt-3 text-[0.95rem] leading-relaxed text-muted">{lede}</p> : null}

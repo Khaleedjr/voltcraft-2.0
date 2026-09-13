@@ -51,7 +51,7 @@ export default function HomePage() {
           <div className="grid items-end gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-14">
             <div>
               <Fig>Fig. 1 — Lagos bench stock, {totalLines} lines</Fig>
-              <h1 className="mt-4 max-w-[15ch] font-display text-[clamp(2.6rem,7.2vw,5.2rem)] leading-[1.02] tracking-[-0.022em]">
+              <h1 className="mt-4 max-w-[15ch] font-display text-[clamp(2.15rem,5.4vw,4rem)] leading-[1.04] tracking-[-0.022em]">
                 Your next build shouldn&apos;t wait on <em className="not-italic text-live">customs</em>.
               </h1>
             </div>
@@ -84,7 +84,7 @@ export default function HomePage() {
               <div key={m.t} className="border-t-2 border-ink pt-3.5">
                 <dt className="sr-only">{m.t}</dt>
                 <dd>
-                  <span className="block font-display text-[2.35rem] leading-none tracking-[-0.02em] tabular-nums">
+                  <span className="block font-display text-[1.95rem] leading-none tracking-[-0.025em] tabular-nums">
                     {m.n}
                   </span>
                   <span className="mt-2.5 block text-[0.85rem] leading-relaxed text-muted">{m.t}</span>
@@ -116,7 +116,7 @@ export default function HomePage() {
                   className="group flex h-full flex-col gap-2 p-5 transition-colors hover:bg-raised"
                 >
                   <span className="vc-fig text-live">{String(i + 1).padStart(2, "0")}</span>
-                  <span className="font-display text-[1.35rem] leading-tight tracking-[-0.015em] group-hover:text-live">
+                  <span className="font-display text-[1.12rem] leading-snug tracking-[-0.015em] group-hover:text-live">
                     {c.name}
                   </span>
                   <span className="text-[0.84rem] leading-relaxed text-muted">{c.blurb}</span>
@@ -157,7 +157,7 @@ export default function HomePage() {
           <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
             <div>
               <Fig>Section 03</Fig>
-              <h2 className="mt-3 max-w-[18ch] font-display text-3xl leading-[1.08] tracking-[-0.02em] sm:text-4xl">
+              <h2 className="mt-3 max-w-[18ch] font-display text-[1.65rem] leading-[1.14] tracking-[-0.022em] sm:text-[2.05rem]">
                 Who we keep stock for
               </h2>
               <p className="mt-4 max-w-[42ch] text-[0.95rem] leading-relaxed text-muted">
@@ -174,7 +174,7 @@ export default function HomePage() {
                   <span className="vc-fig text-live sm:pt-1.5">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <h3 className="font-display text-[1.45rem] leading-tight tracking-[-0.015em]">
+                  <h3 className="font-display text-[1.18rem] leading-snug tracking-[-0.015em]">
                     {a.name}
                   </h3>
                   <p className="text-[0.9rem] leading-relaxed text-muted">{a.detail}</p>
@@ -194,7 +194,7 @@ export default function HomePage() {
                 <Fig tone="block" className="text-live">
                   {kit.figure} — Bill of materials
                 </Fig>
-                <h2 className="mt-3.5 max-w-[20ch] font-display text-[1.9rem] leading-[1.1] tracking-[-0.015em] sm:text-4xl">
+                <h2 className="mt-3.5 max-w-[20ch] font-display text-[1.55rem] leading-[1.15] tracking-[-0.02em] sm:text-[2.05rem]">
                   {kit.name}
                 </h2>
                 <p className="mt-4 max-w-[44ch] text-[0.95rem] leading-[1.68] text-block-muted">
@@ -202,7 +202,7 @@ export default function HomePage() {
                 </p>
                 <div className="mt-7 flex flex-wrap items-center gap-4">
                   <AddKitToCart lines={kit.lines} />
-                  <span className="font-display text-2xl tabular-nums">
+                  <span className="font-display text-[1.35rem] tabular-nums">
                     {formatNaira(kit.total)}
                   </span>
                 </div>
@@ -232,7 +232,7 @@ export default function HomePage() {
       <Container>
         <Section>
           <Fig>Next step</Fig>
-          <h2 className="mt-3 max-w-[22ch] font-display text-3xl leading-[1.08] tracking-[-0.02em] sm:text-[2.75rem]">
+          <h2 className="mt-3 max-w-[22ch] font-display text-[1.65rem] leading-[1.14] tracking-[-0.022em] sm:text-[2.2rem]">
             Buying for a lab, a class or a production run?
           </h2>
           <p className="mt-4 max-w-[52ch] text-[0.98rem] leading-relaxed text-muted">

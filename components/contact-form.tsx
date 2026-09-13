@@ -42,7 +42,7 @@ export function ContactForm() {
   if (status.kind === "sent") {
     return (
       <div className="border border-earth bg-sheet p-6">
-        <p className="font-display text-2xl tracking-[-0.015em]">Message sent.</p>
+        <p className="font-display text-[1.3rem] tracking-[-0.018em]">Message sent.</p>
         <p className="mt-2 text-[0.92rem] leading-relaxed text-muted">
           We reply during counter hours, usually the same working day.
         </p>

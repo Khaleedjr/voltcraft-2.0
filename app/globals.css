@@ -3,78 +3,32 @@
 /* ------------------------------------------------------------------
    VoltCraft — "Blueprint" design system
    A drawing-sheet grid, prussian ink, and the red of a live conductor.
+   Light only, by design: the palette is a paper ground, not a screen.
    ------------------------------------------------------------------ */
 
 :root {
   /* surfaces */
-  --vc-ground: #e6eaec;
-  --vc-sheet: #f7f8f8;
+  --vc-ground: #e9edef;
+  --vc-sheet: #f7f8f9;
   --vc-raised: #ffffff;
   /* type */
   --vc-ink: #0e2233;
   --vc-muted: #4e6577;
   --vc-faint: #7a8c9a;
   /* structure */
-  --vc-line: #c3ccd2;
-  --vc-hairline: rgba(14, 34, 51, 0.07);
+  --vc-line: #c7d0d6;
+  --vc-hairline: rgba(14, 34, 51, 0.06);
   /* accents — live conductor red, earth green */
   --vc-live: #d6332a;
   --vc-live-hover: #b92920;
   --vc-live-ink: #ffffff;
   --vc-earth: #2c6b4f;
-  --vc-warn: #9a6212;
-  /* inverted block (used for the dark case panels) */
+  --vc-warn: #96600f;
+  /* inverted block, for the one or two panels that need to carry weight */
   --vc-block: #0e2233;
-  --vc-block-ink: #e4ebf0;
+  --vc-block-ink: #e6edf2;
   --vc-block-muted: #9fb3c2;
-  --vc-block-line: rgba(255, 255, 255, 0.14);
-  /* The dark block sits on a light ground, so it needs no outline. */
-  --vc-block-edge: transparent;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --vc-ground: #0b1620;
-    --vc-sheet: #10202c;
-    --vc-raised: #162936;
-    --vc-ink: #e3ebf0;
-    --vc-muted: #93aabb;
-    --vc-faint: #6d8598;
-    --vc-line: #233d4f;
-    --vc-hairline: rgba(255, 255, 255, 0.05);
-    --vc-live: #ff5a4d;
-    --vc-live-hover: #ff7568;
-    --vc-live-ink: #240705;
-    --vc-earth: #4bae7e;
-    --vc-warn: #d8a04a;
-    --vc-block: #061019;
-    --vc-block-ink: #e3ebf0;
-    --vc-block-muted: #93aabb;
-    --vc-block-line: rgba(255, 255, 255, 0.12);
-    /* On a dark ground it would otherwise dissolve into the page. */
-    --vc-block-edge: rgba(255, 255, 255, 0.1);
-  }
-}
-
-:root[data-theme="dark"] {
-  --vc-ground: #0b1620;
-  --vc-sheet: #10202c;
-  --vc-raised: #162936;
-  --vc-ink: #e3ebf0;
-  --vc-muted: #93aabb;
-  --vc-faint: #6d8598;
-  --vc-line: #233d4f;
-  --vc-hairline: rgba(255, 255, 255, 0.05);
-  --vc-live: #ff5a4d;
-  --vc-live-hover: #ff7568;
-  --vc-live-ink: #240705;
-  --vc-earth: #4bae7e;
-  --vc-warn: #d8a04a;
-  --vc-block: #061019;
-  --vc-block-ink: #e3ebf0;
-  --vc-block-muted: #93aabb;
-  --vc-block-line: rgba(255, 255, 255, 0.12);
-  --vc-block-edge: rgba(255, 255, 255, 0.1);
+  --vc-block-line: rgba(255, 255, 255, 0.15);
 }
 
 @theme inline {
@@ -95,10 +49,9 @@
   --color-block-ink: var(--vc-block-ink);
   --color-block-muted: var(--vc-block-muted);
   --color-block-line: var(--vc-block-line);
-  --color-block-edge: var(--vc-block-edge);
 
-  --font-display: var(--font-instrument-serif), Georgia, "Times New Roman", serif;
-  --font-sans: var(--font-public-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-archivo), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-plex-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   --radius-sheet: 1px;
@@ -108,14 +61,10 @@
   html {
     color-scheme: light;
   }
-  :root[data-theme="dark"],
-  :root:not([data-theme="light"]) {
-    color-scheme: light dark;
-  }
   body {
     background-color: var(--vc-ground);
     color: var(--vc-ink);
-    font-family: var(--font-public-sans), system-ui, sans-serif;
+    font-family: var(--font-plex-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
   ::selection {
@@ -128,6 +77,13 @@
   }
   h1, h2, h3 {
     text-wrap: balance;
+  }
+  /* Archivo is a grotesque, so display type needs weight and tight tracking to
+     read the way the old serif did. Declared in the base layer so any explicit
+     font-weight or tracking utility on the element still wins. */
+  .font-display {
+    font-weight: 600;
+    letter-spacing: -0.025em;
   }
 }
 
@@ -157,18 +113,6 @@
     height: 1px;
     flex: 1;
     background: var(--vc-line);
-  }
-  /* the logo is black artwork — flip it for the dark sheet */
-  .vc-logo-mark {
-    filter: none;
-  }
-  :root[data-theme="dark"] .vc-logo-mark {
-    filter: invert(1);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .vc-logo-mark {
-      filter: invert(1);
-    }
   }
 }
 

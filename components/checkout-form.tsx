@@ -34,7 +34,7 @@ export function CheckoutForm() {
   if (order.items.length === 0) {
     return (
       <div className="border border-line bg-sheet p-10 text-center">
-        <p className="font-display text-3xl tracking-[-0.02em]">There&apos;s nothing to check out.</p>
+        <p className="font-display text-[1.6rem] tracking-[-0.022em]">There&apos;s nothing to check out.</p>
         <p className="mx-auto mt-3 max-w-[42ch] text-[0.93rem] leading-relaxed text-muted">
           Add something to the cart first and this page will have some work to do.
         </p>
@@ -163,7 +163,7 @@ export function CheckoutForm() {
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-4 border-t border-line pt-3.5">
             <dt className="font-semibold">Total</dt>
-            <dd className="font-display text-3xl tabular-nums">{formatNaira(order.total)}</dd>
+            <dd className="font-display text-[1.6rem] tabular-nums">{formatNaira(order.total)}</dd>
           </div>
         </dl>
 

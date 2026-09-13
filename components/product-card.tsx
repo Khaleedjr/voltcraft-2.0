@@ -19,7 +19,7 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="mt-auto flex flex-col gap-3 pt-1">
         <StockPill text={stock.text} tone={stock.tone} />
         <div className="flex items-baseline gap-2">
-          <span className="font-display text-2xl tabular-nums">{formatNaira(product.price)}</span>
+          <span className="font-display text-[1.35rem] tabular-nums">{formatNaira(product.price)}</span>
           {product.compareAt ? (
             <span className="text-[0.8rem] text-faint line-through tabular-nums">
               {formatNaira(product.compareAt)}

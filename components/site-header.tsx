@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart-context";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Container } from "@/components/ui";
 import { SITE } from "@/lib/site";
 import { formatNaira } from "@/lib/format";
@@ -65,7 +64,7 @@ export function SiteHeader() {
               width={1200}
               height={724}
               priority
-              className="vc-logo-mark h-10 w-auto sm:h-11"
+              className="h-10 w-auto sm:h-11"
             />
           </Link>
 
@@ -113,7 +112,6 @@ export function SiteHeader() {
           </form>
 
           <div className="ml-auto flex items-center gap-2 md:ml-0">
-            <ThemeToggle />
             <Link
               href="/cart"
               className="relative grid size-9 place-items-center border border-line text-muted transition-colors hover:border-ink hover:text-ink"
