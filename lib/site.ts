@@ -3,14 +3,14 @@ export const SITE = {
   name: "VoltCraft",
   tagline: "Hack it. Build it. Craft it.",
   description:
-    "Engineering tools, dev boards, components and test gear for makers, students and builders in Nigeria. Stocked in Lagos, delivered nationwide.",
+    "Engineering tools, dev boards, components and test gear for makers, students and builders in Nigeria. Stocked in Kaduna, delivered nationwide.",
   url: "https://voltcraft.org.ng",
   quoteUrl: "https://quote.voltcraft.org.ng",
   email: "sales@voltcraft.org.ng",
   phone: "+234 800 000 0000",
   phoneHref: "tel:+2348000000000",
   whatsapp: "https://wa.me/2348000000000",
-  city: "Lagos, Nigeria",
+  city: "Kaduna, Nigeria",
   hours: [
     { days: "Mon–Fri", time: "08:00 – 17:00" },
     { days: "Saturday", time: "09:00 – 14:00" },

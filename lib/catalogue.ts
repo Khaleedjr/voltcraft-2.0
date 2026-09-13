@@ -715,7 +715,7 @@ export const PRODUCTS: Product[] = [
     name: "PLA filament, 1.75 mm, 1 kg",
     sku: "VC-PRO-0705",
     category: "prototyping",
-    summary: "Vacuum-sealed with desiccant — it matters in Lagos humidity. Prints at 200 °C.",
+    summary: "Vacuum-sealed with desiccant — it matters once the rains come. Prints at 200 °C.",
     price: 19500,
     stock: 34,
     specs: [

@@ -111,13 +111,13 @@ export function CheckoutForm() {
               <label htmlFor="co-city" className="vc-fig mb-2 block text-muted">
                 City
               </label>
-              <input id="co-city" name="city" required autoComplete="address-level2" className={fieldClass} placeholder="Lagos" />
+              <input id="co-city" name="city" required autoComplete="address-level2" className={fieldClass} placeholder="Kaduna" />
             </div>
             <div>
               <label htmlFor="co-state" className="vc-fig mb-2 block text-muted">
                 State
               </label>
-              <select id="co-state" name="state" required defaultValue="Lagos" className={fieldClass}>
+              <select id="co-state" name="state" required defaultValue="Kaduna" className={fieldClass}>
                 {STATES.map((s) => (
                   <option key={s} value={s}>
                     {s}

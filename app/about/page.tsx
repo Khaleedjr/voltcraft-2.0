@@ -11,14 +11,14 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "VoltCraft stocks engineering tools and components in Lagos so builders in Nigeria can buy parts today instead of waiting on a shipment.",
+    "VoltCraft stocks engineering tools and components in Kaduna so builders in Nigeria can buy parts today instead of waiting on a shipment.",
 };
 
 const PRINCIPLES = [
   {
     fig: "01",
     title: "Stock it, don't source it",
-    body: "A listing on this site means the part is on a shelf in Lagos with a count against it. If we have to order something in, we say so and give you a date rather than let you find out after you have paid.",
+    body: "A listing on this site means the part is on a shelf in Kaduna with a count against it. If we have to order something in, we say so and give you a date rather than let you find out after you have paid.",
   },
   {
     fig: "02",

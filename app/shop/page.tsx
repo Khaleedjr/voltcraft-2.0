@@ -9,7 +9,7 @@ import { getProducts, searchProducts } from "@/lib/catalogue";
 export const metadata: Metadata = {
   title: "Shop",
   description:
-    "Dev boards, components, sensors, test gear, soldering kit and bench tools — held in Lagos, delivered across Nigeria.",
+    "Dev boards, components, sensors, test gear, soldering kit and bench tools — held in Kaduna, delivered across Nigeria.",
 };
 
 export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
@@ -36,8 +36,8 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
         </h1>
         <p className="mt-4 max-w-[54ch] text-[0.98rem] leading-relaxed text-muted">
           {query
-            ? `${products.length} ${products.length === 1 ? "product matches" : "products match"} your search. Every price is in naira and every count is real stock in Lagos.`
-            : "Priced in naira, counted in Lagos, dispatched the same working day when you order before 2pm."}
+            ? `${products.length} ${products.length === 1 ? "product matches" : "products match"} your search. Every price is in naira and every count is real stock in Kaduna.`
+            : "Priced in naira, counted in Kaduna, dispatched the same working day when you order before 2pm."}
         </p>
 
         <div className="mt-8">

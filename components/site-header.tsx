@@ -7,12 +7,16 @@ import { useRef, useState } from "react";
 import { useCart } from "@/components/cart-context";
 import { Container } from "@/components/ui";
 import { SITE } from "@/lib/site";
-import { formatNaira } from "@/lib/format";
 
-const NAV = [
-  { href: "/shop", label: "Shop" },
+/**
+ * The header carries commerce only — browse, search, quote, cart. Company
+ * pages (About, Contact, policies) live in the footer, where people look for
+ * them, and stay in the mobile menu so they are reachable without scrolling.
+ */
+const SECONDARY_NAV = [
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
+  { href: "/delivery", label: "Delivery & returns" },
 ] as const;
 
 export function SiteHeader() {
@@ -25,6 +29,7 @@ export function SiteHeader() {
   const open = openedAt === pathname;
   const [query, setQuery] = useState("");
   const searchRef = useRef<HTMLInputElement>(null);
+  const onShop = pathname.startsWith("/shop") || pathname.startsWith("/product");
 
   function submitSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -35,28 +40,8 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-ground/92 backdrop-blur-sm">
-      <div className="border-b border-line/70">
-        <Container>
-          <div className="vc-fig flex flex-wrap items-center gap-x-5 gap-y-1 py-2 text-faint">
-            <span>
-              Free delivery over{" "}
-              <span className="text-muted">{formatNaira(SITE.freeDeliveryThreshold)}</span>
-            </span>
-            <span className="hidden sm:inline">{SITE.city}</span>
-            <a
-              href={SITE.quoteUrl}
-              className="ml-auto text-live hover:underline"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Bulk quote →
-            </a>
-          </div>
-        </Container>
-      </div>
-
       <Container>
-        <div className="flex items-center gap-3 py-3 sm:gap-5">
+        <div className="flex items-center gap-3 py-3.5 sm:gap-6">
           <Link href="/" className="shrink-0" aria-label={`${SITE.name} home`}>
             <Image
               src="/brand/voltcraft-wordmark.png"
@@ -68,24 +53,24 @@ export function SiteHeader() {
             />
           </Link>
 
-          <nav className="hidden items-center gap-6 text-[0.9rem] lg:flex">
-            {NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={`transition-colors hover:text-live ${
-                  pathname.startsWith(item.href) ? "text-live" : "text-muted"
-                }`}
-              >
-                {item.label}
-              </Link>
-            ))}
+          <nav className="hidden lg:block">
+            <Link
+              href="/shop"
+              aria-current={onShop ? "page" : undefined}
+              className={`border-b-2 pb-0.5 text-[0.92rem] font-medium transition-colors ${
+                onShop
+                  ? "border-ink text-ink"
+                  : "border-transparent text-muted hover:border-line hover:text-ink"
+              }`}
+            >
+              Shop
+            </Link>
           </nav>
 
           <form
             onSubmit={submitSearch}
             role="search"
-            className="ml-auto hidden min-w-0 flex-1 items-center border border-line bg-raised focus-within:border-ink md:flex md:max-w-[320px]"
+            className="ml-auto hidden min-w-0 flex-1 items-center border border-line bg-raised focus-within:border-ink md:flex md:max-w-[340px]"
           >
             <label htmlFor="site-search" className="sr-only">
               Search the catalogue
@@ -96,8 +81,8 @@ export function SiteHeader() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search — esp32, flux, calipers"
-              className="min-w-0 flex-1 bg-transparent px-3 py-2 text-[0.85rem] text-ink outline-none placeholder:text-faint"
+              placeholder="Search the catalogue"
+              className="min-w-0 flex-1 bg-transparent px-3.5 py-2 text-[0.88rem] text-ink outline-none placeholder:text-faint"
             />
             <button
               type="submit"
@@ -111,7 +96,15 @@ export function SiteHeader() {
             </button>
           </form>
 
-          <div className="ml-auto flex items-center gap-2 md:ml-0">
+          <div className="ml-auto flex items-center gap-2 md:ml-0 md:gap-3">
+            <a
+              href={SITE.quoteUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="hidden border border-line px-3.5 py-2 text-[0.85rem] font-medium text-muted transition-colors hover:border-ink hover:text-ink lg:inline-block"
+            >
+              Bulk quote
+            </a>
             <Link
               href="/cart"
               className="relative grid size-9 place-items-center border border-line text-muted transition-colors hover:border-ink hover:text-ink"
@@ -153,8 +146,8 @@ export function SiteHeader() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search — esp32, flux, calipers"
-              className="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-[0.9rem] outline-none placeholder:text-faint"
+              placeholder="Search the catalogue"
+              className="min-w-0 flex-1 bg-transparent px-3.5 py-2.5 text-[0.9rem] outline-none placeholder:text-faint"
             />
             <button type="submit" className="px-4 text-muted" aria-label="Search">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
@@ -164,11 +157,14 @@ export function SiteHeader() {
             </button>
           </form>
           <nav className="flex flex-col">
-            {NAV.map((item) => (
+            <Link href="/shop" className="border-b border-line py-3 text-[0.95rem] font-medium text-ink">
+              Shop
+            </Link>
+            {SECONDARY_NAV.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
-                className="border-b border-line py-3 text-[0.95rem] text-ink"
+                className="border-b border-line py-3 text-[0.95rem] text-muted"
               >
                 {item.label}
               </Link>
@@ -177,7 +173,7 @@ export function SiteHeader() {
               href={SITE.quoteUrl}
               target="_blank"
               rel="noreferrer"
-              className="py-3 text-[0.95rem] text-live"
+              className="py-3 text-[0.95rem] font-medium text-live"
             >
               Request a bulk quote →
             </a>

@@ -169,7 +169,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
                     In stock
                   </th>
                   <td className="px-5 py-3.5 tabular-nums text-muted">
-                    {product.stock} unit{product.stock === 1 ? "" : "s"}, Lagos
+                    {product.stock} unit{product.stock === 1 ? "" : "s"}, Kaduna
                   </td>
                 </tr>
               </tbody>

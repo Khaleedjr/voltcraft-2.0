@@ -50,7 +50,7 @@ export default function HomePage() {
         <div className="py-14 sm:py-20 lg:py-24">
           <div className="grid items-end gap-8 lg:grid-cols-[1.35fr_1fr] lg:gap-14">
             <div>
-              <Fig>Fig. 1 — Lagos bench stock, {totalLines} lines</Fig>
+              <Fig>Fig. 1 — Kaduna bench stock, {totalLines} lines</Fig>
               <h1 className="mt-4 max-w-[15ch] font-display text-[clamp(2.15rem,5.4vw,4rem)] leading-[1.04] tracking-[-0.022em]">
                 Your next build shouldn&apos;t wait on <em className="not-italic text-live">customs</em>.
               </h1>
@@ -58,7 +58,7 @@ export default function HomePage() {
             <div>
               <p className="max-w-[46ch] text-[1.02rem] leading-[1.68] text-muted">
                 VoltCraft stocks dev boards, components, test gear and the bench tools that go with
-                them — held in Lagos, shipped nationwide in 24 to 48 hours. Order today, solder this
+                them — held in Kaduna, shipped nationwide in 24 to 48 hours. Order today, solder this
                 weekend.
               </p>
               <div className="mt-7 flex flex-wrap items-center gap-4">
@@ -76,8 +76,8 @@ export default function HomePage() {
 
           <dl className="mt-10 grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { n: String(totalLines), t: "Lines held in Lagos, not ordered in when you ask" },
-              { n: "24–48h", t: "Door delivery to Abuja, Ibadan, Kano and Port Harcourt" },
+              { n: String(totalLines), t: "Lines held in Kaduna, not ordered in when you ask" },
+              { n: "24–48h", t: "Door delivery to Abuja, Kano, Zaria and Jos" },
               { n: formatNaira(SITE.freeDeliveryThreshold), t: "Order value above which delivery is on us" },
               { n: String(categories.length), t: "Aisles, from passives to the bench you solder on" },
             ].map((m) => (
@@ -136,7 +136,7 @@ export default function HomePage() {
           <SectionHeading
             fig="Section 02"
             title="Moving off the shelf this week"
-            lede="Priced in naira, counted in Lagos, and honest about how many are actually left."
+            lede="Priced in naira, counted in Kaduna, and honest about how many are actually left."
             action={
               <Link href="/shop" className="border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
                 Shop everything →

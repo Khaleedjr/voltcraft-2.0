@@ -16,10 +16,10 @@ export const metadata: Metadata = {
 };
 
 const ZONES = [
-  { zone: "Lagos mainland & island", time: "Same day – 24 hours", note: "Dispatch rider" },
-  { zone: "Ibadan, Abeokuta, Benin", time: "24 – 48 hours", note: "Courier" },
-  { zone: "Abuja, Port Harcourt, Enugu", time: "48 hours", note: "Courier" },
-  { zone: "Kano, Kaduna, Jos, Maiduguri", time: "48 – 72 hours", note: "Courier" },
+  { zone: "Kaduna metro", time: "Same day – 24 hours", note: "Dispatch rider" },
+  { zone: "Zaria, Kano, Abuja (FCT)", time: "24 – 48 hours", note: "Courier" },
+  { zone: "Jos, Katsina, Bauchi, Minna", time: "48 hours", note: "Courier" },
+  { zone: "Lagos, Ibadan, Benin, Enugu, Port Harcourt", time: "48 – 72 hours", note: "Courier" },
   { zone: "Everywhere else in Nigeria", time: "2 – 4 working days", note: "Courier or park" },
 ];
 
