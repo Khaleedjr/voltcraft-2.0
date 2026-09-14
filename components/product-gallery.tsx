@@ -27,6 +27,7 @@ export function ProductGallery({ product }: { product: Product }) {
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 520px"
+          referrerPolicy="no-referrer"
           onError={() => setBroken((prev) => new Set(prev).add(active))}
           className="object-contain p-6"
         />
@@ -49,6 +50,7 @@ export function ProductGallery({ product }: { product: Product }) {
                   alt=""
                   fill
                   sizes="64px"
+                  referrerPolicy="no-referrer"
                   onError={() => setBroken((prev) => new Set(prev).add(i))}
                   className="object-contain p-1.5"
                 />

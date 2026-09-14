@@ -41,6 +41,7 @@ export function ProductImage({
         fill
         sizes={sizes}
         priority={priority}
+        referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
         className="object-contain p-3"
       />
