@@ -183,6 +183,24 @@ export function stockLabel(product: Product): { text: string; tone: "in" | "low"
   return { text: "In stock", tone: "in" };
 }
 
+/** How much off, for merchandising. Null when the line is not discounted. */
+export function discountPercent(product: Product): number | null {
+  if (!product.compareAt || product.compareAt <= product.price) return null;
+  return Math.round((1 - product.price / product.compareAt) * 100);
+}
+
+/** Discounted lines, deepest cut first — the shop's strongest hook. */
+export function getOnSale(limit = 8): Product[] {
+  return PRODUCTS.filter((p) => discountPercent(p) !== null && p.images.length)
+    .sort((a, b) => (discountPercent(b) ?? 0) - (discountPercent(a) ?? 0))
+    .slice(0, limit);
+}
+
+/** One photographed product per aisle, for the category tiles. */
+export function categoryThumbnail(slug: CategorySlug): Product | undefined {
+  return PRODUCTS.find((p) => p.categories.includes(slug) && p.images.length);
+}
+
 /** Variable products show a range; the listed price is the cheapest option. */
 export function priceLabel(product: Product): string | null {
   if (!product.variants || product.variants.length < 2) return null;
