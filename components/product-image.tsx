@@ -1,10 +1,17 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import { ProductPlate } from "@/components/product-plate";
 import { primaryCategory, type Product } from "@/lib/catalogue";
 
 /**
- * Product photography comes from the store's media library. A handful of lines
- * have no photo, so those fall back to a drawing-sheet plate rather than a gap.
+ * Product photography, with a drawing-sheet plate as the fallback.
+ *
+ * The fallback is not decoration: the media library has refused requests from
+ * other origins before, and a listing with a white void in it looks broken in a
+ * way a labelled plate does not. Any image that fails to load — missing file,
+ * hotlink protection, a format the browser will not decode — degrades quietly.
  */
 export function ProductImage({
   product,
@@ -19,9 +26,10 @@ export function ProductImage({
   priority?: boolean;
   index?: number;
 }) {
+  const [failed, setFailed] = useState(false);
   const src = product.images[index];
 
-  if (!src) {
+  if (!src || failed) {
     return <ProductPlate category={primaryCategory(product)} label={product.name} ratio={ratio} />;
   }
 
@@ -33,6 +41,7 @@ export function ProductImage({
         fill
         sizes={sizes}
         priority={priority}
+        onError={() => setFailed(true)}
         className="object-contain p-3"
       />
     </div>

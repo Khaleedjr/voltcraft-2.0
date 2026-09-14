@@ -7,7 +7,10 @@ import { primaryCategory, type Product } from "@/lib/catalogue";
 
 export function ProductGallery({ product }: { product: Product }) {
   const [active, setActive] = useState(0);
-  const images = product.images;
+  const [broken, setBroken] = useState<Set<number>>(new Set());
+  // Anything the browser refuses to load drops out of the gallery entirely,
+  // rather than leaving a blank frame or a dead thumbnail behind.
+  const images = product.images.filter((_, i) => !broken.has(i));
 
   if (images.length === 0) {
     return (
@@ -19,11 +22,12 @@ export function ProductGallery({ product }: { product: Product }) {
     <div className="flex flex-col gap-3">
       <div className="relative aspect-[5/4] w-full max-w-full overflow-hidden border border-line bg-raised">
         <Image
-          src={images[active]}
+          src={images[Math.min(active, images.length - 1)]}
           alt={product.name}
           fill
           priority
           sizes="(max-width: 1024px) 100vw, 520px"
+          onError={() => setBroken((prev) => new Set(prev).add(active))}
           className="object-contain p-6"
         />
       </div>
@@ -40,7 +44,14 @@ export function ProductGallery({ product }: { product: Product }) {
                   i === active ? "border-ink" : "border-line hover:border-muted"
                 }`}
               >
-                <Image src={src} alt="" fill sizes="64px" className="object-contain p-1.5" />
+                <Image
+                  src={src}
+                  alt=""
+                  fill
+                  sizes="64px"
+                  onError={() => setBroken((prev) => new Set(prev).add(i))}
+                  className="object-contain p-1.5"
+                />
               </button>
             </li>
           ))}
