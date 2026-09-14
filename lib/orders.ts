@@ -1,4 +1,4 @@
-import { getProduct, type Product } from "@/lib/catalogue";
+import { getProduct, maxOrderable, type Product } from "@/lib/catalogue";
 import { SITE } from "@/lib/site";
 
 /** Flat national delivery fee, waived above the free-delivery threshold. */
@@ -28,7 +28,7 @@ export function priceOrder(lines: OrderLineInput[]): PricedOrder {
     if (!product) continue;
     const qty = Math.floor(line.qty);
     if (!Number.isFinite(qty) || qty <= 0) continue;
-    const capped = Math.min(qty, Math.max(product.stock, 0));
+    const capped = Math.min(qty, Math.max(maxOrderable(product), 0));
     if (capped <= 0) continue;
     items.push({ product, qty: capped, lineTotal: product.price * capped });
   }

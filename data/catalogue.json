@@ -1,0 +1,2723 @@
+{
+  "products": [
+    {
+      "slug": "12v-450ma-5w-power-supply",
+      "name": "12v 450mA 5W Power Supply",
+      "sku": "",
+      "wooId": "5106",
+      "categories": [
+        "power"
+      ],
+      "summary": "",
+      "description": [
+        "AC85 ~ 265v 50/60 HZ",
+        "-DC12V (±0.1V)",
+        "-450MA",
+        "-5W"
+      ],
+      "price": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1615.jpeg"
+      ]
+    },
+    {
+      "slug": "12v-600rpm-dc-gear-motor",
+      "name": "12V 600rpm  DC Gear Motor",
+      "sku": "",
+      "wooId": "5419",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "Bringsmart 12V 600rpm N20 DC Gear Motor Reversed Control Low Noise",
+      "description": [],
+      "price": 7000,
+      "compareAt": 7500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/10985604251863676010.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/10999171591924236707.jpg"
+      ]
+    },
+    {
+      "slug": "180-micro-servo-motor",
+      "name": "180° Micro Servo Motor",
+      "sku": "",
+      "wooId": "4621",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "",
+      "description": [
+        "SG90 9G Micro Servo Motor for Robot 6CH RC Helicopter Airplane Controls",
+        "T=0.5ms — Rotate 0",
+        "T=1.0ms — Rotate 45",
+        "T=1.5ms — Rotate 90",
+        "T=2.0ms — Rotate 135",
+        "T=2.5ms — Rotate 180",
+        "Specification:",
+        "Origin: Mainland China",
+        "Condition: New",
+        "Supply Voltage: 4.2-6V",
+        "Specifications: 180 degree",
+        "Product parameters:",
+        "Product name:9G small servo",
+        "Product torque:1.6KG/CM(48V)"
+      ],
+      "price": 3500,
+      "compareAt": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_20_2024-12-19_12-24-23.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_81_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_75_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "18650-lithium-battery-3-7v",
+      "name": "18650 Lithium battery 3.7v",
+      "sku": "",
+      "wooId": "5253",
+      "categories": [
+        "power"
+      ],
+      "summary": "",
+      "description": [
+        "A nominal voltage of 3.7V and capacities ranging from 2000mAh to 3500mAh."
+      ],
+      "price": 1000,
+      "compareAt": 1200,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/LTX-Rechargeable-Battery-18650-3.7v-1200mah.webp",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/H6f1e0c24a20a47c5b292834605a78b13p.avif"
+      ]
+    },
+    {
+      "slug": "1ch-channel-relay-module",
+      "name": "1CH Channel Relay Module",
+      "sku": "",
+      "wooId": "345",
+      "categories": [
+        "power",
+        "switches"
+      ],
+      "summary": "12V low level trigger 1 Channel Relay Module interface Board Shield For PIC AVR DSP ARM MCU Arduino",
+      "description": [
+        "Microcontroller development board can be used as a module that can be used as a home appliance control;",
+        "The control of the DC or AC signal, can control 220V AC load.",
+        "There is a normally open and a normally closed contact.",
+        "Blue KF301 terminals to the line of control is more convenient."
+      ],
+      "price": 2500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Voltage",
+          "value": "12V, 5V"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_36_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_51_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_50_2024-12-19_12-23-55.jpg"
+      ],
+      "variants": [
+        {
+          "label": "12V",
+          "price": 2500
+        },
+        {
+          "label": "5V",
+          "price": 2500
+        }
+      ],
+      "featured": true
+    },
+    {
+      "slug": "2wd-robot-car-chassis",
+      "name": "2WD Robot Car Chassis",
+      "sku": "",
+      "wooId": "5188",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "Motor Smart Robot Car Chassis Kit",
+      "description": [
+        "List of items:",
+        "A car chassis",
+        "Trolley wheels 2",
+        "DC Gear Motor 2",
+        "Speed encoder 2",
+        "Fasteners 4",
+        "Caster 1",
+        "Four batteries box 1",
+        "A high-quality rocker switch",
+        "An assembly drawing",
+        "Several screws and nuts"
+      ],
+      "price": 11500,
+      "compareAt": 13000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S62b2d570770c4b51853c8ae7c8f9e4e4M.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/Sade355240a5a44d896906ddc5c3e9024n.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/Sf1d6f2214ca04580ab69ec692864f63cr.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S4372b28a3a244dc3b4d407bf87db9b26k.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S9703a8f8b6264d35a3ae384ee1f1bc77x.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S62b2d570770c4b51853c8ae7c8f9e4e4M.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "3-7v-lithium-battery-charger",
+      "name": "3.7v Lithium Battery Charger",
+      "sku": "",
+      "wooId": "5099",
+      "categories": [
+        "power"
+      ],
+      "summary": "3.7V Lithium Battery Charger Protection Board 5V 1A 2A Li-ion Lipo Battery Charging Protect Two-in-one Module Micro USB Type-C",
+      "description": [
+        "Specifications:",
+        "• Name: 1A lithium battery charging and protection integrated board two-in-one",
+        "• Interface: MICRO/Type-c",
+        "• Voltage: 5V",
+        "• Charging cut-off voltage: 4.2V ±1%",
+        "• Charging current: 1000mA",
+        "• Battery over-discharge protection voltage: 2.5V",
+        "• Battery overcurrent protection current: 3A",
+        "• Board size: 2.8*1.7CM"
+      ],
+      "price": 2000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/Sfae3f69f3f694d4187e7b6309e88de39S.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "360-micro-servo-motor",
+      "name": "360° Micro Servo Motor",
+      "sku": "",
+      "wooId": "4707",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "",
+      "description": [
+        "SG90 9G Micro Servo Motor for Robot 6CH RC Helicopter Airplane Controls",
+        "T=0.5ms — Maximum forward rotation speed",
+        "T=1.5ms — No Rotation",
+        "T=2.5ms — Maximum Reverse speed",
+        "Specification:",
+        "Origin: Mainland China",
+        "Condition: New",
+        "Supply Voltage: 4.2-6V",
+        "SG90 9G servo 450 fixed-wing helicopter model QC standard servo sg90",
+        "Specifications: 360 degrees",
+        "Product parameters:",
+        "Product name:9G small servo",
+        "Product torque:1.6KG/CM(48V)",
+        "Reaction speed:0.3SC/60 DEGREE"
+      ],
+      "price": 3200,
+      "compareAt": 3500,
+      "inStock": true,
+      "stock": 6,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_20_2024-12-19_12-24-23.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_81_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_75_2024-12-19_12-23-55.jpg"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "4pcs-dc-electric-motor",
+      "name": "4PCS DC Electric Motor",
+      "sku": "",
+      "wooId": "5084",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "Plastic TT Motor Tire Wheel 3-6V Dual Shaft Gear Motor",
+      "description": [
+        "Feature:",
+        "Electric motors",
+        "-Color:Yellow.",
+        "-Material:ABS.",
+        "-Size:13.7x11x5.5cm/5.39x4.33x2.16inch.",
+        "-Weight:56g."
+      ],
+      "price": 13000,
+      "inStock": true,
+      "stock": 1,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1608.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1609.jpeg"
+      ]
+    },
+    {
+      "slug": "4wd-robot-car-chassis",
+      "name": "4WD Robot Car Chassis",
+      "sku": "",
+      "wooId": "5195",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "4WD Smart Robot Car Chassis Kits",
+      "description": [
+        "Product Description:",
+        "2xCar chassis (The color is transparent)",
+        "4xDC gear motor",
+        "4xYellow wheels",
+        "1x4-AA-L Battery box",
+        "4x20 line tachometer encoder",
+        "8xFastener",
+        "1x3D assembly drawings (Chinese version)",
+        "Several pillars screw nut"
+      ],
+      "price": 19500,
+      "compareAt": 20500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S5f58a65a343045f687bee7a392aa542eC.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S046c5aa969ff42f4886cfe28f2c76343Q.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S974c0a56a9aa4a8291e36cede2766261s.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S203a6a0f6b44452b9cf60f64b9156ad7y.webp"
+      ]
+    },
+    {
+      "slug": "4x4-keypad",
+      "name": "4x4 Keypad",
+      "sku": "",
+      "wooId": "5203",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "4*4 Matrix Array/Matrix Keyboard",
+      "description": [],
+      "price": 2000,
+      "compareAt": 2500,
+      "inStock": true,
+      "stock": 5,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S78e6d8a3ad774cf7a4598fb2c73c5463t.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "5-2v-2-channel-relay-module",
+      "name": "5-2V 2-Channel Relay Module",
+      "sku": "",
+      "wooId": "5102",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "12v way relay module for  channel relay module with optocoupler Relay Output",
+      "description": [],
+      "price": 3300,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1618.jpeg"
+      ]
+    },
+    {
+      "slug": "50kg-load-cell",
+      "name": "50kg Load Cell",
+      "sku": "",
+      "wooId": "5163",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "",
+      "description": [],
+      "price": 1500,
+      "compareAt": 1800,
+      "inStock": false,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/113-1.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/1088374397-1412463321.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/1089685728-1672099970.jpg"
+      ]
+    },
+    {
+      "slug": "5mm-led-light",
+      "name": "5mm LED Light",
+      "sku": "",
+      "wooId": "5206",
+      "categories": [
+        "display"
+      ],
+      "summary": "",
+      "description": [],
+      "price": 50,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Blue, Green, Red, White, Yellow"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/Sf6a0a139318a41b295d669e37850a85a5.jpg_220x220q75.jpg_.avif"
+      ],
+      "variants": [
+        {
+          "label": "Blue",
+          "price": 50
+        },
+        {
+          "label": "Green",
+          "price": 50
+        },
+        {
+          "label": "Red",
+          "price": 50
+        },
+        {
+          "label": "White",
+          "price": 50
+        },
+        {
+          "label": "Yellow",
+          "price": 50
+        }
+      ]
+    },
+    {
+      "slug": "5v-2-channel-relay-module",
+      "name": "5V 2 Channel Relay Module",
+      "sku": "",
+      "wooId": "5415",
+      "categories": [
+        "power"
+      ],
+      "summary": "5V Relay Module with Optocoupler Low Level Trigger Expansion Board Compatible with R3 MEGA 2560 1280 DSP ARM",
+      "description": [
+        "Description",
+        "Standard interface that can be controlled directly by microcontroller (Compatible with Arduino, 8051, AVR, PIC, DSP, ARM, ARM, MSP430, TTL logic).",
+        "Driver Current:15-20mA each",
+        "Size: 50.5mm(L) x 38.5mm(W) x 18.5mm(H)(1.99inch x 1.54inch x 0.73inch)",
+        "Equiped with high-current relay, AC250V 10A ; DC30V 10A",
+        "you will get 5pcs 2 Channel DC 5V Relay Module with Optocoupler Low Level Trigger Expansion Board Compatible with Arduino R3 MEGA 2560 1280 DSP ARM PIC AVR STM32 Raspberry Pi"
+      ],
+      "price": 3500,
+      "compareAt": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/S35bfe7b159d44a8496aa81f97a8a7829S.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Scc2c57e28de241baa2b5c3b2c9d37dcbQ.avif"
+      ]
+    },
+    {
+      "slug": "6-axis-gyroscope-accelerometer-sensor",
+      "name": "6-Axis Gyroscope Accelerometer Sensor",
+      "sku": "",
+      "wooId": "307",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "6-Axis Gyroscope Accelerometer Sensor Module Replace MPU6050 For Arduino With Pins GY-6500",
+      "description": [
+        "SPECIFICATIONS:",
+        "Power supply: 3-5v (internal low dropout regulator)",
+        "Communication: standard IIC / SPI communications protocol",
+        "-Chip 16bit AD converter, 16-bit data output",
+        "Gyroscopes range: ± 250 500 1000 2000 ° / s",
+        "Acceleration range: ± 2 ± 4 ± 8 ± 16g",
+        "The use of Immersion Gold PCB, machine welding process to ensure quality",
+        "2.54mm pitch",
+        "Module size 15mm * 25m"
+      ],
+      "price": 3000,
+      "compareAt": 3200,
+      "inStock": true,
+      "stock": 2,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Black"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S7bbf2e45ca18441ca8f67b1302926c0eh.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S314e5978faaa4b07a7a5644f1a430e62v.avif"
+      ]
+    },
+    {
+      "slug": "6v-water-pump",
+      "name": "6V Water Pump",
+      "sku": "",
+      "wooId": "4608",
+      "categories": [
+        "fluid-control"
+      ],
+      "summary": "DC 3-6V Water Pump Low Noise Brushless Motor Pump120L/H Mini Micro Submersible Water Pump Water Pipe 1m",
+      "description": [
+        "Feature:",
+        "-DC voltage: 2.5-6V",
+        "-Maximum lift: 40-110cm/15.75\"-43.4\"",
+        "-Flow rate: 80-120L/H",
+        "-Outer diameter of effluent: 7.5mm/0.3\"",
+        "-Inner diameter of the water outlet: 4.7 mm / 0.18\"",
+        "-Diameter: approx. 24mm / 0.95\"",
+        "-Length: approx. 45 mm / 1.8\"",
+        "-Height: about. 33mm / 1.30\"",
+        "-Material: engineering plastic",
+        "-Drive mode: DC brushless design, magnetic drive",
+        "-500 hours of continuous working life"
+      ],
+      "price": 2400,
+      "compareAt": 2800,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_3_2024-12-19_12-24-23.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_3_2024-12-19_12-24-23.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_91_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_37_2024-12-19_12-24-23.jpg"
+      ]
+    },
+    {
+      "slug": "6x2mm-powerfull-magnets",
+      "name": "6x2mm Powerfull Magnets",
+      "sku": "100",
+      "wooId": "5440",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Super Powerful Magnets Strong Disc Magnets for Fridge, DIY, Building, Scientific,",
+      "description": [],
+      "price": 100,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/1089829800-758934848.jpg"
+      ]
+    },
+    {
+      "slug": "7805-voltage-regulator",
+      "name": "7805 Voltage Regulator",
+      "sku": "",
+      "wooId": "5241",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "",
+      "description": [
+        "The LM7805 is a 3-terminal positive voltage regulator IC, commonly used to provide a stable 5V output from a variable input voltage. It's a popular choice in electronic circuits due to its simple design and ability to maintain a consistent voltage despite fluctuations in the input. The \"78\" in its name indicates it's a positive voltage regulator, and \"05\" specifies the output voltage of 5V."
+      ],
+      "price": 600,
+      "compareAt": 800,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/lm7805-voltage-regulator.webp",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/20241016144716533.png"
+      ]
+    },
+    {
+      "slug": "9v-battery",
+      "name": "9V Battery",
+      "sku": "",
+      "wooId": "5260",
+      "categories": [
+        "power"
+      ],
+      "summary": "",
+      "description": [],
+      "price": 1000,
+      "compareAt": 1100,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/images.jpeg"
+      ]
+    },
+    {
+      "slug": "a4988-driver-cnc-shield-v3",
+      "name": "A4988 Driver CNC shield V3",
+      "sku": "",
+      "wooId": "5431",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "",
+      "description": [
+        "Specification:",
+        "1. 3 axis stepper motor driver",
+        "2. Compatible with micro-drive laser engraving machine, three-axis CNC engraving machine,.",
+        "3. 2A can be controlled within the two-phase four-wire stepper motor.",
+        "4. Released the digital IO interface, easy to connect to other modules, such as ENDSTOP.",
+        "5. Released the I2C interface, you can connect to the LCD I2C or other 12C module.",
+        "6. Power DC5V interface, 7.5-12V voltage input.",
+        "7. GRBL compatible",
+        "8. Worked with aduino nano."
+      ],
+      "price": 3800,
+      "compareAt": 4000,
+      "inStock": true,
+      "stock": 3,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/1098558968999443043.jpg"
+      ]
+    },
+    {
+      "slug": "a4988-stepper-motor-driver",
+      "name": "A4988 Stepper Motor Driver",
+      "sku": "",
+      "wooId": "5434",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "A4988 DRV8825 Stepper Motor Driver With Heat sink Carrier Reprap RAMPS",
+      "description": [],
+      "price": 2500,
+      "compareAt": 3000,
+      "inStock": true,
+      "stock": 6,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_175533_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "ac-dc-converter-110v-220v-to-12v-2a",
+      "name": "AC-DC Converter 110V 220V to 12V 2A",
+      "sku": "",
+      "wooId": "5557",
+      "categories": [
+        "power"
+      ],
+      "summary": "",
+      "description": [],
+      "price": 7000,
+      "compareAt": 7500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/08/Screenshot-2026-08-11-at-2.53.36-AM.png"
+      ]
+    },
+    {
+      "slug": "ac-dc-converter-110v-220v-to-5v-2a",
+      "name": "AC-DC Converter 110V 220V to 5V 2A",
+      "sku": "",
+      "wooId": "5540",
+      "categories": [
+        "power"
+      ],
+      "summary": "Ac input (VAC) : 85-264(recommended range Dc input (VDC) : 110-370(recommended range) Frequency range (Hz) : 47-63 Input current (mA) : 0.12/115vac0.06/230vac Surge current (A) : cold start :10A230VAC Efficiency (TYP) : ≥77% No load standby",
+      "description": [],
+      "price": 5500,
+      "compareAt": 6000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/08/Sf43cae02c64547149352be7cffebb088f.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2026/08/S18a3433c61ff4a28932bdf54fab873f7w.avif"
+      ]
+    },
+    {
+      "slug": "ac-dc-to-dc-buck-step-down-converter-module-lm2596hv",
+      "name": "AC/DC to DC Buck Step Down Converter Module LM2596HV",
+      "sku": "",
+      "wooId": "5411",
+      "categories": [
+        "power"
+      ],
+      "summary": "LM2596HV 3v 3.3V 5V 6V 9V 12V 15V 24V DC 5V-50V Adjustable Step-Down 3A Power Supply",
+      "description": [
+        "Features:",
+        "The power module adopts the plug-in LM2596HV,the high voltage version of the LM2596. The maximum input voltage is 50V (limited by the filter capacitor withstand voltage). The external heat sink can withstand high current operation. The input terminal uses a 4A rectifier bridge stack to input AC power,and has a dedicated DC input port,which is commonly used for AC and DC input. The output voltage can be adjusted from 3.3V to 33V,and the output voltage will vary with different input voltage ranges."
+      ],
+      "price": 3700,
+      "compareAt": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/S9b774310865b4e67b669b506aad77c8dE.avif"
+      ]
+    },
+    {
+      "slug": "acs712-current-sensor-module",
+      "name": "ACS712 Current Sensor Module",
+      "sku": "",
+      "wooId": "252",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Current Sensor Module ACS712 module 5A 20A 30A Hall Current Sensor Module 5A/20A/30A ACS712",
+      "description": [],
+      "price": 2500,
+      "compareAt": 2800,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Blue"
+        },
+        {
+          "label": "Size",
+          "value": "30, 32, 34, 36"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S2edc9082a8ce41adaaa594be46851026S.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S76195e7509c94f8faca4665489f6be46a.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "active-piezo-buzzer",
+      "name": "Active Piezo Buzzer",
+      "sku": "",
+      "wooId": "5015",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Active Buzzer 5V Magnetic Long Continous Beep Tone Alarm Ringer 12*9.5mm Mini Active Piezo Buzzers, for Arduino",
+      "description": [
+        "Description：",
+        "Rated voltage: DC 5V",
+        "Diameter : 12mm ;",
+        "Spacing of the foot : 6.5mm ;",
+        "Height : 9.5mm",
+        "Current : < 250MA",
+        "Sensitivity/SPL: Min 85 dB",
+        "Resonant frequency: 2300-2500 ± 300Hz"
+      ],
+      "price": 400,
+      "compareAt": 500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/02/S08e402ec93fd42f0bffc40122f43b2b92.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "alcohol-ethanol-sensor-breath-mq-3",
+      "name": "Alcohol Ethanol Sensor Breath MQ-3",
+      "sku": "",
+      "wooId": "5544",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "",
+      "description": [
+        "High-precision alcohol ethanol detection The MQ-3 sensor offers accurate detection of alcohol and ethanol levels in breath gas, making it ideal for DIY breathalyzer projects and safety monitoring applications.",
+        "Compatible with Arduino and 51 microcontrollers Designed for seamless integration with Arduino and 51 systems, this sensor enables easy implementation in various electronic projects requiring ethanol sensing.",
+        "Low power consumption and stable performance With a Supply Voltage suitable for standard microcontroller setups, the sensor ensures reliable operation with minimal power usage and consistent output.",
+        "Compact and lightweight design Measuring 13 x 11 x 4 cm and weighing only 0.013 kg, this sensor is easy to install and integrate into small-scale or portable devices."
+      ],
+      "price": 3500,
+      "compareAt": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/08/download.jpeg"
+      ]
+    },
+    {
+      "slug": "arduino-uno-r3",
+      "name": "Arduino uno R3",
+      "sku": "",
+      "wooId": "4602",
+      "categories": [
+        "microcontrollers"
+      ],
+      "summary": "UNO+WiFi R3 MEGA328P Chip CH340G For Arduino UNO R3 Development Board WeMos ESP8266",
+      "description": [
+        "The use of high-speed microprocessor controller (ATMEGA328), the development",
+        "of user interface and environment are very simple, easy to understand, very",
+        "suitable for beginners to learn.",
+        "Performance description",
+        "I/ O digital input / output terminals 0 ~ 13.",
+        "I/ O analog input / output terminals 0 ~ 5.",
+        "Support ISP download",
+        "Input voltage: connected to the",
+        "computer USB without external power supply, external power supply 5V ~ 9V DC voltage input.",
+        "Output voltage: 5V DC voltage output and 3.3V DC voltage output.",
+        "Using Atmel Atmega328microprocessor controller"
+      ],
+      "price": 8500,
+      "compareAt": 9000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/3.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/4.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/2.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/1.avif"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "arduino-uno-starter-kit",
+      "name": "Arduino UNO Starter Kit",
+      "sku": "3",
+      "wooId": "5010",
+      "categories": [
+        "microcontrollers"
+      ],
+      "summary": "Starter Kit for Arduino UNO R3 Upgraded version Learning Suite",
+      "description": [
+        "RFID Learning Suite is the entry to the master suite upgrades, updates place mainly in:",
+        "1.1602 I2C 1602 replaced the screen to control it more convenient,",
+        "2.New RFID module and RFID keychain and white card,",
+        "3. Added DS1302 clock module,",
+        "4. New of the sound detection module,",
+        "5.New temperature and humidity module,",
+        "6. New water level detection module,",
+        "7. Added 4 * 4 keypad module",
+        "8. New of 8 * 8 dot matrix module",
+        "Package Included:",
+        "1 X UNO Board",
+        "1 X USB Cable",
+        "1 X Jump Cable",
+        "1 X Breadboard"
+      ],
+      "price": 48000,
+      "compareAt": 49000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/02/Se7d52029a6c94d83af95b9973e93f929a.png_220x220.png_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/02/S6f554ea50a224608beac5eb1fbcd8400q.png_220x220.png_.avif"
+      ]
+    },
+    {
+      "slug": "as608-fingerprint-sensor",
+      "name": "AS608 Fingerprint Sensor",
+      "sku": "",
+      "wooId": "5476",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Product overview This fingerprint module is an integrated fingerprint processing module integrating optical path and fingerprint processing. It has the characteristics of small size, low power consumption, simple interface, high reliability",
+      "description": [],
+      "price": 15000,
+      "compareAt": 16000,
+      "inStock": true,
+      "stock": 3,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_191336_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "atmega328p-nano-3-0-conrtroller",
+      "name": "ATMEGA328P Nano 3.0 Conrtroller",
+      "sku": "",
+      "wooId": "5116",
+      "categories": [
+        "microcontrollers"
+      ],
+      "summary": "Nano 3.0 With the bootloader compatible controller CH340 USB driver Mini /Type-C/ Micro 16Mhz ATMEGA328P for Arduino",
+      "description": [
+        "1. 12 digital input/output ports D2-D132, 8 analog input ports AO-A7",
+        "3. 1 pair of TTL level serial port transceiver ports RX/TX",
+        "4. 6 PWM ports, D3, D5, D6, D9, D10, D115, using Atmel Atmega328p-AU microcontroller",
+        "6. Support USB download and power supply",
+        "7. Support external 3.3V-12V DC power supply 8. Supp lithium battery and 9V battery power supply",
+        "9. Support ISP download"
+      ],
+      "price": 8000,
+      "compareAt": 9000,
+      "inStock": true,
+      "stock": 11,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1598.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1597.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1596.jpeg"
+      ]
+    },
+    {
+      "slug": "battery-connector",
+      "name": "Battery Connector",
+      "sku": "",
+      "wooId": "4415",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "UNO R3 9V Battery Connector 9V battery clip for arduino",
+      "description": [
+        "SPECIFICATION:",
+        "9V battery connector, the other can be connected to the 2.1*5.5mm socket"
+      ],
+      "price": 500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/image16-1.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/HTB1.6FYRFXXXXaoXVXXq6xXFXXXS.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/HTB1OHd6RFXXXXaYXFXXq6xXFXXXF.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "breadboard-830-tie-points",
+      "name": "BreadBoard 830 Tie Points",
+      "sku": "",
+      "wooId": "5108",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "",
+      "description": [],
+      "price": 2500,
+      "inStock": true,
+      "stock": 1,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/Sdd9bfe8b85b347f5835d61119334ce841.jpeg_220x220q75.jpeg_.avif"
+      ]
+    },
+    {
+      "slug": "camera-module",
+      "name": "Camera Module",
+      "sku": "",
+      "wooId": "4420",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "OV7670 camera module OV7670 module Supports VGA CIF auto exposure control display active size 640X480 For Arduino",
+      "description": [],
+      "price": 3500,
+      "compareAt": 3800,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S75b2e496f8d94ed980bbe1f03c17570ep.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S112b6b27168440d6bc5db76152cc93d0o.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "capacitive-soil-moisture-sensor",
+      "name": "Capacitive Soil Moisture Sensor",
+      "sku": "",
+      "wooId": "5466",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Capacitive Soil Moisture Sensor Corrosion Resistant for Arduino Moisture Detection Garden Watering",
+      "description": [],
+      "price": 2500,
+      "compareAt": 3000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_185838_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "dht11-temperature-sensor",
+      "name": "DHT11 Temperature Sensor",
+      "sku": "",
+      "wooId": "5229",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Digital Temperature and Humidity Sensor DHT11",
+      "description": [],
+      "price": 2800,
+      "compareAt": 3000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/dth-500x500-1.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/DHT11–Temperature-Sensor-Pinout.jpg"
+      ]
+    },
+    {
+      "slug": "dht22-am2303-temprature-sensor",
+      "name": "DHT22 AM2303 Temprature Sensor",
+      "sku": "",
+      "wooId": "5114",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "DHT22 Digital Temperature and Humidity Sensor AM2302 Module",
+      "description": [
+        "DHT22 Digital Temperature and Humidity Sensor AM2302 Module+PCB with Cable",
+        "Feature",
+        "DHT22 digital temperature and humidity sensor is a calibrated digital signal output temperature and humidity combined sensor, which application-specific modules capture technology and digital temperature and humidity sensor technology to ensure that products with high reliability and excellent long-term stability.",
+        "No pullup resistor needed. Just plug right into your board. Ultra-low power consumption No additional components Excellent long-term stability"
+      ],
+      "price": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1595.jpeg"
+      ]
+    },
+    {
+      "slug": "dual-shaft-tt-motor",
+      "name": "Dual Shaft TT Motor",
+      "sku": "",
+      "wooId": "5073",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "Dual Shaft TT Motor DC 3-12V Smart Car Robot Gear Motor Install EMC Smart Car Chassis Four Drive Car Motor Gearmotor",
+      "description": [
+        "Dual Shaft Geared Motor Gearmotor DC 3-12V Dual Shaft TT Motor Install EMC Smart Car Chassis Four Drive Car Motor DIY for Smart Car Robot Toys",
+        "Feature:",
+        "1.High Performance: The TT Motor 130 Electric Motor is specifically designed to deliver high performance while maintaining strong resistance against interference. It ensures stable and reliable operation, even in environments with electromagnetic disturbances or other sources of interference.",
+        "2.Enhanced EMC Compatibility: With added EMC enhancements, this dual shaft geared motor minimizes electromagnetic emissions and susceptibility to interference, allowing it to coexist harmoniously with other electronic devices. Experience seamless integration and reduced signal disruption when using this motor in your projects.",
+        "3.Compact and Versatile: Despite its compact size, this dual shaft TT motor offers impressive torque and power output. Its small form factor makes it suitable for applications with limited space requirements, providing flexibility and adaptability for various projects.",
+        "4.Efficient Power Transfer: The gearbox motor maximizes energy utilization and minimizes power loss during operation, resulting in superior performance and reduced energy consumption. Enjoy efficient power transfer and longer battery life in your intelligent vehicles or robotic applications.",
+        "5.Wide Range Applications: Tailored for intelligent vehicles and robot projects, this smart car chassis four drive car motor is compatible with DIY projects, educational kits, and hobbyist endeavors. Unlock endless possibilities with a versatile motor that caters to the needs of robotics enthusiasts, makers, educators, and students.",
+        "Specification:",
+        "Origin: Mainland China",
+        "Type: Module",
+        "Condition: New",
+        "Application: Electric Toy",
+        "Supply Voltage: DC3V-12 V",
+        "Model Number: TT Motor"
+      ],
+      "price": 2000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1605.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1604.jpeg"
+      ]
+    },
+    {
+      "slug": "dual-axis-xy-joystick",
+      "name": "Dual-axis XY Joystick",
+      "sku": "",
+      "wooId": "5421",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Joystick Module Higher Quality PS2 Joystick Control Lever Sensor KY-023",
+      "description": [
+        "Product Description:",
+        "Two-axis key joystick sensor module by the use of PS2 rocker potentiometer, with (X, Y) 2-axis analog output, (Z) 1 button digital output.  With the Arduino sensor expansion board can produce remote control and other interactive works.  In addition, this product in order to allow customers to more easily with the arduino expansion board and other standard interfaces, in the design of the X, Y, Z axis of the circuit are separate leads, the user can use 3-pin ARDUINO special line really plug into the expansion board ."
+      ],
+      "price": 1500,
+      "compareAt": 2000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/1099988500-1799472275.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/1099841046-206481442.jpg"
+      ]
+    },
+    {
+      "slug": "esp32-development-board-type-c-usb",
+      "name": "ESP32 Development Board TYPE-C USB",
+      "sku": "",
+      "wooId": "4884",
+      "categories": [
+        "microcontrollers"
+      ],
+      "summary": "ESP32 Development Board TYPE-C USB CH340C WiFi+Bluetooth Ultra-Low Power Consumption Dual Core ESP32-DevKitC-32 ESP-WROOM",
+      "description": [
+        "SPECIFICATIONS",
+        "Development board model: ESP32-DevKitC-32",
+        "Module model: ESP32-WROOM-32",
+        "Main control chip: ESP32-DOWDQ6-V3 dual-core 32bit MCU integrated WiFi, Bluetooth,",
+        "Integrated 520-kBSRAM, 448-kBROM16-kBSRAMinRTC",
+        "External storage: 4MB",
+        "USB driver chip: CH340C, with good system compatibility, higher download speed, and more stability. Support VIN external wide voltage input 5-12V power supply (battery version maximum 5.5V input) Support USB power supply, external 3.3V power supply, and VIN power supply three kinds of power supply Mode development board size: 52*28mm/weight about 9.5g",
+        "Support ArduinoIDE mixly, mind+, Python and other programming software"
+      ],
+      "price": 10500,
+      "compareAt": 11500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/333.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/555.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/444.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/222.avif"
+      ]
+    },
+    {
+      "slug": "esp32-cam",
+      "name": "ESP32-CAM",
+      "sku": "",
+      "wooId": "5034",
+      "categories": [
+        "microcontrollers"
+      ],
+      "summary": "",
+      "description": [
+        "ESP32-CAM-MB MICRO USB ESP32 Serial to WiFi ESP32 CAM Development Board CH340 CH340G 5V Bluetooth+OV2640 Camera"
+      ],
+      "price": 15000,
+      "compareAt": 16000,
+      "inStock": true,
+      "stock": 7,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/04/Sede3bcb0be384d61b1cff5b170c135abY.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/04/Sa75cca3d6c0946c6bc3d1e59fffb54ecJ.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/04/S47e21f4933904124ac485b87c1de786fk.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "esp8266",
+      "name": "ESP8266",
+      "sku": "",
+      "wooId": "5030",
+      "categories": [
+        "microcontrollers"
+      ],
+      "summary": "802.11b/g/n Built in Tensilia L106 ultra-low power consumption 32-bit micro MCU, with main frequency supporting 80 Built in 10bit high-precision ADC Built in TCP/IP protocol stack Built in TR switch, balun, LNA, power amplifier and matching",
+      "description": [
+        "serial port wifi module NodeMCU Lua V3 Internet of Things development board TYPE-C interface CH340"
+      ],
+      "price": 8000,
+      "compareAt": 8500,
+      "inStock": true,
+      "stock": 1,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/04/S69a3214ad22d489483e32bb78a035fe7Y.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/04/Scac3300f583c43ecb926688fd624b3b0H.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "finger-print-sensor",
+      "name": "Finger Print Sensor",
+      "sku": "",
+      "wooId": "4590",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "FPM10A Fingerprint Reader Sensor Board Module Optical Fingerprint Fingerprint For Arduino Locks Serial Communication Interface",
+      "description": [
+        "Supply voltage: DC 3.6 ~ 6.0V / 3.3V",
+        "Supply Current: Current: <120mA",
+        "Peak current: <140mA",
+        "Fingerprint image time: <1.0 seconds",
+        "Window size: 14 X 18 mm",
+        "Matching mode: Match mode (1:1)",
+        "Search mode (1: N)",
+        "Temperature: -20° - +50°",
+        "Relative Humidity: 40% RH-85%"
+      ],
+      "price": 15000,
+      "compareAt": 18000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/2-1.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/voltcraft3-1.png"
+      ]
+    },
+    {
+      "slug": "flame-sensor-module",
+      "name": "Flame Sensor Module",
+      "sku": "",
+      "wooId": "5091",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "IR Flame Sensor Module Detector Smartsense For Temperature Detecting",
+      "description": [],
+      "price": 1000,
+      "inStock": true,
+      "stock": 2,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1612.jpeg"
+      ]
+    },
+    {
+      "slug": "gt2-pulley-20-teeth-bore-2mm",
+      "name": "GT2 Pulley 20 Teeth Bore 2mm",
+      "sku": "",
+      "wooId": "5451",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Packing list: 1 x GT2-6mm 2meter 2 x GT2 Pulley 5mm 2X Idler 20teeth 5mm 4 xTorsion spring",
+      "description": [],
+      "price": 8500,
+      "compareAt": 9000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_182248_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "hx711-weighing-sensor",
+      "name": "HX711 weighing sensor",
+      "sku": "",
+      "wooId": "5175",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "",
+      "description": [
+        "The HX711 Weighing Sensor is a precision 24-bit analog-to-digital converter (ADC) designed specifically for weigh scale applications."
+      ],
+      "price": 1900,
+      "compareAt": 2000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/hx711-load-cell-amplifier-1-500x500-1.jpg"
+      ]
+    },
+    {
+      "slug": "infrared-pir-sensor",
+      "name": "Infrared PIR Sensor",
+      "sku": "",
+      "wooId": "229",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Mini IR Pyroelectric Infrared PIR Motion Human Sensor Automatic Detector Module AM312 Sensor DC 2.7 to 12V .",
+      "description": [
+        "Technical Parameters:",
+        "Operating voltage: DC 2.7-12V;",
+        "Static power consumption: <0.1mA;",
+        "Delay time: 2 seconds;",
+        "Block time: 2 seconds;",
+        "Trigger mode: repeatable;",
+        "Sensing range: ≤ 100 degrees cone angle, 3-5 meters; (according to the specific lens)",
+        "Working temperature: -20 - + 60 °",
+        "PCB Dimensions: 10mm * 8mm",
+        "Module lens: small lens"
+      ],
+      "price": 1500,
+      "compareAt": 1700,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Blue"
+        },
+        {
+          "label": "Size",
+          "value": "30, 32, 34, 36"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_49_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/image_2024-12-20_213600138.png"
+      ]
+    },
+    {
+      "slug": "ir-infrared-obstacle-avoidance-sensor-module",
+      "name": "IR Infrared Obstacle Avoidance Sensor Module",
+      "sku": "",
+      "wooId": "5548",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "",
+      "description": [
+        "3-PIN Design for Easy Integration Featuring a 3PIN interface, this sensor module ensures simple and stable connection with Arduino and other microcontrollers for seamless project integration.",
+        "Optical-Electronics Sensor with Reflective Function As a Reflective Photoelectric Sensor, it detects obstacles using infrared light reflection, making it perfect for smart robot navigation and automation applications.",
+        "Switching Transducer Output for Clear Signals The Switching Transducer output provides a clear digital signal, enabling accurate detection of obstacles and reliable performance in real-time control systems."
+      ],
+      "price": 1200,
+      "compareAt": 1500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/08/Screenshot-2026-08-11-at-2.39.24-AM.png"
+      ]
+    },
+    {
+      "slug": "jumper-wires-pieces",
+      "name": "Jumper Wires (pieces)",
+      "sku": "",
+      "wooId": "5173",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "",
+      "description": [],
+      "price": 60,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Types",
+          "value": "Male to Male, Male to Female, Female to Female"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/40_20pin_20male_20-_20female_20splittable_20jumper_20wire_20-_2020cm-1-1000x750-500x500-1.webp"
+      ],
+      "variants": [
+        {
+          "label": "Male to Male",
+          "price": 60
+        },
+        {
+          "label": "Male to Female",
+          "price": 60
+        },
+        {
+          "label": "Female to Female",
+          "price": 60
+        }
+      ]
+    },
+    {
+      "slug": "l293d-motor-control-shield",
+      "name": "L293D Motor Control Shield",
+      "sku": "",
+      "wooId": "5499",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "L293D motor control shield motor drive expansion board FOR Arduino",
+      "description": [],
+      "price": 4200,
+      "compareAt": 5000,
+      "inStock": true,
+      "stock": 3,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/06/H35ced2ce05624a569c3bafa9d7702d1fs.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "l293d-motor-driver-control-shield",
+      "name": "L293D Motor Driver Control Shield",
+      "sku": "",
+      "wooId": "5093",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "L293D motor control shield motor drive expansion board FOR Arduino motor shield",
+      "description": [
+        "L293D is a monolithic integrated, high voltage, high current, 4-channel driver.Basically this means using this chip you can use DC motors and power supplies of up to 36 Volts, thats some pretty big motors and the chip can supply a maximum current of 600mA per channel, the L293D chip is also what\\'s known as a type of H-Bridge. The H-Bridge is typically an electrical circuit that enables a voltage to be applied across a load in either direction to an output, e.g. motor.",
+        "- 2 interface for 5V Servo connected to For high-resolution dedicated timer - no jitter!",
+        "- Can drive 4 DC motors or 2 stepper motors or 2 Servo",
+        "- Up to 4 bi-directional DC motors with individual 8-bit speed selection",
+        "- Up to 2 stepper motors (unipolar or bipolar) with single coil, double coil or interleaved stepping.",
+        "- 4 H-Bridges: per bridge provides 0.6A (1.2A peak current) with thermal protection, can run motors on 4.5V to 36V DC",
+        "- Pull down resistors keep motors disabled during power-up",
+        "- reset button",
+        "- 2 external terminal power interface, for seperate logic/motor supplies"
+      ],
+      "price": 4500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1613.jpeg"
+      ]
+    },
+    {
+      "slug": "l298n-motor-driver",
+      "name": "L298N Motor Driver",
+      "sku": "",
+      "wooId": "5182",
+      "categories": [
+        "switches"
+      ],
+      "summary": "",
+      "description": [
+        "Module name : dual H bridge motor drive module",
+        "Work mode : H bridge drive (double road)",
+        "Main control chip : L298N",
+        "Packaging : electrostatic bag",
+        "Logical voltage : 5V",
+        "Drive voltage : 5v-35v",
+        "Logical current : 0mA-36mA",
+        "Driving current : 2A(MAX single bridge)",
+        "Storage temperature : - 20 ° to + 135 °",
+        "Maximum power : 25W",
+        "Weight : 30 g",
+        "Peripheral dimensions : 43*43*27mm"
+      ],
+      "price": 5400,
+      "compareAt": 6000,
+      "inStock": true,
+      "stock": 6,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S10d584eab6c24188a71e11e4658e5b5bA.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S12f4f0d80f2949219e2a6dcea9f375e7n.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/S48bc17de8efe463a9ca2bb0dd7ee3f40j.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "lcd-display-module-blue",
+      "name": "LCD Display Module Blue",
+      "sku": "",
+      "wooId": "360",
+      "categories": [
+        "display"
+      ],
+      "summary": "CD1602 1602 LCD Module Blue / Yellow Green Screen 16x2 Character LCD Display PCF8574T PCF8574 IIC 12C Interface 5V for arduino.",
+      "description": [
+        "SPECIFICATIONS:",
+        "-Size: 41.5mm*19mm*15.3mm",
+        "-Weight: 5g",
+        "-PCB color: Black TZT",
+        "-Supply Voltage: 2.5-6V",
+        "-Support I2C Protocol"
+      ],
+      "price": 6500,
+      "compareAt": 7500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Blue, Green, Red"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_30_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/voltcraft13.png",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_34_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "lcd-display-module-green",
+      "name": "LCD Display Module Green",
+      "sku": "",
+      "wooId": "4858",
+      "categories": [
+        "display"
+      ],
+      "summary": "CD1602 1602 LCD Module Blue / Yellow Green Screen 16×2 Character LCD Display PCF8574T PCF8574 IIC 12C Interface 5V for arduino.",
+      "description": [
+        "SPECIFICATIONS:",
+        "-Size: 41.5mm*19mm*15.3mm",
+        "-Weight: 5g",
+        "-PCB color: Black TZT",
+        "-Supply Voltage: 2.5-6V",
+        "-Support I2C Protocol"
+      ],
+      "price": 6500,
+      "compareAt": 7500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_34_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_44_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_34_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "led-10-bars-display-green",
+      "name": "LED 10 Bars  Display Green",
+      "sku": "",
+      "wooId": "4617",
+      "categories": [
+        "display"
+      ],
+      "summary": "PRODUCT FEATURES: • 100% Brand new and high quality LED Bar-graph • Item : LED Bar Graph • Emitted color : White / Blue / Red / Jade-green / Green  / Yellow Voltage : 1.99 v",
+      "description": [
+        "PRODUCT FEATURES:",
+        "-100% Brand new and high quality LED Bar-graph",
+        "-Item : LED Bar Graph",
+        "-Emitted color : Green",
+        "-Voltage : 1.99 v"
+      ],
+      "price": 1400,
+      "compareAt": 1800,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/voltcraft10.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_60_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "led-10-bars-display-red",
+      "name": "LED 10 Bars Display Red",
+      "sku": "",
+      "wooId": "4848",
+      "categories": [
+        "display"
+      ],
+      "summary": "",
+      "description": [
+        "PRODUCT FEATURES:",
+        "-100% Brand new and high quality LED Bar-graph",
+        "-Item : LED Bar Graph",
+        "-Emitted color : Red",
+        "-Voltage : 1.99 v"
+      ],
+      "price": 1400,
+      "compareAt": 1800,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_53_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_60_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "led-4-bits-display-module",
+      "name": "LED 4 Bits Display Module",
+      "sku": "",
+      "wooId": "4614",
+      "categories": [
+        "display"
+      ],
+      "summary": "74HC595 Digital LED Display Module 0.4 Inch LED Nixie Tube Display Module 3.3-5V 4-Digit",
+      "description": [
+        "Specification:",
+        "-Origin: Mainland China",
+        "-Type: Module",
+        "-Condition: New",
+        "-Supply Voltage: 3.3-5 V",
+        "-Product weight: 11g",
+        "-Product size: 38.6*22*10mm",
+        "Features:",
+        "1.Compact and Versatile: This 0.4-inch four-digit display module, driven by 74HC595, offers a space-saving solution for various applications.The module efficiently utilizes 2595 digital tube driver, requiring only 3 MCU IO ports for dynamic scanning display.",
+        "2.Wide Voltage Range Compatibility: With a wide operating voltage range of 3.3V to 5V, this display module can be easily integrated into different electronic setups.",
+        "3.Convenient PCB Size: The module comes in a conveniently compact PCB size of 38.6mm *22mm, making it suitable for projects with limited space.",
+        "4.Clear and Legible: Featuring four 0.4-inch digital tubes, this module provides clear and legible numerical displays, ensuring easy visibility even from a distance.",
+        "5.Lightweight and Portable: Weighing just 11g, this display module is lightweight and portable, enabling effortless integration into your projects without adding unnecessary bulk."
+      ],
+      "price": 1900,
+      "compareAt": 2200,
+      "inStock": false,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_59_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_40_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_44_2024-12-19_12-24-23.jpg"
+      ]
+    },
+    {
+      "slug": "led-7-segment-display",
+      "name": "LED 7 Segment Display",
+      "sku": "",
+      "wooId": "4861",
+      "categories": [
+        "display"
+      ],
+      "summary": "10pcs 0.56 Inch 10Pins 5161AS 5161BS 1 Bit Digit 7 Segment Red LED Digital Display Digitron Common Anode Cathode C-C C-A",
+      "description": [
+        "FEATURES",
+        "-0.39 inch digit height",
+        "-Continuous uniform segments.",
+        "-Low power requirement.",
+        "-Excellent characters appearance.",
+        "-High brightness & high contrast.",
+        "-Wide viewing angle.",
+        "-Solid state reliability.",
+        "-Categorized for luminous intensity.",
+        "-I.C. compatiable.",
+        "-Easy mounting on P.C. board or socke"
+      ],
+      "price": 500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_35_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_38_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "lm2596-buck-converter",
+      "name": "LM2596 Buck Converter",
+      "sku": "",
+      "wooId": "5463",
+      "categories": [
+        "power"
+      ],
+      "summary": "DC-DC Adjustable Buck Converter Voltage Regulator Conversion Power Supply Module LM2596",
+      "description": [],
+      "price": 2500,
+      "compareAt": 3000,
+      "inStock": true,
+      "stock": 4,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_184414_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "lm7805-voltage-regulator",
+      "name": "LM7805 Voltage Regulator",
+      "sku": "",
+      "wooId": "5553",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "",
+      "description": [],
+      "price": 500,
+      "compareAt": 600,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/08/Screenshot-2026-08-11-at-2.47.59-AM.png"
+      ]
+    },
+    {
+      "slug": "mg996r-180-degree-servo-motor",
+      "name": "MG996R 180 Degree Servo Motor",
+      "sku": "",
+      "wooId": "5481",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "Product Parameters: Gear type: Metal gears and Plastic gears Stall Torque: 12kg/cm (6V) Operation Voltage: 4.8-7.2V Temperature range: 0°C to 55°C Operating speed: 0.17sec/60 degrees (4.8V no load) Operating speed: 0.13sec/60 degrees (6.0V ",
+      "description": [],
+      "price": 7000,
+      "compareAt": 7500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_191822_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "mini-breadboard-170-tie-point",
+      "name": "Mini BreadBoard 170 Tie-point",
+      "sku": "",
+      "wooId": "5104",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "",
+      "description": [
+        "Mini Solderless Breadboard",
+        "Tie-point :170",
+        "Size: 35x47x8.5mm"
+      ],
+      "price": 2000,
+      "inStock": false,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1619.jpeg"
+      ]
+    },
+    {
+      "slug": "nema-17-stepper-motor",
+      "name": "Nema 17 Stepper Motor",
+      "sku": "",
+      "wooId": "5448",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "Nema17 Stepper Motor 17HS4023 42BGYH 4-lead 1.0A 13N.cm For CNC Laser Engraving machine 3D Printer",
+      "description": [],
+      "price": 13000,
+      "compareAt": 14000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/image_2026-08-24_015223623.png"
+      ]
+    },
+    {
+      "slug": "neo-6m-gps-module",
+      "name": "Neo 6M GPS Module",
+      "sku": "",
+      "wooId": "5135",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "Gps Module Arduino Neo 6m Flight Control Gps Module With Flight Control",
+      "description": [
+        "Description",
+        "GPS module NEO-6M,",
+        "universal power supply of 3V-5V",
+        "Model: GY-GPS6MV2",
+        "The module has a ceramic edge antenna with super strong signal",
+        "EEPROM saves configuration parameter data when power is turned off",
+        "With data backup battery",
+        "With LED signal indicator light",
+        "Antenna size 25*25mm",
+        "Module size 25mm*35mm",
+        "Installation hole diameter 3mm",
+        "Default baud rate: 9600",
+        "Compatible with various flight control modules"
+      ],
+      "price": 7000,
+      "compareAt": 7500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1600.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/S944354e1f42447fabd87a0fce690dab7i.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/S258bf7a434994a99bf2f2103e97de4b82.jpg"
+      ]
+    },
+    {
+      "slug": "nrf24l01-wireless-data-transmission-rf",
+      "name": "NRF24L01 Wireless Data  Transmission RF",
+      "sku": "",
+      "wooId": "5111",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "NRF24L01 2.4GHz 2Mbit/s Wireless Data Transmission RF Transceiver Module Board 1.9-3.6V For Arduino DIY",
+      "description": [
+        "NRF24LO1 is a single chip radio transceiver for the worldwide 2.4 - 2.5 GHz ISM band.",
+        "Compatible with Arduino and Raspberry Pi.",
+        "Applications:",
+        "wire less peripherals, remote control systems such as RC vehicles and consumer remote electronics, wire less voice transmission such as VolP, wire less sensor networks, wire less networks, home and commercial automation",
+        "Ultra small:",
+        "15x29mm (including:built-in 2.4GHz antenna), for easy implementation into designs without additional hardware"
+      ],
+      "price": 1800,
+      "compareAt": 2000,
+      "inStock": true,
+      "stock": 3,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1594.jpeg"
+      ]
+    },
+    {
+      "slug": "oled-screen-display-module",
+      "name": "OLED Screen Display Module",
+      "sku": "",
+      "wooId": "4611",
+      "categories": [
+        "display"
+      ],
+      "summary": "OLED Self-luminous, no backlight 0.96 inch",
+      "description": [
+        "SPECIFICATIONS:",
+        "-Resolution: 128 x 64",
+        "-View Angle: >160 Degree",
+        "-Support Voltage: 3.3v - 5v DC",
+        "-Power Consumption: 0.04W during normal operations, full screen lit 0.08W"
+      ],
+      "price": 4500,
+      "compareAt": 5000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_14_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_2_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "pcb-board",
+      "name": "PCB Board",
+      "sku": "",
+      "wooId": "5292",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "PCB Universal Board Single Side Yellow 5*7CM,7 X 9Cm, PCB Board Prototype Perforated Grid Board Kit, for DIY Soldering",
+      "description": [],
+      "price": 500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Size",
+          "value": "7x9cm, 7x5cm"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/08/2X3-Inches-General-Purpose-Zero-PCB-Printed-Circuit-Board.jpg"
+      ],
+      "variants": [
+        {
+          "label": "7x5cm",
+          "price": 500
+        },
+        {
+          "label": "7x9cm",
+          "price": 700
+        }
+      ]
+    },
+    {
+      "slug": "pcf8574-lcd-display-adapter-module",
+      "name": "PCF8574 LCD Display Adapter Module",
+      "sku": "",
+      "wooId": "5473",
+      "categories": [
+        "display"
+      ],
+      "summary": "PCF8574 LCD Display Adapter Module IIC 12C LCD1602 2004 IIC Serial Interface Board 5V",
+      "description": [],
+      "price": 2000,
+      "compareAt": 2500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_191019_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "potentiometer-rm065-adjustable-resistance",
+      "name": "Potentiometer RM065 Adjustable Resistance",
+      "sku": "65",
+      "wooId": "5437",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "RM065 Adjustable Resistance 10OR~1M Potentiometers 1K 5K 20K 50K 10OK 50OK 1M Variable Resistors",
+      "description": [],
+      "price": 100,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_180207_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "push-button-switch",
+      "name": "Push Button Switch",
+      "sku": "",
+      "wooId": "340",
+      "categories": [
+        "switches"
+      ],
+      "summary": "Push Button Switch 10x15mm SPST 2Pin 3A 250V KCD11 Snap-in on/Off Rocker Switch 10MM*15MM Black Red and White",
+      "description": [
+        "Push Button Switch 10x15mm SPST 2Pin 3A 250V KCD11 Snap-in on/Off",
+        "Rocker Switch 10MM*15MM",
+        "Black Red and White"
+      ],
+      "price": 500,
+      "compareAt": 700,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Black"
+        },
+        {
+          "label": "Size",
+          "value": "32, 34, 36, 38"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S4142e3e6f43043a39e6dcd915613b3bex.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S2e9c7c155f72468f81099d0e4940bc43I.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "rain-water-level-sensor",
+      "name": "Rain Water Level Sensor",
+      "sku": "",
+      "wooId": "5493",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "",
+      "description": [
+        "DC 3V-5V Rain Water Level Sensor Module Detection Liquid Surface Depth Height for Arduino"
+      ],
+      "price": 900,
+      "compareAt": 1000,
+      "inStock": true,
+      "stock": 5,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/06/Sa8b6b4b461cd4b2ba754438a7d7d19ee1.webp"
+      ]
+    },
+    {
+      "slug": "raindrops-detection-sensor",
+      "name": "Raindrops Detection Sensor",
+      "sku": "",
+      "wooId": "316",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "",
+      "description": [
+        "The sensor USES the high quality FR - 04 double material, large area of 5.5 * 4.OCM, treatment of nickel plating and surface, have fight oxidation, electrical conductivity, and life has more superior performance.",
+        "The output format: digital switch output (O and 1) and analog AO voltage output.The LM393, use of wide voltage comparator.",
+        "The working voltage of 3.3 V to 5 V.",
+        "Size: Like the picture show Usage: - Connected to 5v power supply power lights, no water droplets on induction plate."
+      ],
+      "price": 1700,
+      "compareAt": 1800,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Aqua, Blue, Green, Red"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/Sf805254a5b1848429402d1f2b806447fz.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_88_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S63a6625620d94d399bcf2f04813e7715u.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/Sf805254a5b1848429402d1f2b806447fz.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "raspberry-pi-camera-module",
+      "name": "Raspberry Pi Camera Module",
+      "sku": "",
+      "wooId": "5095",
+      "categories": [
+        "microcontrollers"
+      ],
+      "summary": "Raspberry Pi Camera Module, 5MP 1080p with OV5647 Sensor Video Camera Module for Raspberry Pi 2, Pi 3 3B+, Pi 4 , Pi Zero W",
+      "description": [
+        "Features:",
+        "• Compatible: camera module fit for Raspberry Pi Model A/B/B+, Pi 2B and Raspberry Pi 3B 3B+, Pi 4B, Pi Zero, Pi Zero W.",
+        "• Ribbon flex cable: 11.81in/30cm golden camera cable specially designed for Raspberry Pi zero/zero w; 5.90in/15cm and 19.68in/50cm white camera cable for Raspberry Pi Model A/B/B+, Pi 2B and Raspberry Pi 3B 3B+, Pi 4B.",
+        "• Specification: 5 Megapixels sensor with OV5647 webcam sensor in a fixed-focus lens; the high-definition video camera is capable of 2592 x 1944 pixel static images and supports video resolution 1080p@30fps, 720p@60fps and 640x480p 60/90 video recording.",
+        "• Endless creativity: 15-pin MIPI camera serial interface - plugs directly into for the Raspberry Pi board; The camera module size: 25mm×24mm×9mm and weight only 3g, making it perfect for mobile, you can be applied to image recognition and image tracking, etc.",
+        "Specifications",
+        "Module Weight: 3g",
+        "Max frame rate: 30fps",
+        "Focus Mode: fixed-focus",
+        "Angle of View: 65 degree",
+        "Working voltage: 1.7V~3.0V",
+        "Field of View: 2.0 x 1.33m at 2 m",
+        "Module Size: 25mm × 24mm × 9mm",
+        "Working temperature: -20 °C ~ 70 °C"
+      ],
+      "price": 11000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/image_2025-05-27_165918404.png",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/S449b2b15d2804ed68daf5ef8f8c02af0P.png_220x220.png_.avif"
+      ]
+    },
+    {
+      "slug": "raspberry-pi-zero-2w",
+      "name": "Raspberry Pi Zero 2W",
+      "sku": "",
+      "wooId": "4879",
+      "categories": [
+        "microcontrollers"
+      ],
+      "summary": "Raspberry Pi Zero 2W / Zero W / Zero WH WIFI Bluetooth Board with 1GHz CPU 512MB RAM Raspberry Pi Zero Version 1.3",
+      "description": [
+        "【Raspberry Pi Zero 2W Features】",
+        "Broadcom BCM2710A1, 1GHz quad-core 64-bit Arm Cortex-A53 CPU",
+        "512MB LPDDR2 SDRAM",
+        "2.4GHz 802.11 b/g/n wireless LAN",
+        "Bluetooth 4.2, Bluetooth Low Energy (BLE), onboard antenna",
+        "Mini HDMI port and micro USB On-The-Go (OTG) port",
+        "microSD card slot",
+        "CSI-2 camera connector",
+        "HAT-compatible 40-pin header footprint (unpopulated)",
+        "Micro USB power",
+        "Composite video and reset pins via solder test points",
+        "H.264, MPEG-4 decode (1080p30); H.264 encode (1080p30)",
+        "OpenGL ES 1.1, 2.0 graphics"
+      ],
+      "price": 46000,
+      "compareAt": 48000,
+      "inStock": true,
+      "stock": 1,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/33.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/22.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/11.avif"
+      ]
+    },
+    {
+      "slug": "rfid-blank-cards",
+      "name": "RFID Blank Cards",
+      "sku": "",
+      "wooId": "5005",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Rewritable 125KHz RFID T5577/5200/EM4305 Blank Card Smart Access Control Key Card",
+      "description": [
+        "1. High quality RFID cards proximity door control access.",
+        "2. Each card without ID number, can be programmed.",
+        "3. Suitable for 125KHz card reader and reading distance is 0-10cm.",
+        "4. Widely used at apartment, office, park and other places.",
+        "5. Read, Writable and Rewrite.",
+        "6. Can copy 125KHz key card, such as EM4100, 125KHz ID cards.",
+        "Specifications:",
+        "Chip: EM4305 / T5577 / 5200",
+        "Material: PVC",
+        "Operation Frequency: 125KHz",
+        "Read and rewrite key tags",
+        "Compatible with all Door Entry system",
+        "Reading distance: 0-10cm (Depending on the reader's design,environment and application)",
+        "Working temperature: -40 °C~ 65 °C"
+      ],
+      "price": 800,
+      "compareAt": 900,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/02/S251edd2bf62c4c46b9d6a56596724183P.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/02/S6652ccbd5cc549f699a8ee681236fb9dn.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/02/S81b0a0d1370d4e1c94601d1a4de308628.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "rfid-module-with-tag",
+      "name": "RFID Module with Tag",
+      "sku": "",
+      "wooId": "324",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "RFID Module RC522 Kits 13.56 Mhz 6cm With Tags SPI Write & Read for Arduino",
+      "description": [
+        "Current :13-26mA /",
+        "DC 3.3V",
+        "Idle Current :10-13mA",
+        "Sleep current: <8OuA",
+        "Peak current: <30mA",
+        "Specifications:",
+        "Operating Frequency: 13.56MHz Supported card Dimensions: 40mm x 60mm",
+        "Environmental Operating temperature: -20-80 degrees Celsius",
+        "Relative Humidity: 5% -95%",
+        "Module Interface SPI Parameters",
+        "Data Transfer Rate: Max. 10Mbit/s"
+      ],
+      "price": 2500,
+      "compareAt": 3000,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Blue"
+        },
+        {
+          "label": "Size",
+          "value": "32, 34, 36, 38"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_89_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_96_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_95_2024-12-19_12-23-55.jpg"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "rtc-real-time-clock-module-for-arduino",
+      "name": "RTC Real Time Clock Module for Arduino",
+      "sku": "",
+      "wooId": "5086",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "DS3231 AT24C32 IIC Precision RTC Real Time Clock",
+      "description": [
+        "Module parameters:",
+        "1 Size: 38mm (length) * 22mm (W) * 14mm (height)",
+        "2 Weight: 8g",
+        "3 Operating voltage :3.3 - 5 .5 V",
+        "4 clock chip: high-precision clock chip DS3231",
+        "5 Clock Accuracy :0-40 ° range, the accuracy 2ppm, the error was about 1 minute",
+        "6 calendar alarm clock with two",
+        "7 programmable square-wave output",
+        "8 Real time clock generator seconds, minutes, hours, day, date, month and year timing and provide valid until the year 2100 leap year compensation",
+        "9 chip temperature sensor comes with an accuracy of ± 3 °",
+        "10 memory chips: AT24C32 (storage capacity 32K)",
+        "11.IIC bus interface, the maximum transmission speed of 400KHz (working voltage of 5V)",
+        "12 can be cascaded with other IIC device, 24C32 addresses can be shorted A0/A1/A2 modify default address is 0x57",
+        "13 with rechargeable battery LIR2032, to ensure the system after power failure, the clock move any natural normal"
+      ],
+      "price": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1610.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/image_2025-05-27_164717939.png"
+      ]
+    },
+    {
+      "slug": "sim800l-gprs-module",
+      "name": "SIM800L GPRS Module",
+      "sku": "",
+      "wooId": "5133",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "SIM800L GPRS GSM Module Micro SIM Card Core BOard Quad-band TTL Serial Port for arduino",
+      "description": [],
+      "price": 7500,
+      "compareAt": 8000,
+      "inStock": true,
+      "stock": 1,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1599.jpeg"
+      ]
+    },
+    {
+      "slug": "sim800l-gsm-module",
+      "name": "SIM800L GSM Module",
+      "sku": "",
+      "wooId": "5080",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "SIM800L GPRS GSM Module Micro SIM Card Core Board Quad-band TTL Serial Port for arduino",
+      "description": [],
+      "price": 7500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1599.jpeg"
+      ]
+    },
+    {
+      "slug": "sim800l-v2-5v-module",
+      "name": "SIM800L v2 5V Module",
+      "sku": "",
+      "wooId": "5460",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "",
+      "description": [
+        "GENERAL FEATURES",
+        "Quad-band 850/900/1800/1900MHz",
+        "GPRS multi-slot class 12/10",
+        "GPRS mobile station class B",
+        "Compliant to GSM phase 2/2+",
+        "- Class 4 (2 W @ 850/900MHz)",
+        "- Class 1 (1 W @ 1800/1900MHz)",
+        "Bluetooth: Compliant with 3.0+EDR",
+        "FM: 76~109MHz worldwide bands with 50 KHz tuning step",
+        "Dimensions: 15.8*17.8*2.4mm",
+        "Weight: 1.35g",
+        "Control via AT commands (3GPP TS 27.007, 27.005 And SIMCOM enhanced AT Commands)",
+        "Supply voltage range 3.4~ 4.4V",
+        "Low power consumption"
+      ],
+      "price": 7000,
+      "compareAt": 8000,
+      "inStock": true,
+      "stock": 5,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_182924_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "smoke-gas-sensor-mq-2",
+      "name": "Smoke Gas Sensor MQ-2",
+      "sku": "",
+      "wooId": "247",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "MQ-2 MQ2 Smoke Gas LPG Butane Hydrogen Gas Sensor Detector Module For Arduino .",
+      "description": [
+        "SPECIFICATIONS",
+        "Input voltage : DC5V Power consumption ( current ): 150mA",
+        "DO output : TTL digital 0 and 1 ( 0.1 and 5V)",
+        "AO output :0.1-0 .3 V ( relative to pollution ) , the maximum concentration of a voltage of about 4V",
+        "Special note: After the sensor is powered , needs to warm up around 20S, measured data was stable , heat sensor is a normal phenomenon , because the internal heating wire , if hot is not normal .",
+        "VCC: positive power supply (5V)",
+        "GND: power supply is negative",
+        "DO: TTL switching signal output",
+        "AO: analog signal output"
+      ],
+      "price": 3000,
+      "compareAt": 3500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Blue, Gray"
+        },
+        {
+          "label": "Size",
+          "value": "30, 32, 34, 36"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_62_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S639bf68fdf4c4ee38189ef568ebe91f9q.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/Sa29733fa8e5b43f39f7118224baf05661.jpg_220x220q75.jpg_.avif"
+      ],
+      "featured": true
+    },
+    {
+      "slug": "soil-moisture-sensor",
+      "name": "Soil Moisture Sensor",
+      "sku": "",
+      "wooId": "4423",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Soil Moisture Hygrometer Detection Humidity Sensor Module For arduino",
+      "description": [
+        "Soil Moisture Hygrometer Detection Humidity",
+        "Operating Voltage 3.3V-5V",
+        "Module Dual Output mode",
+        "PCB board size: 3cm * 1.6cm",
+        "Power indicator (red) and the digital switch output indicator (green)",
+        "LM393 comparator chip, stable VCC external 3.3V-5V"
+      ],
+      "price": 1700,
+      "compareAt": 2000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_27_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/soil-moisture-sensor-based-on-the-lm393-chip.webp",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/images.jpg"
+      ]
+    },
+    {
+      "slug": "soldering-lead-0-8mm-50g",
+      "name": "Soldering Lead 0.8mm 50g",
+      "sku": "",
+      "wooId": "5570",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "",
+      "description": [],
+      "price": 2000,
+      "compareAt": 2500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/08/1d506f_17a5359f7cd44c7180c6dd0e6e9eadf4mv2.avif"
+      ]
+    },
+    {
+      "slug": "solenoid-lock-12v",
+      "name": "Solenoid Lock 12v",
+      "sku": "",
+      "wooId": "5503",
+      "categories": [
+        "actuators"
+      ],
+      "summary": "Electronic Lock Catch Door Gate 12V 0.4A Release Assembly Solenoid",
+      "description": [],
+      "price": 8000,
+      "compareAt": 9000,
+      "inStock": true,
+      "stock": 4,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/06/S000ba920370944189bd6b8f6f32a2879J.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "solenoid-valve-normally-closed",
+      "name": "Solenoid Valve Normally closed",
+      "sku": "",
+      "wooId": "4605",
+      "categories": [
+        "fluid-control"
+      ],
+      "summary": "Tiny Mini Solenoid Valve Normally Closed N/C Flow Control Water Valve 5V Water pump",
+      "description": [
+        "Specification:",
+        "1.Brand: TCS",
+        "2.Model: JSB1523018",
+        "3.Rated voltage: DC 5V",
+        "4.Suitable voltage: DC 5V-6V",
+        "5.Flow: 1.1LPM",
+        "6.Pressure: 80kPa",
+        "7.Weight: 18g"
+      ],
+      "price": 5500,
+      "compareAt": 5800,
+      "inStock": true,
+      "stock": 9,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/voltcraft5-1.png",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_13_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "sound-sensor-module",
+      "name": "Sound Sensor Module",
+      "sku": "",
+      "wooId": "5496",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Sound Sensor Module Sound Control Sensor MAX4466 MAX9814",
+      "description": [],
+      "price": 1800,
+      "compareAt": 2000,
+      "inStock": true,
+      "stock": 10,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/06/A9535f65095a149c7b3b8ce08e2a5a0a8d.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "thermister-sensor",
+      "name": "Thermister Sensor",
+      "sku": "",
+      "wooId": "4593",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Thermistor Waterproof Temperature Controller Sensor Probe W1209 STC-1000 W3001 Thermostat 0.5m/1m/2m/3m DS18B20 NTC 10K 1% 3950",
+      "description": [
+        "Product parameters:",
+        "Power supply voltage: 3.0V~5.5V",
+        "Working temperature: 125 C",
+        "Wide temperature range: -50C~+125"
+      ],
+      "price": 2100,
+      "compareAt": 2500,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_82_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/therm.avif"
+      ]
+    },
+    {
+      "slug": "thermoelectric-power-generator-sp1848",
+      "name": "Thermoelectric Power Generator SP1848",
+      "sku": "",
+      "wooId": "5075",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "SP1848-27145 Thermoelectric Power Generator Cooler Peltier 120Celsius 40x40mm High Temperature Generation Elemente Module",
+      "description": [
+        "Specification:",
+        "Origin: Mainland China",
+        "Type: Module",
+        "Condition: New",
+        "Operating Temperature: -40 degree to 120 degree",
+        "Model Number: Integrated Circuits",
+        "Lead Length: About 300mm",
+        "Power Generating Plate Dimensions: 40mm*40mm*4mm/0.2*0.2*0.2in",
+        "Operating Instructions:",
+        "Attach the side with markings to the heat dissipation surface (cold end), and attach the unmarked side to the heat absorption surface (hot end).",
+        "Red wire connects to the positive electrode, black wire connects to the negative electrode. Electricity generation occurs with a temperature difference.",
+        "Thermal Conductivity (K): 15~16x10-3-W/℃ cm.",
+        "Temperature Range(SP1848-27145): -40°C to 120°C",
+        "Temperature Difference (Approximate Values):"
+      ],
+      "price": 6000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1606.jpeg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1607.jpeg"
+      ]
+    },
+    {
+      "slug": "tip-122-darlington-transistor",
+      "name": "TIP 122 Darlington Transistor",
+      "sku": "",
+      "wooId": "5245",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "",
+      "description": [
+        "TIP122 is a Darlington-to-NPN transistor , consisting of a pair of Darlington transistors, which works similar to an ordinary NPN transistor. The TIP122 is known for its high current gain of 1000, which uses a very high current of 5 A at the collector"
+      ],
+      "price": 500,
+      "compareAt": 600,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/polyster-capacitors-500x500-1.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/20241112215844664.png",
+        "https://voltcraft.org.ng/wp-content/uploads/2025/07/TIP122-Darlington-NPN-Transistor.jpg"
+      ]
+    },
+    {
+      "slug": "toggle-switch-3pin",
+      "name": "Toggle Switch 3pin",
+      "sku": "",
+      "wooId": "349",
+      "categories": [
+        "switches"
+      ],
+      "summary": "Blue Mini MTS-102 3-Pin SPDT ON-ON 6A 125VAC Miniature Toggle Switches.",
+      "description": [
+        "SPECIFICATION:",
+        "SPDT 3A 250VAC/6A 125V",
+        "Type:MTS-102",
+        "Pin number:3-Pin",
+        "Position: 2 (On-On)",
+        "Mounting hole:1/4\"(6mm)",
+        "Size:33 x 13 mm"
+      ],
+      "price": 400,
+      "compareAt": 600,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Blue"
+        },
+        {
+          "label": "Size",
+          "value": "32, 34, 36, 38"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_56_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_67_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "touch-button-module",
+      "name": "Touch button Module",
+      "sku": "",
+      "wooId": "4596",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Touch button Module Capacitor type Single Channel Self Locking Touch switch sensor",
+      "description": [
+        "Specifications:",
+        "High-concerned Chemical: None",
+        "Package: TQFP",
+        "is customized: Yes",
+        "Dissipation Power: 1w",
+        "Supply Voltage: 3v-5v",
+        "Application: Computer",
+        "Condition: New"
+      ],
+      "price": 400,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_77_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/touch.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/voltcraft1-1.png"
+      ]
+    },
+    {
+      "slug": "touch-switch-sensor",
+      "name": "Touch Switch Sensor",
+      "sku": "",
+      "wooId": "4599",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Touch Sensor Module Touch Switch 1 Touch Switch Sensing",
+      "description": [
+        "Power supply: 2-5.5VDC, green LED, lights up when powered on correctly.",
+        "Touch area: Both the front and back can serve touch surfaces, replacing traditional light touch buttons.",
+        "Similar to the internal area of a fingerprint icon, it can be triggered by lightly touching with a finger.",
+        "Control interface: There are a total of 3 pins (GND, VCC, SIG), with GND as the ground, VCC as the power supply, and SIG as the digital signal output"
+      ],
+      "price": 1500,
+      "compareAt": 1800,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_47_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_54_2024-12-19_12-23-55.jpg",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_55_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "ultrasonic-sensor",
+      "name": "Ultrasonic Sensor",
+      "sku": "",
+      "wooId": "242",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "HC-SR04 Ultrasonic Sensor Distance Module for Arduino MEGA2560 Nano Robot.",
+      "description": [
+        "Specification:",
+        "Origin: Mainland China",
+        "Model Number: Ultrasonic Ranging Module",
+        "Theory: Ultrasonic Sensor",
+        "Wide Voltage Operation: 3v-5.5v, Fully Compatible With Hc-Sro4 Software And Hardware Size",
+        "Detection Distance:",
+        "5v:2cm-450cm/0.78-175.5in",
+        "3.3v:2cm-400cm/0.78-156in",
+        "Detection Angle: <15",
+        "Adopt Industrial Grade Mcu, Working Temperature: -20℃-80℃."
+      ],
+      "price": 1800,
+      "compareAt": 2000,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Color",
+          "value": "Blue"
+        },
+        {
+          "label": "Size",
+          "value": "30, 32, 34, 36"
+        }
+      ],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/voltcraft27.png",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/S03dda4ac4e274398b5fe1703407afbb5Q.jpg_220x220q75.jpg_.avif",
+        "https://voltcraft.org.ng/wp-content/uploads/2024/12/photo_79_2024-12-19_12-23-55.jpg"
+      ]
+    },
+    {
+      "slug": "voltage-detection-module",
+      "name": "Voltage Detection Module",
+      "sku": "",
+      "wooId": "5141",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Voltage Detection Module Voltage Sensor For Arduino",
+      "description": [
+        "Parameters:",
+        "Voltage input range: DC0-25V",
+        "Voltage detection range: DC0.02445V-25V",
+        "Voltage simulation resolution: 0.00489V",
+        "DC input interface: the positive terminal is connected to VCC and the negative terminal is connected to GND",
+        "Output interface: \"+\" connects to 5/3.3V, \"-\" connects to GND, and \"s\" connects to AD pins of Arduin"
+      ],
+      "price": 1500,
+      "compareAt": 2000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2025/05/IMG_1601.jpeg"
+      ]
+    },
+    {
+      "slug": "yx5300-uart-mp3-module",
+      "name": "YX5300 UART MP3 Module",
+      "sku": "",
+      "wooId": "5446",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "YX5300 UART Control Serial MP3 Music Player Module For Arduino AVR ARM PIC CF for Micro SD SDHC Card UART TTL Support MP3 WAV",
+      "description": [],
+      "price": 3800,
+      "compareAt": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_181135_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "zmct103c-5a-range-single-phase-ac-current-sensor",
+      "name": "ZMCT103C 5A Range Single Phase AC Current Sensor",
+      "sku": "",
+      "wooId": "5562",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "",
+      "description": [
+        "Precision Current Sensing with ZMCT103C The ZMCT103C module delivers accurate single-phase AC current measurement with a 5A range, ideal for energy monitoring and smart metering applications in industrial and home automation systems."
+      ],
+      "price": 3200,
+      "compareAt": 3700,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/08/Sc35bb1231ff14010bb198cec939eabb7q.jpg_220x220q75.jpg_.avif"
+      ]
+    },
+    {
+      "slug": "zmpt101b-ac-voltage-sensor-module",
+      "name": "ZMPT101B AC Voltage Sensor Module",
+      "sku": "",
+      "wooId": "5470",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "ZMPT101B AC Voltage Sensor Module - 0-250V Single Phase Voltage Detection for Arduino, STM32",
+      "description": [],
+      "price": 3500,
+      "compareAt": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [],
+      "tags": [],
+      "images": [
+        "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_190429_AliExpress.png"
+      ]
+    }
+  ]
+}

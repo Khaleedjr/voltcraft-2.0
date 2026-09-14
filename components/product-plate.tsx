@@ -75,12 +75,12 @@ const GLYPHS: Record<CategorySlug, React.ReactNode> = {
 
 export function ProductPlate({
   category,
-  sku,
+  label,
   className = "",
   ratio = "aspect-[4/3]",
 }: {
   category: CategorySlug;
-  sku: string;
+  label?: string;
   className?: string;
   ratio?: string;
 }) {
@@ -106,7 +106,9 @@ export function ProductPlate({
         {GLYPHS[category]}
       </svg>
 
-      <span className="vc-fig absolute bottom-3 left-4 text-faint">{sku}</span>
+      {label ? (
+        <span className="vc-fig absolute bottom-3 left-4 right-4 truncate text-faint">{label}</span>
+      ) : null}
     </div>
   );
 }

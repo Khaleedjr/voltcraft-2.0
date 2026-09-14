@@ -1,4 +1,4 @@
-import { getProduct } from "@/lib/catalogue";
+import { getProduct, maxOrderable } from "@/lib/catalogue";
 
 /**
  * The cart lives in a module-level store rather than React state so that
@@ -86,7 +86,7 @@ export function getServerSnapshot(): CartSnapshot {
 export function addLine(slug: string, qty = 1) {
   const product = getProduct(slug);
   if (!product) return;
-  const ceiling = Math.max(product.stock, 1);
+  const ceiling = Math.max(maxOrderable(product), 1);
   const existing = snapshot.lines.find((l) => l.slug === slug);
   const nextQty = Math.min((existing?.qty ?? 0) + qty, ceiling);
   commit(
@@ -103,7 +103,7 @@ export function setLineQty(slug: string, qty: number) {
     commit(snapshot.lines.filter((l) => l.slug !== slug));
     return;
   }
-  const capped = Math.min(qty, Math.max(product.stock, 1));
+  const capped = Math.min(qty, Math.max(maxOrderable(product), 1));
   commit(snapshot.lines.map((l) => (l.slug === slug ? { ...l, qty: capped } : l)));
 }
 

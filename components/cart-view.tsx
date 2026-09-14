@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useCart } from "@/components/cart-context";
-import { ProductPlate } from "@/components/product-plate";
+import { maxOrderable } from "@/lib/catalogue";
+import { ProductImage } from "@/components/product-image";
 import { ButtonLink, Fig } from "@/components/ui";
 import { formatNaira } from "@/lib/format";
 import { DELIVERY_FEE, priceOrder } from "@/lib/orders";
@@ -38,7 +39,7 @@ export function CartView() {
         {order.items.map(({ product, qty, lineTotal }) => (
           <li key={product.slug} className="grid grid-cols-[84px_1fr] gap-4 border-b border-line py-5 sm:grid-cols-[110px_1fr]">
             <Link href={`/product/${product.slug}`} aria-label={product.name}>
-              <ProductPlate category={product.category} sku={product.sku} ratio="aspect-square" />
+              <ProductImage product={product} ratio="aspect-square" sizes="110px" />
             </Link>
             <div className="flex min-w-0 flex-col gap-2">
               <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-1">
@@ -66,7 +67,7 @@ export function CartView() {
                   <button
                     type="button"
                     onClick={() => setQty(product.slug, qty + 1)}
-                    disabled={qty >= product.stock}
+                    disabled={qty >= maxOrderable(product)}
                     className="grid size-9 place-items-center text-muted hover:text-ink disabled:opacity-40"
                     aria-label={`Increase quantity of ${product.name}`}
                   >
@@ -80,7 +81,7 @@ export function CartView() {
                 >
                   Remove
                 </button>
-                {qty >= product.stock ? (
+                {product.stock != null && qty >= product.stock ? (
                   <span className="vc-fig text-warn">All {product.stock} in stock</span>
                 ) : null}
               </div>

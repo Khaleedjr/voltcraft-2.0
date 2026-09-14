@@ -23,14 +23,14 @@ export const KITS: Kit[] = [
     blurb:
       "Reads its surroundings, sleeps between readings and pushes over Wi-Fi. Runs for weeks on one cell, and every part is on the shelf today.",
     lines: [
-      { slug: "esp32-wroom-development-board", qty: 1, why: "Wi-Fi and deep sleep" },
-      { slug: "dht22-temperature-humidity-sensor", qty: 1, why: "Temperature and humidity" },
-      { slug: "soil-moisture-sensor", qty: 1, why: "What the node is actually watching" },
-      { slug: "oled-096-i2c-display", qty: 1, why: "On-device readout" },
-      { slug: "tp4056-charging-module", qty: 1, why: "USB-C charging" },
-      { slug: "lm2596-buck-converter", qty: 1, why: "Clean 3.3 V rail" },
-      { slug: "breadboard-830-point", qty: 1, why: "Build it before you solder it" },
-      { slug: "jumper-wires-male-female", qty: 1, why: "Wiring" },
+      { slug: "esp32-development-board-type-c-usb", qty: 1, why: "Wi-Fi and deep sleep" },
+      { slug: "dht22-am2303-temprature-sensor", qty: 1, why: "Temperature and humidity" },
+      { slug: "capacitive-soil-moisture-sensor", qty: 1, why: "Survives being left in soil" },
+      { slug: "oled-screen-display-module", qty: 1, why: "On-device readout" },
+      { slug: "18650-lithium-battery-3-7v", qty: 1, why: "The cell" },
+      { slug: "3-7v-lithium-battery-charger", qty: 1, why: "Charging" },
+      { slug: "breadboard-830-tie-points", qty: 1, why: "Build it before you solder it" },
+      { slug: "jumper-wires-pieces", qty: 20, why: "Wiring" },
     ],
   },
 ];

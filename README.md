@@ -97,21 +97,54 @@ Products have no photography yet, so listings render a drawing-sheet plate —
 registration ticks, the SKU, and a schematic glyph for the aisle. Replace
 `components/product-plate.tsx` with `next/image` once photos exist.
 
+## The catalogue
+
+`data/catalogue.json` is **generated** — do not hand-edit it. It comes from a
+WooCommerce export of the live store:
+
+```bash
+# WP Admin → Products → Export → CSV, then:
+node scripts/import-woocommerce.mjs ~/Downloads/wc-product-export.csv
+```
+
+The importer handles variable products (variations become `variants`), sale
+pricing, categories, attributes and HTML descriptions, and prints anything it
+had to skip so nothing disappears silently. Two products the store files only
+under "ALL ITEMS" are assigned an aisle by an override map at the top of the
+script — worth reviewing when the store's own categories change.
+
+`lib/catalogue.ts` types that JSON and exposes the accessors every page uses, so
+the data source can change again without touching a single component.
+
+## Product photography
+
+Images are the store's own, served from the existing WordPress media library at
+`voltcraft.org.ng/wp-content/uploads/`. `next.config.ts` allows that host under
+`images.remotePatterns`, so photos appear with no extra work.
+
+To stop depending on the old site — before switching WordPress off — pull them
+local:
+
+```bash
+node scripts/download-images.mjs
+```
+
+That writes `public/products/` and rewrites `data/catalogue.json` to point at
+the local copies. Once nothing remote is left, drop `images.remotePatterns`.
+
 ## What still needs real data
 
-Everything below is a placeholder written to be plausible, **not** VoltCraft's
-real information. Replace before launch.
+The catalogue, prices, product photography and stock flags are now the store's
+real data. These are still invented and need your figures:
 
-- **`lib/catalogue.ts`** — all 44 products, their specifications, stock counts
-  and naira prices are invented. Swap in the real stock list.
 - **`lib/site.ts`** — phone number, email, WhatsApp link, opening hours, social
-  links and the free-delivery threshold are placeholders.
+  links, and the ₦25,000 free-delivery threshold.
 - **`app/delivery/page.tsx`** — delivery zones and timings, the 7-day returns
-  window and the 30-day fault window are drafted to a sensible default. These
-  are commercial commitments; confirm every one.
+  window and the 30-day fault window. These are commercial commitments;
+  confirm every one.
 - **`app/about/page.tsx`** — contains no founding date, founder name or history,
-  because none was supplied. Add the real story.
-- **Product photography** — see above.
+  because none was supplied.
+- **Home page figures** — the 24–48h delivery claim and the 2pm dispatch cutoff.
 - **Order persistence** — `app/api/checkout/route.ts` logs the priced order and
   does not store it. Write it to a database there, and add a Paystack webhook
   handler, before taking real money.
