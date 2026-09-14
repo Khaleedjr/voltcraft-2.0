@@ -126,12 +126,12 @@ export function CartView() {
         <p className="mt-5 text-[0.82rem] leading-relaxed text-muted">
           Buying ten or more of anything?{" "}
           <a
-            href={SITE.quoteUrl}
+            href={SITE.whatsapp}
             target="_blank"
             rel="noreferrer"
             className="border-b border-muted hover:border-live hover:text-live"
           >
-            Ask for a bulk price
+            Message us on WhatsApp
           </a>{" "}
           before you pay.
         </p>

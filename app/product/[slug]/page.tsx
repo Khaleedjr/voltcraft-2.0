@@ -130,8 +130,8 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
               <li className="flex gap-2.5">
                 <span className="text-live" aria-hidden>→</span>
                 Buying ten or more?{" "}
-                <a href={SITE.quoteUrl} target="_blank" rel="noreferrer" className="border-b border-muted hover:border-live hover:text-live">
-                  Ask for a bulk price
+                <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="border-b border-muted hover:border-live hover:text-live">
+                  Message us on WhatsApp
                 </a>
                 .
               </li>

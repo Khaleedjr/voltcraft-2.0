@@ -31,8 +31,8 @@ export default function ContactPage() {
               {[
                 { t: "Email", v: SITE.email, href: `mailto:${SITE.email}` },
                 { t: "Phone", v: SITE.phone, href: SITE.phoneHref },
-                { t: "WhatsApp", v: "Message the counter", href: SITE.whatsapp },
-                { t: "Bulk quotes", v: "quote.voltcraft.org.ng", href: SITE.quoteUrl },
+                { t: "WhatsApp", v: SITE.phone, href: SITE.whatsapp },
+                { t: "3D printing", v: "quote.voltcraft.org.ng", href: SITE.printingUrl },
               ].map((row) => (
                 <div key={row.t} className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line py-3.5">
                   <dt className="vc-fig text-muted">{row.t}</dt>

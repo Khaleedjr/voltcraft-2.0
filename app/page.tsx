@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { ProductImage } from "@/components/product-image";
-import { ButtonLink, Container, Fig, Section } from "@/components/ui";
+import { ButtonLink, Container, Section } from "@/components/ui";
 import {
   categoryThumbnail,
   countByCategory,
@@ -41,8 +41,7 @@ export default function HomePage() {
       <Container>
         <div className="grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-20">
           <div>
-            <Fig>{SITE.city} · {total} lines in stock</Fig>
-            <h1 className="mt-4 font-display text-[clamp(2.2rem,5.4vw,3.6rem)] leading-[1.04] tracking-[-0.028em]">
+            <h1 className="font-display text-[clamp(2.2rem,5.4vw,3.6rem)] leading-[1.04] tracking-[-0.028em]">
               Parts on the shelf.
             </h1>
             <p className="mt-5 max-w-[46ch] text-[1.02rem] leading-[1.65] text-muted">
@@ -86,8 +85,8 @@ export default function HomePage() {
               Free delivery over {formatNaira(SITE.freeDeliveryThreshold)}
             </li>
             <li className="sm:text-right">
-              <a href={SITE.quoteUrl} target="_blank" rel="noreferrer" className="hover:text-live">
-                Bulk quotes →
+              <a href={SITE.printingUrl} target="_blank" rel="noreferrer" className="hover:text-live">
+                3D printing service →
               </a>
             </li>
           </ul>
@@ -173,12 +172,12 @@ export default function HomePage() {
             </div>
             <div className="flex flex-wrap gap-4">
               <a
-                href={SITE.quoteUrl}
+                href={SITE.whatsapp}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center bg-live px-6 py-3.5 text-[0.9rem] font-semibold text-live-ink transition-colors hover:bg-live-hover"
               >
-                Request a quote
+                Message us on WhatsApp
               </a>
               <ButtonLink href="/contact" variant="outline">
                 Contact us

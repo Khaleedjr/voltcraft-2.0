@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { SOCIAL_ICONS } from "@/components/social-icons";
 import { Container } from "@/components/ui";
 import { getCategories } from "@/lib/catalogue";
 import { SITE } from "@/lib/site";
@@ -23,19 +24,25 @@ export function SiteFooter() {
             <p className="mt-4 max-w-[34ch] text-[0.88rem] leading-relaxed text-muted">
               {SITE.description}
             </p>
-            <div className="mt-5 flex gap-4">
-              {SITE.socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[0.85rem] text-muted hover:text-live"
-                >
-                  {s.label}
-                </a>
-              ))}
-            </div>
+            <ul className="mt-5 flex gap-3">
+              {SITE.socials.map((social) => {
+                const Icon = SOCIAL_ICONS[social.icon];
+                return (
+                  <li key={social.label}>
+                    <a
+                      href={social.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={`${social.label} — ${social.handle}`}
+                      title={`${social.label} — ${social.handle}`}
+                      className="grid size-10 place-items-center border border-line text-muted transition-colors hover:border-ink hover:text-live"
+                    >
+                      <Icon className="size-[1.15rem]" />
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
 
           <nav aria-labelledby="footer-shop">
@@ -64,8 +71,8 @@ export function SiteFooter() {
             </h2>
             <ul className="grid gap-2.5 text-[0.88rem] text-muted">
               <li>
-                <a href={SITE.quoteUrl} target="_blank" rel="noreferrer" className="hover:text-live">
-                  Bulk quotes
+                <a href={SITE.printingUrl} target="_blank" rel="noreferrer" className="hover:text-live">
+                  3D printing
                 </a>
               </li>
               <li>

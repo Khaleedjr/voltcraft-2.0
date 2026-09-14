@@ -53,7 +53,7 @@ export function SiteHeader() {
             />
           </Link>
 
-          <nav className="hidden lg:block">
+          <nav className="hidden items-center gap-7 lg:flex">
             <Link
               href="/shop"
               aria-current={onShop ? "page" : undefined}
@@ -65,6 +65,14 @@ export function SiteHeader() {
             >
               Shop
             </Link>
+            <a
+              href={SITE.printingUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="border-b-2 border-transparent pb-0.5 text-[0.92rem] font-medium text-muted transition-colors hover:border-line hover:text-ink"
+            >
+              3D printing
+            </a>
           </nav>
 
           <form
@@ -97,14 +105,6 @@ export function SiteHeader() {
           </form>
 
           <div className="ml-auto flex items-center gap-2 md:ml-0 md:gap-3">
-            <a
-              href={SITE.quoteUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="hidden border border-line px-3.5 py-2 text-[0.85rem] font-medium text-muted transition-colors hover:border-ink hover:text-ink lg:inline-block"
-            >
-              Bulk quote
-            </a>
             <Link
               href="/cart"
               className="relative grid size-9 place-items-center border border-line text-muted transition-colors hover:border-ink hover:text-ink"
@@ -170,12 +170,20 @@ export function SiteHeader() {
               </Link>
             ))}
             <a
-              href={SITE.quoteUrl}
+              href={SITE.printingUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="border-b border-line py-3 text-[0.95rem] text-muted"
+            >
+              3D printing
+            </a>
+            <a
+              href={SITE.whatsapp}
               target="_blank"
               rel="noreferrer"
               className="py-3 text-[0.95rem] font-medium text-live"
             >
-              Request a bulk quote →
+              Message us on WhatsApp →
             </a>
           </nav>
         </div>
