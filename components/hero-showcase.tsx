@@ -22,7 +22,7 @@ export function HeroShowcase({ products }: { products: Product[] }) {
       {/* feature card */}
       <Link
         href={`/product/${feature.slug}`}
-        className="vc-lift group block overflow-hidden rounded-xl border border-line bg-raised shadow-[0_24px_60px_-30px_rgba(14,34,51,0.45)]"
+        className="vc-lift group block overflow-hidden rounded-xl border border-line bg-raised shadow-[0_24px_60px_-30px_rgba(var(--vc-shadow),0.45)]"
       >
         <div className="relative">
           <ProductImage product={feature} ratio="aspect-[4/3]" sizes="(max-width:1024px) 90vw, 440px" priority pad="p-6" />

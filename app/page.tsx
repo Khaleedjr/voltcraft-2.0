@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { HeroShowcase } from "@/components/hero-showcase";
+import { Intro } from "@/components/intro";
 import { ProductImage } from "@/components/product-image";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink, Container, Section } from "@/components/ui";
@@ -39,16 +40,14 @@ export default function HomePage() {
 
   return (
     <>
+      <Intro />
+
       {/* ------------------------------------------------------------ hero */}
       <div className="relative overflow-hidden">
         {/* a soft blueprint wash behind the hero, fading down into the page */}
         <div
           aria-hidden
-          className="pointer-events-none absolute inset-0 -z-10 opacity-70"
-          style={{
-            background:
-              "radial-gradient(60% 80% at 82% 12%, rgba(214,51,42,0.06), transparent 60%), radial-gradient(50% 60% at 8% 0%, rgba(14,34,51,0.05), transparent 55%)",
-          }}
+          className="vc-wash-hero pointer-events-none absolute inset-0 -z-10 opacity-70"
         />
         <Container>
           <div className="grid items-center gap-10 py-14 sm:py-18 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-24">
@@ -183,11 +182,7 @@ export default function HomePage() {
             <div className="relative overflow-hidden rounded-lg border border-line bg-block p-6 text-block-ink sm:p-9">
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 opacity-60"
-                style={{
-                  background:
-                    "radial-gradient(60% 120% at 88% 10%, rgba(214,51,42,0.22), transparent 55%)",
-                }}
+                className="vc-wash-block pointer-events-none absolute inset-0 opacity-60"
               />
               <div className="relative flex flex-wrap items-center justify-between gap-6">
                 <div>

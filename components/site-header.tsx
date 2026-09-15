@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart-context";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { Container } from "@/components/ui";
 import { SITE } from "@/lib/site";
 
@@ -49,7 +50,7 @@ export function SiteHeader() {
               width={1200}
               height={724}
               priority
-              className="h-10 w-auto sm:h-11"
+              className="vc-logo h-10 w-auto sm:h-11"
             />
           </Link>
 
@@ -105,6 +106,7 @@ export function SiteHeader() {
               </a>
             </nav>
 
+            <ThemeToggle />
             <Link
               href="/cart"
               className="relative grid size-9 place-items-center border border-line text-muted transition-colors hover:border-ink hover:text-ink"

@@ -3,10 +3,21 @@
 /* ------------------------------------------------------------------
    VoltCraft — "Blueprint" design system
    A drawing-sheet grid, prussian ink, and the red of a live conductor.
-   Light only, by design: the palette is a paper ground, not a screen.
+
+   Two themes, one identity: light is a paper drawing sheet, dark is the
+   same drawing in prussian blue under a lamp. Every colour goes through a
+   token here, so the whole site swaps by flipping one attribute.
+
+   The theme lives on <html data-theme="light|dark">, resolved before first
+   paint by the inline script in app/layout.tsx — which reads the visitor's
+   stored choice, or falls back to their OS setting. Because that script
+   always writes a concrete value, the CSS below only needs the light
+   default plus one dark override; there is no prefers-color-scheme block
+   to keep in sync.
    ------------------------------------------------------------------ */
 
 :root {
+  color-scheme: light;
   /* surfaces */
   --vc-ground: #e9edef;
   --vc-sheet: #f7f8f9;
@@ -19,6 +30,8 @@
   --vc-line: #c7d0d6;
   --vc-hairline: rgba(14, 34, 51, 0.06);
   --vc-shadow: 14, 34, 51;  /* rgb parts, for translucent lift shadows */
+  --vc-sheen: rgba(255, 255, 255, 0.5);         /* inner highlight on a frame */
+  --vc-sheen-lit: rgba(255, 255, 255, 0.6);     /* ...the same, on hover */
   /* accents — live conductor red, earth green */
   --vc-live: #d6332a;
   --vc-live-hover: #b92920;
@@ -30,6 +43,71 @@
   --vc-block-ink: #e6edf2;
   --vc-block-muted: #9fb3c2;
   --vc-block-line: rgba(255, 255, 255, 0.15);
+  /* atmospheric washes — the tinted glows behind the hero and CTA panel */
+  --vc-wash-live: rgba(214, 51, 42, 0.06);
+  --vc-wash-ink: rgba(14, 34, 51, 0.05);
+  --vc-glow-live: rgba(214, 51, 42, 0.22);
+  /* the intro's ground — always dark, so the arc has something to glow against */
+  --vc-intro-a: #14252f;
+  --vc-intro-b: #060f17;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --vc-ground: #0a141d;
+  --vc-sheet: #0f1c27;
+  --vc-raised: #16242f;
+  --vc-ink: #e4edf4;
+  --vc-muted: #a3b8c7;
+  --vc-faint: #7b919f;
+  --vc-line: #273a4a;
+  --vc-hairline: rgba(150, 200, 235, 0.07);
+  --vc-shadow: 0, 0, 0;
+  --vc-sheen: rgba(255, 255, 255, 0.045);
+  --vc-sheen-lit: rgba(255, 255, 255, 0.085);
+  /* The red has to work twice over on a dark ground: bright enough to read as
+     accent text, which then puts near-black on the button rather than white —
+     both directions clear 5:1, where a white-on-red button could not. */
+  --vc-live: #ff5347;
+  --vc-live-hover: #ff6f64;
+  --vc-live-ink: #1b0603;
+  --vc-earth: #46c58c;
+  --vc-warn: #e2a94a;
+  --vc-block: #1d3040;
+  --vc-block-ink: #e9f1f7;
+  --vc-block-muted: #a3b8c7;
+  --vc-block-line: rgba(255, 255, 255, 0.13);
+  --vc-wash-live: rgba(255, 83, 71, 0.1);
+  --vc-wash-ink: rgba(90, 160, 220, 0.06);
+  --vc-glow-live: rgba(255, 83, 71, 0.2);
+  --vc-intro-a: #12222e;
+  --vc-intro-b: #040b11;
+}
+
+/* The brush wordmark is black artwork on transparent, so on a dark ground it
+   has to be flipped to read at all. */
+:root[data-theme="dark"] .vc-logo {
+  filter: invert(1);
+}
+
+/* Show a control only under one theme. Driven off the attribute rather than
+   React state so the markup is right before any JavaScript runs. */
+:root[data-theme="dark"] .vc-when-light,
+:root:not([data-theme="dark"]) .vc-when-dark {
+  display: none;
+}
+
+/* Toggling the theme mid-session: ease the colours across instead of
+   snapping. The class is added for a beat by the toggle, then removed. */
+:root.vc-theming,
+:root.vc-theming *,
+:root.vc-theming *::before,
+:root.vc-theming *::after {
+  transition:
+    background-color 0.28s ease,
+    border-color 0.28s ease,
+    color 0.28s ease,
+    fill 0.28s ease !important;
 }
 
 @theme inline {
@@ -60,9 +138,6 @@
 }
 
 @layer base {
-  html {
-    color-scheme: light;
-  }
   body {
     background-color: var(--vc-ground);
     color: var(--vc-ink);
@@ -146,7 +221,7 @@
     border-radius: 6px;
     background:
       radial-gradient(120% 120% at 30% 15%, var(--vc-raised) 0%, var(--vc-sheet) 78%);
-    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    box-shadow: inset 0 0 0 1px var(--vc-sheen);
     transition:
       border-color 0.25s ease,
       box-shadow 0.3s ease,
@@ -158,7 +233,7 @@
   .group:hover .vc-frame {
     border-color: color-mix(in srgb, var(--vc-ink) 28%, var(--vc-line));
     box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+      inset 0 0 0 1px var(--vc-sheen-lit),
       0 12px 30px -14px rgba(var(--vc-shadow), 0.35);
   }
   .group:hover .vc-frame-img {
@@ -186,6 +261,201 @@
   .group:hover .vc-arrow {
     transform: translateX(4px);
   }
+
+  /* --- atmospheric washes ------------------------------------------------
+     Tinted glows that sit behind the hero and the dark CTA panel. Tokenised
+     rather than inlined so they re-tune with the theme. */
+  .vc-wash-hero {
+    background:
+      radial-gradient(60% 80% at 82% 12%, var(--vc-wash-live), transparent 60%),
+      radial-gradient(50% 60% at 8% 0%, var(--vc-wash-ink), transparent 55%);
+  }
+  .vc-wash-block {
+    background: radial-gradient(60% 120% at 88% 10%, var(--vc-glow-live), transparent 55%);
+  }
+}
+
+/* ------------------------------------------------------------------------
+   The electric intro
+   A one-per-session title card on the home page: an arc of current draws
+   across the screen, the wordmark ignites off it like a contact closing,
+   and the whole thing pulls away to reveal the page.
+
+   It is pure CSS with animation-fill-mode: forwards, so it clears itself
+   even if JavaScript never runs. components/intro.tsx only adds the
+   niceties — skip on interaction, and show it once per session.
+   ------------------------------------------------------------------------ */
+
+@keyframes vc-intro-veil {
+  0%, 64% { opacity: 1; transform: none; visibility: visible; }
+  100% { opacity: 0; transform: scale(1.05); visibility: hidden; }
+}
+@keyframes vc-intro-bail {
+  to { opacity: 0; transform: scale(1.03); visibility: hidden; }
+}
+@keyframes vc-intro-grid {
+  0% { opacity: 0; transform: scale(1.08); }
+  30% { opacity: 1; }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes vc-intro-halo {
+  0%, 22% { opacity: 0; }
+  46% { opacity: 1; }
+  100% { opacity: 0.55; }
+}
+@keyframes vc-bolt-draw {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes vc-bolt-spend {
+  to { opacity: 0.14; }
+}
+/* the wordmark striking on: blown out, stuttering, then holding steady */
+@keyframes vc-mark-strike {
+  0% { opacity: 0; transform: scale(0.985); filter: invert(1) brightness(2.4); }
+  30% { opacity: 0.9; }
+  40% { opacity: 0.12; }
+  52% { opacity: 1; }
+  62% { opacity: 0.45; }
+  100% { opacity: 1; transform: none; filter: invert(1) brightness(1); }
+}
+@keyframes vc-intro-flash {
+  0% { opacity: 0; }
+  18% { opacity: 0.38; }
+  100% { opacity: 0; }
+}
+/* a shockwave, not a circle: out fast and gone well before it reaches the edge */
+@keyframes vc-intro-ring {
+  0% { opacity: 0.85; transform: scale(0.2); }
+  45% { opacity: 0.22; }
+  100% { opacity: 0; transform: scale(11); }
+}
+@keyframes vc-intro-tag {
+  0% { opacity: 0; transform: translateY(6px); letter-spacing: 0.5em; }
+  100% { opacity: 0.75; transform: none; letter-spacing: 0.22em; }
+}
+
+@layer components {
+  .vc-intro {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: grid;
+    place-items: center;
+    place-content: center;
+    overflow: hidden;
+    background: radial-gradient(120% 95% at 50% 45%, var(--vc-intro-a), var(--vc-intro-b) 72%);
+    animation: vc-intro-veil 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+  /* the drawing grid, drifting in */
+  .vc-intro::before {
+    content: "";
+    position: absolute;
+    inset: -8%;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(140, 195, 240, 0.09) 0 1px, transparent 1px 72px),
+      repeating-linear-gradient(90deg, rgba(140, 195, 240, 0.09) 0 1px, transparent 1px 72px);
+    animation: vc-intro-grid 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  /* the charge building behind the mark */
+  .vc-intro::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(42% 54% at 50% 48%, rgba(255, 83, 71, 0.22), transparent 70%);
+    opacity: 0;
+    animation: vc-intro-halo 1.1s ease-out forwards;
+  }
+
+  .vc-intro-core {
+    position: relative;
+    z-index: 1;
+    width: min(74vw, 460px);
+  }
+  .vc-intro-arc {
+    position: absolute;
+    left: -10%;
+    top: 46%;
+    width: 120%;
+    translate: 0 -50%;
+    overflow: visible;
+    /* The glow has to hang off the <svg> itself. A filter set on a path inside
+       is measured in user units, so the viewBox scale would multiply the blur
+       radius by several hundred and smear it into nothing. */
+    filter:
+      drop-shadow(0 0 5px var(--vc-live))
+      drop-shadow(0 0 14px var(--vc-live))
+      drop-shadow(0 0 30px rgba(255, 83, 71, 0.55));
+  }
+  .vc-bolt {
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation:
+      vc-bolt-draw 0.5s cubic-bezier(0.5, 0, 0.2, 1) 0.06s forwards,
+      vc-bolt-spend 0.45s ease 0.62s forwards;
+  }
+  .vc-bolt-glow {
+    stroke: var(--vc-live);
+    stroke-width: 0.018;
+    opacity: 0.9;
+  }
+  .vc-bolt-core {
+    stroke: #fff;
+    stroke-width: 0.005;
+  }
+  .vc-intro-mark {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    opacity: 0;
+    animation: vc-mark-strike 0.62s cubic-bezier(0.22, 1, 0.36, 1) 0.34s forwards;
+  }
+  .vc-intro-ring {
+    position: absolute;
+    left: 50%;
+    top: 46%;
+    width: 56px;
+    height: 56px;
+    margin: -28px 0 0 -28px;
+    border: 1px solid var(--vc-live);
+    border-radius: 999px;
+    opacity: 0;
+    filter: blur(0.5px);
+    animation: vc-intro-ring 0.7s cubic-bezier(0.15, 0.8, 0.3, 1) 0.48s forwards;
+  }
+  .vc-intro-tag {
+    position: relative;
+    z-index: 1;
+    margin-top: 1.35rem;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    animation: vc-intro-tag 0.5s ease-out 0.8s forwards;
+  }
+  /* The discharge. Deliberately a burst centred on the mark rather than a flat
+     white frame — a full-viewport strobe is both uglier and a photosensitivity
+     hazard. */
+  .vc-intro-flash {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(38% 46% at 50% 47%, #fff, rgba(255, 255, 255, 0.28) 45%, transparent 72%);
+    opacity: 0;
+    animation: vc-intro-flash 0.34s ease-out 0.46s forwards;
+  }
+
+  /* skipped by hand — bail out quickly rather than cutting */
+  :root[data-intro="skipping"] .vc-intro {
+    animation: vc-intro-bail 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+  }
+  /* already played this session, or finished */
+  :root[data-intro="done"] .vc-intro {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -203,5 +473,10 @@
   .vc-lift:hover,
   .group:hover .vc-frame-img {
     transform: none !important;
+  }
+  /* The intro is motion and nothing else — there is no reduced version of it
+     worth showing, so it never appears. */
+  .vc-intro {
+    display: none !important;
   }
 }

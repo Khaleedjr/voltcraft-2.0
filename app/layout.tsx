@@ -45,12 +45,25 @@ export const metadata: Metadata = {
   icons: { icon: "/brand/voltcraft-icon.png", apple: "/brand/voltcraft-icon.png" },
 };
 
+/**
+ * Resolve the theme while the browser is still parsing <head>, so the first
+ * paint is already in the right palette — a stored choice wins, otherwise the
+ * visitor's OS setting decides. Writing a concrete value here is what lets
+ * globals.css get away with a single [data-theme="dark"] override.
+ */
+const THEME_SCRIPT = `(function(){try{var s=localStorage.getItem("vc-theme");var t=s==="light"||s==="dark"?s:(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      data-theme="light"
+      suppressHydrationWarning
       className={`${plexSans.variable} ${archivo.variable} ${plexMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="vc-grid-ground flex min-h-full flex-col bg-ground text-ink">
         <a
           href="#main"
