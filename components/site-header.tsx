@@ -43,15 +43,21 @@ export function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-line bg-ground/92 backdrop-blur-sm">
       <Container>
         <div className="flex items-center gap-3 py-3.5 sm:gap-5">
-          <Link href="/" className="shrink-0" aria-label={`${SITE.name} home`}>
+          <Link
+            href="/"
+            className="relative block shrink-0"
+            aria-label={`${SITE.name} home`}
+          >
             <Image
               src="/brand/voltcraft-wordmark.png"
               alt={SITE.name}
               width={1200}
               height={724}
               priority
-              className="vc-logo h-10 w-auto sm:h-11"
+              className="vc-logo block h-10 w-auto sm:h-11"
             />
+            {/* the charge the title card hands off — see .vc-mark-spark */}
+            <span className="vc-mark-spark" aria-hidden />
           </Link>
 
           <form

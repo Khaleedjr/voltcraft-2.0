@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { SITE } from "@/lib/site";
 
 /** Matches the vc-intro-veil animation in globals.css. */
-const RUN_MS = 1600;
+const RUN_MS = 2400;
 const BAIL_MS = 250;
 const KEY = "vc-intro";
 

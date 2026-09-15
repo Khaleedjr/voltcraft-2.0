@@ -287,7 +287,7 @@
    ------------------------------------------------------------------------ */
 
 @keyframes vc-intro-veil {
-  0%, 64% { opacity: 1; transform: none; visibility: visible; }
+  0%, 72% { opacity: 1; transform: none; visibility: visible; }
   100% { opacity: 0; transform: scale(1.05); visibility: hidden; }
 }
 @keyframes vc-intro-bail {
@@ -344,7 +344,7 @@
     place-content: center;
     overflow: hidden;
     background: radial-gradient(120% 95% at 50% 45%, var(--vc-intro-a), var(--vc-intro-b) 72%);
-    animation: vc-intro-veil 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    animation: vc-intro-veil 2.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
   }
   /* the drawing grid, drifting in */
   .vc-intro::before {
@@ -354,7 +354,7 @@
     background-image:
       repeating-linear-gradient(0deg, rgba(140, 195, 240, 0.09) 0 1px, transparent 1px 72px),
       repeating-linear-gradient(90deg, rgba(140, 195, 240, 0.09) 0 1px, transparent 1px 72px);
-    animation: vc-intro-grid 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: vc-intro-grid 1.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
   /* the charge building behind the mark */
   .vc-intro::after {
@@ -363,7 +363,7 @@
     inset: 0;
     background: radial-gradient(42% 54% at 50% 48%, rgba(255, 83, 71, 0.22), transparent 70%);
     opacity: 0;
-    animation: vc-intro-halo 1.1s ease-out forwards;
+    animation: vc-intro-halo 1.6s ease-out forwards;
   }
 
   .vc-intro-core {
@@ -393,8 +393,8 @@
     stroke-dasharray: 1;
     stroke-dashoffset: 1;
     animation:
-      vc-bolt-draw 0.5s cubic-bezier(0.5, 0, 0.2, 1) 0.06s forwards,
-      vc-bolt-spend 0.45s ease 0.62s forwards;
+      vc-bolt-draw 0.72s cubic-bezier(0.5, 0, 0.2, 1) 0.1s forwards,
+      vc-bolt-spend 0.6s ease 0.92s forwards;
   }
   .vc-bolt-glow {
     stroke: var(--vc-live);
@@ -412,7 +412,7 @@
     width: 100%;
     height: auto;
     opacity: 0;
-    animation: vc-mark-strike 0.62s cubic-bezier(0.22, 1, 0.36, 1) 0.34s forwards;
+    animation: vc-mark-strike 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
   }
   .vc-intro-ring {
     position: absolute;
@@ -425,7 +425,7 @@
     border-radius: 999px;
     opacity: 0;
     filter: blur(0.5px);
-    animation: vc-intro-ring 0.7s cubic-bezier(0.15, 0.8, 0.3, 1) 0.48s forwards;
+    animation: vc-intro-ring 0.95s cubic-bezier(0.15, 0.8, 0.3, 1) 0.75s forwards;
   }
   .vc-intro-tag {
     position: relative;
@@ -434,7 +434,7 @@
     text-align: center;
     color: #fff;
     opacity: 0;
-    animation: vc-intro-tag 0.5s ease-out 0.8s forwards;
+    animation: vc-intro-tag 0.55s ease-out 1.05s forwards;
   }
   /* The discharge. Deliberately a burst centred on the mark rather than a flat
      white frame — a full-viewport strobe is both uglier and a photosensitivity
@@ -445,7 +445,7 @@
     z-index: 2;
     background: radial-gradient(38% 46% at 50% 47%, #fff, rgba(255, 255, 255, 0.28) 45%, transparent 72%);
     opacity: 0;
-    animation: vc-intro-flash 0.34s ease-out 0.46s forwards;
+    animation: vc-intro-flash 0.45s ease-out 0.72s forwards;
   }
 
   /* skipped by hand — bail out quickly rather than cutting */
@@ -455,6 +455,57 @@
   /* already played this session, or finished */
   :root[data-intro="done"] .vc-intro {
     display: none;
+  }
+}
+
+/* ------------------------------------------------------------------------
+   The header wordmark picks the current up
+   When the title card hands off, the same charge runs through the logo in
+   the header — masked by the wordmark's own alpha, so only the ink lights
+   up rather than a rectangle over it. On a repeat visit, where the intro is
+   skipped, data-intro is already "done" at parse time and this fires on its
+   own, so the logo still greets you.
+   ------------------------------------------------------------------------ */
+
+@keyframes vc-mark-sweep {
+  0% { opacity: 0; transform: translateX(-120%) skewX(-12deg); }
+  18% { opacity: 1; }
+  82% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(300%) skewX(-12deg); }
+}
+
+@layer components {
+  .vc-mark-spark {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    -webkit-mask: url("/brand/voltcraft-wordmark.png") no-repeat center / 100% 100%;
+    mask: url("/brand/voltcraft-wordmark.png") no-repeat center / 100% 100%;
+  }
+  .vc-mark-spark::before {
+    content: "";
+    position: absolute;
+    top: -25%;
+    bottom: -25%;
+    left: 0;
+    width: 48%;
+    opacity: 0;
+    transform: translateX(-120%) skewX(-12deg);
+    /* Red leads and trails a narrow white-hot core: on the light theme's black
+       ink a wide white band would read as the logo dissolving rather than as a
+       charge passing through it. */
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--vc-live) 32%,
+      rgba(255, 255, 255, 0.92) 50%,
+      var(--vc-live) 66%,
+      transparent 100%
+    );
+  }
+  :root[data-intro] .vc-mark-spark::before {
+    animation: vc-mark-sweep 0.95s cubic-bezier(0.45, 0, 0.35, 1) 0.1s both;
   }
 }
 
