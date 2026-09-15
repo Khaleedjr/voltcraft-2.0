@@ -52,11 +52,7 @@ export default function HomePage() {
         <Container>
           <div className="grid items-center gap-10 py-14 sm:py-18 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-24">
             <div>
-              <span className="inline-flex items-center gap-2 rounded-full border border-line bg-raised/70 px-3 py-1 text-[0.72rem] font-medium text-muted backdrop-blur">
-                <span className="size-1.5 animate-pulse rounded-full bg-earth" aria-hidden />
-                {total} products in stock · {SITE.city.split(",")[0]}
-              </span>
-              <h1 className="mt-5 font-display text-[clamp(2.4rem,5.8vw,4rem)] leading-[1.02] tracking-[-0.03em]">
+              <h1 className="font-display text-[clamp(2.4rem,5.8vw,4rem)] leading-[1.02] tracking-[-0.03em]">
                 Parts on the shelf.
               </h1>
               <p className="mt-5 max-w-[46ch] text-[1.05rem] leading-[1.65] text-muted">

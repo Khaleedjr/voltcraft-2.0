@@ -41,7 +41,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-ground/92 backdrop-blur-sm">
       <Container>
-        <div className="flex items-center gap-3 py-3.5 sm:gap-6">
+        <div className="flex items-center gap-3 py-3.5 sm:gap-5">
           <Link href="/" className="shrink-0" aria-label={`${SITE.name} home`}>
             <Image
               src="/brand/voltcraft-wordmark.png"
@@ -53,32 +53,10 @@ export function SiteHeader() {
             />
           </Link>
 
-          <nav className="hidden items-center gap-7 lg:flex">
-            <Link
-              href="/shop"
-              aria-current={onShop ? "page" : undefined}
-              className={`border-b-2 pb-0.5 text-[0.92rem] font-medium transition-colors ${
-                onShop
-                  ? "border-ink text-ink"
-                  : "border-transparent text-muted hover:border-line hover:text-ink"
-              }`}
-            >
-              Shop
-            </Link>
-            <a
-              href={SITE.printingUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="border-b-2 border-transparent pb-0.5 text-[0.92rem] font-medium text-muted transition-colors hover:border-line hover:text-ink"
-            >
-              3D printing
-            </a>
-          </nav>
-
           <form
             onSubmit={submitSearch}
             role="search"
-            className="ml-auto hidden min-w-0 flex-1 items-center border border-line bg-raised focus-within:border-ink md:flex md:max-w-[340px]"
+            className="hidden min-w-0 items-center border border-line bg-raised focus-within:border-ink md:flex md:w-[220px] lg:w-[260px]"
           >
             <label htmlFor="site-search" className="sr-only">
               Search the catalogue
@@ -89,22 +67,44 @@ export function SiteHeader() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search the catalogue"
-              className="min-w-0 flex-1 bg-transparent px-3.5 py-2 text-[0.88rem] text-ink outline-none placeholder:text-faint"
+              placeholder="Search"
+              className="min-w-0 flex-1 bg-transparent px-3 py-1.5 text-[0.85rem] text-ink outline-none placeholder:text-faint"
             />
             <button
               type="submit"
-              className="grid size-9 shrink-0 place-items-center text-muted hover:text-live"
+              className="grid size-8 shrink-0 place-items-center text-muted hover:text-live"
               aria-label="Search"
             >
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                 <circle cx="11" cy="11" r="7" />
                 <path d="m20 20-3.5-3.5" />
               </svg>
             </button>
           </form>
 
-          <div className="ml-auto flex items-center gap-2 md:ml-0 md:gap-3">
+          <div className="ml-auto flex items-center gap-2 sm:gap-5">
+            <nav className="hidden items-center gap-6 lg:flex">
+              <Link
+                href="/shop"
+                aria-current={onShop ? "page" : undefined}
+                className={`border-b-2 pb-0.5 text-[0.92rem] font-medium transition-colors ${
+                  onShop
+                    ? "border-ink text-ink"
+                    : "border-transparent text-muted hover:border-line hover:text-ink"
+                }`}
+              >
+                Shop
+              </Link>
+              <a
+                href={SITE.printingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="border-b-2 border-transparent pb-0.5 text-[0.92rem] font-medium text-muted transition-colors hover:border-line hover:text-ink"
+              >
+                3D printing
+              </a>
+            </nav>
+
             <Link
               href="/cart"
               className="relative grid size-9 place-items-center border border-line text-muted transition-colors hover:border-ink hover:text-ink"
