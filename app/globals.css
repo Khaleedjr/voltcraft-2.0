@@ -18,6 +18,7 @@
   /* structure */
   --vc-line: #c7d0d6;
   --vc-hairline: rgba(14, 34, 51, 0.06);
+  --vc-shadow: 14, 34, 51;  /* rgb parts, for translucent lift shadows */
   /* accents — live conductor red, earth green */
   --vc-live: #d6332a;
   --vc-live-hover: #b92920;
@@ -40,6 +41,7 @@
   --color-faint: var(--vc-faint);
   --color-line: var(--vc-line);
   --color-hairline: var(--vc-hairline);
+  --color-shadow: var(--vc-shadow);
   --color-live: var(--vc-live);
   --color-live-hover: var(--vc-live-hover);
   --color-live-ink: var(--vc-live-ink);
@@ -114,6 +116,76 @@
     flex: 1;
     background: var(--vc-line);
   }
+
+  /* --- scroll reveal -----------------------------------------------------
+     Default state is fully visible, so server render, no-JS, and the first
+     paint of anything above the fold all read correctly. The reveal component
+     only adds .reveal-init (which hides) to elements that start below the
+     viewport, then swaps to .reveal-in when they scroll into view. */
+  .reveal-init {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  .reveal-in {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  /* --- media frame -------------------------------------------------------
+     The box a product photograph sits in. A soft two-stop ground and an inset
+     hairline give it depth the flat border never had; the photo eases up on
+     hover. .vc-frame is the container, .vc-frame-img the <img> inside it. */
+  .vc-frame {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--vc-line);
+    border-radius: 6px;
+    background:
+      radial-gradient(120% 120% at 30% 15%, var(--vc-raised) 0%, var(--vc-sheet) 78%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .vc-frame-img {
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .vc-frame {
+    border-color: color-mix(in srgb, var(--vc-ink) 28%, var(--vc-line));
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.6),
+      0 12px 30px -14px rgba(var(--vc-shadow), 0.35);
+  }
+  .group:hover .vc-frame-img {
+    transform: scale(1.06);
+  }
+
+  /* card lift — a product card rises slightly and casts a soft shadow */
+  .vc-lift {
+    transition:
+      border-color 0.25s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .vc-lift:hover {
+    transform: translateY(-3px);
+    border-color: color-mix(in srgb, var(--vc-ink) 30%, var(--vc-line));
+    box-shadow: 0 18px 40px -22px rgba(var(--vc-shadow), 0.4);
+  }
+
+  /* an arrow that nudges on hover of its group */
+  .vc-arrow {
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .group:hover .vc-arrow {
+    transform: translateX(4px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -122,5 +194,14 @@
   *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
+  }
+  .reveal-init {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .vc-frame-img,
+  .vc-lift:hover,
+  .group:hover .vc-frame-img {
+    transform: none !important;
   }
 }

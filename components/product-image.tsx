@@ -6,12 +6,15 @@ import { ProductPlate } from "@/components/product-plate";
 import { primaryCategory, type Product } from "@/lib/catalogue";
 
 /**
- * Product photography, with a drawing-sheet plate as the fallback.
+ * Product photography in a soft blueprint frame, with a drawing-sheet plate as
+ * the fallback.
  *
  * The fallback is not decoration: the media library has refused requests from
  * other origins before, and a listing with a white void in it looks broken in a
- * way a labelled plate does not. Any image that fails to load — missing file,
- * hotlink protection, a format the browser will not decode — degrades quietly.
+ * way a labelled plate does not. Any image that fails to load degrades quietly.
+ *
+ * When the image sits inside an element with the `group` class, it eases up on
+ * hover (see .vc-frame in globals.css).
  */
 export function ProductImage({
   product,
@@ -19,12 +22,14 @@ export function ProductImage({
   sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px",
   priority = false,
   index = 0,
+  pad = "p-4",
 }: {
   product: Product;
   ratio?: string;
   sizes?: string;
   priority?: boolean;
   index?: number;
+  pad?: string;
 }) {
   const [failed, setFailed] = useState(false);
   const src = product.images[index];
@@ -34,7 +39,7 @@ export function ProductImage({
   }
 
   return (
-    <div className={`relative ${ratio} w-full max-w-full overflow-hidden border border-line bg-raised`}>
+    <div className={`vc-frame ${ratio} w-full max-w-full`}>
       <Image
         src={src}
         alt={product.name}
@@ -43,7 +48,7 @@ export function ProductImage({
         priority={priority}
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
-        className="object-contain p-3"
+        className={`vc-frame-img object-contain ${pad}`}
       />
     </div>
   );

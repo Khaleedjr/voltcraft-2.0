@@ -86,7 +86,7 @@ export function ProductPlate({
 }) {
   return (
     <div
-      className={`relative ${ratio} w-full max-w-full overflow-hidden border border-line bg-sheet ${className}`}
+      className={`vc-frame ${ratio} w-full max-w-full ${className}`}
     >
       {/* registration ticks, as on a drawing sheet */}
       <span className="pointer-events-none absolute left-2 top-2 size-3 border-l border-t border-line" aria-hidden />
@@ -96,7 +96,7 @@ export function ProductPlate({
 
       <svg
         viewBox="0 0 96 96"
-        className="absolute inset-0 m-auto size-[52%] text-line"
+        className="vc-frame-img absolute inset-0 m-auto size-[50%] text-faint/70"
         fill="none"
         stroke="currentColor"
         strokeWidth="1.6"

@@ -11,12 +11,12 @@ export function ProductCard({ product }: { product: Product }) {
   const off = discountPercent(product);
 
   return (
-    <article className="flex flex-col gap-3 border border-line bg-raised p-4 transition-colors hover:border-ink">
+    <article className="vc-lift flex flex-col gap-3 border border-line bg-raised p-4">
       <Link href={`/product/${product.slug}`} className="group flex flex-col gap-3">
         <div className="relative">
           <ProductImage product={product} />
           {off ? (
-            <span className="absolute left-0 top-0 bg-live px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-wider text-live-ink">
+            <span className="absolute left-2 top-2 z-10 rounded-sm bg-live px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-wider text-live-ink shadow-sm">
               −{off}%
             </span>
           ) : null}

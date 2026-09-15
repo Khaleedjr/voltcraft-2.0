@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { ProductImage } from "@/components/product-image";
+import { Reveal } from "@/components/reveal";
 import { ButtonLink, Container, Section } from "@/components/ui";
 import {
   categoryThumbnail,
@@ -38,55 +39,82 @@ export default function HomePage() {
   return (
     <>
       {/* ------------------------------------------------------------ hero */}
-      <Container>
-        <div className="grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-20">
-          <div>
-            <h1 className="font-display text-[clamp(2.2rem,5.4vw,3.6rem)] leading-[1.04] tracking-[-0.028em]">
-              Parts on the shelf.
-            </h1>
-            <p className="mt-5 max-w-[46ch] text-[1.02rem] leading-[1.65] text-muted">
-              Sensors, boards, displays and the small parts that finish a build — shipped nationwide
-              in 24 to 48 hours.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-4">
-              <ButtonLink href="/shop">Shop all {total} products</ButtonLink>
-              <ButtonLink href="/shop/sensors" variant="underline">
-                Sensors →
-              </ButtonLink>
+      <div className="relative overflow-hidden">
+        {/* a soft blueprint wash behind the hero, fading down into the page */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 -z-10 opacity-70"
+          style={{
+            background:
+              "radial-gradient(60% 80% at 82% 12%, rgba(214,51,42,0.06), transparent 60%), radial-gradient(50% 60% at 8% 0%, rgba(14,34,51,0.05), transparent 55%)",
+          }}
+        />
+        <Container>
+          <div className="grid items-center gap-10 py-14 sm:py-18 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-24">
+            <div>
+              <span className="inline-flex items-center gap-2 rounded-full border border-line bg-raised/70 px-3 py-1 text-[0.72rem] font-medium text-muted backdrop-blur">
+                <span className="size-1.5 animate-pulse rounded-full bg-earth" aria-hidden />
+                {total} products in stock · {SITE.city.split(",")[0]}
+              </span>
+              <h1 className="mt-5 font-display text-[clamp(2.4rem,5.8vw,4rem)] leading-[1.02] tracking-[-0.03em]">
+                Parts on the shelf.
+              </h1>
+              <p className="mt-5 max-w-[46ch] text-[1.05rem] leading-[1.65] text-muted">
+                Sensors, boards, displays and the small parts that finish a build — shipped
+                nationwide in 24 to 48 hours.
+              </p>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <ButtonLink href="/shop" className="group">
+                  Shop all {total} products
+                  <span className="vc-arrow ml-1" aria-hidden>→</span>
+                </ButtonLink>
+                <ButtonLink href="/shop/sensors" variant="underline" className="group">
+                  Sensors <span className="vc-arrow" aria-hidden>→</span>
+                </ButtonLink>
+              </div>
             </div>
-          </div>
 
-          <ul className="grid grid-cols-2 gap-3">
-            {hero.map((p, i) => (
-              <li key={p.slug}>
-                <Link href={`/product/${p.slug}`} className="group block">
-                  <ProductImage
-                    product={p}
-                    ratio="aspect-square"
-                    sizes="(max-width: 1024px) 45vw, 240px"
-                    priority={i < 2}
-                  />
-                  <p className="mt-2 truncate text-[0.8rem] text-muted group-hover:text-live">
-                    {p.name}
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </Container>
+            <ul className="grid grid-cols-2 gap-3 sm:gap-4">
+              {hero.map((p, i) => (
+                <li key={p.slug}>
+                  <Reveal delay={i * 90}>
+                    <Link href={`/product/${p.slug}`} className="group block">
+                      <ProductImage
+                        product={p}
+                        ratio="aspect-square"
+                        sizes="(max-width: 1024px) 45vw, 240px"
+                        priority={i < 2}
+                      />
+                      <p className="mt-2 truncate text-[0.8rem] text-muted transition-colors group-hover:text-live">
+                        {p.name}
+                      </p>
+                    </Link>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </Container>
+      </div>
 
       {/* ------------------------------------------------------ value strip */}
       <div className="border-y border-line bg-sheet">
         <Container>
           <ul className="vc-fig grid gap-y-3 py-4 text-muted sm:grid-cols-3">
-            <li>Same-day dispatch before 2pm</li>
-            <li className="sm:text-center">
-              Free delivery over {formatNaira(SITE.freeDeliveryThreshold)}
+            <li className="flex items-center gap-2">
+              <Bolt /> Same-day dispatch before 2pm
+            </li>
+            <li className="flex items-center gap-2 sm:justify-center">
+              <Truck /> Free delivery over {formatNaira(SITE.freeDeliveryThreshold)}
             </li>
             <li className="sm:text-right">
-              <a href={SITE.printingUrl} target="_blank" rel="noreferrer" className="hover:text-live">
-                3D printing service →
+              <a
+                href={SITE.printingUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="group inline-flex items-center gap-2 hover:text-live sm:justify-end"
+              >
+                <Cube /> 3D printing service <span className="vc-arrow" aria-hidden>→</span>
               </a>
             </li>
           </ul>
@@ -100,36 +128,38 @@ export default function HomePage() {
             <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.022em] sm:text-[2.05rem]">
               Shop by aisle
             </h2>
-            <Link href="/shop" className="border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
-              All products →
+            <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
+              All products <span className="vc-arrow" aria-hidden>→</span>
             </Link>
           </div>
           <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((c) => {
+            {categories.map((c, i) => {
               const thumb = categoryThumbnail(c.slug);
               return (
                 <li key={c.slug}>
-                  <Link
-                    href={`/shop/${c.slug}`}
-                    className="group flex items-center gap-4 border border-line bg-raised p-3 transition-colors hover:border-ink"
-                  >
-                    <div className="w-16 shrink-0">
-                      {thumb ? (
-                        <ProductImage product={thumb} ratio="aspect-square" sizes="64px" />
-                      ) : null}
-                    </div>
-                    <div className="min-w-0">
-                      <span className="block font-display text-[1.05rem] tracking-[-0.015em] group-hover:text-live">
-                        {c.name}
+                  <Reveal delay={(i % 3) * 70}>
+                    <Link
+                      href={`/shop/${c.slug}`}
+                      className="vc-lift group flex items-center gap-4 border border-line bg-raised p-3"
+                    >
+                      <div className="w-16 shrink-0">
+                        {thumb ? (
+                          <ProductImage product={thumb} ratio="aspect-square" sizes="64px" pad="p-2" />
+                        ) : null}
+                      </div>
+                      <div className="min-w-0">
+                        <span className="block font-display text-[1.05rem] tracking-[-0.015em] transition-colors group-hover:text-live">
+                          {c.name}
+                        </span>
+                        <span className="vc-fig mt-1 block text-faint">
+                          {countByCategory(c.slug)} products
+                        </span>
+                      </div>
+                      <span className="vc-arrow ml-auto pr-1 text-muted group-hover:text-live" aria-hidden>
+                        →
                       </span>
-                      <span className="vc-fig mt-1 block text-faint">
-                        {countByCategory(c.slug)} products
-                      </span>
-                    </div>
-                    <span className="ml-auto pr-1 text-muted group-hover:text-live" aria-hidden>
-                      →
-                    </span>
-                  </Link>
+                    </Link>
+                  </Reveal>
                 </li>
               );
             })}
@@ -142,16 +172,23 @@ export default function HomePage() {
         <Container>
           <Section>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.022em] sm:text-[2.05rem]">
-                On offer
-              </h2>
-              <Link href="/shop" className="border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
-                See everything →
+              <div className="flex items-baseline gap-3">
+                <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.022em] sm:text-[2.05rem]">
+                  On offer
+                </h2>
+                <span className="rounded-full bg-live/10 px-2.5 py-1 text-[0.7rem] font-semibold text-live">
+                  Up to 33% off
+                </span>
+              </div>
+              <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
+                See everything <span className="vc-arrow" aria-hidden>→</span>
               </Link>
             </div>
             <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-              {onSale.map((p) => (
-                <ProductCard key={p.slug} product={p} />
+              {onSale.map((p, i) => (
+                <Reveal key={p.slug} delay={(i % 4) * 60}>
+                  <ProductCard product={p} />
+                </Reveal>
               ))}
             </div>
           </Section>
@@ -161,31 +198,70 @@ export default function HomePage() {
       {/* -------------------------------------------------------------- cta */}
       <Container>
         <Section>
-          <div className="flex flex-wrap items-center justify-between gap-6 border border-line bg-sheet p-6 sm:p-8">
-            <div>
-              <h2 className="font-display text-[1.4rem] leading-tight tracking-[-0.02em] sm:text-[1.7rem]">
-                Buying in quantity?
-              </h2>
-              <p className="mt-2 text-[0.92rem] text-muted">
-                Send the parts list and we&apos;ll price it.
-              </p>
+          <Reveal>
+            <div className="relative overflow-hidden rounded-lg border border-line bg-block p-6 text-block-ink sm:p-9">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 opacity-60"
+                style={{
+                  background:
+                    "radial-gradient(60% 120% at 88% 10%, rgba(214,51,42,0.22), transparent 55%)",
+                }}
+              />
+              <div className="relative flex flex-wrap items-center justify-between gap-6">
+                <div>
+                  <h2 className="font-display text-[1.5rem] leading-tight tracking-[-0.02em] sm:text-[1.9rem]">
+                    Buying in quantity?
+                  </h2>
+                  <p className="mt-2 max-w-[44ch] text-[0.95rem] text-block-muted">
+                    Send the parts list and we&apos;ll price it — usually the same day.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href={SITE.whatsapp}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center rounded-sm bg-live px-6 py-3.5 text-[0.9rem] font-semibold text-live-ink transition-colors hover:bg-live-hover"
+                  >
+                    Message us on WhatsApp
+                  </a>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center rounded-sm border border-block-line px-6 py-3.5 text-[0.9rem] font-semibold text-block-ink transition-colors hover:border-block-ink"
+                  >
+                    Contact us
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div className="flex flex-wrap gap-4">
-              <a
-                href={SITE.whatsapp}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center justify-center bg-live px-6 py-3.5 text-[0.9rem] font-semibold text-live-ink transition-colors hover:bg-live-hover"
-              >
-                Message us on WhatsApp
-              </a>
-              <ButtonLink href="/contact" variant="outline">
-                Contact us
-              </ButtonLink>
-            </div>
-          </div>
+          </Reveal>
         </Section>
       </Container>
     </>
+  );
+}
+
+/* --- small inline glyphs for the value strip ----------------------------- */
+function Bolt() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-live" aria-hidden>
+      <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
+    </svg>
+  );
+}
+function Truck() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-live" aria-hidden>
+      <path d="M3 6h11v9H3zM14 9h4l3 3v3h-7z" />
+      <circle cx="7" cy="18" r="1.6" /><circle cx="17" cy="18" r="1.6" />
+    </svg>
+  );
+}
+function Cube() {
+  return (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-live" aria-hidden>
+      <path d="M12 2 21 7v10l-9 5-9-5V7z" /><path d="M12 12 21 7M12 12v10M12 12 3 7" />
+    </svg>
   );
 }
