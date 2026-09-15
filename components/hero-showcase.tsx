@@ -1,69 +1,85 @@
 import Link from "next/link";
 import { ProductImage } from "@/components/product-image";
-import { discountPercent, type Product } from "@/lib/catalogue";
+import { discountPercent, primaryCategory, getCategory, type Product } from "@/lib/catalogue";
 import { formatNaira } from "@/lib/format";
 
 /**
- * The hero's product display: three cards fanned into a shallow stack, the
- * middle one brought forward as the feature. Each is a real, clickable product
- * card — image, name and price contained in the card rather than floating as a
- * bare box. On phones the stack collapses to a single feature card, so the
- * rotations never clip or crowd.
+ * The hero's product display: one clean feature card with a fully-visible row
+ * of thumbnails beneath it. No overlap, nothing hidden — every product reads
+ * clearly. Each is a real, clickable product card.
  */
 export function HeroShowcase({ products }: { products: Product[] }) {
-  const stack = products.slice(0, 3);
-  if (stack.length === 0) return null;
+  const items = products.slice(0, 4);
+  if (items.length === 0) return null;
 
-  const feature = stack[Math.min(1, stack.length - 1)];
-  const behind = stack.filter((p) => p !== feature);
+  const [feature, ...rest] = items;
+  const thumbs = rest.slice(0, 3);
+  const category = getCategory(primaryCategory(feature));
+  const off = discountPercent(feature);
 
   return (
-    <div className="relative mx-auto w-full max-w-[380px] sm:max-w-[440px]">
-      {/* the two cards peeking out behind, on wider screens only */}
-      {behind.map((p, i) => (
-        <Link
-          key={p.slug}
-          href={`/product/${p.slug}`}
-          aria-label={p.name}
-          className="group absolute inset-x-0 top-4 hidden sm:block"
-          style={{
-            transform: i === 0 ? "rotate(-7deg) translateX(-16%)" : "rotate(7deg) translateX(16%)",
-            zIndex: 10,
-          }}
-        >
-          <HeroCard product={p} compact />
-        </Link>
-      ))}
-
-      {/* the feature card, front and centre */}
-      <Link href={`/product/${feature.slug}`} className="group relative z-20 block">
-        <HeroCard product={feature} />
-      </Link>
-    </div>
-  );
-}
-
-function HeroCard({ product, compact = false }: { product: Product; compact?: boolean }) {
-  const off = discountPercent(product);
-  return (
-    <div className="vc-lift rounded-xl border border-line bg-raised p-3 shadow-[0_20px_50px_-24px_rgba(14,34,51,0.45)]">
-      <div className="relative">
-        <ProductImage product={product} ratio="aspect-square" sizes="(max-width:1024px) 70vw, 360px" priority />
-        {off ? (
-          <span className="absolute left-2 top-2 z-10 rounded-sm bg-live px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-wider text-live-ink shadow-sm">
-            −{off}%
-          </span>
-        ) : null}
-      </div>
-      {!compact ? (
-        <div className="mt-3 flex items-center justify-between gap-3 px-1 pb-0.5">
-          <span className="truncate text-[0.9rem] font-semibold leading-snug transition-colors group-hover:text-live">
-            {product.name}
-          </span>
-          <span className="shrink-0 font-display text-[1.05rem] tracking-[-0.015em] tabular-nums">
-            {formatNaira(product.price)}
-          </span>
+    <div className="mx-auto flex w-full max-w-[440px] flex-col gap-4">
+      {/* feature card */}
+      <Link
+        href={`/product/${feature.slug}`}
+        className="vc-lift group block overflow-hidden rounded-xl border border-line bg-raised shadow-[0_24px_60px_-30px_rgba(14,34,51,0.45)]"
+      >
+        <div className="relative">
+          <ProductImage product={feature} ratio="aspect-[4/3]" sizes="(max-width:1024px) 90vw, 440px" priority pad="p-6" />
+          {off ? (
+            <span className="absolute left-3 top-3 z-10 rounded-sm bg-live px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-wider text-live-ink shadow-sm">
+              −{off}%
+            </span>
+          ) : null}
         </div>
+        <div className="flex items-center justify-between gap-3 border-t border-line px-4 py-3.5">
+          <div className="min-w-0">
+            {category ? <span className="vc-fig block text-faint">{category.name}</span> : null}
+            <span className="mt-0.5 block truncate text-[0.95rem] font-semibold leading-snug transition-colors group-hover:text-live">
+              {feature.name}
+            </span>
+          </div>
+          <div className="shrink-0 text-right">
+            <span className="block font-display text-[1.15rem] tracking-[-0.015em] tabular-nums">
+              {formatNaira(feature.price)}
+            </span>
+            {feature.compareAt ? (
+              <span className="block text-[0.72rem] text-faint line-through tabular-nums">
+                {formatNaira(feature.compareAt)}
+              </span>
+            ) : null}
+          </div>
+        </div>
+      </Link>
+
+      {/* thumbnail row */}
+      {thumbs.length ? (
+        <ul className="grid grid-cols-3 gap-3">
+          {thumbs.map((p) => {
+            const thumbOff = discountPercent(p);
+            return (
+              <li key={p.slug}>
+                <Link
+                  href={`/product/${p.slug}`}
+                  aria-label={p.name}
+                  className="vc-lift group block rounded-lg border border-line bg-raised p-2"
+                >
+                  <div className="relative">
+                    <ProductImage product={p} ratio="aspect-square" sizes="150px" pad="p-2" />
+                    {thumbOff ? (
+                      <span className="absolute left-1.5 top-1.5 z-10 rounded-sm bg-live px-1.5 py-0.5 font-mono text-[0.55rem] font-semibold text-live-ink">
+                        −{thumbOff}%
+                      </span>
+                    ) : null}
+                  </div>
+                  <span className="mt-1.5 block px-0.5 font-display text-[0.85rem] tabular-nums">
+                    {formatNaira(p.price)}
+                  </span>
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
       ) : null}
     </div>
   );
