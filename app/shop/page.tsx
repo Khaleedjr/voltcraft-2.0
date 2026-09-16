@@ -25,20 +25,22 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
     <Container>
       <div className="py-10 sm:py-14">
         <Fig>{query ? "Search results" : "Catalogue"}</Fig>
-        <h1 className="mt-3 max-w-[20ch] font-display text-[2rem] leading-[1.08] tracking-[-0.025em] sm:text-[2.6rem]">
-          {query ? (
-            <>
+        {query ? (
+          <>
+            <h1 className="mt-3 max-w-[20ch] font-display text-[2rem] leading-[1.08] tracking-[-0.025em] sm:text-[2.6rem]">
               Results for <em className="text-live">{query}</em>
-            </>
-          ) : (
-            "Everything on the shelf"
-          )}
-        </h1>
-        <p className="mt-4 max-w-[54ch] text-[0.98rem] leading-relaxed text-muted">
-          {query
-            ? `${products.length} ${products.length === 1 ? "product matches" : "products match"} your search. Every price is in naira and every count is real stock in Kaduna.`
-            : "Priced in naira, counted in Kaduna, dispatched the same working day when you order before 2pm."}
-        </p>
+            </h1>
+            <p className="mt-4 max-w-[54ch] text-[0.98rem] leading-relaxed text-muted">
+              {products.length} {products.length === 1 ? "product matches" : "products match"} your
+              search.
+            </p>
+          </>
+        ) : (
+          // Browsing needs no title or blurb — the aisle rail and the count
+          // below say what this is. The heading stays for screen readers and
+          // search engines, which would otherwise find the page headless.
+          <h1 className="sr-only">Everything on the shelf</h1>
+        )}
 
         <div className="mt-8">
           <CategoryRail />

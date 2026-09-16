@@ -68,34 +68,45 @@
   --vc-glow-live: rgba(255, 189, 89, 0.3);
 }
 
+/* The dark theme is not the light one with the lights off. Light is the paper
+   drawing sheet — cool, prussian, a workshop by daylight. Dark is warm
+   graphite, which is what the gold actually wants behind it: brass on
+   blackened steel rather than brass on navy. Every surface, line and grid
+   hairline carries that warmth, so the gold reads as part of the room.
+
+   Surfaces are also spaced further apart here than in light: raised sits at
+   roughly 2.4x the ground's luminance, so a card is an object rather than an
+   outline. */
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --vc-ground: #0a141d;
-  --vc-sheet: #0f1c27;
-  --vc-raised: #16242f;
-  --vc-ink: #e4edf4;
-  --vc-muted: #a3b8c7;
-  --vc-faint: #7b919f;
-  --vc-line: #33495e;
-  --vc-line-soft: #1e3040;
-  --vc-hairline: rgba(150, 200, 235, 0.07);
+  --vc-ground: #15120e;
+  --vc-sheet: #1c1813;
+  --vc-raised: #242019;
+  --vc-ink: #f0ece5;
+  --vc-muted: #b3aa9c;
+  --vc-faint: #8f8778;
+  --vc-line: #3d372d;
+  --vc-line-soft: #272219;
+  --vc-hairline: rgba(255, 216, 150, 0.055);
   --vc-shadow: 0, 0, 0;
-  --vc-sheen: rgba(255, 255, 255, 0.045);
-  --vc-sheen-lit: rgba(255, 255, 255, 0.085);
+  --vc-sheen: rgba(255, 255, 255, 0.04);
+  --vc-sheen-lit: rgba(255, 255, 255, 0.075);
   --vc-gold: #ffbd59;
   --vc-gold-hover: #ffd08a;
+  /* the gold clears 11:1 on this ground, so here it is both fill and type */
   --vc-live: #ffbd59;
   --vc-live-hover: #ffd08a;
-  --vc-live-ink: #0e2233;
-  --vc-earth: #46c58c;
+  /* warm near-black on the gold, to match the room rather than the light theme */
+  --vc-live-ink: #23190a;
+  --vc-earth: #6ec489;
   --vc-warn: #ff8a7a;
-  --vc-block: #1d3040;
-  --vc-block-ink: #e9f1f7;
-  --vc-block-muted: #a3b8c7;
-  --vc-block-line: rgba(255, 255, 255, 0.13);
+  --vc-block: #2b251b;
+  --vc-block-ink: #f5f1e9;
+  --vc-block-muted: #b3aa9c;
+  --vc-block-line: rgba(255, 255, 255, 0.12);
   --vc-wash-live: rgba(255, 189, 89, 0.1);
-  --vc-wash-ink: rgba(90, 160, 220, 0.06);
-  --vc-glow-live: rgba(255, 189, 89, 0.22);
+  --vc-wash-ink: rgba(255, 214, 150, 0.05);
+  --vc-glow-live: rgba(255, 189, 89, 0.24);
 }
 
 /* Show a control only under one theme. Driven off the attribute rather than
