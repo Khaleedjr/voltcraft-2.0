@@ -20,7 +20,7 @@ export function ProductGallery({ product }: { product: Product }) {
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="relative aspect-[5/4] w-full max-w-full overflow-hidden border border-line bg-raised">
+      <div className="vc-plate relative aspect-[5/4] w-full max-w-full overflow-hidden border border-line">
         <Image
           src={images[Math.min(active, images.length - 1)]}
           alt={product.name}
@@ -41,7 +41,7 @@ export function ProductGallery({ product }: { product: Product }) {
                 onClick={() => setActive(i)}
                 aria-label={`View image ${i + 1} of ${images.length}`}
                 aria-current={i === active ? "true" : undefined}
-                className={`relative size-16 overflow-hidden border bg-raised transition-colors ${
+                className={`vc-plate relative size-16 overflow-hidden border transition-colors ${
                   i === active ? "border-ink" : "border-line hover:border-muted"
                 }`}
               >

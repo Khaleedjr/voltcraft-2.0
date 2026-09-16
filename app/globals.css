@@ -36,6 +36,11 @@
   --vc-shadow: 14, 34, 51;  /* rgb parts, for translucent lift shadows */
   --vc-sheen: rgba(255, 255, 255, 0.5);         /* inner highlight on a frame */
   --vc-sheen-lit: rgba(255, 255, 255, 0.6);     /* ...the same, on hover */
+  /* The photo plate. Product shots are lit against white, so this stays light
+     in BOTH themes — see the dark override on .vc-frame. Not derived from the
+     surface tokens, which invert. */
+  --vc-plate-a: #ffffff;
+  --vc-plate-b: #f1f4f6;
   /* accents — live conductor red, earth green */
   --vc-live: #d6332a;
   --vc-live-hover: #b92920;
@@ -221,8 +226,8 @@
     border: 1px solid var(--vc-line);
     border-radius: 6px;
     background:
-      radial-gradient(120% 120% at 30% 15%, var(--vc-raised) 0%, var(--vc-sheet) 78%);
-    box-shadow: inset 0 0 0 1px var(--vc-sheen);
+      radial-gradient(120% 120% at 30% 15%, var(--vc-plate-a) 0%, var(--vc-plate-b) 78%);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
     transition:
       border-color 0.25s ease,
       box-shadow 0.3s ease,
@@ -234,7 +239,7 @@
   .group:hover .vc-frame {
     border-color: color-mix(in srgb, var(--vc-ink) 28%, var(--vc-line));
     box-shadow:
-      inset 0 0 0 1px var(--vc-sheen-lit),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.65),
       0 12px 30px -14px rgba(var(--vc-shadow), 0.35);
   }
   .group:hover .vc-frame-img {
@@ -245,6 +250,21 @@
   /* nested inside a card, the frame steps back so there is one outline, not two */
   .vc-lift .vc-frame {
     border-color: var(--vc-line-soft);
+  }
+
+  /* the same plate, for a photograph that is not inside a .vc-frame */
+  .vc-plate {
+    background:
+      radial-gradient(120% 120% at 30% 15%, var(--vc-plate-a) 0%, var(--vc-plate-b) 78%);
+  }
+
+  /* On dark, dim the plate and the photograph on it together. Letting the plate
+     invert instead would drop a white-background product shot onto a dark card,
+     where it becomes the brightest thing on the page; dimming as one keeps the
+     shot sitting on the background it was photographed against. */
+  :root[data-theme="dark"] .vc-frame,
+  :root[data-theme="dark"] .vc-plate {
+    filter: brightness(0.86) saturate(0.96);
   }
 
   .vc-lift {
