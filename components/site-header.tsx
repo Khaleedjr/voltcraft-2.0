@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useCart } from "@/components/cart-context";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Wordmark } from "@/components/wordmark";
 import { Container } from "@/components/ui";
 import { SITE } from "@/lib/site";
 
@@ -44,14 +44,7 @@ export function SiteHeader() {
       <Container>
         <div className="flex items-center gap-3 py-3.5 sm:gap-5">
           <Link href="/" className="shrink-0" aria-label={`${SITE.name} home`}>
-            <Image
-              src="/brand/voltcraft-wordmark.png"
-              alt={SITE.name}
-              width={1200}
-              height={724}
-              priority
-              className="vc-logo h-10 w-auto sm:h-11"
-            />
+            <Wordmark priority className="h-10 w-auto sm:h-11" />
           </Link>
 
           <form
@@ -118,7 +111,7 @@ export function SiteHeader() {
                 <circle cx="18" cy="20" r="1.3" />
               </svg>
               {ready && count > 0 ? (
-                <span className="absolute -right-2 -top-2 grid min-w-5 place-items-center bg-live px-1 font-mono text-[0.62rem] font-semibold leading-5 text-live-ink">
+                <span className="absolute -right-2 -top-2 grid min-w-5 place-items-center bg-gold px-1 font-mono text-[0.62rem] font-semibold leading-5 text-live-ink">
                   {count}
                 </span>
               ) : null}

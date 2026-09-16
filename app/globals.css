@@ -41,21 +41,31 @@
      surface tokens, which invert. */
   --vc-plate-a: #ffffff;
   --vc-plate-b: #f1f4f6;
-  /* accents — live conductor red, earth green */
-  --vc-live: #d6332a;
-  --vc-live-hover: #b92920;
-  --vc-live-ink: #ffffff;
+  /* accents — the brand gold, earth green
+     --vc-gold is the gold off the logo (#ffbd59). It is a FILL colour only:
+     against the page it manages 1.4:1, so it can carry dark text but can never
+     be text itself. --vc-live is the same hue taken down until it reads as
+     type (4.9:1 on the ground, 5.7:1 on white) and is what text-live and
+     border-live resolve to. On dark the two converge, because the bright gold
+     reads perfectly well on a dark ground. */
+  --vc-gold: #ffbd59;
+  --vc-gold-hover: #f7ae3f;
+  --vc-live: #915a08;
+  --vc-live-hover: #7a4b06;
+  --vc-live-ink: #0e2233;
   --vc-earth: #2c6b4f;
-  --vc-warn: #96600f;
+  /* Low stock was amber, which the gold now owns; red is free and reads as
+     urgency anyway. */
+  --vc-warn: #b32d1f;
   /* inverted block, for the one or two panels that need to carry weight */
   --vc-block: #0e2233;
   --vc-block-ink: #e6edf2;
   --vc-block-muted: #9fb3c2;
   --vc-block-line: rgba(255, 255, 255, 0.15);
   /* atmospheric washes — the tinted glows behind the hero and CTA panel */
-  --vc-wash-live: rgba(214, 51, 42, 0.06);
+  --vc-wash-live: rgba(255, 189, 89, 0.16);
   --vc-wash-ink: rgba(14, 34, 51, 0.05);
-  --vc-glow-live: rgba(214, 51, 42, 0.22);
+  --vc-glow-live: rgba(255, 189, 89, 0.3);
 }
 
 :root[data-theme="dark"] {
@@ -72,27 +82,20 @@
   --vc-shadow: 0, 0, 0;
   --vc-sheen: rgba(255, 255, 255, 0.045);
   --vc-sheen-lit: rgba(255, 255, 255, 0.085);
-  /* The red has to work twice over on a dark ground: bright enough to read as
-     accent text, which then puts near-black on the button rather than white —
-     both directions clear 5:1, where a white-on-red button could not. */
-  --vc-live: #ff5347;
-  --vc-live-hover: #ff6f64;
-  --vc-live-ink: #1b0603;
+  --vc-gold: #ffbd59;
+  --vc-gold-hover: #ffd08a;
+  --vc-live: #ffbd59;
+  --vc-live-hover: #ffd08a;
+  --vc-live-ink: #0e2233;
   --vc-earth: #46c58c;
-  --vc-warn: #e2a94a;
+  --vc-warn: #ff8a7a;
   --vc-block: #1d3040;
   --vc-block-ink: #e9f1f7;
   --vc-block-muted: #a3b8c7;
   --vc-block-line: rgba(255, 255, 255, 0.13);
-  --vc-wash-live: rgba(255, 83, 71, 0.1);
+  --vc-wash-live: rgba(255, 189, 89, 0.1);
   --vc-wash-ink: rgba(90, 160, 220, 0.06);
-  --vc-glow-live: rgba(255, 83, 71, 0.2);
-}
-
-/* The brush wordmark is black artwork on transparent, so on a dark ground it
-   has to be flipped to read at all. */
-:root[data-theme="dark"] .vc-logo {
-  filter: invert(1);
+  --vc-glow-live: rgba(255, 189, 89, 0.22);
 }
 
 /* Show a control only under one theme. Driven off the attribute rather than
@@ -126,6 +129,8 @@
   --color-line-soft: var(--vc-line-soft);
   --color-hairline: var(--vc-hairline);
   --color-shadow: var(--vc-shadow);
+  --color-gold: var(--vc-gold);
+  --color-gold-hover: var(--vc-gold-hover);
   --color-live: var(--vc-live);
   --color-live-hover: var(--vc-live-hover);
   --color-live-ink: var(--vc-live-ink);
@@ -151,7 +156,7 @@
     -webkit-font-smoothing: antialiased;
   }
   ::selection {
-    background: var(--vc-live);
+    background: var(--vc-gold);
     color: var(--vc-live-ink);
   }
   :focus-visible {

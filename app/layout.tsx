@@ -67,7 +67,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="vc-grid-ground flex min-h-full flex-col bg-ground text-ink">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-live focus:px-4 focus:py-2 focus:text-live-ink"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-gold focus:px-4 focus:py-2 focus:text-live-ink"
         >
           Skip to content
         </a>

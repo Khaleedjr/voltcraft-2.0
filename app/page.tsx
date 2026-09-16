@@ -183,7 +183,7 @@ export default function HomePage() {
                     href={SITE.whatsapp}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-sm bg-live px-6 py-3.5 text-[0.9rem] font-semibold text-live-ink transition-colors hover:bg-live-hover"
+                    className="inline-flex items-center justify-center rounded-sm bg-gold px-6 py-3.5 text-[0.9rem] font-semibold text-live-ink transition-colors hover:bg-gold-hover"
                   >
                     Message us on WhatsApp
                   </a>

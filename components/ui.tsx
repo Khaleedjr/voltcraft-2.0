@@ -48,10 +48,10 @@ const buttonBase =
   "inline-flex items-center justify-center gap-2 text-[0.9rem] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50";
 
 const buttonVariants: Record<ButtonVariant, string> = {
-  live: "bg-live px-6 py-3.5 text-live-ink hover:bg-live-hover",
+  live: "bg-gold px-6 py-3.5 text-live-ink hover:bg-gold-hover",
   outline: "border border-ink px-6 py-3.5 text-ink hover:bg-ink hover:text-ground",
   underline: "border-b border-ink px-1 py-2 text-ink hover:border-live hover:text-live",
-  block: "bg-ink px-6 py-3.5 text-ground hover:bg-live hover:text-live-ink",
+  block: "bg-ink px-6 py-3.5 text-ground hover:bg-gold hover:text-live-ink",
 };
 
 export function ButtonLink({

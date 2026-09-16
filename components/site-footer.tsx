@@ -1,7 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { SOCIAL_ICONS } from "@/components/social-icons";
 import { Container } from "@/components/ui";
+import { Wordmark } from "@/components/wordmark";
 import { getCategories } from "@/lib/catalogue";
 import { SITE } from "@/lib/site";
 
@@ -14,13 +14,7 @@ export function SiteFooter() {
       <Container>
         <div className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_1.35fr_0.9fr_1.15fr]">
           <div>
-            <Image
-              src="/brand/voltcraft-logo.png"
-              alt={SITE.name}
-              width={1600}
-              height={1143}
-              className="vc-logo h-20 w-auto"
-            />
+            <Wordmark variant="logo" className="h-20 w-auto" />
             <p className="mt-4 max-w-[34ch] text-[0.88rem] leading-relaxed text-muted">
               {SITE.description}
             </p>

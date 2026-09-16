@@ -27,7 +27,7 @@ export function HeroShowcase({ products }: { products: Product[] }) {
         <div className="relative">
           <ProductImage product={feature} ratio="aspect-[4/3]" sizes="(max-width:1024px) 90vw, 440px" priority pad="p-6" />
           {off ? (
-            <span className="absolute left-3 top-3 z-10 rounded-sm bg-live px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-wider text-live-ink shadow-sm">
+            <span className="absolute left-3 top-3 z-10 rounded-sm bg-gold px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-wider text-live-ink shadow-sm">
               −{off}%
             </span>
           ) : null}
@@ -67,7 +67,7 @@ export function HeroShowcase({ products }: { products: Product[] }) {
                   <div className="relative">
                     <ProductImage product={p} ratio="aspect-square" sizes="150px" pad="p-2" />
                     {thumbOff ? (
-                      <span className="absolute left-1.5 top-1.5 z-10 rounded-sm bg-live px-1.5 py-0.5 font-mono text-[0.55rem] font-semibold text-live-ink">
+                      <span className="absolute left-1.5 top-1.5 z-10 rounded-sm bg-gold px-1.5 py-0.5 font-mono text-[0.55rem] font-semibold text-live-ink">
                         −{thumbOff}%
                       </span>
                     ) : null}

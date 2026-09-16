@@ -16,7 +16,7 @@ export function ProductCard({ product }: { product: Product }) {
         <div className="relative">
           <ProductImage product={product} />
           {off ? (
-            <span className="absolute left-2 top-2 z-10 rounded-sm bg-live px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-wider text-live-ink shadow-sm">
+            <span className="absolute left-2 top-2 z-10 rounded-sm bg-gold px-2 py-1 font-mono text-[0.62rem] font-semibold tracking-wider text-live-ink shadow-sm">
               −{off}%
             </span>
           ) : null}
