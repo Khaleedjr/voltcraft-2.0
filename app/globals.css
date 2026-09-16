@@ -27,7 +27,11 @@
   --vc-muted: #4e6577;
   --vc-faint: #7a8c9a;
   /* structure */
-  --vc-line: #c7d0d6;
+  /* Borders carry the prussian rather than a neutral grey, so an outline reads
+     as drawn on the sheet. -soft is for a frame nested inside an already
+     outlined card, which would otherwise be a box drawn inside a box. */
+  --vc-line: #b6c5d2;
+  --vc-line-soft: #dde5eb;
   --vc-hairline: rgba(14, 34, 51, 0.06);
   --vc-shadow: 14, 34, 51;  /* rgb parts, for translucent lift shadows */
   --vc-sheen: rgba(255, 255, 255, 0.5);         /* inner highlight on a frame */
@@ -57,7 +61,8 @@
   --vc-ink: #e4edf4;
   --vc-muted: #a3b8c7;
   --vc-faint: #7b919f;
-  --vc-line: #273a4a;
+  --vc-line: #33495e;
+  --vc-line-soft: #1e3040;
   --vc-hairline: rgba(150, 200, 235, 0.07);
   --vc-shadow: 0, 0, 0;
   --vc-sheen: rgba(255, 255, 255, 0.045);
@@ -113,6 +118,7 @@
   --color-muted: var(--vc-muted);
   --color-faint: var(--vc-faint);
   --color-line: var(--vc-line);
+  --color-line-soft: var(--vc-line-soft);
   --color-hairline: var(--vc-hairline);
   --color-shadow: var(--vc-shadow);
   --color-live: var(--vc-live);
@@ -236,6 +242,11 @@
   }
 
   /* card lift — a product card rises slightly and casts a soft shadow */
+  /* nested inside a card, the frame steps back so there is one outline, not two */
+  .vc-lift .vc-frame {
+    border-color: var(--vc-line-soft);
+  }
+
   .vc-lift {
     transition:
       border-color 0.25s ease,
