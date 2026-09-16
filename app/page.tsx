@@ -50,12 +50,8 @@ export default function HomePage() {
           <div className="grid items-center gap-10 py-14 sm:py-18 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-24">
             <div>
               <h1 className="font-display text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.1] tracking-[-0.025em]">
-                Electronics parts, in stock and shipped nationwide.
+                Everything your build needs.
               </h1>
-              <p className="mt-5 max-w-[48ch] text-[1.02rem] leading-[1.6] text-muted">
-                Sensors, microcontrollers, displays, actuators and the components that finish a
-                build — delivered across Nigeria in 24 to 48 hours.
-              </p>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <ButtonLink href="/shop" className="group">
                   Shop all {total} products

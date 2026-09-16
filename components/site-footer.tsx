@@ -12,7 +12,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-line bg-sheet">
       <Container>
-        <div className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1.1fr]">
+        <div className="grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-[1.35fr_1.35fr_0.9fr_1.15fr]">
           <div>
             <Image
               src="/brand/voltcraft-logo.png"
@@ -46,10 +46,10 @@ export function SiteFooter() {
           </div>
 
           <nav aria-labelledby="footer-shop">
-            <h2 id="footer-shop" className="vc-fig mb-4 text-muted">
+            <h2 id="footer-shop" className="vc-fig mb-4 font-semibold text-ink">
               Shop
             </h2>
-            <ul className="grid gap-2.5 text-[0.88rem] text-muted">
+            <ul className="grid gap-2.5 text-[0.88rem] text-muted sm:grid-cols-2">
               {categories.map((c) => (
                 <li key={c.slug}>
                   <Link href={`/shop/${c.slug}`} className="hover:text-live">
@@ -66,7 +66,7 @@ export function SiteFooter() {
           </nav>
 
           <nav aria-labelledby="footer-help">
-            <h2 id="footer-help" className="vc-fig mb-4 text-muted">
+            <h2 id="footer-help" className="vc-fig mb-4 font-semibold text-ink">
               Buying
             </h2>
             <ul className="grid gap-2.5 text-[0.88rem] text-muted">
@@ -94,25 +94,37 @@ export function SiteFooter() {
           </nav>
 
           <div>
-            <h2 className="vc-fig mb-4 text-muted">Reach us</h2>
-            <ul className="grid gap-2.5 text-[0.88rem] text-muted">
+            <h2 className="vc-fig mb-4 font-semibold text-ink">Reach us</h2>
+            <ul className="grid gap-3 text-[0.88rem]">
               <li>
-                <a href={`mailto:${SITE.email}`} className="hover:text-live">
-                  {SITE.email}
+                <a
+                  href={`mailto:${SITE.email}`}
+                  className="flex items-start gap-2.5 text-muted transition-colors hover:text-live"
+                >
+                  <MailIcon />
+                  <span className="min-w-0 break-words">{SITE.email}</span>
                 </a>
               </li>
               <li>
-                <a href={SITE.phoneHref} className="hover:text-live">
+                <a
+                  href={SITE.phoneHref}
+                  className="flex items-center gap-2.5 text-muted transition-colors hover:text-live"
+                >
+                  <PhoneIcon />
                   {SITE.phone}
                 </a>
               </li>
-              {SITE.hours.map((h) => (
-                <li key={h.days} className="flex justify-between gap-4 tabular-nums">
-                  <span>{h.days}</span>
-                  <span className="text-faint">{h.time}</span>
-                </li>
-              ))}
             </ul>
+
+            <h3 className="vc-fig mb-2.5 mt-6 text-faint">Opening hours</h3>
+            <dl className="grid gap-1.5 text-[0.88rem]">
+              {SITE.hours.map((h) => (
+                <div key={h.days} className="flex items-baseline gap-3">
+                  <dt className="w-20 shrink-0 text-muted">{h.days}</dt>
+                  <dd className="tabular-nums text-faint">{h.time}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
 
@@ -125,5 +137,23 @@ export function SiteFooter() {
         </div>
       </Container>
     </footer>
+  );
+}
+
+/* --- small glyphs, matched to the 1.6 stroke used across the site --------- */
+function MailIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="mt-[3px] shrink-0 text-faint" aria-hidden>
+      <rect x="3" y="5" width="18" height="14" rx="2" />
+      <path d="m3.5 6.5 8.5 6 8.5-6" />
+    </svg>
+  );
+}
+
+function PhoneIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="shrink-0 text-faint" aria-hidden>
+      <path d="M7 3.5 9.2 8l-2 1.6a12 12 0 0 0 5.2 5.2L14 12.8 18.5 15v3.2a1.8 1.8 0 0 1-2 1.8A15.6 15.6 0 0 1 4 7.5a1.8 1.8 0 0 1 1.8-2H7z" strokeLinejoin="round" />
+    </svg>
   );
 }
