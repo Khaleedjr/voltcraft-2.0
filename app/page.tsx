@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ProductCard } from "@/components/product-card";
 import { HeroShowcase } from "@/components/hero-showcase";
-import { Intro } from "@/components/intro";
 import { ProductImage } from "@/components/product-image";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink, Container, Section } from "@/components/ui";
@@ -40,8 +39,6 @@ export default function HomePage() {
 
   return (
     <>
-      <Intro />
-
       {/* ------------------------------------------------------------ hero */}
       <div className="relative overflow-hidden">
         {/* a soft blueprint wash behind the hero, fading down into the page */}
