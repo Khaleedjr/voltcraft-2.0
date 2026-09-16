@@ -6,6 +6,7 @@ import {
   parseLines,
   priceOrder,
 } from "@/lib/orders";
+import { createPendingOrder, isOrderStoreConfigured } from "@/lib/order-store";
 import { initializeTransaction, isPaystackConfigured } from "@/lib/paystack";
 
 /**
@@ -15,9 +16,10 @@ import { initializeTransaction, isPaystackConfigured } from "@/lib/paystack";
  * recomputed here from the catalogue, so a tampered cart cannot change what
  * gets charged.
  *
- * TODO(voltcraft): orders are currently logged, not persisted. Write the priced
- * order to a database here (and again in a Paystack webhook handler) before
- * taking real money.
+ * The priced order is written to the database BEFORE the customer is sent to
+ * Paystack, so a payment can never arrive for an order we have no record of.
+ * Whether it was actually paid is decided later, by the webhook — see
+ * app/api/paystack/webhook/route.ts.
  */
 export async function POST(request: Request) {
   let body: unknown;
@@ -60,15 +62,44 @@ export async function POST(request: Request) {
     delivery: order.delivery,
     total: order.total,
   };
-  console.info("[checkout] order placed", JSON.stringify(summary));
-
   if (!isPaystackConfigured()) {
+    // No payments configured: record the order if we can, and let the counter
+    // follow it up. Nothing is being charged, so logging is an acceptable
+    // floor here in a way it would not be once money is moving.
+    if (isOrderStoreConfigured()) {
+      try {
+        await createPendingOrder({ reference, customer, order });
+      } catch (error) {
+        console.error("[checkout] could not record manual order", error);
+      }
+    }
+    console.info("[checkout] order placed (manual)", JSON.stringify(summary));
     return NextResponse.json({
       ok: true,
       mode: "manual" as const,
       reference,
       total: order.total,
     });
+  }
+
+  // Taking money with nowhere to put the order is how a paid order vanishes.
+  // Refuse rather than risk it.
+  if (!isOrderStoreConfigured()) {
+    console.error("[checkout] payments are on but the order store is not configured");
+    return NextResponse.json(
+      { ok: false, error: "We are not able to take orders right now. Please call the counter." },
+      { status: 503 },
+    );
+  }
+
+  try {
+    await createPendingOrder({ reference, customer, order });
+  } catch (error) {
+    console.error("[checkout] could not record order", error);
+    return NextResponse.json(
+      { ok: false, error: "We couldn't start the payment. Please try again or call the counter." },
+      { status: 503 },
+    );
   }
 
   const origin = new URL(request.url).origin;

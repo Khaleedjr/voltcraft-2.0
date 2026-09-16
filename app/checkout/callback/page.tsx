@@ -3,6 +3,7 @@ import { ClearCart } from "@/components/clear-cart";
 import { ButtonLink, Container, Fig } from "@/components/ui";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
+import { isOrderStoreConfigured, settleOrder } from "@/lib/order-store";
 import { isPaystackConfigured, verifyTransaction, type VerifyResult } from "@/lib/paystack";
 
 export const metadata: Metadata = {
@@ -12,6 +13,12 @@ export const metadata: Metadata = {
 
 // Paystack redirects here with the reference; the status is only ever taken
 // from a server-side verify call, never from the query string.
+//
+// This page is a courtesy, not the record. The webhook is what actually decides
+// whether an order was paid, because it runs whether or not the customer's
+// browser ever comes back. Settling here too just means a customer who does
+// come straight back sees the right thing without waiting on the webhook —
+// settleOrder is idempotent, so whichever arrives first wins.
 export const dynamic = "force-dynamic";
 
 function first(value: string | string[] | undefined): string | null {
@@ -35,9 +42,20 @@ export default async function PaymentCallbackPage({
   } else {
     try {
       result = await verifyTransaction(reference);
+      if (isOrderStoreConfigured()) {
+        await settleOrder({
+          reference,
+          paid: result.status === "success",
+          amountPaid: result.amount,
+          channel: result.channel,
+          paidAt: result.paidAt,
+        });
+      }
     } catch (error) {
-      console.error("[checkout] verification failed", error);
-      failure = "We couldn't confirm the payment with Paystack just now.";
+      // The customer has still paid; the webhook will record it. Do not tell
+      // them anything went wrong with their money.
+      console.error("[checkout] callback settle failed", reference, error);
+      if (!result) failure = "We couldn't confirm the payment with Paystack just now.";
     }
   }
 
