@@ -115,8 +115,14 @@ export const PRODUCTS: Product[] = catalogue.products as Product[];
 
 // ------------------------------------------------------------------- accessors
 
+/**
+ * Listed A-Z. The declaration order in CATEGORIES is the schematic one
+ * (sensing, then thinking, then doing); alphabetical is what a shopper
+ * scans, so sorting happens here rather than by reordering the source.
+ * Copied so the exported constant is never mutated.
+ */
 export function getCategories(): Category[] {
-  return CATEGORIES;
+  return [...CATEGORIES].sort((a, b) => a.name.localeCompare(b.name, "en"));
 }
 
 export function getCategory(slug: string): Category | undefined {

@@ -50,7 +50,7 @@ export function SiteFooter() {
               Shop
             </h2>
             <ul className="grid gap-2.5 text-[0.88rem] text-muted">
-              {categories.slice(0, 6).map((c) => (
+              {categories.map((c) => (
                 <li key={c.slug}>
                   <Link href={`/shop/${c.slug}`} className="hover:text-live">
                     {c.name}

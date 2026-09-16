@@ -101,10 +101,7 @@ export default function HomePage() {
       {/* ------------------------------------------------------- categories */}
       <Container>
         <Section divide={false}>
-          <div className="flex flex-wrap items-baseline justify-between gap-4">
-            <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.022em] sm:text-[2.05rem]">
-              Shop by aisle
-            </h2>
+          <div className="flex flex-wrap items-baseline justify-end gap-4">
             <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
               All products <span className="vc-arrow" aria-hidden>→</span>
             </Link>
@@ -149,14 +146,9 @@ export default function HomePage() {
         <Container>
           <Section>
             <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <div className="flex items-baseline gap-3">
-                <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.022em] sm:text-[2.05rem]">
-                  On offer
-                </h2>
-                <span className="rounded-full bg-live/10 px-2.5 py-1 text-[0.7rem] font-semibold text-live">
-                  Up to 33% off
-                </span>
-              </div>
+              <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.022em] sm:text-[2.05rem]">
+                Sale items
+              </h2>
               <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
                 See everything <span className="vc-arrow" aria-hidden>→</span>
               </Link>
