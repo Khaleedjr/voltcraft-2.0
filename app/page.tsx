@@ -1,6 +1,6 @@
 import Link from "next/link";
+import { HeroFigure } from "@/components/hero-figure";
 import { ProductCard } from "@/components/product-card";
-import { HeroShowcase } from "@/components/hero-showcase";
 import { ProductImage } from "@/components/product-image";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink, Container, Section } from "@/components/ui";
@@ -8,34 +8,16 @@ import {
   categoryThumbnail,
   countByCategory,
   getCategories,
-  getFeaturedProducts,
   getOnSale,
-  getProduct,
   getProducts,
-  type Product,
 } from "@/lib/catalogue";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
-
-/** Four recognisable things, for the hero. Falls back if the slugs move. */
-function heroProducts(): Product[] {
-  const wanted = ["arduino-uno-r3", "esp32-development-board-type-c-usb", "oled-screen-display-module", "180-micro-servo-motor"];
-  const picked = wanted.map(getProduct).filter((p): p is Product => Boolean(p?.images.length));
-  if (picked.length === 4) return picked;
-  const pool = getFeaturedProducts(8).concat(getProducts().filter((p) => p.images.length));
-  const seen = new Set(picked.map((p) => p.slug));
-  for (const p of pool) {
-    if (picked.length === 4) break;
-    if (!seen.has(p.slug)) { picked.push(p); seen.add(p.slug); }
-  }
-  return picked.slice(0, 4);
-}
 
 export default function HomePage() {
   const categories = getCategories();
   const total = getProducts().length;
   const onSale = getOnSale(8);
-  const hero = heroProducts();
 
   return (
     <>
@@ -47,7 +29,7 @@ export default function HomePage() {
           className="vc-wash-hero pointer-events-none absolute inset-0 -z-10 opacity-70"
         />
         <Container>
-          <div className="grid items-center gap-10 py-14 sm:py-18 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-24">
+          <div className="grid items-center gap-10 py-12 sm:py-16 lg:grid-cols-[1.05fr_1fr] lg:gap-16 lg:py-20">
             <div>
               <h1 className="font-display text-[clamp(1.9rem,4.4vw,3rem)] leading-[1.1] tracking-[-0.025em]">
                 Everything your build needs.
@@ -64,7 +46,7 @@ export default function HomePage() {
             </div>
 
             <div className="pt-2 sm:pt-6 lg:pt-0">
-              <HeroShowcase products={hero} />
+              <HeroFigure />
             </div>
           </div>
         </Container>
