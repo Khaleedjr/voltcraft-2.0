@@ -32,16 +32,25 @@ import Link from "next/link";
  */
 
 /* ------------------------------------------------------------- projection */
-const K = 0.8660254;
-const OX = 344;
-const OY = 11;
-/** The board plane itself: plan coordinates in, isometric out. */
-const PLANE = `matrix(${K} 0.5 -${K} 0.5 ${OX} ${OY})`;
+/**
+ * The board is not rotated in plan, only tilted back — so its front and back
+ * edges stay horizontal and it sits square to the frame instead of standing on
+ * a corner. Depth survives as cos of the tilt and height rises as sin of the
+ * same angle, which is what keeps the solid consistent rather than merely
+ * squashed. At 45 degrees the two are equal.
+ */
+const TILT = Math.SQRT1_2; // cos 45 = sin 45
+const DEPTH = TILT;
+const RISE = TILT;
+const OX = 14;
+const OY = 8;
+/** The board plane itself: plan coordinates in, foreshortened out. */
+const PLANE = `matrix(1 0 0 ${DEPTH.toFixed(5)} ${OX} ${OY})`;
 /** Anything lying flat at a height is the plane, lifted. */
-const at = (z: number) => `translate(0 ${-z}) ${PLANE}`;
+const at = (z: number) => `translate(0 ${-(z * RISE).toFixed(2)}) ${PLANE}`;
 
-const px = (x: number, y: number) => (x - y) * K + OX;
-const py = (x: number, y: number, z = 0) => (x + y) / 2 - z + OY;
+const px = (x: number, _y = 0) => x + OX;
+const py = (_x: number, y: number, z = 0) => y * DEPTH - z * RISE + OY;
 const pt = (x: number, y: number, z = 0) => `${px(x, y).toFixed(1)},${py(x, y, z).toFixed(1)}`;
 /** A plan rectangle's top face, as screen-space points. */
 const face = (x: number, y: number, w: number, h: number, z: number) =>
@@ -140,14 +149,12 @@ function Box({
 }) {
   const x1 = x + w;
   const y1 = y + h;
-  const right = `${pt(x1, y, z)} ${pt(x1, y1, z)} ${pt(x1, y1)} ${pt(x1, y)}`;
+  // square to the frame, the side faces are edge-on — only the front shows
   const front = `${pt(x, y1, z)} ${pt(x1, y1, z)} ${pt(x1, y1)} ${pt(x, y1)}`;
   return (
     <>
-      <polygon points={right} fill={fill} stroke="var(--vc-muted)" strokeWidth="1.2" />
-      <polygon points={right} fill="rgba(var(--vc-shadow), 0.07)" />
       <polygon points={front} fill={fill} stroke="var(--vc-muted)" strokeWidth="1.2" />
-      <polygon points={front} fill="rgba(var(--vc-shadow), 0.15)" />
+      <polygon points={front} fill="rgba(var(--vc-shadow), 0.14)" />
       <polygon points={face(x, y, w, h, z)} fill={fill} stroke="var(--vc-muted)" strokeWidth="1.4" />
     </>
   );
@@ -171,8 +178,8 @@ function Cyl({
 }) {
   const sx = px(cx, cy);
   const sy = py(cx, cy);
-  const rx = r * K * Math.SQRT2;
-  const ry = (r * Math.SQRT2) / 2;
+  const rx = r;
+  const ry = r * DEPTH;
   const side = `M${sx - rx} ${sy - z} L${sx - rx} ${sy} A${rx} ${ry} 0 0 0 ${sx + rx} ${sy} L${sx + rx} ${sy - z} Z`;
   return (
     <>
@@ -237,19 +244,18 @@ export function HeroFigure() {
   return (
     <div className="mx-auto w-full max-w-[520px]">
       <svg
-        viewBox="0 0 729 470"
+        viewBox="0 0 504 304"
         className="vc-board w-full"
         role="group"
         aria-label="Board diagram — each part links to its aisle"
       >
         <defs>
           {/* the ground pour, hatched the way a board's copper fill is drawn */}
-          {/* A hatch runs at 45 degrees in plan, and 45 degrees in plan
-              projects to dead horizontal — the one direction nothing else on
-              an isometric board runs. Plan slope 1:3 comes out at 49 degrees
-              on screen, and the 21x7 tile keeps the same line spacing. */}
-          <pattern id="vc-pour" patternUnits="userSpaceOnUse" width="21" height="7">
-            <path d="M-1 -0.333L22 7.333" stroke="var(--vc-trace)" strokeWidth="0.9" fill="none" />
+          {/* Without the plan rotation a 45 degree hatch comes out at 35
+              degrees on screen rather than flat, so it can be the real thing
+              again. */}
+          <pattern id="vc-pour" patternUnits="userSpaceOnUse" width="7" height="7">
+            <path d="M-1 8L8-1" stroke="var(--vc-trace)" strokeWidth="0.9" fill="none" />
           </pattern>
           {/* copper is held back from everything it must not touch: a clearance
               gap follows every trace, rings every pad, and each mounting hole
@@ -277,16 +283,6 @@ export function HeroFigure() {
         </defs>
 
         {/* ---------------------------------------------- the board's own edge */}
-        <polygon
-          points={`${pt(x1, b.y)} ${pt(x1, y1)} ${pt(x1, y1, -THICK)} ${pt(x1, b.y, -THICK)}`}
-          fill="var(--vc-raised)"
-          stroke="var(--vc-muted)"
-          strokeWidth="1.6"
-        />
-        <polygon
-          points={`${pt(x1, b.y)} ${pt(x1, y1)} ${pt(x1, y1, -THICK)} ${pt(x1, b.y, -THICK)}`}
-          fill="rgba(var(--vc-shadow), 0.1)"
-        />
         <polygon
           points={`${pt(b.x, y1)} ${pt(x1, y1)} ${pt(x1, y1, -THICK)} ${pt(b.x, y1, -THICK)}`}
           fill="var(--vc-raised)"
@@ -414,36 +410,26 @@ export function HeroFigure() {
           </g>
         </g>
 
-        {/* ------------------------------ the parts, back to front, as doors */}
-        <Part href="/shop/connectors" aisle="Connectors" hit={[8, 138, 54, 62, 14]} tip={[px(41, 170) - 96, py(41, 170, 14) - 16]}>
-          <Box x={20} y={144} w={42} h={52} z={14} />
-          <Box x={12} y={157} w={14} h={26} z={9} fill="var(--vc-raised)" />
+        {/* ---------------------- the parts, back to front by depth, as doors */}
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 50, 0]} tip={[px(266), py(0, 64) - 18]}>
+          <g transform={PLANE}>
+            {HEADER_X.map((x, i) => (
+              <g key={`t${x}`}>
+                <rect x={x} y="64" width="13" height="13" rx={i === 0 ? 1 : 6.5} fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" />
+                <circle cx={x + 6.5} cy="70.5" r="2.6" fill="var(--vc-ground)" vectorEffect="non-scaling-stroke" />
+              </g>
+            ))}
+          </g>
         </Part>
 
-        <Part href="/shop/display" aisle="Display" hit={[62, 98, 50, 68, 8]} tip={[px(86, 132) - 66, py(86, 132, 8) - 20]}>
-          <Cyl cx={86} cy={118} r={7} z={8} top="var(--vc-gold)" />
-          <ellipse
-            className="vc-led-halo"
-            cx={px(86, 118)}
-            cy={py(86, 118, 8)}
-            rx={7 * K * Math.SQRT2}
-            ry={(7 * Math.SQRT2) / 2}
-            fill="var(--vc-gold)"
-          />
-          <Cyl cx={86} cy={146} r={7} z={8} />
-          <ellipse
-            className="vc-led-blink"
-            cx={px(86, 146)}
-            cy={py(86, 146, 8)}
-            rx={7 * K * Math.SQRT2}
-            ry={(7 * Math.SQRT2) / 2}
-            fill="var(--vc-sheet)"
-            stroke="var(--vc-muted)"
-            strokeWidth="1.3"
-          />
+        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 104, 64, 52, 6]} tip={[px(424), py(0, 110, 6) - 16]}>
+          <Box x={396} y={110} w={56} h={18} z={6} />
+          <g transform={at(6)} stroke="var(--vc-line)" strokeWidth="1.4" fill="none">
+            <path d="M410 110v18M422 110v18M434 110v18" vectorEffect="non-scaling-stroke" />
+          </g>
         </Part>
 
-        <Part href="/shop/switches" aisle="Switches" hit={[112, 102, 54, 59, 12]} tip={[px(132, 122), py(132, 122, 12) - 34]}>
+        <Part href="/shop/switches" aisle="Switches" hit={[112, 102, 54, 59, 12]} tip={[px(132), py(0, 104, 17) - 16]}>
           <g transform={PLANE} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
             <rect x="108" y="110" width="7" height="6" rx="1" vectorEffect="non-scaling-stroke" />
             <rect x="108" y="128" width="7" height="6" rx="1" vectorEffect="non-scaling-stroke" />
@@ -454,55 +440,34 @@ export function HeroFigure() {
           <Cyl cx={132} cy={122} r={10} z={17} top="var(--vc-raised)" />
         </Part>
 
-        {/* the electrolytics, the small ceramic, and the jack */}
-        <Cyl cx={112} cy={206} r={18} z={26} />
-        <Box x={168} y={140} w={13} h={26} z={10} />
-        <Part href="/shop/power" aisle="Power" hit={[8, 258, 82, 68, 18]} tip={[px(36, 292) - 92, py(36, 292, 18) + 6]}>
-          <Box x={24} y={268} w={38} h={48} z={18} />
-          <Box x={10} y={280} w={17} h={24} z={12} fill="var(--vc-raised)" />
-          <g transform={at(12)}>
-            <circle cx="18" cy="292" r="4" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
-          </g>
+        <Part href="/shop/display" aisle="Display" hit={[62, 98, 50, 68, 8]} tip={[px(86), py(0, 111, 8) - 16]}>
+          <Cyl cx={86} cy={118} r={7} z={8} top="var(--vc-gold)" />
+          <ellipse className="vc-led-halo" cx={px(86)} cy={py(0, 118, 8)} rx={7} ry={7 * DEPTH} fill="var(--vc-gold)" />
+          <Cyl cx={86} cy={146} r={7} z={8} />
+          <ellipse className="vc-led-blink" cx={px(86)} cy={py(0, 146, 8)} rx={7} ry={7 * DEPTH} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.3" />
         </Part>
+
+        <Box x={168} y={140} w={13} h={26} z={10} />
+
+        <Part href="/shop/connectors" aisle="Connectors" hit={[8, 138, 54, 62, 14]} tip={[px(37), py(0, 144, 14) - 16]}>
+          <Box x={20} y={144} w={42} h={52} z={14} />
+          <Box x={12} y={157} w={14} h={26} z={9} fill="var(--vc-raised)" />
+        </Part>
+
+        {/* the crystal and its pads */}
+        <g transform={PLANE} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
+          <rect x="328" y="193" width="8" height="14" rx="1.5" vectorEffect="non-scaling-stroke" />
+          <rect x="388" y="193" width="8" height="14" rx="1.5" vectorEffect="non-scaling-stroke" />
+        </g>
+        <Box x={336} y={186} w={52} h={26} z={11} />
+        <g transform={at(11)}>
+          <rect x="342" y="191" width="40" height="16" rx="8" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+        </g>
+
+        <Cyl cx={112} cy={206} r={18} z={26} />
         <Cyl cx={156} cy={206} r={18} z={26} />
 
-        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 50, 0]} tip={[px(266, 62) - 10, py(266, 62) - 26]}>
-          <g transform={PLANE}>
-            {HEADER_X.map((x, i) => (
-              <g key={`t${x}`}>
-                <rect
-                  x={x}
-                  y="64"
-                  width="13"
-                  height="13"
-                  rx={i === 0 ? 1 : 6.5}
-                  fill="var(--vc-sheet)"
-                  stroke="var(--vc-line)"
-                  strokeWidth="1.3"
-                  vectorEffect="non-scaling-stroke"
-                />
-                <circle cx={x + 6.5} cy="70.5" r="2.6" fill="var(--vc-ground)" vectorEffect="non-scaling-stroke" />
-              </g>
-            ))}
-          </g>
-        </Part>
-
-        <Part href="/shop/power" aisle="Power" hit={[96, 266, 66, 50, 20]} tip={[px(129, 291) - 74, py(129, 291, 20) + 4]}>
-          <g transform={PLANE} stroke="var(--vc-muted)" strokeWidth="2.2" fill="none">
-            <path d="M114 314v10M133 314v10M152 314v10" vectorEffect="non-scaling-stroke" />
-          </g>
-          <Box x={96} y={268} w={66} h={46} z={20} />
-          <g transform={at(20)}>
-            <path d="M96 280h66" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" vectorEffect="non-scaling-stroke" />
-          </g>
-        </Part>
-
-        <Part
-          href="/shop/microcontrollers"
-          aisle="Microcontrollers"
-          hit={[198, 166, 116, 104, 10]}
-          tip={[px(256, 218), py(256, 218, 10) - 40]}
-        >
+        <Part href="/shop/microcontrollers" aisle="Microcontrollers" hit={[198, 166, 116, 104, 10]} tip={[px(256), py(0, 168, 10) - 16]}>
           <g transform={PLANE} fill="var(--vc-muted)">
             {CHIP_TOP_X.map((x) => (
               <rect key={`ct${x}`} x={x} y="160" width="4" height="8" rx="1" />
@@ -524,34 +489,7 @@ export function HeroFigure() {
           </g>
         </Part>
 
-        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 104, 64, 52, 6]} tip={[px(424, 119) + 78, py(424, 119, 6) - 16]}>
-          <Box x={396} y={110} w={56} h={18} z={6} />
-          <g transform={at(6)} stroke="var(--vc-line)" strokeWidth="1.4" fill="none">
-            <path d="M410 110v18M422 110v18M434 110v18" vectorEffect="non-scaling-stroke" />
-          </g>
-        </Part>
-
-        {/* the crystal, and its pads */}
-        <g transform={PLANE} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
-          <rect x="328" y="193" width="8" height="14" rx="1.5" vectorEffect="non-scaling-stroke" />
-          <rect x="388" y="193" width="8" height="14" rx="1.5" vectorEffect="non-scaling-stroke" />
-        </g>
-        <Box x={336} y={186} w={52} h={26} z={11} />
-        <g transform={at(11)}>
-          <rect
-            x="342"
-            y="191"
-            width="40"
-            height="16"
-            rx="8"
-            fill="none"
-            stroke="var(--vc-line)"
-            strokeWidth="1.2"
-            vectorEffect="non-scaling-stroke"
-          />
-        </g>
-
-        <Part href="/shop/sensors" aisle="Sensors" hit={[334, 224, 50, 64, 18]} tip={[px(359, 256) + 82, py(359, 256, 18) + 2]}>
+        <Part href="/shop/sensors" aisle="Sensors" hit={[334, 224, 50, 64, 18]} tip={[px(359), py(0, 226, 18) - 16]}>
           <g transform={PLANE} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
             {[230, 240, 254, 264].map((y) => (
               <rect key={y} x="330" y={y} width="6" height="4" rx="1" vectorEffect="non-scaling-stroke" />
@@ -568,28 +506,15 @@ export function HeroFigure() {
           </g>
         </Part>
 
-        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 340, 291, 50, 0]} tip={[px(266, 380) - 4, py(266, 380) + 26]}>
-          <g transform={PLANE}>
-            {HEADER_X.map((x, i) => (
-              <g key={`b${x}`}>
-                <rect
-                  x={x}
-                  y="356"
-                  width="13"
-                  height="13"
-                  rx={i === 0 ? 1 : 6.5}
-                  fill="var(--vc-sheet)"
-                  stroke="var(--vc-line)"
-                  strokeWidth="1.3"
-                  vectorEffect="non-scaling-stroke"
-                />
-                <circle cx={x + 6.5} cy="362.5" r="2.6" fill="var(--vc-ground)" vectorEffect="non-scaling-stroke" />
-              </g>
-            ))}
+        <Part href="/shop/power" aisle="Power" hit={[8, 258, 82, 68, 18]} tip={[px(36), py(0, 268, 18) - 16]}>
+          <Box x={24} y={268} w={38} h={48} z={18} />
+          <Box x={10} y={280} w={17} h={24} z={12} fill="var(--vc-raised)" />
+          <g transform={at(12)}>
+            <circle cx="18" cy="292" r="4" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
           </g>
         </Part>
 
-        <Part href="/shop/actuators" aisle="Actuators" hit={[388, 256, 60, 64, 16]} tip={[px(418, 288) + 74, py(418, 288, 16) + 18]}>
+        <Part href="/shop/actuators" aisle="Actuators" hit={[388, 256, 60, 64, 16]} tip={[px(418), py(0, 258, 20) - 16]}>
           <Box x={388} y={258} w={60} h={60} z={16} />
           <g transform={at(16)}>
             <g fill="none" stroke="var(--vc-line)" strokeWidth="1.3" vectorEffect="non-scaling-stroke">
@@ -598,31 +523,13 @@ export function HeroFigure() {
               <circle cx="395" cy="311" r="3.2" />
               <circle cx="441" cy="311" r="3.2" />
             </g>
-            <circle
-              cx="418"
-              cy="288"
-              r="26"
-              fill="var(--vc-raised)"
-              stroke="var(--vc-line)"
-              strokeWidth="1.3"
-              vectorEffect="non-scaling-stroke"
-            />
+            <circle cx="418" cy="288" r="26" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" />
             {/* the blades turn in the board's plane, and are projected after */}
             <g transform="translate(418 288)">
               <g className="vc-fan">
                 {BLADES.map((a) => (
                   <g key={a} transform={`rotate(${a})`}>
-                    <ellipse
-                      cx="0"
-                      cy="-16"
-                      rx="6.4"
-                      ry="10.5"
-                      transform="rotate(24 0 -16)"
-                      fill="var(--vc-sheet)"
-                      stroke="var(--vc-muted)"
-                      strokeWidth="1.4"
-                      vectorEffect="non-scaling-stroke"
-                    />
+                    <ellipse cx="0" cy="-16" rx="6.4" ry="10.5" transform="rotate(24 0 -16)" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
                   </g>
                 ))}
               </g>
@@ -630,6 +537,28 @@ export function HeroFigure() {
           </g>
           <Cyl cx={418} cy={288} r={7} z={20} top="var(--vc-sheet)" />
         </Part>
+
+        <Part href="/shop/power" aisle="Power" hit={[96, 266, 66, 56, 20]} tip={[px(129), py(0, 268, 20) - 16]}>
+          <g transform={PLANE} stroke="var(--vc-muted)" strokeWidth="2.2" fill="none">
+            <path d="M114 314v10M133 314v10M152 314v10" vectorEffect="non-scaling-stroke" />
+          </g>
+          <Box x={96} y={268} w={66} h={46} z={20} />
+          <g transform={at(20)}>
+            <path d="M96 280h66" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" vectorEffect="non-scaling-stroke" />
+          </g>
+        </Part>
+
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 336, 291, 56, 0]} tip={[px(266), py(0, 369) + 26]}>
+          <g transform={PLANE}>
+            {HEADER_X.map((x, i) => (
+              <g key={`b${x}`}>
+                <rect x={x} y="356" width="13" height="13" rx={i === 0 ? 1 : 6.5} fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" />
+                <circle cx={x + 6.5} cy="362.5" r="2.6" fill="var(--vc-ground)" vectorEffect="non-scaling-stroke" />
+              </g>
+            ))}
+          </g>
+        </Part>
+
       </svg>
     </div>
   );
