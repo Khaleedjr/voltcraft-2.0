@@ -247,7 +247,12 @@ function Part({
  * are given in plan x and height and projected together.
  */
 const ARM_Y = 284;
-const ap = (x: number, z: number): [number, number] => [px(x), py(0, ARM_Y, z)];
+/** The board's underside is a thickness down; that is where the bench is. */
+const BENCH = 9 * RISE;
+const ap = (x: number, z: number): [number, number] => [px(x), py(0, ARM_Y, z) + BENCH];
+/** A hinge: its offset from the joint above it, handed to CSS to pivot on. */
+const hinge = (from: [number, number], to: [number, number]) =>
+  ({ "--ox": `${(to[0] - from[0]).toFixed(1)}px`, "--oy": `${(to[1] - from[1]).toFixed(1)}px` }) as React.CSSProperties;
 
 function Seg({ a, b, w }: { a: [number, number]; b: [number, number]; w: number }) {
   return (
@@ -266,6 +271,10 @@ function Joint({ p, r }: { p: [number, number]; r: number }) {
     </>
   );
 }
+
+/** Each link as a vector from the joint it hangs off. */
+const ARM_UPPER: [number, number] = [-34, -25.5];
+const ARM_FORE: [number, number] = [-30, 19.8];
 
 const BOARD = { x: 44, y: 44, w: 432, h: 352 };
 const THICK = 9;
@@ -594,21 +603,38 @@ export function HeroFigure() {
 
 
         {/* The arm stands beside the board and reaches over it, so it is drawn
-            after everything: what it passes above, it covers. */}
+            after everything: what it passes above, it covers.
+
+            It is a chain, not a picture of one — each segment is hinged at the
+            joint above it and rotates about that joint, so the elbow carries
+            the forearm and the forearm carries the claw. The pivot lives in a
+            CSS custom property per joint, and the positioning translate sits on
+            the element as well as in the keyframes: a CSS transform replaces
+            the attribute outright, so if the translate lived only in the
+            animation, stopping the animation would collapse the arm onto the
+            origin. */}
         <Part href="/shop/actuators" aisle="Actuators" hit={[450, 254, 106, 99, 51]} tip={[px(503), py(0, ARM_Y, 91)]}>
-          {/* the board's top face is z = 0 and its underside is THICK below,
-              so the bench is there — the arm stands on it, not on the board */}
-          <g transform={`translate(0 ${(THICK * RISE).toFixed(2)})`}>
-          <Box x={492} y={262} w={56} h={44} z={7} />
-          <Cyl cx={520} cy={284} r={13} z={44} />
-          <Seg a={ap(520, 44)} b={ap(486, 80)} w={13} />
-          <Seg a={ap(486, 80)} b={ap(456, 52)} w={11} />
-          <Seg a={ap(456, 52)} b={ap(456, 42)} w={7} />
-          <Seg a={ap(456, 42)} b={ap(446, 32)} w={5} />
-          <Seg a={ap(456, 42)} b={ap(466, 32)} w={5} />
-          <Joint p={ap(520, 44)} r={9} />
-          <Joint p={ap(486, 80)} r={7.5} />
-          <Joint p={ap(456, 52)} r={6} />
+          <g transform={`translate(0 ${BENCH.toFixed(2)})`}>
+            <Box x={492} y={262} w={56} h={44} z={7} />
+            <Cyl cx={520} cy={284} r={13} z={44} />
+          </g>
+          <g className="vc-arm-a" style={hinge([0, 0], ap(520, 44))}>
+            <Seg a={[0, 0]} b={ARM_UPPER} w={13} />
+            <g className="vc-arm-b" style={hinge([0, 0], ARM_UPPER)}>
+              <Seg a={[0, 0]} b={ARM_FORE} w={11} />
+              <g className="vc-arm-c" style={hinge([0, 0], ARM_FORE)}>
+                <Seg a={[0, 0]} b={[0, 7.1]} w={7} />
+                <g className="vc-jaw-l" style={hinge([0, 0], [0, 7.1])}>
+                  <Seg a={[0, 0]} b={[-10, 7.1]} w={5} />
+                </g>
+                <g className="vc-jaw-r" style={hinge([0, 0], [0, 7.1])}>
+                  <Seg a={[0, 0]} b={[10, 7.1]} w={5} />
+                </g>
+                <Joint p={[0, 0]} r={6} />
+              </g>
+              <Joint p={[0, 0]} r={7.5} />
+            </g>
+            <Joint p={[0, 0]} r={9} />
           </g>
         </Part>
       </svg>
