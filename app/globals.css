@@ -432,6 +432,68 @@
   stroke-dasharray: 5 3;
 }
 
+/* The pick-and-place head is a chain turning in the board's own plane. The
+   positioning translate is on the element AND in every keyframe: a CSS
+   transform replaces the attribute outright, so with the translate only in
+   the animation, stopping it would fold the arm onto the origin — which is
+   precisely what prefers-reduced-motion does. */
+.vc-scara-a,
+.vc-scara-b,
+.vc-scara-c {
+  transform-box: view-box;
+  transform-origin: 0 0;
+  transform: translate(var(--ox), var(--oy));
+}
+.vc-scara-a {
+  animation: vc-scara-a 9s ease-in-out infinite;
+}
+.vc-scara-b {
+  animation: vc-scara-b 9s ease-in-out infinite;
+}
+.vc-scara-c {
+  animation: vc-scara-c 9s ease-in-out infinite;
+}
+@keyframes vc-scara-a {
+  0%,
+  100% {
+    transform: translate(var(--ox), var(--oy)) rotate(0deg);
+  }
+  40% {
+    transform: translate(var(--ox), var(--oy)) rotate(-16deg);
+  }
+  72% {
+    transform: translate(var(--ox), var(--oy)) rotate(9deg);
+  }
+}
+@keyframes vc-scara-b {
+  0%,
+  100% {
+    transform: translate(var(--ox), var(--oy)) rotate(0deg);
+  }
+  40% {
+    transform: translate(var(--ox), var(--oy)) rotate(26deg);
+  }
+  72% {
+    transform: translate(var(--ox), var(--oy)) rotate(-14deg);
+  }
+}
+/* the nozzle dips as the head arrives, the way a head sets a part down */
+@keyframes vc-scara-c {
+  0%,
+  100% {
+    transform: translate(var(--ox), var(--oy)) scale(1);
+  }
+  44%,
+  56% {
+    transform: translate(var(--ox), var(--oy)) scale(0.72);
+  }
+}
+.vc-board:hover .vc-scara-a,
+.vc-board:hover .vc-scara-b,
+.vc-board:hover .vc-scara-c {
+  animation-duration: 4s;
+}
+
 .vc-board:hover .vc-pulse {
   animation-duration: 1.1s;
 }
@@ -458,7 +520,10 @@
   /* the blanket rule above only makes an infinite animation fast, which would
      leave a pulse frozen mid-net; stop them and drop what only motion earned */
   .vc-fan,
-  .vc-led-blink {
+  .vc-led-blink,
+  .vc-scara-a,
+  .vc-scara-b,
+  .vc-scara-c {
     animation: none !important;
   }
   .vc-pulse,

@@ -169,6 +169,48 @@ function Part({
   );
 }
 
+/* ------------------------------------------------- the pick-and-place head */
+/**
+ * A SCARA head on a pedestal beside the board.
+ *
+ * The articulated arm this replaces could not work here: its joints hinge
+ * vertically, and from straight above that reads as overlapping rectangles
+ * with no sense of articulation at all. A SCARA turns in the horizontal
+ * plane, so a plan view is the view it is meant to be seen from — and a
+ * pick-and-place head is in any case the thing that actually belongs above a
+ * bare board.
+ *
+ * It is a chain: each link is hinged at the joint above it, the pivot handed
+ * to CSS per joint. The positioning translate sits on the element as well as
+ * in every keyframe, because a CSS transform replaces the attribute outright
+ * and the arm would otherwise fold onto the origin the moment the animation
+ * stopped.
+ */
+const HEAD_BASE: [number, number] = [566, 300];
+const HEAD_UPPER: [number, number] = [-50, -50];
+const HEAD_FORE: [number, number] = [-36, -45];
+const hinge = (to: [number, number]) =>
+  ({ "--ox": `${to[0]}px`, "--oy": `${to[1]}px` }) as React.CSSProperties;
+
+/** A link: an outline stroke with a lighter one inside, as the parts are. */
+function Seg({ b, w }: { b: [number, number]; w: number }) {
+  return (
+    <>
+      <line x1="0" y1="0" x2={b[0]} y2={b[1]} stroke="var(--vc-muted)" strokeWidth={w} strokeLinecap="round" />
+      <line x1="0" y1="0" x2={b[0]} y2={b[1]} stroke="var(--vc-sheet)" strokeWidth={w - 2.8} strokeLinecap="round" />
+    </>
+  );
+}
+
+function Hub({ r }: { r: number }) {
+  return (
+    <>
+      <circle cx="0" cy="0" r={r} fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+      <circle cx="0" cy="0" r={r * 0.36} fill="var(--vc-muted)" />
+    </>
+  );
+}
+
 const HEADER_X = Array.from({ length: 13 }, (_, i) => 128 + i * 22);
 /** The quad-flat pack's legs, stepped along each edge. */
 const CHIP_TOP_X = Array.from({ length: 9 }, (_, i) => 202 + i * 13);
@@ -190,16 +232,16 @@ const PIN_LABELS: [number, number, string][] = [
 
 export function HeroFigure() {
   return (
-    <div className="mx-auto w-full max-w-[460px]">
+    <div className="mx-auto w-full max-w-[540px]">
       <svg
-        viewBox="0 0 520 440"
+        viewBox="0 0 612 440"
         className="vc-board w-full"
         role="group"
         aria-label="Board diagram — each part links to its aisle"
       >
         {/* registration ticks, as on a drawing sheet */}
         <g stroke="var(--vc-line)" strokeWidth="1.5" fill="none">
-          <path d="M4 22V4h18M498 4h18v18M516 418v18h-18M22 436H4v-18" />
+          <path d="M4 22V4h18M590 4h18v18M608 418v18h-18M22 436H4v-18" />
         </g>
 
         <defs>
@@ -344,18 +386,18 @@ export function HeroFigure() {
 
 
         {/* ------------------------------------------------- the parts, as doors */}
-        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 35]} tip={[270, 40]}>
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 48, 291, 46]} tip={[270, 40]}>
           {HEADER_X.map((x, i) => (
             <Pad key={`t${x}`} x={x} y={64} first={i === 0} />
           ))}
         </Part>
-        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 347, 291, 35]} tip={[270, 390]}>
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 340, 291, 46]} tip={[270, 390]}>
           {HEADER_X.map((x, i) => (
             <Pad key={`b${x}`} x={x} y={356} first={i === 0} />
           ))}
         </Part>
 
-        <Part href="/shop/connectors" aisle="Connectors" hit={[10, 140, 56, 60]} tip={[76, 216]}>
+        <Part href="/shop/connectors" aisle="Connectors" hit={[10, 140, 52, 60]} tip={[76, 216]}>
           {/* the shell, then the mouth standing proud of it with the tongue
               inside — a socket reads by its opening, not by its outline */}
           <rect x="20" y="144" width="42" height="52" rx="3"
@@ -387,7 +429,7 @@ export function HeroFigure() {
           </g>
         </Part>
 
-        <Part href="/shop/display" aisle="Display" hit={[70, 100, 36, 64]} tip={[86, 176]}>
+        <Part href="/shop/display" aisle="Display" hit={[62, 100, 44, 64]} tip={[86, 176]}>
           <circle className="vc-led-halo" cx="86" cy="118" r="7" fill="var(--vc-gold)" />
           <circle cx="86" cy="118" r="7" fill="var(--vc-gold)" />
           <circle className="vc-led-blink" cx="86" cy="146" r="7"
@@ -450,7 +492,7 @@ export function HeroFigure() {
           <path d="M336 278h46" stroke="var(--vc-line)" strokeWidth="1.3" fill="none" />
         </Part>
 
-        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 102, 62, 35]} tip={[424, 152]}>
+        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 98, 62, 46]} tip={[424, 152]}>
           <rect x="396" y="110" width="56" height="18" rx="3"
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
           <path d="M410 110v18M422 110v18M434 110v18" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" />
@@ -487,6 +529,25 @@ export function HeroFigure() {
           </g>
           <circle cx="418" cy="288" r="7" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
           <circle cx="418" cy="288" r="2.5" fill="var(--vc-muted)" />
+        </Part>
+
+        {/* the head, on its pedestal beside the board */}
+        <Part href="/shop/actuators" aisle="Actuators" hit={[512, 246, 92, 92]} tip={[558, 372]}>
+          <rect x="540" y="274" width="52" height="52" rx="6"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <circle cx="566" cy="300" r="24" fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+          <g className="vc-scara-a" style={hinge(HEAD_BASE)}>
+            <Seg b={HEAD_UPPER} w={18} />
+            <g className="vc-scara-b" style={hinge(HEAD_UPPER)}>
+              <Seg b={HEAD_FORE} w={14} />
+              <g className="vc-scara-c" style={hinge(HEAD_FORE)}>
+                <circle cx="0" cy="0" r="10" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+                <circle cx="0" cy="0" r="4.5" fill="var(--vc-gold)" />
+              </g>
+              <Hub r={12} />
+            </g>
+            <Hub r={16} />
+          </g>
         </Part>
 
         {/* a dimension line, because the sheet always carries one */}
