@@ -57,7 +57,7 @@ export default function HomePage() {
         <Container>
           <ul className="vc-fig grid gap-y-3 py-4 text-muted sm:grid-cols-3">
             <li className="flex items-center gap-2">
-              <Bolt /> Same-day dispatch before 2pm
+              <Tag /> Priced in naira, stocked in Kaduna
             </li>
             <li className="flex items-center gap-2 sm:justify-center">
               <Truck /> Free delivery over {formatNaira(SITE.freeDeliveryThreshold)}
@@ -186,10 +186,11 @@ export default function HomePage() {
 }
 
 /* --- small inline glyphs for the value strip ----------------------------- */
-function Bolt() {
+function Tag() {
   return (
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" className="text-live" aria-hidden>
-      <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="text-live" aria-hidden>
+      <path d="M3 12.6V4.4A1.4 1.4 0 0 1 4.4 3h8.2L21 11.4 12.4 20z" strokeLinejoin="round" />
+      <circle cx="7.6" cy="7.6" r="1.5" />
     </svg>
   );
 }

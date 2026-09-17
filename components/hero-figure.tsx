@@ -192,6 +192,18 @@ const CHIP_TOP_X = Array.from({ length: 9 }, (_, i) => 202 + i * 13);
 const CHIP_SIDE_Y = Array.from({ length: 8 }, (_, i) => 174 + i * 12);
 /** Five blades, pitched, around the hub. */
 const BLADES = [0, 72, 144, 216, 288];
+/** Stitching vias, tying the pour together down each margin. */
+const STITCH_LEFT = [110, 136, 162, 188, 214, 240];
+const STITCH_RIGHT = [110, 136, 162, 188, 214, 240, 266, 292, 318, 344];
+/** What a few of the header pins are, printed beside them as a board does. */
+const PIN_LABELS: [number, number, string][] = [
+  [134.5, 380, "GND"],
+  [156.5, 380, "5V"],
+  [178.5, 380, "3V3"],
+  [354.5, 61, "D11"],
+  [376.5, 61, "D12"],
+  [398.5, 61, "D13"],
+];
 
 export function HeroFigure() {
   return (
@@ -207,9 +219,50 @@ export function HeroFigure() {
           <path d="M4 22V4h18M498 4h18v18M516 418v18h-18M22 436H4v-18" />
         </g>
 
-        {/* the board, and the keepout line inside its edge */}
+        <defs>
+          {/* the ground pour, hatched the way a board's copper fill is drawn.
+              The tile's diagonal runs corner to corner past both edges so it
+              joins up across cells instead of dashing. */}
+          <pattern id="vc-pour" patternUnits="userSpaceOnUse" width="7" height="7">
+            <path d="M-1 8L8-1" stroke="var(--vc-trace)" strokeWidth="0.9" fill="none" />
+          </pattern>
+          {/* Copper is held back from everything it must not touch, which is
+              what stops a pour reading as wallpaper: a clearance gap follows
+              every trace and rings every pad, and each mounting hole is kept
+              clear. Masked in black — the pour is simply absent there. */}
+          <mask id="vc-pour-keepout">
+            <rect x="58" y="58" width="404" height="324" rx="8" fill="#fff" />
+            <g
+              stroke="#000"
+              strokeWidth="9"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              {[...SIGNAL, ...LIVE, ...POWER].map((d) => (
+                <path key={d} d={d} />
+              ))}
+            </g>
+            <g fill="#000">
+              {HEADER_X.map((x) => (
+                <circle key={`mt${x}`} cx={x + 6.5} cy="70.5" r="11" />
+              ))}
+              {HEADER_X.map((x) => (
+                <circle key={`mb${x}`} cx={x + 6.5} cy="362.5" r="11" />
+              ))}
+              <circle cx="74" cy="74" r="17" />
+              <circle cx="446" cy="74" r="17" />
+              <circle cx="74" cy="366" r="17" />
+              <circle cx="446" cy="366" r="17" />
+            </g>
+          </mask>
+        </defs>
+
+        {/* the board, its pour, and the keepout line inside its edge */}
         <rect x="44" y="44" width="432" height="352" rx="16"
               fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.6" />
+        <rect x="58" y="58" width="404" height="324" rx="8"
+              fill="url(#vc-pour)" mask="url(#vc-pour-keepout)" opacity="0.38" />
         <rect x="54" y="54" width="412" height="332" rx="10"
               fill="none" stroke="var(--vc-line-soft)" strokeWidth="1.2" />
 
@@ -258,6 +311,23 @@ export function HeroFigure() {
           <circle cx="446" cy="74" r="3.5" />
           <circle cx="74" cy="366" r="3.5" />
           <circle cx="446" cy="366" r="3.5" />
+        </g>
+
+        {/* stitching vias down each margin, tying the pour together */}
+        <g fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.2">
+          {STITCH_LEFT.map((y) => (
+            <circle key={`sl${y}`} cx="68" cy={y} r="2.7" />
+          ))}
+          {STITCH_RIGHT.map((y) => (
+            <circle key={`sr${y}`} cx="458" cy={y} r="2.7" />
+          ))}
+        </g>
+
+        {/* what a few of the header pins are */}
+        <g fill="var(--vc-faint)" fontFamily="var(--font-mono)" fontSize="7" textAnchor="middle">
+          {PIN_LABELS.map(([x, y, t]) => (
+            <text key={t} x={x} y={y}>{t}</text>
+          ))}
         </g>
 
         <Via x={176} y={188} />
