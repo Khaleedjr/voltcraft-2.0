@@ -1,109 +1,133 @@
 import Link from "next/link";
 
 /**
- * The hero's figure: an ESP32 development board, drawn the way the rest of the
- * site is drawn — a plate on the drawing sheet, line work in ink, current in
- * gold.
+ * The hero's figure: an Arduino Uno, drawn the way the rest of the site is
+ * drawn — a plate on the drawing sheet, line work in ink, current in gold.
  *
  * It is a replica rather than a generic board, so it is built to the real
- * thing's proportions: 25.4 x 51.4mm, which is the 200 x 408 the board is drawn
- * at here, at 7.87 units to the millimetre. Everything else follows from that
- * scale — 2.54mm header pitch is 20 units, the module's 1.27mm castellations
- * are 10, an 0805 passive is 16 x 10.
+ * thing's proportions: 68.6 x 53.4mm, which is the 540 x 420 the board is
+ * drawn at here, at 7.87 units to the millimetre. Everything else follows from
+ * that scale — 2.54mm header pitch is 20 units, a DIP-28's body is 276 long,
+ * an 0805 passive is 16 x 10.
  *
- * What makes it read as an ESP32 at a glance is the silhouette, in this order:
- * the shield can with the meandered antenna overhanging the top edge, the two
- * long header rows down the sides, and the micro-USB flanked by EN and BOOT at
- * the bottom. That is why those four are drawn most carefully.
+ * What makes it read as an Uno at a glance is the silhouette, in this order:
+ * the outline itself, with its square top-right corner stepped in above the
+ * chamfer while the other three are rounded; the USB-B and the barrel jack
+ * standing off the left edge; the four header groups with the famous 0.16in
+ * break between D7 and D8; and the DIP-28 in its socket across the lower half.
+ * Those are what is drawn most carefully.
  *
  * The routing is done the way a board is routed:
  *
  *   - Pads are rings with a hole through them, and pin 1 of each header is
- *     square. The module's castellations run at half the header pitch, as they
- *     do on a WROOM.
+ *     square. The DIP has its end notch and a pin-1 dimple beside it.
  *   - Every trace leaves a pad straight, turns at 45 degrees and arrives
  *     square. No trace crosses another and none runs through a component body,
  *     because on this layer neither can happen. Where a net has to get past
- *     something — or, as on the real board, simply continues underneath the
- *     module — it ends on a via.
+ *     something — or, as on the real board, simply continues on the back — it
+ *     ends on a via.
  *   - Power is drawn heavier than signal, as it is laid out heavier.
  *
- * The board is powered rather than posed: the power LED breathes, the GPIO2
- * LED blinks, the antenna radiates, and pulses of current run the live nets —
- * USB in to the bridge, the bridge's UART up to the module, the regulator's
- * 3V3 back out. It is CSS on SVG — no script, nothing to hydrate — and it
- * stops dead under prefers-reduced-motion, where the board falls back to the
- * drawing.
+ * The board is powered rather than posed: ON sits lit and breathing, L blinks
+ * the way a fresh board's does, TX and RX flicker against each other, and
+ * pulses of current run the live nets. It is CSS on SVG — no script, nothing
+ * to hydrate — and it stops dead under prefers-reduced-motion, where the board
+ * falls back to the drawing.
  *
  * And the parts are doors. Each one that maps honestly onto an aisle is a link
- * into it: the module to microcontrollers, the headers and usb to connectors,
- * the regulator to power, the LEDs to display, EN and BOOT to switches. A
- * DevKit carries no sensor and nothing that moves, so sensors and actuators
- * have no door here — the headline keeps its own Sensors link. The USB-UART
- * bridge is drawn but is not a door either: no aisle sells one.
+ * into it: the DIP to microcontrollers, the four header groups, the USB-B and
+ * both ICSP headers to connectors, the barrel jack and the regulator to power,
+ * the indicators to display, reset to switches. An Uno carries no sensor and
+ * nothing that moves, so sensors and actuators have no door here — the
+ * headline keeps its own Sensors link. The USB-serial chip, the crystal and
+ * the electrolytics are drawn but are not doors: no aisle sells one.
  *
  * Because the drawing contains links it cannot be role="img": that role makes
  * everything inside it presentational and would hide every one of them from
  * assistive tech.
  */
 
+/** The Uno's outline: three rounded corners, and the stepped, chamfered one. */
+const BOARD =
+  "M62 44 H572 V162 L592 182 V454 A10 10 0 0 1 582 464 H62 " +
+  "A10 10 0 0 1 52 454 V54 A10 10 0 0 1 62 44 Z";
+const BOARD_INSET =
+  "M70 52 H564 V158 L584 178 V446 A8 8 0 0 1 576 454 H70 " +
+  "A8 8 0 0 1 62 446 V60 A8 8 0 0 1 70 52 Z";
+
 /** Signal runs: the fine copper that carries no current in this drawing. */
 const SIGNAL = [
-  /* module castellations out to the header pins beside them */
-  "M89.5 132 H99",
-  "M89.5 152 H99",
-  "M89.5 172 H99",
-  "M89.5 192 H99",
-  "M89.5 212 H99",
-  "M89.5 252 H99",
-  "M250.5 132 H241",
-  "M250.5 152 H241",
-  "M250.5 172 H241",
-  "M250.5 192 H241",
-  "M250.5 212 H241",
-  "M250.5 232 H241",
-  "M250.5 252 H241",
-  /* the pins below the module drop through and run underneath it */
-  "M89.5 272 H97",
-  "M89.5 292 H97",
-  "M89.5 312 H97",
-  "M89.5 332 H97",
-  "M89.5 352 H97",
-  "M89.5 372 H97",
-  "M89.5 392 H97",
-  "M250.5 272 H243",
-  "M250.5 292 H243",
-  "M250.5 312 H243",
-  "M250.5 332 H243",
-  "M250.5 352 H243",
-  "M250.5 372 H243",
-  "M250.5 392 H243",
-  /* the two buttons, straight down to a via */
-  "M127 422 V414",
-  "M234 422 V414",
-  /* the LEDs' return to ground */
-  "M192 292 V304",
-  "M218 292 V304",
+  /* D0-D7 drop through and run to the chip on the back, as they do */
+  "M204 73 V86",
+  "M224 73 V86",
+  "M244 73 V86",
+  "M264 73 V86",
+  "M284 73 V86",
+  "M304 73 V86",
+  "M324 73 V86",
+  "M344 73 V86",
+  /* the three at the far end of the digital header do the same */
+  "M516 73 V86",
+  "M536 73 V86",
+  "M556 73 V86",
+  /* D8-D12 run straight down the open lane into the chip's top pins */
+  "M376 73 V301",
+  "M416 73 V301",
+  "M456 73 V301",
+  "M496 73 V301",
+  /* the analog pins come up into the chip's bottom row */
+  "M356 437 V384",
+  "M396 437 V384",
+  "M416 437 V384",
+  "M456 437 V384",
+  /* the crystal, onto the two pins beside it */
+  "M248 282 V296 H267 L272 301",
+  "M350 282 V295 L356 301",
+  /* both ICSP headers continue on the back */
+  "M516 251 V262",
+  "M536 251 V262",
+  "M556 251 V262",
+  "M140 87 V100",
+  "M160 87 V100",
+  "M180 87 V100",
+  /* reset, and the usb-serial chip's lines to the processor */
+  "M129 96 V108",
+  "M247 128 H262",
+  "M247 146 H262",
+  /* L is driven from D13 underneath */
+  "M196 224 V236",
+  /* the power header's rails all live in the pour */
+  "M170 437 V430",
+  "M190 437 V430",
+  "M210 437 V430",
+  "M230 437 V430",
+  "M250 437 V430",
+  "M270 437 V430",
+  "M290 437 V430",
+  "M310 437 V430",
 ];
 
 /** Live runs: the ones the pulses travel. */
 const LIVE = [
-  /* usb data, up to the bridge */
-  "M162 420 V394",
-  "M178 420 V394",
-  /* the bridge's uart, up to the module */
-  "M162 342 V271 L149 258",
-  "M170 342 V265 L163 258",
-  /* the two indicators */
-  "M191 258 V272",
-  "M205 258 V265 L212 272",
+  /* usb data, across to the usb-serial chip */
+  "M162 128 H180",
+  "M162 146 H180",
+  /* that chip driving the two serial indicators */
+  "M195 171 V186",
+  "M222 171 V186",
+  /* three of the digital lines, running the length of the board */
+  "M396 73 V301",
+  "M436 73 V301",
+  "M476 73 V301",
+  /* two of the analog ones */
+  "M376 437 V384",
+  "M436 437 V384",
 ];
 
-/** Power: 5V in off the usb, through the regulator, 3V3 back out. */
+/** Power: the jack in, through the regulator, and 5V up to the ON indicator. */
 const POWER = [
-  "M154 420 V408 L144 398 H113 V318",
-  "M135 270 V258",
-  "M89.5 232 H99",
+  "M166 416 V420 H213 L219 414",
+  "M230 360 V224",
 ];
 
 /** A through-hole pad: a ring with a hole. Pin 1 is square, as on a real board. */
@@ -180,30 +204,41 @@ function Part({
   );
 }
 
-/** 15 pins a side at 2.54mm, which is 20 units at this scale. */
-const HEADER_Y = Array.from({ length: 15 }, (_, i) => 132 + i * 20);
-/** The module's castellations, at half the header pitch as a WROOM's are. */
-const CAST_Y = Array.from({ length: 13 }, (_, i) => 132 + i * 10);
-/** Its bottom row, the six that face down the board. */
-const CAST_BOT_X = [135, 149, 163, 177, 191, 205];
-/** Where the lower pins drop through, down each margin. */
-const DROP_Y = [272, 292, 312, 332, 352, 372, 392];
-/** The bridge's pads, a QFN with five a side. */
-const QFN_X = [154, 162, 170, 178, 186];
-const QFN_Y = [354, 362, 370, 378, 386];
+/* The four header groups, with the 0.16in break between D7 and D8 that every
+   shield has had to live with since 2007. */
+const DIGITAL_HI = Array.from({ length: 10 }, (_, i) => 376 + i * 20);
+const DIGITAL_LO = Array.from({ length: 8 }, (_, i) => 204 + i * 20);
+const POWER_HDR = Array.from({ length: 8 }, (_, i) => 170 + i * 20);
+const ANALOG_HDR = Array.from({ length: 6 }, (_, i) => 356 + i * 20);
+/** The DIP-28's legs, fourteen a side. */
+const DIP_X = Array.from({ length: 14 }, (_, i) => 276 + i * 20);
+/** The USB-serial chip's pads, a TQFP with five a side. */
+const U2_X = [195, 204, 213, 222, 231];
+const U2_Y = [119, 128, 137, 146, 155];
+/** Both ICSP headers are 2x3. */
+const ICSP = [516, 536, 556];
+const ICSP2 = [140, 160, 180];
+/** Where the header pins drop through. */
+const DROP_HI = [516, 536, 556];
+const MOUNT: [number, number][] = [
+  [70, 285],
+  [70, 452],
+  [566, 100],
+  [566, 425],
+];
 
 export function HeroFigure() {
   return (
-    <div className="mx-auto w-full max-w-[286px]">
+    <div className="mx-auto w-full max-w-[420px]">
       <svg
-        viewBox="0 0 340 540"
+        viewBox="0 0 650 520"
         className="vc-board w-full"
         role="group"
-        aria-label="ESP32 board diagram — each part links to its aisle"
+        aria-label="Arduino Uno board diagram — each part links to its aisle"
       >
         {/* registration ticks, as on a drawing sheet */}
         <g stroke="var(--vc-line)" strokeWidth="1.5" fill="none">
-          <path d="M4 22V4h18M318 4h18v18M336 518v18h-18M22 536H4v-18" />
+          <path d="M4 22V4h18M628 4h18v18M646 498v18h-18M22 516H4v-18" />
         </g>
 
         <defs>
@@ -213,64 +248,41 @@ export function HeroFigure() {
           <pattern id="vc-pour" patternUnits="userSpaceOnUse" width="6" height="6">
             <path d="M-1 7L7-1" stroke="var(--vc-trace)" strokeWidth="0.85" fill="none" />
           </pattern>
-          {/* the shield can is stamped metal: a regular grid of raised dimples,
-              which is what a WROOM's lid actually looks like up close */}
-          <pattern id="vc-can" patternUnits="userSpaceOnUse" width="10" height="10">
-            <circle cx="5" cy="5" r="0.85" fill="var(--vc-line)" />
-          </pattern>
           {/* Copper is held back from everything it must not touch, which is
               what stops a pour reading as wallpaper: a clearance gap follows
-              every trace, rings every pad and rings every via. Masked in
-              black — the pour is simply absent there. */}
+              every trace, rings every pad and via, and each mounting hole is
+              kept clear. Masked in black — the pour is simply absent there. */}
           <mask id="vc-pour-keepout">
-            <rect x="78" y="82" width="184" height="392" rx="4" fill="#fff" />
+            <path d={BOARD_INSET} fill="#fff" />
             <g stroke="#000" strokeWidth="7" fill="none" strokeLinecap="round" strokeLinejoin="round">
               {[...SIGNAL, ...LIVE, ...POWER].map((d) => (
                 <path key={d} d={d} />
               ))}
             </g>
             <g fill="#000">
-              {HEADER_Y.map((y) => (
-                <circle key={`ml${y}`} cx="83" cy={y} r="10" />
+              {[...DIGITAL_HI, ...DIGITAL_LO].map((x) => (
+                <circle key={`kt${x}`} cx={x} cy="66" r="10" />
               ))}
-              {HEADER_Y.map((y) => (
-                <circle key={`mr${y}`} cx="257" cy={y} r="10" />
+              {[...POWER_HDR, ...ANALOG_HDR].map((x) => (
+                <circle key={`kb${x}`} cx={x} cy="444" r="10" />
               ))}
-              {DROP_Y.map((y) => (
-                <circle key={`vl${y}`} cx="97" cy={y} r="6.5" />
-              ))}
-              {DROP_Y.map((y) => (
-                <circle key={`vr${y}`} cx="243" cy={y} r="6.5" />
+              {ICSP.map((x) => [224, 244].map((y) => (
+                <circle key={`ki${x}-${y}`} cx={x} cy={y} r="10" />
+              )))}
+              {ICSP2.map((x) => [62, 80].map((y) => (
+                <circle key={`kj${x}-${y}`} cx={x} cy={y} r="10" />
+              )))}
+              {MOUNT.map(([x, y]) => (
+                <circle key={`km${x}-${y}`} cx={x} cy={y} r="18" />
               ))}
             </g>
           </mask>
         </defs>
 
-        {/* the antenna's field, leaving the board */}
-        <g
-          fill="none"
-          stroke="var(--vc-gold)"
-          strokeWidth="2.6"
-          strokeLinecap="round"
-          aria-hidden
-        >
-          {[0, 0.95, 1.9].map((delay) => (
-            <path
-              key={delay}
-              className="vc-rf"
-              d="M130.1 58.5A62 62 0 0 1 209.9 58.5"
-              style={{ animationDelay: `${delay}s` }}
-            />
-          ))}
-        </g>
-
         {/* the board, its pour, and the keepout line inside its edge */}
-        <rect x="70" y="74" width="200" height="408" rx="5"
-              fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="2" />
-        <rect x="78" y="82" width="184" height="392" rx="4"
-              fill="url(#vc-pour)" mask="url(#vc-pour-keepout)" opacity="0.38" />
-        <rect x="75" y="79" width="190" height="398" rx="4"
-              fill="none" stroke="var(--vc-line-soft)" strokeWidth="1" />
+        <path d={BOARD} fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="2" />
+        <path d={BOARD_INSET} fill="url(#vc-pour)" mask="url(#vc-pour-keepout)" opacity="0.38" />
+        <path d={BOARD_INSET} fill="none" stroke="var(--vc-line-soft)" strokeWidth="1" />
 
         {/* ---------------------------------------------------------- traces */}
         <g fill="none" stroke="var(--vc-trace)" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
@@ -291,7 +303,7 @@ export function HeroFigure() {
               className="vc-pulse"
               d={d}
               strokeWidth="3"
-              style={{ animationDelay: `${((i * 0.41) % 2.4).toFixed(2)}s` }}
+              style={{ animationDelay: `${((i * 0.37) % 2.4).toFixed(2)}s` }}
             />
           ))}
           {POWER.map((d, i) => (
@@ -300,192 +312,232 @@ export function HeroFigure() {
               className="vc-pulse"
               d={d}
               strokeWidth="3.8"
-              style={{ animationDelay: `${(0.2 + i * 0.5).toFixed(2)}s` }}
+              style={{ animationDelay: `${(0.25 + i * 0.7).toFixed(2)}s` }}
             />
           ))}
         </g>
 
-        {/* the vias the lower pins and the buttons drop through */}
-        {DROP_Y.map((y) => <Via key={`dl${y}`} x={97} y={y} />)}
-        {DROP_Y.map((y) => <Via key={`dr${y}`} x={243} y={y} />)}
-        <Via x={127} y={414} />
-        <Via x={234} y={414} />
-        <Via x={192} y={304} />
-        <Via x={218} y={304} />
+        {/* mounting holes */}
+        <g fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.4">
+          {MOUNT.map(([x, y]) => <circle key={`h${x}-${y}`} cx={x} cy={y} r="9" />)}
+        </g>
+        <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.1">
+          {MOUNT.map(([x, y]) => <circle key={`hi${x}-${y}`} cx={x} cy={y} r="4" />)}
+        </g>
+
+        {/* the vias every net that continues on the back drops through */}
+        {DIGITAL_LO.map((x) => <Via key={`vl${x}`} x={x} y={86} />)}
+        {DROP_HI.map((x) => <Via key={`vh${x}`} x={x} y={86} />)}
+        {ICSP.map((x) => <Via key={`vi${x}`} x={x} y={262} />)}
+        {ICSP2.map((x) => <Via key={`vj${x}`} x={x} y={100} />)}
+        {POWER_HDR.map((x) => <Via key={`vp${x}`} x={x} y={430} />)}
+        <Via x={129} y={108} />
+        <Via x={262} y={128} />
+        <Via x={262} y={146} />
+        <Via x={196} y={236} />
 
         {/* ------------------------------------------ passives, drawing only */}
-        <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
-          <rect x="122" y="330" width="18" height="12" rx="1.5" />
-          <rect x="122" y="356" width="18" height="12" rx="1.5" />
-          <rect x="214" y="340" width="18" height="12" rx="1.5" />
+        {/* the two electrolytics beside the power section */}
+        <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
+          <circle cx="182" cy="320" r="21" />
+          <circle cx="182" cy="372" r="21" />
         </g>
-        <g fill="var(--vc-muted)">
-          <rect x="122" y="330" width="4.5" height="12" rx="1" />
-          <rect x="135.5" y="330" width="4.5" height="12" rx="1" />
-          <rect x="122" y="356" width="4.5" height="12" rx="1" />
-          <rect x="135.5" y="356" width="4.5" height="12" rx="1" />
-          <rect x="214" y="340" width="4.5" height="12" rx="1" />
-          <rect x="227.5" y="340" width="4.5" height="12" rx="1" />
+        <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.2">
+          <circle cx="182" cy="320" r="13" />
+          <circle cx="182" cy="372" r="13" />
+        </g>
+        <g stroke="var(--vc-line)" strokeWidth="1.4" fill="none">
+          <path d="M173 313a13 13 0 0 0 0 14" />
+          <path d="M173 365a13 13 0 0 0 0 14" />
         </g>
 
-        {/* the usb-uart bridge: a QFN, drawn but not a door — no aisle sells one */}
+        {/* the 0805s scattered over the open copper, as they are on the real
+            board: two by the usb-serial chip, one by each header */}
+        <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
+          <rect x="286" y="136" width="16" height="10" rx="1.5" />
+          <rect x="286" y="162" width="16" height="10" rx="1.5" />
+          <rect x="320" y="136" width="16" height="10" rx="1.5" />
+          <rect x="505" y="272" width="16" height="10" rx="1.5" />
+        </g>
         <g fill="var(--vc-muted)">
-          {QFN_X.map((x) => (
-            <rect key={`qt${x}`} x={x - 3} y="342" width="6" height="6" rx="1" />
-          ))}
-          {QFN_X.map((x) => (
-            <rect key={`qb${x}`} x={x - 3} y="388" width="6" height="6" rx="1" />
-          ))}
-          {QFN_Y.map((y) => (
-            <rect key={`ql${y}`} x="144" y={y - 3} width="6" height="6" rx="1" />
-          ))}
-          {QFN_Y.map((y) => (
-            <rect key={`qr${y}`} x="190" y={y - 3} width="6" height="6" rx="1" />
+          {[[286, 136], [286, 162], [320, 136], [505, 272]].map(([x, y]) => (
+            <g key={`r${x}-${y}`}>
+              <rect x={x} y={y} width="4.5" height="10" rx="1" />
+              <rect x={x + 11.5} y={y} width="4.5" height="10" rx="1" />
+            </g>
           ))}
         </g>
-        <rect x="150" y="348" width="40" height="40" rx="3"
+
+        {/* the 16MHz crystal, in its can, beside the processor */}
+        <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5">
+          <rect x="243" y="268" width="10" height="14" rx="1.5" />
+          <rect x="345" y="268" width="10" height="14" rx="1.5" />
+        </g>
+        <rect x="258" y="258" width="87" height="34" rx="16"
+              fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.7" />
+        <rect x="265" y="264" width="73" height="22" rx="11"
+              fill="none" stroke="var(--vc-line)" strokeWidth="1.1" />
+
+        {/* the usb-serial chip: a TQFP, drawn but not a door — no aisle sells one */}
+        <g fill="var(--vc-muted)">
+          {U2_X.map((x) => (
+            <rect key={`ut${x}`} x={x - 3} y="104" width="6" height="6" rx="1" />
+          ))}
+          {U2_X.map((x) => (
+            <rect key={`ub${x}`} x={x - 3} y="165" width="6" height="6" rx="1" />
+          ))}
+          {U2_Y.map((y) => (
+            <rect key={`ul${y}`} x="180" y={y - 3} width="6" height="6" rx="1" />
+          ))}
+          {U2_Y.map((y) => (
+            <rect key={`ur${y}`} x="241" y={y - 3} width="6" height="6" rx="1" />
+          ))}
+        </g>
+        <rect x="186" y="110" width="55" height="55" rx="3"
               fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
-        <circle cx="157" cy="355" r="2.6" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
+        <circle cx="194" cy="118" r="3" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
 
         {/* ------------------------------------------- the parts, as doors */}
-        <Part href="/shop/connectors" aisle="Connectors" hit={[60, 122, 31, 300]} tip={[60, 112]}>
-          {HEADER_Y.map((y, i) => (
-            <Pad key={`hl${y}`} x={83} y={y} first={i === 0} />
+        <Part href="/shop/connectors" aisle="Connectors" hit={[196, 42, 368, 48]} tip={[380, 30]}>
+          {DIGITAL_LO.map((x, i) => (
+            <Pad key={`dl${x}`} x={x} y={66} first={i === 0} />
           ))}
-        </Part>
-        <Part href="/shop/connectors" aisle="Connectors" hit={[249, 122, 31, 300]} tip={[278, 112]}>
-          {HEADER_Y.map((y, i) => (
-            <Pad key={`hr${y}`} x={257} y={y} first={i === 0} />
+          {DIGITAL_HI.map((x, i) => (
+            <Pad key={`dh${x}`} x={x} y={66} first={i === 0} />
           ))}
         </Part>
 
-        <Part href="/shop/microcontrollers" aisle="Microcontrollers" hit={[96, 52, 148, 210]} tip={[170, 34]}>
-          {/* the castellations, running out from under both long edges */}
+        <Part href="/shop/connectors" aisle="Connectors" hit={[162, 422, 302, 46]} tip={[313, 480]}>
+          {POWER_HDR.map((x, i) => (
+            <Pad key={`ph${x}`} x={x} y={444} first={i === 0} />
+          ))}
+          {ANALOG_HDR.map((x, i) => (
+            <Pad key={`ah${x}`} x={x} y={444} first={i === 0} />
+          ))}
+        </Part>
+
+        <Part href="/shop/connectors" aisle="Connectors" hit={[38, 106, 126, 106]} tip={[101, 228]}>
+          {/* USB-B: the shell, the mouth standing past the board's edge, and
+              the tongue inside — a socket reads by its opening */}
           <g fill="var(--vc-muted)">
-            {CAST_Y.map((y) => (
-              <rect key={`cl${y}`} x="95" y={y - 2.6} width="8" height="5.2" rx="1" />
-            ))}
-            {CAST_Y.map((y) => (
-              <rect key={`cr${y}`} x="237" y={y - 2.6} width="8" height="5.2" rx="1" />
-            ))}
-            {CAST_BOT_X.map((x) => (
-              <rect key={`cb${x}`} x={x - 2.6} y="254" width="5.2" height="8" rx="1" />
+            {[128, 146].map((y) => (
+              <rect key={`up${y}`} x="150" y={y - 5} width="12" height="10" rx="1" />
             ))}
           </g>
-          {/* the antenna's own board, kept clear of copper, and its meander */}
-          <rect x="99" y="58" width="142" height="48" rx="2"
-                fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
-          <path
-            d={
-              "M113 98 V72 H123 V96 H133 V72 H143 V96 H153 V72 H163 V96 " +
-              "H173 V72 H183 V96 H193 V72 H203 V96 H213 V72 H223 V107"
-            }
-            fill="none"
-            stroke="var(--vc-gold)"
-            strokeWidth="1.9"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-          {/* the shield can, with the spot welds down its seam */}
-          <rect x="99" y="106" width="142" height="152" rx="3"
-                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.8" />
-          <rect x="105" y="112" width="130" height="140" rx="2"
-                fill="url(#vc-can)" stroke="var(--vc-line)" strokeWidth="1.1" opacity="0.6" />
-          <path d="M105 119h130" stroke="var(--vc-line-soft)" strokeWidth="1" fill="none" />
-          <g fill="var(--vc-line)">
-            {[120, 148, 176, 204, 232].map((x) => (
-              <circle key={`wt${x}`} cx={x} cy="109.5" r="1.5" />
-            ))}
-            {[120, 148, 176, 204, 232].map((x) => (
-              <circle key={`wb${x}`} cx={x} cy="254.5" r="1.5" />
-            ))}
-            {[130, 160, 190, 220].map((y) => (
-              <circle key={`wl${y}`} cx="101.5" cy={y} r="1.5" />
-            ))}
-            {[130, 160, 190, 220].map((y) => (
-              <circle key={`wr${y}`} cx="238.5" cy={y} r="1.5" />
-            ))}
-          </g>
+          <rect x="50" y="112" width="100" height="94" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.7" />
+          <path d="M62 112v94M138 112v94" stroke="var(--vc-line)" strokeWidth="1.1" fill="none" />
+          <rect x="34" y="128" width="20" height="62" rx="3"
+                fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.7" />
+          <rect x="40" y="140" width="10" height="38" rx="2"
+                fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
         </Part>
 
-        <Part href="/shop/power" aisle="Power" hit={[100, 264, 60, 60]} tip={[130, 336]}>
+        <Part href="/shop/connectors" aisle="Connectors" hit={[128, 48, 62, 50]} tip={[159, 112]}>
+          {ICSP2.map((x) =>
+            [62, 80].map((y) => (
+              <Pad key={`i2${x}-${y}`} x={x} y={y} first={x === 140 && y === 62} />
+            )),
+          )}
+        </Part>
+
+        <Part href="/shop/connectors" aisle="Connectors" hit={[506, 210, 62, 52]} tip={[537, 200]}>
+          {ICSP.map((x) =>
+            [224, 244].map((y) => (
+              <Pad key={`i1${x}-${y}`} x={x} y={y} first={x === 516 && y === 224} />
+            )),
+          )}
+        </Part>
+
+        <Part href="/shop/power" aisle="Power" hit={[40, 350, 120, 88]} tip={[100, 460]}>
+          {/* the barrel jack: housing, the barrel standing out of it past the
+              board's edge, and the centre pin inside */}
+          <g fill="var(--vc-muted)">
+            {[374, 416].map((y) => (
+              <rect key={`jp${y}`} x="154" y={y - 6} width="12" height="12" rx="1" />
+            ))}
+          </g>
+          <rect x="56" y="359" width="98" height="71" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.7" />
+          <path d="M68 359v71" stroke="var(--vc-line)" strokeWidth="1.1" fill="none" />
+          <rect x="36" y="374" width="24" height="42" rx="12"
+                fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.7" />
+          <circle cx="48" cy="395" r="6" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+        </Part>
+
+        <Part href="/shop/power" aisle="Power" hit={[206, 356, 60, 62]} tip={[236, 344]}>
           {/* SOT-223: the wide tab on one side, three pins on the other */}
-          <rect x="110" y="270" width="39" height="12" rx="1.5"
+          <rect x="216" y="360" width="39" height="12" rx="1.5"
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4" />
           <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
-            <rect x="108" y="306" width="10" height="12" rx="1.5" />
-            <rect x="126" y="306" width="10" height="12" rx="1.5" />
-            <rect x="144" y="306" width="10" height="12" rx="1.5" />
+            <rect x="214" y="402" width="10" height="12" rx="1.5" />
+            <rect x="232" y="402" width="10" height="12" rx="1.5" />
+            <rect x="250" y="402" width="10" height="12" rx="1.5" />
           </g>
-          <rect x="104" y="280" width="51" height="28" rx="2"
+          <rect x="210" y="370" width="51" height="32" rx="2"
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
-          <path d="M104 288h51" stroke="var(--vc-line)" strokeWidth="1.1" fill="none" />
+          <path d="M210 379h51" stroke="var(--vc-line)" strokeWidth="1.1" fill="none" />
         </Part>
 
-        <Part href="/shop/display" aisle="Display" hit={[180, 266, 50, 46]} tip={[205, 324]}>
-          {/* power, breathing — and GPIO2, blinking as a fresh board's does */}
-          <circle className="vc-led-halo" cx="192" cy="282" r="6.5" fill="var(--vc-gold)" />
+        <Part href="/shop/display" aisle="Display" hit={[178, 178, 68, 52]} tip={[212, 246]}>
+          {/* TX and RX flickering against each other, L blinking, and ON lit */}
+          <circle className="vc-led-halo" cx="228" cy="219" r="9" fill="var(--vc-gold)" />
           <g fill="var(--vc-muted)">
-            <rect x="186" y="272" width="12" height="5" rx="1" />
-            <rect x="186" y="287" width="12" height="5" rx="1" />
-            <rect x="212" y="272" width="12" height="5" rx="1" />
-            <rect x="212" y="287" width="12" height="5" rx="1" />
+            {[188, 220].map((x) =>
+              [182, 210].map((y) => (
+                <g key={`lc${x}-${y}`}>
+                  <rect x={x} y={y} width="16" height="5" rx="1" />
+                  <rect x={x} y={y + 15} width="16" height="5" rx="1" />
+                </g>
+              )),
+            )}
           </g>
-          <rect x="186" y="276" width="12" height="12" rx="1.5" fill="var(--vc-gold)" />
-          <rect className="vc-led-blink" x="212" y="276" width="12" height="12" rx="1.5"
+          <rect className="vc-led-tx" x="188" y="186" width="16" height="10" rx="1.5"
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.3" />
+          <rect className="vc-led-rx" x="220" y="186" width="16" height="10" rx="1.5"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.3" />
+          <rect className="vc-led-blink" x="188" y="214" width="16" height="10" rx="1.5"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.3" />
+          <rect x="220" y="214" width="16" height="10" rx="1.5" fill="var(--vc-gold)" />
         </Part>
 
-        <Part href="/shop/switches" aisle="Switches" hit={[93, 422, 45, 56]} tip={[104, 490]}>
+        <Part href="/shop/switches" aisle="Switches" hit={[70, 48, 56, 52]} tip={[98, 34]}>
+          {/* four legs and a round actuator: a tactile switch is known by its
+              legs, and without them this is just a square with a circle */}
           <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.3">
-            <rect x="100" y="422" width="12" height="7" rx="1" />
-            <rect x="121" y="422" width="12" height="7" rx="1" />
-            <rect x="100" y="470" width="12" height="7" rx="1" />
-            <rect x="121" y="470" width="12" height="7" rx="1" />
+            <rect x="72" y="61" width="10" height="10" rx="1" />
+            <rect x="72" y="86" width="10" height="10" rx="1" />
+            <rect x="124" y="61" width="10" height="10" rx="1" />
+            <rect x="124" y="86" width="10" height="10" rx="1" />
           </g>
-          <rect x="96" y="428" width="41" height="42" rx="2"
+          <rect x="80" y="56" width="46" height="46" rx="2"
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
-          <circle cx="116.5" cy="449" r="11" fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
-          <circle cx="116.5" cy="449" r="4.5" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
+          <circle cx="103" cy="79" r="13" fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+          <circle cx="103" cy="79" r="5" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
         </Part>
 
-        <Part href="/shop/switches" aisle="Switches" hit={[202, 422, 45, 56]} tip={[236, 490]}>
-          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.3">
-            <rect x="207" y="422" width="12" height="7" rx="1" />
-            <rect x="228" y="422" width="12" height="7" rx="1" />
-            <rect x="207" y="470" width="12" height="7" rx="1" />
-            <rect x="228" y="470" width="12" height="7" rx="1" />
-          </g>
-          <rect x="203" y="428" width="41" height="42" rx="2"
-                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
-          <circle cx="223.5" cy="449" r="11" fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
-          <circle cx="223.5" cy="449" r="4.5" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
-        </Part>
-
-        <Part href="/shop/connectors" aisle="Connectors" hit={[140, 414, 60, 84]} tip={[170, 512]}>
-          {/* micro-usb: the five pins on the board, the shell over them, and
-              the mouth standing past the board's edge with the tongue inside */}
+        <Part href="/shop/microcontrollers" aisle="Microcontrollers" hit={[272, 292, 276, 100]} tip={[410, 410]}>
+          {/* the socket the DIP sits in, then the DIP: legs both sides, the end
+              notch, and the pin-1 dimple beside it */}
+          <rect x="260" y="307" width="288" height="71" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.2" />
           <g fill="var(--vc-muted)">
-            {QFN_X.map((x) => (
-              <rect key={`up${x}`} x={x - 3} y="420" width="6" height="10" rx="1" />
+            {DIP_X.map((x) => (
+              <rect key={`pt${x}`} x={x - 4} y="301" width="8" height="12" rx="1" />
+            ))}
+            {DIP_X.map((x) => (
+              <rect key={`pb${x}`} x={x - 4} y="372" width="8" height="12" rx="1" />
             ))}
           </g>
-          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
-            <rect x="141" y="420" width="11" height="12" rx="1.5" />
-            <rect x="188" y="420" width="11" height="12" rx="1.5" />
-          </g>
-          <rect x="141" y="430" width="58" height="50" rx="2"
-                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
-          <path d="M141 440h58" stroke="var(--vc-line)" strokeWidth="1.1" fill="none" />
-          <rect x="152" y="472" width="36" height="16" rx="5"
-                fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.6" />
-          <rect x="158" y="477" width="24" height="7" rx="2"
-                fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
+          <rect x="266" y="313" width="276" height="59" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.7" />
+          <path d="M266 332a10 10 0 0 0 0 20" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
+          <circle cx="285" cy="326" r="4.5" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
         </Part>
 
         {/* a dimension line, because the sheet always carries one */}
         <g stroke="var(--vc-faint)" strokeWidth="1.1">
-          <path d="M70 524h200M70 518v12M270 518v12" />
+          <path d="M52 496h540M52 490v12M592 490v12" />
         </g>
       </svg>
     </div>

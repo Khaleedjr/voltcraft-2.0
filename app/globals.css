@@ -348,25 +348,41 @@
    attribute rather than composing with it, so the spinning group carries no
    attribute of its own — its wrapper holds the translate — and it turns about
    its own bounding box via transform-box. */
-/* the antenna's field: three waves leaving the meander, one after another.
-   The origin is the antenna's base in viewBox units, so every wave grows out
-   of the same point rather than out of its own bounding box. */
-.vc-rf {
-  transform-box: view-box;
-  transform-origin: 170px 106px;
-  animation: vc-rf-out 2.85s ease-out infinite;
+/* TX and RX, flickering against each other the way a board's serial pair does
+   while it is being talked to. steps(1) because an indicator is on or off,
+   never halfway, and the two are offset so they never agree. */
+.vc-led-tx,
+.vc-led-rx {
+  animation: vc-led-serial 1.9s steps(1, end) infinite;
 }
-@keyframes vc-rf-out {
-  0% {
-    transform: scale(0.45);
-    opacity: 0;
+.vc-led-rx {
+  animation-delay: 0.62s;
+  animation-duration: 1.45s;
+}
+@keyframes vc-led-serial {
+  0%,
+  7% {
+    fill: var(--vc-gold);
   }
-  22% {
-    opacity: 0.8;
+  8%,
+  19% {
+    fill: var(--vc-sheet);
   }
+  20%,
+  24% {
+    fill: var(--vc-gold);
+  }
+  25%,
+  31% {
+    fill: var(--vc-sheet);
+  }
+  32%,
+  38% {
+    fill: var(--vc-gold);
+  }
+  39%,
   100% {
-    transform: scale(1.3);
-    opacity: 0;
+    fill: var(--vc-sheet);
   }
 }
 
@@ -456,9 +472,7 @@
 .vc-board:hover .vc-pulse {
   animation-duration: 1.1s;
 }
-.vc-board:hover .vc-rf {
-  animation-duration: 1.5s;
-}
+
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -478,12 +492,13 @@
   }
   /* the blanket rule above only makes an infinite animation fast, which would
      leave a pulse frozen mid-net; stop them and drop what only motion earned */
-  .vc-led-blink {
+  .vc-led-blink,
+  .vc-led-tx,
+  .vc-led-rx {
     animation: none !important;
   }
   .vc-pulse,
-  .vc-led-halo,
-  .vc-rf {
+  .vc-led-halo {
     display: none;
   }
 }
