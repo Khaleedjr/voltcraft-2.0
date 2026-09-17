@@ -396,6 +396,42 @@
   }
 }
 
+/* Parts of the board are doors into the aisles. The hit rect is filled
+   transparent, not none — `none` takes no pointer events, so an outlined part
+   would only be clickable along its own strokes. */
+.vc-part {
+  cursor: pointer;
+}
+.vc-hit {
+  fill: transparent;
+}
+.vc-part-body {
+  transition: filter 0.16s ease;
+}
+.vc-part:hover .vc-part-body,
+.vc-part:focus-visible .vc-part-body {
+  filter: drop-shadow(0 0 5px var(--vc-gold)) drop-shadow(0 0 1.5px var(--vc-gold));
+}
+.vc-tip {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease;
+}
+.vc-part:hover .vc-tip,
+.vc-part:focus-visible .vc-tip {
+  opacity: 1;
+}
+/* the glow alone is not a focus indicator, so keyboard focus also rings the
+   part's own hit area */
+.vc-part:focus {
+  outline: none;
+}
+.vc-part:focus-visible .vc-hit {
+  stroke: var(--vc-live);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+}
+
 .vc-board:hover .vc-pulse {
   animation-duration: 1.1s;
 }

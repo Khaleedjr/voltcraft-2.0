@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 /**
  * The hero's figure: a control board drawn the way the rest of the site is
  * drawn — a plate on the drawing sheet, prussian line work, current in gold.
@@ -21,15 +23,24 @@
  *     something it ends on a via and continues on the other side.
  *   - Power is drawn heavier than signal, as it is laid out heavier.
  *
- * And the board is powered rather than posed: the indicator breathes, the
- * status LED blinks, the fan turns, and pulses of current run the live traces
- * out from the chip. Hovering it winds everything up. All of it is CSS on
- * SVG — no script, nothing to hydrate — and all of it stops dead under
- * prefers-reduced-motion, where the board falls back to the drawing.
+ * The board is powered rather than posed: the indicator breathes, the status
+ * LED blinks, the fan turns, and pulses of current run the live traces out
+ * from the chip. It is CSS on SVG — no script, nothing to hydrate — and it
+ * stops dead under prefers-reduced-motion, where the board falls back to the
+ * drawing.
  *
- * Geometry lives in these three arrays rather than inline, so the pulses can
- * ride the very same paths as the traces they light, and so the routing can be
- * checked as data.
+ * And the parts are doors. Each one that maps honestly onto an aisle is a
+ * link into it: the chip to microcontrollers, the fan to actuators, the button
+ * to switches, the LEDs to display, the regulator and jack to power, the
+ * headers and usb to connectors, the resistor to accessories. The mapping is
+ * checked against what those aisles actually hold rather than against what the
+ * part is called — nothing points somewhere a visitor would not expect to
+ * land. Sensors has no part on this board, which is why the headline keeps its
+ * own Sensors link; fluid control has two products and no part either.
+ *
+ * Because the drawing now contains links it can no longer be role="img":
+ * that role makes everything inside it presentational and would hide every
+ * one of them from assistive tech.
  */
 
 /** Signal runs: the fine copper that carries no current in this drawing. */
@@ -63,7 +74,7 @@ const SIGNAL = [
   "M308 276 V282 L314 288 H388",
 ];
 
-/** Live runs: these are the ones the pulses travel. */
+/** Live runs: the ones the pulses travel. */
 const LIVE = [
   "M204 160 V146.5 L134.5 77",
   "M243 160 V100.5 L266.5 77",
@@ -130,6 +141,51 @@ function Ref({ x, y, children }: { x: number; y: number; children: string }) {
   );
 }
 
+/**
+ * A part that is a door into an aisle.
+ *
+ * The hit rect is filled transparent rather than none: `none` takes no pointer
+ * events at all, so a part drawn in outline would only be clickable on its own
+ * strokes. The label rides inside the link so plain :hover reveals it without
+ * needing to reach across the tree.
+ */
+function Part({
+  href,
+  aisle,
+  hit,
+  tip,
+  children,
+}: {
+  href: string;
+  aisle: string;
+  hit: [number, number, number, number];
+  tip: [number, number];
+  children: React.ReactNode;
+}) {
+  const label = aisle.toUpperCase();
+  const w = label.length * 6.7 + 14;
+  return (
+    <Link href={href} className="vc-part" aria-label={`Shop ${aisle.toLowerCase()}`}>
+      <rect className="vc-hit" x={hit[0]} y={hit[1]} width={hit[2]} height={hit[3]} rx="4" />
+      <g className="vc-part-body">{children}</g>
+      <g className="vc-tip">
+        <rect x={tip[0] - w / 2} y={tip[1] - 11.5} width={w} height="16" rx="3" fill="var(--vc-ink)" />
+        <text
+          x={tip[0]}
+          y={tip[1]}
+          textAnchor="middle"
+          fill="var(--vc-ground)"
+          fontFamily="var(--font-mono)"
+          fontSize="9.5"
+          letterSpacing="1"
+        >
+          {label}
+        </text>
+      </g>
+    </Link>
+  );
+}
+
 const HEADER_X = Array.from({ length: 13 }, (_, i) => 128 + i * 22);
 /** The quad-flat pack's legs, stepped along each edge. */
 const CHIP_TOP_X = Array.from({ length: 9 }, (_, i) => 202 + i * 13);
@@ -143,8 +199,8 @@ export function HeroFigure() {
       <svg
         viewBox="0 0 520 440"
         className="vc-board w-full"
-        role="img"
-        aria-label="Schematic of a running microcontroller board"
+        role="group"
+        aria-label="Board diagram — each part links to its aisle"
       >
         {/* registration ticks, as on a drawing sheet */}
         <g stroke="var(--vc-line)" strokeWidth="1.5" fill="none">
@@ -190,8 +246,7 @@ export function HeroFigure() {
           ))}
         </g>
 
-        {/* --------------------------------------------------------- hardware */}
-        {/* mounting holes */}
+        {/* --------------------------------------- fixed hardware and passives */}
         <g fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.5">
           <circle cx="74" cy="74" r="8" />
           <circle cx="446" cy="74" r="8" />
@@ -205,23 +260,6 @@ export function HeroFigure() {
           <circle cx="446" cy="366" r="3.5" />
         </g>
 
-        {/* edge connectors: usb, then power in */}
-        <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
-          <rect x="20" y="140" width="42" height="58" rx="3" />
-          <rect x="28" y="150" width="26" height="38" rx="2" fill="none" />
-          <rect x="20" y="236" width="42" height="44" rx="6" />
-          <circle cx="41" cy="258" r="7" fill="none" />
-        </g>
-
-        {/* pin headers, top and bottom */}
-        {HEADER_X.map((x, i) => (
-          <Pad key={`t${x}`} x={x} y={64} first={i === 0} />
-        ))}
-        {HEADER_X.map((x, i) => (
-          <Pad key={`b${x}`} x={x} y={356} first={i === 0} />
-        ))}
-
-        {/* vias */}
         <Via x={176} y={188} />
         <Via x={182} y={194} />
         <Via x={178} y={230} />
@@ -231,109 +269,146 @@ export function HeroFigure() {
         <Via x={336} y={242} />
         <Via x={336} y={266} />
 
-        {/* the microcontroller: legs on all four sides, notch on the top edge */}
-        <g fill="var(--vc-muted)">
-          {CHIP_TOP_X.map((x) => (
-            <rect key={`ct${x}`} x={x} y="160" width="4" height="8" rx="1" />
-          ))}
-          {CHIP_TOP_X.map((x) => (
-            <rect key={`cb${x}`} x={x} y="268" width="4" height="8" rx="1" />
-          ))}
-          {CHIP_SIDE_Y.map((y) => (
-            <rect key={`cl${y}`} x="192" y={y} width="8" height="4" rx="1" />
-          ))}
-          {CHIP_SIDE_Y.map((y) => (
-            <rect key={`cr${y}`} x="312" y={y} width="8" height="4" rx="1" />
-          ))}
-        </g>
-        <rect x="200" y="168" width="112" height="100" rx="5"
-              fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
-        <path d="M244 168a12 12 0 0 0 24 0" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
-        <circle cx="213" cy="181" r="4.5" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
-
-        {/* discrete parts */}
+        {/* passives: no aisle sells a bare capacitor or crystal, so these stay
+            drawing rather than pretending to be doors */}
         <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
           <circle cx="112" cy="206" r="18" />
           <circle cx="156" cy="206" r="18" />
           <rect x="336" y="186" width="52" height="26" rx="13" />
           <rect x="328" y="193" width="8" height="14" rx="1.5" />
           <rect x="388" y="193" width="8" height="14" rx="1.5" />
-          <rect x="96" y="268" width="66" height="46" rx="3" />
-          <rect x="396" y="110" width="56" height="18" rx="3" />
           <rect x="344" y="232" width="26" height="13" rx="2" />
           <rect x="344" y="266" width="26" height="13" rx="2" />
-          <rect x="112" y="104" width="40" height="36" rx="4" />
           <rect x="168" y="140" width="13" height="26" rx="2" />
         </g>
         <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3">
           <circle cx="112" cy="206" r="11" />
           <circle cx="156" cy="206" r="11" />
-          <circle cx="132" cy="122" r="11" />
         </g>
         <g stroke="var(--vc-line)" strokeWidth="1.4" fill="none">
-          {/* the polarity stripe down one side of each electrolytic */}
           <path d="M101 199a11 11 0 0 0 0 14" />
           <path d="M145 199a11 11 0 0 0 0 14" />
-          {/* the regulator's tab, and the resistor's bands */}
-          <path d="M96 280h66" />
-          <path d="M410 110v18M422 110v18M434 110v18" />
         </g>
-        {/* the regulator's three legs */}
-        <g stroke="var(--vc-muted)" strokeWidth="2.2" fill="none">
-          <path d="M114 314v10M133 314v10M152 314v10" />
-        </g>
-
-        {/* the fan, and it turns */}
-        <rect x="388" y="258" width="60" height="60" rx="6"
-              fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
-        <g fill="none" stroke="var(--vc-line)" strokeWidth="1.3">
-          <circle cx="395" cy="265" r="3.2" />
-          <circle cx="441" cy="265" r="3.2" />
-          <circle cx="395" cy="311" r="3.2" />
-          <circle cx="441" cy="311" r="3.2" />
-        </g>
-        <circle cx="418" cy="288" r="26" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3" />
-        {/* the translate stays on the wrapper: a CSS transform would replace it */}
-        <g transform="translate(418 288)">
-          <g className="vc-fan">
-            {BLADES.map((a) => (
-              <g key={a} transform={`rotate(${a})`}>
-                <ellipse
-                  cx="0"
-                  cy="-16"
-                  rx="6.4"
-                  ry="10.5"
-                  transform="rotate(24 0 -16)"
-                  fill="var(--vc-sheet)"
-                  stroke="var(--vc-muted)"
-                  strokeWidth="1.4"
-                />
-              </g>
-            ))}
-          </g>
-        </g>
-        <circle cx="418" cy="288" r="7" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
-        <circle cx="418" cy="288" r="2.5" fill="var(--vc-muted)" />
-
-        {/* the power indicator, breathing, and a status one that blinks */}
-        <circle className="vc-led-halo" cx="86" cy="118" r="7" fill="var(--vc-gold)" />
-        <circle cx="86" cy="118" r="7" fill="var(--vc-gold)" />
-        <circle className="vc-led-blink" cx="86" cy="146" r="7"
-                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
-
-        {/* ------------------------------------------------------- silkscreen */}
-        <Ref x={256} y={226}>U1</Ref>
         <Ref x={112} y={182}>C1</Ref>
         <Ref x={156} y={182}>C2</Ref>
         <Ref x={174} y={176}>C3</Ref>
         <Ref x={362} y={224}>Y1</Ref>
         <Ref x={357} y={257}>C4</Ref>
-        <Ref x={132} y={98}>SW1</Ref>
-        <Ref x={86} y={104}>D1</Ref>
-        <Ref x={86} y={132}>D2</Ref>
-        <Ref x={424} y={104}>R1</Ref>
-        <Ref x={129} y={262}>U2</Ref>
-        <Ref x={418} y={334}>FAN1</Ref>
+
+        {/* ------------------------------------------------- the parts, as doors */}
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 35]} tip={[270, 40]}>
+          {HEADER_X.map((x, i) => (
+            <Pad key={`t${x}`} x={x} y={64} first={i === 0} />
+          ))}
+        </Part>
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 347, 291, 35]} tip={[270, 390]}>
+          {HEADER_X.map((x, i) => (
+            <Pad key={`b${x}`} x={x} y={356} first={i === 0} />
+          ))}
+        </Part>
+
+        <Part href="/shop/connectors" aisle="Connectors" hit={[16, 138, 50, 62]} tip={[76, 216]}>
+          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
+            <rect x="20" y="140" width="42" height="58" rx="3" />
+            <rect x="28" y="150" width="26" height="38" rx="2" fill="none" />
+          </g>
+        </Part>
+
+        <Part href="/shop/power" aisle="Power" hit={[16, 234, 50, 48]} tip={[66, 300]}>
+          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
+            <rect x="20" y="236" width="42" height="44" rx="6" />
+            <circle cx="41" cy="258" r="7" fill="none" />
+          </g>
+        </Part>
+
+        <Part href="/shop/power" aisle="Power" hit={[94, 264, 72, 62]} tip={[129, 344]}>
+          <rect x="96" y="268" width="66" height="46" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M96 280h66" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" />
+          <g stroke="var(--vc-muted)" strokeWidth="2.2" fill="none">
+            <path d="M114 314v10M133 314v10M152 314v10" />
+          </g>
+          <Ref x={129} y={262}>U2</Ref>
+        </Part>
+
+        <Part href="/shop/display" aisle="Display" hit={[68, 100, 38, 64]} tip={[86, 176]}>
+          <circle className="vc-led-halo" cx="86" cy="118" r="7" fill="var(--vc-gold)" />
+          <circle cx="86" cy="118" r="7" fill="var(--vc-gold)" />
+          <circle className="vc-led-blink" cx="86" cy="146" r="7"
+                  fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+          <Ref x={86} y={104}>D1</Ref>
+          <Ref x={86} y={132}>D2</Ref>
+        </Part>
+
+        <Part href="/shop/switches" aisle="Switches" hit={[108, 100, 48, 44]} tip={[132, 158]}>
+          <rect x="112" y="104" width="40" height="36" rx="4"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <circle cx="132" cy="122" r="11" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3" />
+          <Ref x={132} y={98}>SW1</Ref>
+        </Part>
+
+        <Part href="/shop/microcontrollers" aisle="Microcontrollers" hit={[188, 156, 136, 124]} tip={[256, 300]}>
+          <g fill="var(--vc-muted)">
+            {CHIP_TOP_X.map((x) => (
+              <rect key={`ct${x}`} x={x} y="160" width="4" height="8" rx="1" />
+            ))}
+            {CHIP_TOP_X.map((x) => (
+              <rect key={`cb${x}`} x={x} y="268" width="4" height="8" rx="1" />
+            ))}
+            {CHIP_SIDE_Y.map((y) => (
+              <rect key={`cl${y}`} x="192" y={y} width="8" height="4" rx="1" />
+            ))}
+            {CHIP_SIDE_Y.map((y) => (
+              <rect key={`cr${y}`} x="312" y={y} width="8" height="4" rx="1" />
+            ))}
+          </g>
+          <rect x="200" y="168" width="112" height="100" rx="5"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M244 168a12 12 0 0 0 24 0" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
+          <circle cx="213" cy="181" r="4.5" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
+          <Ref x={256} y={226}>U1</Ref>
+        </Part>
+
+        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 102, 62, 35]} tip={[424, 152]}>
+          <rect x="396" y="110" width="56" height="18" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M410 110v18M422 110v18M434 110v18" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" />
+          <Ref x={424} y={104}>R1</Ref>
+        </Part>
+
+        <Part href="/shop/actuators" aisle="Actuators" hit={[384, 254, 68, 68]} tip={[418, 348]}>
+          <rect x="388" y="258" width="60" height="60" rx="6"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <g fill="none" stroke="var(--vc-line)" strokeWidth="1.3">
+            <circle cx="395" cy="265" r="3.2" />
+            <circle cx="441" cy="265" r="3.2" />
+            <circle cx="395" cy="311" r="3.2" />
+            <circle cx="441" cy="311" r="3.2" />
+          </g>
+          <circle cx="418" cy="288" r="26" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3" />
+          {/* the translate stays on the wrapper: a CSS transform would replace it */}
+          <g transform="translate(418 288)">
+            <g className="vc-fan">
+              {BLADES.map((a) => (
+                <g key={a} transform={`rotate(${a})`}>
+                  <ellipse
+                    cx="0"
+                    cy="-16"
+                    rx="6.4"
+                    ry="10.5"
+                    transform="rotate(24 0 -16)"
+                    fill="var(--vc-sheet)"
+                    stroke="var(--vc-muted)"
+                    strokeWidth="1.4"
+                  />
+                </g>
+              ))}
+            </g>
+          </g>
+          <circle cx="418" cy="288" r="7" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+          <circle cx="418" cy="288" r="2.5" fill="var(--vc-muted)" />
+          <Ref x={418} y={330}>FAN1</Ref>
+        </Part>
 
         {/* a dimension line, because the sheet always carries one */}
         <g stroke="var(--vc-faint)" strokeWidth="1.2">
