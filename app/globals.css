@@ -32,6 +32,9 @@
      outlined card, which would otherwise be a box drawn inside a box. */
   --vc-line: #b6c5d2;
   --vc-line-soft: #dde5eb;
+  /* copper on the drawing sheet: a shade past --vc-line, so a board's
+     trace work still reads once there is a lot of it in one place */
+  --vc-trace: #9cb0c1;
   --vc-hairline: rgba(14, 34, 51, 0.06);
   --vc-shadow: 14, 34, 51;  /* rgb parts, for translucent lift shadows */
   --vc-sheen: rgba(255, 255, 255, 0.5);         /* inner highlight on a frame */
@@ -87,6 +90,9 @@
   --vc-faint: #8f8778;
   --vc-line: #3d372d;
   --vc-line-soft: #272219;
+  /* warmer and brighter than the line here: on the graphite board a
+     trace at --vc-line all but disappears */
+  --vc-trace: #6b6152;
   --vc-hairline: rgba(255, 216, 150, 0.055);
   --vc-shadow: 0, 0, 0;
   --vc-sheen: rgba(255, 255, 255, 0.04);
