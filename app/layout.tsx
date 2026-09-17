@@ -47,11 +47,14 @@ export const metadata: Metadata = {
 
 /**
  * Resolve the theme while the browser is still parsing <head>, so the first
- * paint is already in the right palette — a stored choice wins, otherwise the
- * visitor's OS setting decides. Writing a concrete value here is what lets
- * globals.css get away with a single [data-theme="dark"] override.
+ * paint is already in the right palette. Light is the default: dark is
+ * something the visitor opts into with the toggle, not something their OS
+ * chooses for them. Only a stored choice moves us off it.
+ *
+ * Writing a concrete value here is what lets globals.css get away with a
+ * single [data-theme="dark"] override.
  */
-const THEME_SCRIPT = `(function(){try{var s=localStorage.getItem("vc-theme");var t=s==="light"||s==="dark"?s:(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t)}catch(e){}})()`;
+const THEME_SCRIPT = `(function(){try{if(localStorage.getItem("vc-theme")==="dark")document.documentElement.setAttribute("data-theme","dark")}catch(e){}})()`;
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (

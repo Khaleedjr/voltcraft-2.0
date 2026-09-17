@@ -15,10 +15,6 @@ function stored(): Theme | null {
   }
 }
 
-function systemTheme(): Theme {
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
 function apply(theme: Theme) {
   document.documentElement.setAttribute("data-theme", theme);
 }
@@ -33,16 +29,9 @@ function apply(theme: Theme) {
 export function ThemeToggle({ className = "" }: { className?: string }) {
   useLayoutEffect(() => {
     // React's Strict Mode remount in development wipes the attribute the inline
-    // script set, so put it back. A no-op in production.
-    apply(stored() ?? systemTheme());
-
-    // Follow the OS for as long as the visitor has not overridden it themselves.
-    const mq = window.matchMedia("(prefers-color-scheme: dark)");
-    const onChange = () => {
-      if (!stored()) apply(systemTheme());
-    };
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
+    // script set, so put it back. A no-op in production. Light is the default;
+    // the OS setting is deliberately not consulted.
+    apply(stored() ?? "light");
   }, []);
 
   function toggle() {
