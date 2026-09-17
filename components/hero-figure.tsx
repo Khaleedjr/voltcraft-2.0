@@ -57,7 +57,7 @@ const SIGNAL = [
   "M192 224 H184 L178 230",
   "M192 236 H186 L180 242",
   "M192 248 H174 V276 L168 282 H162",
-  "M94 206 H80 V262 L86 268 H62",
+  "M94 206 H80 V270 L86 276 H62",
   "M156 224 V262 L150 268",
   "M320 188 H332",
   "M320 200 H328",
@@ -89,7 +89,7 @@ const LIVE = [
 
 /** Power: jack in, through the regulator, out to the header's supply pins. */
 const POWER = [
-  "M62 276 H96",
+  "M62 292 H96",
   "M114 324 V335.5 L134.5 356",
   "M133 324 V332.5 L156.5 356",
   "M152 324 V329.5 L178.5 356",
@@ -343,6 +343,7 @@ export function HeroFigure() {
           <circle cx="112" cy="206" r="18" />
           <circle cx="156" cy="206" r="18" />
           <rect x="336" y="186" width="52" height="26" rx="13" />
+          <rect x="342" y="191" width="40" height="16" rx="8" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
           <rect x="328" y="193" width="8" height="14" rx="1.5" />
           <rect x="388" y="193" width="8" height="14" rx="1.5" />
           <rect x="168" y="140" width="13" height="26" rx="2" />
@@ -358,7 +359,7 @@ export function HeroFigure() {
         <Ref x={112} y={168}>C1</Ref>
         <Ref x={156} y={168}>C2</Ref>
         <Ref x={174} y={136}>C3</Ref>
-        <Ref x={362} y={222}>Y1</Ref>
+        <Ref x={362} y={222}>Y1 16MHz</Ref>
 
         {/* ------------------------------------------------- the parts, as doors */}
         <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 35]} tip={[270, 40]}>
@@ -372,18 +373,27 @@ export function HeroFigure() {
           ))}
         </Part>
 
-        <Part href="/shop/connectors" aisle="Connectors" hit={[16, 138, 50, 62]} tip={[76, 216]}>
-          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
-            <rect x="20" y="140" width="42" height="58" rx="3" />
-            <rect x="28" y="150" width="26" height="38" rx="2" fill="none" />
-          </g>
+        <Part href="/shop/connectors" aisle="Connectors" hit={[10, 140, 56, 60]} tip={[76, 216]}>
+          {/* the shell, then the mouth standing proud of it with the tongue
+              inside — a socket reads by its opening, not by its outline */}
+          <rect x="20" y="144" width="42" height="52" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M20 153h42M20 187h42" stroke="var(--vc-line)" strokeWidth="1.2" fill="none" />
+          <rect x="12" y="157" width="14" height="26" rx="7"
+                fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <rect x="31" y="163" width="24" height="14" rx="3"
+                fill="none" stroke="var(--vc-line)" strokeWidth="1.3" />
         </Part>
 
-        <Part href="/shop/power" aisle="Power" hit={[16, 234, 50, 48]} tip={[66, 300]}>
-          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
-            <rect x="20" y="236" width="42" height="44" rx="6" />
-            <circle cx="41" cy="258" r="7" fill="none" />
-          </g>
+        <Part href="/shop/power" aisle="Power" hit={[8, 264, 58, 56]} tip={[64, 336]}>
+          {/* moved well clear of the usb, and drawn as a jack: the housing,
+              the barrel standing out of it, and the centre pin inside */}
+          <rect x="24" y="268" width="38" height="48" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M24 277h38M24 307h38" stroke="var(--vc-line)" strokeWidth="1.2" fill="none" />
+          <rect x="10" y="280" width="17" height="24" rx="8.5"
+                fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <circle cx="18" cy="292" r="4" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4" />
         </Part>
 
         <Part href="/shop/power" aisle="Power" hit={[94, 264, 72, 62]} tip={[129, 344]}>
@@ -396,7 +406,7 @@ export function HeroFigure() {
           <Ref x={129} y={262}>U2</Ref>
         </Part>
 
-        <Part href="/shop/display" aisle="Display" hit={[68, 100, 38, 64]} tip={[86, 176]}>
+        <Part href="/shop/display" aisle="Display" hit={[70, 100, 36, 64]} tip={[86, 176]}>
           <circle className="vc-led-halo" cx="86" cy="118" r="7" fill="var(--vc-gold)" />
           <circle cx="86" cy="118" r="7" fill="var(--vc-gold)" />
           <circle className="vc-led-blink" cx="86" cy="146" r="7"
@@ -405,10 +415,19 @@ export function HeroFigure() {
           <Ref x={86} y={132}>D2</Ref>
         </Part>
 
-        <Part href="/shop/switches" aisle="Switches" hit={[108, 100, 48, 44]} tip={[132, 158]}>
-          <rect x="112" y="104" width="40" height="36" rx="4"
+        <Part href="/shop/switches" aisle="Switches" hit={[106, 100, 54, 44]} tip={[132, 158]}>
+          {/* four legs and a round actuator: a tactile switch is known by its
+              legs, and without them this was just a square with a circle */}
+          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
+            <rect x="108" y="110" width="7" height="6" rx="1" />
+            <rect x="108" y="128" width="7" height="6" rx="1" />
+            <rect x="149" y="110" width="7" height="6" rx="1" />
+            <rect x="149" y="128" width="7" height="6" rx="1" />
+          </g>
+          <rect x="114" y="104" width="36" height="36" rx="2"
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
-          <circle cx="132" cy="122" r="11" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3" />
+          <circle cx="132" cy="122" r="10" fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+          <circle cx="132" cy="122" r="4" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
           <Ref x={132} y={98}>SW1</Ref>
         </Part>
 
