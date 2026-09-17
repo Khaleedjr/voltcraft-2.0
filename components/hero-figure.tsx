@@ -62,16 +62,15 @@ const SIGNAL = [
   "M320 188 H332",
   "M320 200 H328",
   "M320 212 H330",
-  "M320 224 H336 L344 232",
-  "M320 236 H330 L336 242",
-  "M320 260 H330 L336 266",
+  "M320 224 H322 L330 232",
+  "M320 236 H324 L330 242",
+  "M320 260 H324 L330 266",
   "M217 276 V328.5 L244.5 356",
   "M230 276 V319.5 L266.5 356",
   "M243 276 V310.5 L288.5 356",
   "M256 276 V301.5 L310.5 356",
   "M269 276 V292.5 L332.5 356",
   "M295 276 V292 L307 304 H388",
-  "M308 276 V282 L314 288 H388",
 ];
 
 /** Live runs: the ones the pulses travel. */
@@ -81,7 +80,8 @@ const LIVE = [
   "M308 160 V145.5 L376.5 77",
   "M192 176 H108 L101 169 H62",
   "M320 176 H370 L404 142 V128",
-  "M320 248 H366 L388 270",
+  "M320 248 H322 L330 256",
+  "M308 276 V282 L314 288 H388",
   "M192 260 H186 V341.5 L200.5 356",
   "M204 276 V337.5 L222.5 356",
   "M282 276 V283.5 L354.5 356",
@@ -336,8 +336,6 @@ export function HeroFigure() {
         <Via x={180} y={242} />
         <Via x={332} y={188} />
         <Via x={330} y={212} />
-        <Via x={336} y={242} />
-        <Via x={336} y={266} />
 
         {/* passives: no aisle sells a bare capacitor or crystal, so these stay
             drawing rather than pretending to be doors */}
@@ -347,8 +345,6 @@ export function HeroFigure() {
           <rect x="336" y="186" width="52" height="26" rx="13" />
           <rect x="328" y="193" width="8" height="14" rx="1.5" />
           <rect x="388" y="193" width="8" height="14" rx="1.5" />
-          <rect x="344" y="232" width="26" height="13" rx="2" />
-          <rect x="344" y="266" width="26" height="13" rx="2" />
           <rect x="168" y="140" width="13" height="26" rx="2" />
         </g>
         <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3">
@@ -362,8 +358,7 @@ export function HeroFigure() {
         <Ref x={112} y={182}>C1</Ref>
         <Ref x={156} y={182}>C2</Ref>
         <Ref x={174} y={176}>C3</Ref>
-        <Ref x={362} y={224}>Y1</Ref>
-        <Ref x={357} y={257}>C4</Ref>
+        <Ref x={362} y={222}>Y1</Ref>
 
         {/* ------------------------------------------------- the parts, as doors */}
         <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 35]} tip={[270, 40]}>
@@ -437,6 +432,26 @@ export function HeroFigure() {
           <path d="M244 168a12 12 0 0 0 24 0" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
           <circle cx="213" cy="181" r="4.5" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
           <Ref x={256} y={226}>U1</Ref>
+        </Part>
+
+        <Part href="/shop/sensors" aisle="Sensors" hit={[326, 222, 56, 68]} tip={[352, 322]}>
+          {/* a vented package, the shape the temperature and humidity parts
+              come in — the grille is what makes it read as a sensor rather
+              than another chip */}
+          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
+            {[230, 240, 254, 264].map((y) => (
+              <rect key={y} x="330" y={y} width="6" height="4" rx="1" />
+            ))}
+          </g>
+          <rect x="336" y="226" width="46" height="60" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.2">
+            {[344, 353, 362, 371].map((x) => (
+              <rect key={x} x={x} y="238" width="5" height="32" rx="2.5" />
+            ))}
+          </g>
+          <path d="M336 278h46" stroke="var(--vc-line)" strokeWidth="1.3" fill="none" />
+          <Ref x={359} y={300}>U3</Ref>
         </Part>
 
         <Part href="/shop/accessories" aisle="Accessories" hit={[392, 102, 62, 35]} tip={[424, 152]}>
