@@ -124,23 +124,6 @@ function Via({ x, y }: { x: number; y: number }) {
   );
 }
 
-/** Silkscreen: the designator printed beside each part. */
-function Ref({ x, y, children }: { x: number; y: number; children: string }) {
-  return (
-    <text
-      x={x}
-      y={y}
-      textAnchor="middle"
-      fill="var(--vc-faint)"
-      fontFamily="var(--font-mono)"
-      fontSize="9"
-      letterSpacing="0.5"
-    >
-      {children}
-    </text>
-  );
-}
-
 /**
  * A part that is a door into an aisle.
  *
@@ -324,7 +307,7 @@ export function HeroFigure() {
         </g>
 
         {/* what a few of the header pins are */}
-        <g fill="var(--vc-faint)" fontFamily="var(--font-mono)" fontSize="7" textAnchor="middle">
+        <g fill="var(--vc-faint)" fontFamily="var(--font-mono)" fontSize="8.5" textAnchor="middle">
           {PIN_LABELS.map(([x, y, t]) => (
             <text key={t} x={x} y={y}>{t}</text>
           ))}
@@ -356,10 +339,9 @@ export function HeroFigure() {
           <path d="M101 199a11 11 0 0 0 0 14" />
           <path d="M145 199a11 11 0 0 0 0 14" />
         </g>
-        <Ref x={112} y={168}>C1</Ref>
-        <Ref x={156} y={168}>C2</Ref>
-        <Ref x={174} y={136}>C3</Ref>
-        <Ref x={362} y={222}>Y1 16MHz</Ref>
+
+
+
 
         {/* ------------------------------------------------- the parts, as doors */}
         <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 35]} tip={[270, 40]}>
@@ -403,7 +385,6 @@ export function HeroFigure() {
           <g stroke="var(--vc-muted)" strokeWidth="2.2" fill="none">
             <path d="M114 314v10M133 314v10M152 314v10" />
           </g>
-          <Ref x={129} y={262}>U2</Ref>
         </Part>
 
         <Part href="/shop/display" aisle="Display" hit={[70, 100, 36, 64]} tip={[86, 176]}>
@@ -411,8 +392,7 @@ export function HeroFigure() {
           <circle cx="86" cy="118" r="7" fill="var(--vc-gold)" />
           <circle className="vc-led-blink" cx="86" cy="146" r="7"
                   fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
-          <Ref x={86} y={104}>D1</Ref>
-          <Ref x={86} y={132}>D2</Ref>
+
         </Part>
 
         <Part href="/shop/switches" aisle="Switches" hit={[106, 100, 54, 44]} tip={[132, 158]}>
@@ -428,7 +408,6 @@ export function HeroFigure() {
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
           <circle cx="132" cy="122" r="10" fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
           <circle cx="132" cy="122" r="4" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
-          <Ref x={132} y={98}>SW1</Ref>
         </Part>
 
         <Part href="/shop/microcontrollers" aisle="Microcontrollers" hit={[188, 156, 136, 124]} tip={[256, 300]}>
@@ -450,7 +429,6 @@ export function HeroFigure() {
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
           <path d="M244 168a12 12 0 0 0 24 0" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
           <circle cx="213" cy="181" r="4.5" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
-          <Ref x={256} y={226}>U1</Ref>
         </Part>
 
         <Part href="/shop/sensors" aisle="Sensors" hit={[326, 222, 56, 68]} tip={[352, 322]}>
@@ -470,14 +448,12 @@ export function HeroFigure() {
             ))}
           </g>
           <path d="M336 278h46" stroke="var(--vc-line)" strokeWidth="1.3" fill="none" />
-          <Ref x={359} y={300}>U3</Ref>
         </Part>
 
         <Part href="/shop/accessories" aisle="Accessories" hit={[392, 102, 62, 35]} tip={[424, 152]}>
           <rect x="396" y="110" width="56" height="18" rx="3"
                 fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
           <path d="M410 110v18M422 110v18M434 110v18" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" />
-          <Ref x={424} y={104}>R1</Ref>
         </Part>
 
         <Part href="/shop/actuators" aisle="Actuators" hit={[384, 254, 68, 68]} tip={[418, 348]}>
@@ -511,7 +487,6 @@ export function HeroFigure() {
           </g>
           <circle cx="418" cy="288" r="7" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
           <circle cx="418" cy="288" r="2.5" fill="var(--vc-muted)" />
-          <Ref x={418} y={330}>FAN1</Ref>
         </Part>
 
         {/* a dimension line, because the sheet always carries one */}
