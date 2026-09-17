@@ -234,6 +234,39 @@ function Part({
   );
 }
 
+/* ----------------------------------------------------------------- the arm */
+/**
+ * A small arm on the bench beside the board. It is built from the same two
+ * primitives as everything else for its base and column, and its links are
+ * capsules — an outline stroke with a lighter one inside it, the same
+ * construction as the board's parts, so it reads as line work rather than as
+ * a different drawing.
+ *
+ * It works in the plane of a single plan depth, which is what an arm reaching
+ * across the bench does, so x is horizontal and height is vertical: its joints
+ * are given in plan x and height and projected together.
+ */
+const ARM_Y = 284;
+const ap = (x: number, z: number): [number, number] => [px(x), py(0, ARM_Y, z)];
+
+function Seg({ a, b, w }: { a: [number, number]; b: [number, number]; w: number }) {
+  return (
+    <>
+      <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="var(--vc-muted)" strokeWidth={w} strokeLinecap="round" />
+      <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="var(--vc-sheet)" strokeWidth={w - 2.8} strokeLinecap="round" />
+    </>
+  );
+}
+
+function Joint({ p, r }: { p: [number, number]; r: number }) {
+  return (
+    <>
+      <circle cx={p[0]} cy={p[1]} r={r} fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.4" />
+      <circle cx={p[0]} cy={p[1]} r={r * 0.36} fill="var(--vc-muted)" />
+    </>
+  );
+}
+
 const BOARD = { x: 44, y: 44, w: 432, h: 352 };
 const THICK = 9;
 
@@ -244,7 +277,7 @@ export function HeroFigure() {
   return (
     <div className="mx-auto w-full max-w-[520px]">
       <svg
-        viewBox="0 0 504 304"
+        viewBox="0 0 576 304"
         className="vc-board w-full"
         role="group"
         aria-label="Board diagram — each part links to its aisle"
@@ -411,7 +444,7 @@ export function HeroFigure() {
         </g>
 
         {/* ---------------------- the parts, back to front by depth, as doors */}
-        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 50, 0]} tip={[px(266), py(0, 64) - 18]}>
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 48, 291, 58, 0]} tip={[px(266), py(0, 64) - 18]}>
           <g transform={PLANE}>
             {HEADER_X.map((x, i) => (
               <g key={`t${x}`}>
@@ -422,7 +455,7 @@ export function HeroFigure() {
           </g>
         </Part>
 
-        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 104, 64, 52, 6]} tip={[px(424), py(0, 110, 6) - 16]}>
+        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 100, 64, 58, 6]} tip={[px(424), py(0, 110, 6) - 16]}>
           <Box x={396} y={110} w={56} h={18} z={6} />
           <g transform={at(6)} stroke="var(--vc-line)" strokeWidth="1.4" fill="none">
             <path d="M410 110v18M422 110v18M434 110v18" vectorEffect="non-scaling-stroke" />
@@ -559,6 +592,25 @@ export function HeroFigure() {
           </g>
         </Part>
 
+
+        {/* The arm stands beside the board and reaches over it, so it is drawn
+            after everything: what it passes above, it covers. */}
+        <Part href="/shop/actuators" aisle="Actuators" hit={[450, 254, 106, 99, 51]} tip={[px(503), py(0, ARM_Y, 91)]}>
+          {/* the board's top face is z = 0 and its underside is THICK below,
+              so the bench is there — the arm stands on it, not on the board */}
+          <g transform={`translate(0 ${(THICK * RISE).toFixed(2)})`}>
+          <Box x={492} y={262} w={56} h={44} z={7} />
+          <Cyl cx={520} cy={284} r={13} z={44} />
+          <Seg a={ap(520, 44)} b={ap(486, 80)} w={13} />
+          <Seg a={ap(486, 80)} b={ap(456, 52)} w={11} />
+          <Seg a={ap(456, 52)} b={ap(456, 42)} w={7} />
+          <Seg a={ap(456, 42)} b={ap(446, 32)} w={5} />
+          <Seg a={ap(456, 42)} b={ap(466, 32)} w={5} />
+          <Joint p={ap(520, 44)} r={9} />
+          <Joint p={ap(486, 80)} r={7.5} />
+          <Joint p={ap(456, 52)} r={6} />
+          </g>
+        </Part>
       </svg>
     </div>
   );
