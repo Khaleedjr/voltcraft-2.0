@@ -259,12 +259,12 @@ export function HeroFigure() {
         </defs>
 
         {/* the board, its pour, and the keepout line inside its edge */}
-        <rect x="44" y="44" width="432" height="352" rx="16"
-              fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.6" />
+        <rect x="44" y="44" width="432" height="352" rx="11"
+              fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="2.2" />
         <rect x="58" y="58" width="404" height="324" rx="8"
               fill="url(#vc-pour)" mask="url(#vc-pour-keepout)" opacity="0.38" />
-        <rect x="54" y="54" width="412" height="332" rx="10"
-              fill="none" stroke="var(--vc-line-soft)" strokeWidth="1.2" />
+        <rect x="51" y="51" width="418" height="338" rx="8"
+              fill="none" stroke="var(--vc-line-soft)" strokeWidth="1" />
 
         {/* ---------------------------------------------------------- traces */}
         <g fill="none" stroke="var(--vc-trace)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -355,9 +355,9 @@ export function HeroFigure() {
           <path d="M101 199a11 11 0 0 0 0 14" />
           <path d="M145 199a11 11 0 0 0 0 14" />
         </g>
-        <Ref x={112} y={182}>C1</Ref>
-        <Ref x={156} y={182}>C2</Ref>
-        <Ref x={174} y={176}>C3</Ref>
+        <Ref x={112} y={168}>C1</Ref>
+        <Ref x={156} y={168}>C2</Ref>
+        <Ref x={174} y={136}>C3</Ref>
         <Ref x={362} y={222}>Y1</Ref>
 
         {/* ------------------------------------------------- the parts, as doors */}
