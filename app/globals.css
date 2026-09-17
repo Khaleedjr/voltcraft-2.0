@@ -35,6 +35,9 @@
   /* copper on the drawing sheet: a shade past --vc-line, so a board's
      trace work still reads once there is a lot of it in one place */
   --vc-trace: #9cb0c1;
+  /* the head of a current pulse. On the pale board a pulse has to go
+     hotter than the trace to be seen at all — brighter would vanish */
+  --vc-spark: #e06c00;
   --vc-hairline: rgba(14, 34, 51, 0.06);
   --vc-shadow: 14, 34, 51;  /* rgb parts, for translucent lift shadows */
   --vc-sheen: rgba(255, 255, 255, 0.5);         /* inner highlight on a frame */
@@ -93,6 +96,8 @@
   /* warmer and brighter than the line here: on the graphite board a
      trace at --vc-line all but disappears */
   --vc-trace: #6b6152;
+  /* and on the dark board it goes the other way, up to near-white */
+  --vc-spark: #fff2d8;
   --vc-hairline: rgba(255, 216, 150, 0.055);
   --vc-shadow: 0, 0, 0;
   --vc-sheen: rgba(255, 255, 255, 0.04);
@@ -323,6 +328,81 @@
   }
 }
 
+/* ---------------------------------------------------------------- the board
+   The hero figure is a powered board, not a picture of one: the indicator
+   breathes, the status LED blinks, the fan turns, and pulses of current run
+   the live nets. It is all CSS on SVG, so there is no script and nothing to
+   hydrate, and hovering the board winds it up.
+
+   Note for the fan: a CSS transform REPLACES an element's transform
+   attribute rather than composing with it, so the spinning group carries no
+   attribute of its own — its wrapper holds the translate — and it turns about
+   its own bounding box via transform-box. */
+.vc-fan {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vc-fan-spin 2.7s linear infinite;
+}
+@keyframes vc-fan-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* one dash per period, so a pulse crosses the net and then the net rests */
+.vc-pulse {
+  stroke-dasharray: 17 246;
+  stroke-dashoffset: 263;
+  animation: vc-pulse-run 2.4s linear infinite;
+}
+@keyframes vc-pulse-run {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.vc-led-halo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vc-led-breathe 2.6s ease-in-out infinite;
+}
+@keyframes vc-led-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  55% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.vc-led-blink {
+  animation: vc-led-blink 3.1s ease-in-out infinite;
+}
+@keyframes vc-led-blink {
+  0%,
+  58% {
+    fill: var(--vc-sheet);
+  }
+  64%,
+  76% {
+    fill: var(--vc-gold);
+  }
+  82%,
+  100% {
+    fill: var(--vc-sheet);
+  }
+}
+
+.vc-board:hover .vc-pulse {
+  animation-duration: 1.1s;
+}
+.vc-board:hover .vc-fan {
+  animation-duration: 0.9s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -338,5 +418,15 @@
   .vc-lift:hover,
   .group:hover .vc-frame-img {
     transform: none !important;
+  }
+  /* the blanket rule above only makes an infinite animation fast, which would
+     leave a pulse frozen mid-net; stop them and drop what only motion earned */
+  .vc-fan,
+  .vc-led-blink {
+    animation: none !important;
+  }
+  .vc-pulse,
+  .vc-led-halo {
+    display: none;
   }
 }

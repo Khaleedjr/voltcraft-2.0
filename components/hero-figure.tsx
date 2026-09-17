@@ -8,7 +8,7 @@
  * down under the aisles and the sale row.
  *
  * What makes a board drawing read as a board is the routing, so the routing is
- * the part that is done properly here:
+ * done properly here:
  *
  *   - Pads are rings with a hole through them, and pin 1 of each header is
  *     square. The chip is a quad-flat pack with legs on all four sides, a notch
@@ -21,15 +21,68 @@
  *     something it ends on a via and continues on the other side.
  *   - Power is drawn heavier than signal, as it is laid out heavier.
  *
- * Each part carries its silkscreen designator, and the runs go between points
- * that would plausibly be connected: usb to the chip, barrel jack through the
- * regulator, the regulator's legs down to the power pins of the header, the
- * crystal to the two pins a crystal hangs off.
+ * And the board is powered rather than posed: the indicator breathes, the
+ * status LED blinks, the fan turns, and pulses of current run the live traces
+ * out from the chip. Hovering it winds everything up. All of it is CSS on
+ * SVG — no script, nothing to hydrate — and all of it stops dead under
+ * prefers-reduced-motion, where the board falls back to the drawing.
  *
- * Every colour is a token, so it follows the theme; being line work rather
- * than a photograph it stays sharp at any size, costs a couple of kilobytes,
- * and needs nothing fetched.
+ * Geometry lives in these three arrays rather than inline, so the pulses can
+ * ride the very same paths as the traces they light, and so the routing can be
+ * checked as data.
  */
+
+/** Signal runs: the fine copper that carries no current in this drawing. */
+const SIGNAL = [
+  "M217 160 V137.5 L156.5 77",
+  "M230 160 V128.5 L178.5 77",
+  "M256 160 V109.5 L288.5 77",
+  "M269 160 V118.5 L310.5 77",
+  "M282 160 V127.5 L332.5 77",
+  "M295 160 V136.5 L354.5 77",
+  "M192 188 H176",
+  "M192 200 H188 L182 194",
+  "M192 212 H180 L174 206",
+  "M192 224 H184 L178 230",
+  "M192 236 H186 L180 242",
+  "M192 248 H174 V276 L168 282 H162",
+  "M94 206 H80 V262 L86 268 H62",
+  "M156 224 V262 L150 268",
+  "M320 188 H332",
+  "M320 200 H328",
+  "M320 212 H330",
+  "M320 224 H336 L344 232",
+  "M320 236 H330 L336 242",
+  "M320 260 H330 L336 266",
+  "M217 276 V328.5 L244.5 356",
+  "M230 276 V319.5 L266.5 356",
+  "M243 276 V310.5 L288.5 356",
+  "M256 276 V301.5 L310.5 356",
+  "M269 276 V292.5 L332.5 356",
+  "M295 276 V292 L307 304 H388",
+  "M308 276 V282 L314 288 H388",
+];
+
+/** Live runs: these are the ones the pulses travel. */
+const LIVE = [
+  "M204 160 V146.5 L134.5 77",
+  "M243 160 V100.5 L266.5 77",
+  "M308 160 V145.5 L376.5 77",
+  "M192 176 H108 L101 169 H62",
+  "M320 176 H370 L404 142 V128",
+  "M320 248 H366 L388 270",
+  "M192 260 H186 V341.5 L200.5 356",
+  "M204 276 V337.5 L222.5 356",
+  "M282 276 V283.5 L354.5 356",
+];
+
+/** Power: jack in, through the regulator, out to the header's supply pins. */
+const POWER = [
+  "M62 276 H96",
+  "M114 324 V335.5 L134.5 356",
+  "M133 324 V332.5 L156.5 356",
+  "M152 324 V329.5 L178.5 356",
+];
 
 /** A through-hole pad: a ring with a hole. Pin 1 is square, as on a real board. */
 function Pad({ x, y, first = false }: { x: number; y: number; first?: boolean }) {
@@ -81,11 +134,18 @@ const HEADER_X = Array.from({ length: 13 }, (_, i) => 128 + i * 22);
 /** The quad-flat pack's legs, stepped along each edge. */
 const CHIP_TOP_X = Array.from({ length: 9 }, (_, i) => 202 + i * 13);
 const CHIP_SIDE_Y = Array.from({ length: 8 }, (_, i) => 174 + i * 12);
+/** Five blades, pitched, around the hub. */
+const BLADES = [0, 72, 144, 216, 288];
 
 export function HeroFigure() {
   return (
-    <figure className="mx-auto w-full max-w-[460px]">
-      <svg viewBox="0 0 520 440" className="w-full" role="img" aria-label="Schematic of a microcontroller board">
+    <div className="mx-auto w-full max-w-[460px]">
+      <svg
+        viewBox="0 0 520 440"
+        className="vc-board w-full"
+        role="img"
+        aria-label="Schematic of a running microcontroller board"
+      >
         {/* registration ticks, as on a drawing sheet */}
         <g stroke="var(--vc-line)" strokeWidth="1.5" fill="none">
           <path d="M4 22V4h18M498 4h18v18M516 418v18h-18M22 436H4v-18" />
@@ -98,54 +158,36 @@ export function HeroFigure() {
               fill="none" stroke="var(--vc-line-soft)" strokeWidth="1.2" />
 
         {/* ---------------------------------------------------------- traces */}
-        {/* signal */}
         <g fill="none" stroke="var(--vc-trace)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M217 160 V137.5 L156.5 77" />
-          <path d="M230 160 V128.5 L178.5 77" />
-          <path d="M256 160 V109.5 L288.5 77" />
-          <path d="M269 160 V118.5 L310.5 77" />
-          <path d="M282 160 V127.5 L332.5 77" />
-          <path d="M295 160 V136.5 L354.5 77" />
-          <path d="M192 188 H176" />
-          <path d="M192 200 H188 L182 194" />
-          <path d="M192 212 H180 L174 206" />
-          <path d="M192 224 H184 L178 230" />
-          <path d="M192 236 H186 L180 242" />
-          <path d="M192 248 H174 V276 L168 282 H162" />
-          <path d="M94 206 H80 V262 L86 268 H62" />
-          <path d="M156 224 V262 L150 268" />
-          <path d="M320 188 H332" />
-          <path d="M320 200 H328" />
-          <path d="M320 212 H330" />
-          <path d="M320 224 H336 L344 232" />
-          <path d="M320 236 H330 L336 242" />
-          <path d="M320 260 H330 L336 266" />
-          <path d="M217 276 V328.5 L244.5 356" />
-          <path d="M230 276 V319.5 L266.5 356" />
-          <path d="M243 276 V310.5 L288.5 356" />
-          <path d="M256 276 V301.5 L310.5 356" />
-          <path d="M269 276 V292.5 L332.5 356" />
-          <path d="M295 276 V292 L307 304 H386" />
-          <path d="M308 276 V282 L314 288 H386" />
+          {SIGNAL.map((d) => <path key={d} d={d} />)}
         </g>
-        {/* live */}
         <g fill="none" stroke="var(--vc-gold)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M204 160 V146.5 L134.5 77" />
-          <path d="M243 160 V100.5 L266.5 77" />
-          <path d="M308 160 V145.5 L376.5 77" />
-          <path d="M192 176 H108 L101 169 H62" />
-          <path d="M320 176 H370 L404 142 V128" />
-          <path d="M320 248 H366 L386 268" />
-          <path d="M192 260 H186 V341.5 L200.5 356" />
-          <path d="M204 276 V337.5 L222.5 356" />
-          <path d="M282 276 V283.5 L354.5 356" />
+          {LIVE.map((d) => <path key={d} d={d} />)}
         </g>
-        {/* power, laid heavier */}
         <g fill="none" stroke="var(--vc-gold)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M62 276 H96" />
-          <path d="M114 324 V335.5 L134.5 356" />
-          <path d="M133 324 V332.5 L156.5 356" />
-          <path d="M152 324 V329.5 L178.5 356" />
+          {POWER.map((d) => <path key={d} d={d} />)}
+        </g>
+
+        {/* current, running the live and power nets out from the chip */}
+        <g fill="none" stroke="var(--vc-spark)" strokeLinecap="round" strokeLinejoin="round">
+          {LIVE.map((d, i) => (
+            <path
+              key={d}
+              className="vc-pulse"
+              d={d}
+              strokeWidth="3.2"
+              style={{ animationDelay: `${((i * 0.53) % 2.4).toFixed(2)}s` }}
+            />
+          ))}
+          {POWER.map((d, i) => (
+            <path
+              key={d}
+              className="vc-pulse"
+              d={d}
+              strokeWidth="4.2"
+              style={{ animationDelay: `${(0.35 + i * 0.44).toFixed(2)}s` }}
+            />
+          ))}
         </g>
 
         {/* --------------------------------------------------------- hardware */}
@@ -220,7 +262,6 @@ export function HeroFigure() {
           <rect x="396" y="110" width="56" height="18" rx="3" />
           <rect x="344" y="232" width="26" height="13" rx="2" />
           <rect x="344" y="266" width="26" height="13" rx="2" />
-          <rect x="386" y="268" width="62" height="40" rx="3" />
           <rect x="112" y="104" width="40" height="36" rx="4" />
           <rect x="168" y="140" width="13" height="26" rx="2" />
         </g>
@@ -237,21 +278,48 @@ export function HeroFigure() {
           <path d="M96 280h66" />
           <path d="M410 110v18M422 110v18M434 110v18" />
         </g>
-        {/* the regulator's three legs, and the logic package's */}
+        {/* the regulator's three legs */}
         <g stroke="var(--vc-muted)" strokeWidth="2.2" fill="none">
           <path d="M114 314v10M133 314v10M152 314v10" />
         </g>
-        <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
-          <rect x="396" y="260" width="6" height="8" rx="1" />
-          <rect x="412" y="260" width="6" height="8" rx="1" />
-          <rect x="428" y="260" width="6" height="8" rx="1" />
-          <rect x="396" y="308" width="6" height="8" rx="1" />
-          <rect x="412" y="308" width="6" height="8" rx="1" />
-          <rect x="428" y="308" width="6" height="8" rx="1" />
+
+        {/* the fan, and it turns */}
+        <rect x="388" y="258" width="60" height="60" rx="6"
+              fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+        <g fill="none" stroke="var(--vc-line)" strokeWidth="1.3">
+          <circle cx="395" cy="265" r="3.2" />
+          <circle cx="441" cy="265" r="3.2" />
+          <circle cx="395" cy="311" r="3.2" />
+          <circle cx="441" cy="311" r="3.2" />
         </g>
-        {/* a power indicator, lit, and a status one that is not */}
+        <circle cx="418" cy="288" r="26" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3" />
+        {/* the translate stays on the wrapper: a CSS transform would replace it */}
+        <g transform="translate(418 288)">
+          <g className="vc-fan">
+            {BLADES.map((a) => (
+              <g key={a} transform={`rotate(${a})`}>
+                <ellipse
+                  cx="0"
+                  cy="-16"
+                  rx="6.4"
+                  ry="10.5"
+                  transform="rotate(24 0 -16)"
+                  fill="var(--vc-sheet)"
+                  stroke="var(--vc-muted)"
+                  strokeWidth="1.4"
+                />
+              </g>
+            ))}
+          </g>
+        </g>
+        <circle cx="418" cy="288" r="7" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+        <circle cx="418" cy="288" r="2.5" fill="var(--vc-muted)" />
+
+        {/* the power indicator, breathing, and a status one that blinks */}
+        <circle className="vc-led-halo" cx="86" cy="118" r="7" fill="var(--vc-gold)" />
         <circle cx="86" cy="118" r="7" fill="var(--vc-gold)" />
-        <circle cx="86" cy="146" r="7" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+        <circle className="vc-led-blink" cx="86" cy="146" r="7"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
 
         {/* ------------------------------------------------------- silkscreen */}
         <Ref x={256} y={226}>U1</Ref>
@@ -265,27 +333,13 @@ export function HeroFigure() {
         <Ref x={86} y={132}>D2</Ref>
         <Ref x={424} y={104}>R1</Ref>
         <Ref x={129} y={262}>U2</Ref>
-        <Ref x={417} y={326}>U3</Ref>
-        <text
-          x="260"
-          y="386"
-          textAnchor="middle"
-          fill="var(--vc-faint)"
-          fontFamily="var(--font-mono)"
-          fontSize="12"
-          letterSpacing="3"
-        >
-          VOLTCRAFT
-        </text>
+        <Ref x={418} y={334}>FAN1</Ref>
 
         {/* a dimension line, because the sheet always carries one */}
         <g stroke="var(--vc-faint)" strokeWidth="1.2">
           <path d="M44 416h432M44 410v12M476 410v12" />
         </g>
       </svg>
-      <figcaption className="vc-fig mt-4 text-center text-faint">
-        Fig. 01 — the board everything else plugs into
-      </figcaption>
-    </figure>
+    </div>
   );
 }
