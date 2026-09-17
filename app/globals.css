@@ -432,100 +432,6 @@
   stroke-dasharray: 5 3;
 }
 
-/* The arm is a chain: each joint rotates about itself and carries what hangs
-   below it. The positioning translate is on the element AND repeated in every
-   keyframe, because a CSS transform replaces the attribute outright — with the
-   translate only in the keyframes, stopping the animation would drop each
-   segment onto the origin. */
-.vc-arm-a,
-.vc-arm-b,
-.vc-arm-c,
-.vc-jaw-l,
-.vc-jaw-r {
-  transform-box: view-box;
-  transform-origin: 0 0;
-  transform: translate(var(--ox), var(--oy));
-}
-.vc-arm-a {
-  animation: vc-arm-a 7s ease-in-out infinite;
-}
-.vc-arm-b {
-  animation: vc-arm-b 7s ease-in-out infinite;
-}
-.vc-arm-c {
-  animation: vc-arm-c 7s ease-in-out infinite;
-}
-.vc-jaw-l {
-  animation: vc-jaw-l 7s ease-in-out infinite;
-}
-.vc-jaw-r {
-  animation: vc-jaw-r 7s ease-in-out infinite;
-}
-@keyframes vc-arm-a {
-  0%,
-  100% {
-    transform: translate(var(--ox), var(--oy)) rotate(0deg);
-  }
-  38% {
-    transform: translate(var(--ox), var(--oy)) rotate(-9deg);
-  }
-  72% {
-    transform: translate(var(--ox), var(--oy)) rotate(5deg);
-  }
-}
-@keyframes vc-arm-b {
-  0%,
-  100% {
-    transform: translate(var(--ox), var(--oy)) rotate(0deg);
-  }
-  38% {
-    transform: translate(var(--ox), var(--oy)) rotate(17deg);
-  }
-  72% {
-    transform: translate(var(--ox), var(--oy)) rotate(-7deg);
-  }
-}
-@keyframes vc-arm-c {
-  0%,
-  100% {
-    transform: translate(var(--ox), var(--oy)) rotate(0deg);
-  }
-  38% {
-    transform: translate(var(--ox), var(--oy)) rotate(-10deg);
-  }
-  72% {
-    transform: translate(var(--ox), var(--oy)) rotate(6deg);
-  }
-}
-/* the claw closes as the arm reaches, and opens again on the way back */
-@keyframes vc-jaw-l {
-  0%,
-  100% {
-    transform: translate(var(--ox), var(--oy)) rotate(0deg);
-  }
-  44%,
-  58% {
-    transform: translate(var(--ox), var(--oy)) rotate(15deg);
-  }
-}
-@keyframes vc-jaw-r {
-  0%,
-  100% {
-    transform: translate(var(--ox), var(--oy)) rotate(0deg);
-  }
-  44%,
-  58% {
-    transform: translate(var(--ox), var(--oy)) rotate(-15deg);
-  }
-}
-.vc-board:hover .vc-arm-a,
-.vc-board:hover .vc-arm-b,
-.vc-board:hover .vc-arm-c,
-.vc-board:hover .vc-jaw-l,
-.vc-board:hover .vc-jaw-r {
-  animation-duration: 3.2s;
-}
-
 .vc-board:hover .vc-pulse {
   animation-duration: 1.1s;
 }
@@ -552,12 +458,7 @@
   /* the blanket rule above only makes an infinite animation fast, which would
      leave a pulse frozen mid-net; stop them and drop what only motion earned */
   .vc-fan,
-  .vc-led-blink,
-  .vc-arm-a,
-  .vc-arm-b,
-  .vc-arm-c,
-  .vc-jaw-l,
-  .vc-jaw-r {
+  .vc-led-blink {
     animation: none !important;
   }
   .vc-pulse,

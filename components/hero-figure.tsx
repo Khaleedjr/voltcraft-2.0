@@ -1,62 +1,48 @@
 import Link from "next/link";
 
 /**
- * The hero's figure: a control board, drawn in isometric.
+ * The hero's figure: a control board drawn the way the rest of the site is
+ * drawn — a plate on the drawing sheet, prussian line work, current in gold.
  *
- * The routing is still laid out in plan — the arrays below are ordinary
- * top-down coordinates — and the whole board plane is projected by one
- * matrix. That matters: every check that proved this layout sound (no trace
- * crossing another, none through a component body, every bend at 45 degrees,
- * no label on a wire, clearance in the pour) runs against those same plan
- * coordinates and still holds. Projecting at render time rather than baking
- * the isometry into the data is what keeps the drawing verifiable.
+ * It replaces the stack of product cards that used to sit here. Those put four
+ * bright photo plates in the hero, which on the dark theme were the loudest
+ * thing on the page, and every one of those products appears again further
+ * down under the aisles and the sale row.
  *
- *   iso(x, y, z) = ( (x - y)·cos30 + OX , (x + y)/2 - z + OY )
+ * What makes a board drawing read as a board is the routing, so the routing is
+ * done properly here:
  *
- * so +x runs down-right, +y runs down-left and +z is straight up the screen.
- * Because z only moves a point up, anything lying flat at a height is just the
- * plane matrix with a translate on top of it — which is how the chip's
- * markings, the sensor's grille and the fan's blades ride on their parts.
- * The fan still spins in plan and is projected after, so it turns in the
- * board's plane rather than the screen's.
+ *   - Pads are rings with a hole through them, and pin 1 of each header is
+ *     square. The chip is a quad-flat pack with legs on all four sides, a notch
+ *     on its top edge and the pin-1 dimple beside it.
+ *   - Every trace leaves a pad straight, turns at 45 degrees and arrives
+ *     square. Traces heading the same way turn at stepped heights so they nest
+ *     into a fan instead of converging — the signature of a real layout.
+ *   - No trace crosses another and none runs through a component body, because
+ *     on a single layer neither can happen. Where a net has to get past
+ *     something it ends on a via and continues on the other side.
+ *   - Power is drawn heavier than signal, as it is laid out heavier.
  *
- * A circle in the plane projects to an axis-aligned ellipse of exactly
- * rx = r·cos30·√2, ry = r·√2/2, which is why the electrolytics and the LEDs
- * are cylinders rather than an approximation.
+ * The board is powered rather than posed: the indicator breathes, the status
+ * LED blinks, the fan turns, and pulses of current run the live traces out
+ * from the chip. It is CSS on SVG — no script, nothing to hydrate — and it
+ * stops dead under prefers-reduced-motion, where the board falls back to the
+ * drawing.
  *
- * The parts are still doors: each one that maps honestly onto an aisle links
- * into it, and names the aisle in plain words on hover. There are no component
- * designators — those are notation for whoever assembles a board, not for
- * whoever is shopping for one. The header pin names stay, printed on the board
- * and so sheared with it, as silkscreen would be.
+ * And the parts are doors. Each one that maps honestly onto an aisle is a
+ * link into it: the chip to microcontrollers, the fan to actuators, the button
+ * to switches, the LEDs to display, the regulator and jack to power, the
+ * headers and usb to connectors, the resistor to accessories. The mapping is
+ * checked against what those aisles actually hold rather than against what the
+ * part is called — nothing points somewhere a visitor would not expect to
+ * land. Sensors has no part on this board, which is why the headline keeps its
+ * own Sensors link; fluid control has two products and no part either.
+ *
+ * Because the drawing now contains links it can no longer be role="img":
+ * that role makes everything inside it presentational and would hide every
+ * one of them from assistive tech.
  */
 
-/* ------------------------------------------------------------- projection */
-/**
- * The board is not rotated in plan, only tilted back — so its front and back
- * edges stay horizontal and it sits square to the frame instead of standing on
- * a corner. Depth survives as cos of the tilt and height rises as sin of the
- * same angle, which is what keeps the solid consistent rather than merely
- * squashed. At 45 degrees the two are equal.
- */
-const TILT = Math.SQRT1_2; // cos 45 = sin 45
-const DEPTH = TILT;
-const RISE = TILT;
-const OX = 14;
-const OY = 8;
-/** The board plane itself: plan coordinates in, foreshortened out. */
-const PLANE = `matrix(1 0 0 ${DEPTH.toFixed(5)} ${OX} ${OY})`;
-/** Anything lying flat at a height is the plane, lifted. */
-const at = (z: number) => `translate(0 ${-(z * RISE).toFixed(2)}) ${PLANE}`;
-
-const px = (x: number, _y = 0) => x + OX;
-const py = (_x: number, y: number, z = 0) => y * DEPTH - z * RISE + OY;
-const pt = (x: number, y: number, z = 0) => `${px(x, y).toFixed(1)},${py(x, y, z).toFixed(1)}`;
-/** A plan rectangle's top face, as screen-space points. */
-const face = (x: number, y: number, w: number, h: number, z: number) =>
-  `${pt(x, y, z)} ${pt(x + w, y, z)} ${pt(x + w, y + h, z)} ${pt(x, y + h, z)}`;
-
-/* ------------------------------------------------------------------ nets */
 /** Signal runs: the fine copper that carries no current in this drawing. */
 const SIGNAL = [
   "M217 160 V137.5 L156.5 77",
@@ -109,92 +95,42 @@ const POWER = [
   "M152 324 V329.5 L178.5 356",
 ];
 
-const HEADER_X = Array.from({ length: 13 }, (_, i) => 128 + i * 22);
-const CHIP_TOP_X = Array.from({ length: 9 }, (_, i) => 202 + i * 13);
-const CHIP_SIDE_Y = Array.from({ length: 8 }, (_, i) => 174 + i * 12);
-const STITCH_LEFT = [110, 136, 162, 188, 214, 240];
-const STITCH_RIGHT = [110, 136, 162, 188, 214, 240, 266, 292, 318, 344];
-const PIN_LABELS: [number, number, string][] = [
-  [134.5, 380, "GND"],
-  [156.5, 380, "5V"],
-  [178.5, 380, "3V3"],
-  [354.5, 61, "D11"],
-  [376.5, 61, "D12"],
-  [398.5, 61, "D13"],
-];
-const BLADES = [0, 72, 144, 216, 288];
-
-/* ------------------------------------------------------------------ solids */
-/**
- * A part standing on the board. Only the two faces a viewer can see are
- * drawn — the ones at max x and max y — each shaded so the form reads without
- * needing a light source: the top plain, the right a little down, the front
- * further. The shade is the palette's own shadow token, so it works in either
- * theme.
- */
-function Box({
-  x,
-  y,
-  w,
-  h,
-  z,
-  fill = "var(--vc-sheet)",
-}: {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
-  z: number;
-  fill?: string;
-}) {
-  const x1 = x + w;
-  const y1 = y + h;
-  // square to the frame, the side faces are edge-on — only the front shows
-  const front = `${pt(x, y1, z)} ${pt(x1, y1, z)} ${pt(x1, y1)} ${pt(x, y1)}`;
+/** A through-hole pad: a ring with a hole. Pin 1 is square, as on a real board. */
+function Pad({ x, y, first = false }: { x: number; y: number; first?: boolean }) {
   return (
     <>
-      <polygon points={front} fill={fill} stroke="var(--vc-muted)" strokeWidth="1.2" />
-      <polygon points={front} fill="rgba(var(--vc-shadow), 0.14)" />
-      <polygon points={face(x, y, w, h, z)} fill={fill} stroke="var(--vc-muted)" strokeWidth="1.4" />
+      <rect
+        x={x}
+        y={y}
+        width="13"
+        height="13"
+        rx={first ? 1 : 6.5}
+        fill="var(--vc-sheet)"
+        stroke="var(--vc-line)"
+        strokeWidth="1.3"
+      />
+      <circle cx={x + 6.5} cy={y + 6.5} r="2.6" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1" />
     </>
   );
 }
 
-/** A can standing on the board — an electrolytic, an indicator, the fan hub. */
-function Cyl({
-  cx,
-  cy,
-  r,
-  z,
-  fill = "var(--vc-sheet)",
-  top = "var(--vc-raised)",
-}: {
-  cx: number;
-  cy: number;
-  r: number;
-  z: number;
-  fill?: string;
-  top?: string;
-}) {
-  const sx = px(cx, cy);
-  const sy = py(cx, cy);
-  const rx = r;
-  const ry = r * DEPTH;
-  const side = `M${sx - rx} ${sy - z} L${sx - rx} ${sy} A${rx} ${ry} 0 0 0 ${sx + rx} ${sy} L${sx + rx} ${sy - z} Z`;
+/** Where a net drops through to the other side of the board. */
+function Via({ x, y }: { x: number; y: number }) {
   return (
     <>
-      <path d={side} fill={fill} stroke="var(--vc-muted)" strokeWidth="1.2" />
-      <path d={side} fill="rgba(var(--vc-shadow), 0.12)" stroke="none" />
-      <ellipse cx={sx} cy={sy - z} rx={rx} ry={ry} fill={top} stroke="var(--vc-muted)" strokeWidth="1.3" />
+      <circle cx={x} cy={y} r="3.6" fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.5" />
+      <circle cx={x} cy={y} r="1.2" fill="var(--vc-raised)" />
     </>
   );
 }
 
 /**
- * A part that is a door into an aisle. The hit area is the part's own top face
- * projected, not a screen rectangle — an isometric part is a parallelogram and
- * a box around it would swallow its neighbours. The label rides in screen
- * space so it stays upright while everything under it lies back.
+ * A part that is a door into an aisle.
+ *
+ * The hit rect is filled transparent rather than none: `none` takes no pointer
+ * events at all, so a part drawn in outline would only be clickable on its own
+ * strokes. The label rides inside the link so plain :hover reveals it without
+ * needing to reach across the tree.
  */
 function Part({
   href,
@@ -205,16 +141,15 @@ function Part({
 }: {
   href: string;
   aisle: string;
-  hit: [number, number, number, number, number];
+  hit: [number, number, number, number];
   tip: [number, number];
   children: React.ReactNode;
 }) {
   const label = aisle.toUpperCase();
   const w = label.length * 6.7 + 14;
-  const [hx, hy, hw, hh, hz] = hit;
   return (
     <Link href={href} className="vc-part" aria-label={`Shop ${aisle.toLowerCase()}`}>
-      <polygon className="vc-hit" points={face(hx, hy, hw, hh, hz)} />
+      <rect className="vc-hit" x={hit[0]} y={hit[1]} width={hit[2]} height={hit[3]} rx="4" />
       <g className="vc-part-body">{children}</g>
       <g className="vc-tip">
         <rect x={tip[0] - w / 2} y={tip[1] - 11.5} width={w} height="16" rx="3" fill="var(--vc-ink)" />
@@ -234,77 +169,59 @@ function Part({
   );
 }
 
-/* ----------------------------------------------------------------- the arm */
-/**
- * A small arm on the bench beside the board. It is built from the same two
- * primitives as everything else for its base and column, and its links are
- * capsules — an outline stroke with a lighter one inside it, the same
- * construction as the board's parts, so it reads as line work rather than as
- * a different drawing.
- *
- * It works in the plane of a single plan depth, which is what an arm reaching
- * across the bench does, so x is horizontal and height is vertical: its joints
- * are given in plan x and height and projected together.
- */
-const ARM_Y = 284;
-/** The board's underside is a thickness down; that is where the bench is. */
-const BENCH = 9 * RISE;
-const ap = (x: number, z: number): [number, number] => [px(x), py(0, ARM_Y, z) + BENCH];
-/** A hinge: its offset from the joint above it, handed to CSS to pivot on. */
-const hinge = (from: [number, number], to: [number, number]) =>
-  ({ "--ox": `${(to[0] - from[0]).toFixed(1)}px`, "--oy": `${(to[1] - from[1]).toFixed(1)}px` }) as React.CSSProperties;
-
-function Seg({ a, b, w }: { a: [number, number]; b: [number, number]; w: number }) {
-  return (
-    <>
-      <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="var(--vc-muted)" strokeWidth={w} strokeLinecap="round" />
-      <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} stroke="var(--vc-sheet)" strokeWidth={w - 2.8} strokeLinecap="round" />
-    </>
-  );
-}
-
-function Joint({ p, r }: { p: [number, number]; r: number }) {
-  return (
-    <>
-      <circle cx={p[0]} cy={p[1]} r={r} fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.4" />
-      <circle cx={p[0]} cy={p[1]} r={r * 0.36} fill="var(--vc-muted)" />
-    </>
-  );
-}
-
-/** Each link as a vector from the joint it hangs off. */
-const ARM_UPPER: [number, number] = [-34, -25.5];
-const ARM_FORE: [number, number] = [-30, 19.8];
-
-const BOARD = { x: 44, y: 44, w: 432, h: 352 };
-const THICK = 9;
+const HEADER_X = Array.from({ length: 13 }, (_, i) => 128 + i * 22);
+/** The quad-flat pack's legs, stepped along each edge. */
+const CHIP_TOP_X = Array.from({ length: 9 }, (_, i) => 202 + i * 13);
+const CHIP_SIDE_Y = Array.from({ length: 8 }, (_, i) => 174 + i * 12);
+/** Five blades, pitched, around the hub. */
+const BLADES = [0, 72, 144, 216, 288];
+/** Stitching vias, tying the pour together down each margin. */
+const STITCH_LEFT = [110, 136, 162, 188, 214, 240];
+const STITCH_RIGHT = [110, 136, 162, 188, 214, 240, 266, 292, 318, 344];
+/** What a few of the header pins are, printed beside them as a board does. */
+const PIN_LABELS: [number, number, string][] = [
+  [134.5, 380, "GND"],
+  [156.5, 380, "5V"],
+  [178.5, 380, "3V3"],
+  [354.5, 61, "D11"],
+  [376.5, 61, "D12"],
+  [398.5, 61, "D13"],
+];
 
 export function HeroFigure() {
-  const b = BOARD;
-  const x1 = b.x + b.w;
-  const y1 = b.y + b.h;
   return (
-    <div className="mx-auto w-full max-w-[520px]">
+    <div className="mx-auto w-full max-w-[460px]">
       <svg
-        viewBox="0 0 576 304"
+        viewBox="0 0 520 440"
         className="vc-board w-full"
         role="group"
         aria-label="Board diagram — each part links to its aisle"
       >
+        {/* registration ticks, as on a drawing sheet */}
+        <g stroke="var(--vc-line)" strokeWidth="1.5" fill="none">
+          <path d="M4 22V4h18M498 4h18v18M516 418v18h-18M22 436H4v-18" />
+        </g>
+
         <defs>
-          {/* the ground pour, hatched the way a board's copper fill is drawn */}
-          {/* Without the plan rotation a 45 degree hatch comes out at 35
-              degrees on screen rather than flat, so it can be the real thing
-              again. */}
+          {/* the ground pour, hatched the way a board's copper fill is drawn.
+              The tile's diagonal runs corner to corner past both edges so it
+              joins up across cells instead of dashing. */}
           <pattern id="vc-pour" patternUnits="userSpaceOnUse" width="7" height="7">
             <path d="M-1 8L8-1" stroke="var(--vc-trace)" strokeWidth="0.9" fill="none" />
           </pattern>
-          {/* copper is held back from everything it must not touch: a clearance
-              gap follows every trace, rings every pad, and each mounting hole
-              is kept clear */}
+          {/* Copper is held back from everything it must not touch, which is
+              what stops a pour reading as wallpaper: a clearance gap follows
+              every trace and rings every pad, and each mounting hole is kept
+              clear. Masked in black — the pour is simply absent there. */}
           <mask id="vc-pour-keepout">
             <rect x="58" y="58" width="404" height="324" rx="8" fill="#fff" />
-            <g stroke="#000" strokeWidth="9" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <g
+              stroke="#000"
+              strokeWidth="9"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               {[...SIGNAL, ...LIVE, ...POWER].map((d) => (
                 <path key={d} d={d} />
               ))}
@@ -324,193 +241,177 @@ export function HeroFigure() {
           </mask>
         </defs>
 
-        {/* ---------------------------------------------- the board's own edge */}
-        <polygon
-          points={`${pt(b.x, y1)} ${pt(x1, y1)} ${pt(x1, y1, -THICK)} ${pt(b.x, y1, -THICK)}`}
-          fill="var(--vc-raised)"
-          stroke="var(--vc-muted)"
-          strokeWidth="1.6"
-        />
-        <polygon
-          points={`${pt(b.x, y1)} ${pt(x1, y1)} ${pt(x1, y1, -THICK)} ${pt(b.x, y1, -THICK)}`}
-          fill="rgba(var(--vc-shadow), 0.18)"
-        />
+        {/* the board, its pour, and the keepout line inside its edge */}
+        <rect x="44" y="44" width="432" height="352" rx="11"
+              fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="2.2" />
+        <rect x="58" y="58" width="404" height="324" rx="8"
+              fill="url(#vc-pour)" mask="url(#vc-pour-keepout)" opacity="0.38" />
+        <rect x="51" y="51" width="418" height="338" rx="8"
+              fill="none" stroke="var(--vc-line-soft)" strokeWidth="1" />
 
-        {/* ------------------------------- everything lying flat on the board */}
-        <g transform={PLANE}>
-          <rect
-            x={b.x}
-            y={b.y}
-            width={b.w}
-            height={b.h}
-            rx="11"
-            fill="var(--vc-raised)"
-            stroke="var(--vc-muted)"
-            strokeWidth="2.2"
-            vectorEffect="non-scaling-stroke"
-          />
-          <rect
-            x="58"
-            y="58"
-            width="404"
-            height="324"
-            rx="8"
-            fill="url(#vc-pour)"
-            mask="url(#vc-pour-keepout)"
-            opacity="0.38"
-          />
-          <rect
-            x="51"
-            y="51"
-            width="418"
-            height="338"
-            rx="8"
-            fill="none"
-            stroke="var(--vc-line-soft)"
-            strokeWidth="1"
-            vectorEffect="non-scaling-stroke"
-          />
-
-          <g
-            fill="none"
-            stroke="var(--vc-trace)"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            vectorEffect="non-scaling-stroke"
-          >
-            {SIGNAL.map((d) => (
-              <path key={d} d={d} vectorEffect="non-scaling-stroke" />
-            ))}
-          </g>
-          <g fill="none" stroke="var(--vc-gold)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
-            {LIVE.map((d) => (
-              <path key={d} d={d} vectorEffect="non-scaling-stroke" />
-            ))}
-          </g>
-          <g fill="none" stroke="var(--vc-gold)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
-            {POWER.map((d) => (
-              <path key={d} d={d} vectorEffect="non-scaling-stroke" />
-            ))}
-          </g>
-          <g fill="none" stroke="var(--vc-spark)" strokeLinecap="round" strokeLinejoin="round">
-            {LIVE.map((d, i) => (
-              <path
-                key={d}
-                className="vc-pulse"
-                d={d}
-                strokeWidth="3.2"
-                vectorEffect="non-scaling-stroke"
-                style={{ animationDelay: `${((i * 0.53) % 2.4).toFixed(2)}s` }}
-              />
-            ))}
-            {POWER.map((d, i) => (
-              <path
-                key={d}
-                className="vc-pulse"
-                d={d}
-                strokeWidth="4.2"
-                vectorEffect="non-scaling-stroke"
-                style={{ animationDelay: `${(0.35 + i * 0.44).toFixed(2)}s` }}
-              />
-            ))}
-          </g>
-
-          {/* mounting holes, vias, and the pins that say what they are */}
-          <g fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.5" vectorEffect="non-scaling-stroke">
-            <circle cx="74" cy="74" r="8" />
-            <circle cx="446" cy="74" r="8" />
-            <circle cx="74" cy="366" r="8" />
-            <circle cx="446" cy="366" r="8" />
-          </g>
-          <g fill="var(--vc-ground)" stroke="var(--vc-line)" strokeWidth="1.2" vectorEffect="non-scaling-stroke">
-            <circle cx="74" cy="74" r="3.5" />
-            <circle cx="446" cy="74" r="3.5" />
-            <circle cx="74" cy="366" r="3.5" />
-            <circle cx="446" cy="366" r="3.5" />
-          </g>
-          <g fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.5" vectorEffect="non-scaling-stroke">
-            <circle cx="176" cy="188" r="3.6" />
-            <circle cx="182" cy="194" r="3.6" />
-            <circle cx="178" cy="230" r="3.6" />
-            <circle cx="180" cy="242" r="3.6" />
-            <circle cx="332" cy="188" r="3.6" />
-            <circle cx="330" cy="212" r="3.6" />
-            {STITCH_LEFT.map((y) => (
-              <circle key={`sl${y}`} cx="68" cy={y} r="2.7" />
-            ))}
-            {STITCH_RIGHT.map((y) => (
-              <circle key={`sr${y}`} cx="458" cy={y} r="2.7" />
-            ))}
-          </g>
-          <g fill="var(--vc-faint)" fontFamily="var(--font-mono)" fontSize="8.5" textAnchor="middle">
-            {PIN_LABELS.map(([x, y, t]) => (
-              <text key={t} x={x} y={y}>
-                {t}
-              </text>
-            ))}
-          </g>
+        {/* ---------------------------------------------------------- traces */}
+        <g fill="none" stroke="var(--vc-trace)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+          {SIGNAL.map((d) => <path key={d} d={d} />)}
+        </g>
+        <g fill="none" stroke="var(--vc-gold)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round">
+          {LIVE.map((d) => <path key={d} d={d} />)}
+        </g>
+        <g fill="none" stroke="var(--vc-gold)" strokeWidth="3.4" strokeLinecap="round" strokeLinejoin="round">
+          {POWER.map((d) => <path key={d} d={d} />)}
         </g>
 
-        {/* ---------------------- the parts, back to front by depth, as doors */}
-        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 48, 291, 58, 0]} tip={[px(266), py(0, 64) - 18]}>
-          <g transform={PLANE}>
-            {HEADER_X.map((x, i) => (
-              <g key={`t${x}`}>
-                <rect x={x} y="64" width="13" height="13" rx={i === 0 ? 1 : 6.5} fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" />
-                <circle cx={x + 6.5} cy="70.5" r="2.6" fill="var(--vc-ground)" vectorEffect="non-scaling-stroke" />
-              </g>
-            ))}
-          </g>
-        </Part>
-
-        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 100, 64, 58, 6]} tip={[px(424), py(0, 110, 6) - 16]}>
-          <Box x={396} y={110} w={56} h={18} z={6} />
-          <g transform={at(6)} stroke="var(--vc-line)" strokeWidth="1.4" fill="none">
-            <path d="M410 110v18M422 110v18M434 110v18" vectorEffect="non-scaling-stroke" />
-          </g>
-        </Part>
-
-        <Part href="/shop/switches" aisle="Switches" hit={[112, 102, 54, 59, 12]} tip={[px(132), py(0, 104, 17) - 16]}>
-          <g transform={PLANE} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
-            <rect x="108" y="110" width="7" height="6" rx="1" vectorEffect="non-scaling-stroke" />
-            <rect x="108" y="128" width="7" height="6" rx="1" vectorEffect="non-scaling-stroke" />
-            <rect x="149" y="110" width="7" height="6" rx="1" vectorEffect="non-scaling-stroke" />
-            <rect x="149" y="128" width="7" height="6" rx="1" vectorEffect="non-scaling-stroke" />
-          </g>
-          <Box x={114} y={104} w={36} h={36} z={12} />
-          <Cyl cx={132} cy={122} r={10} z={17} top="var(--vc-raised)" />
-        </Part>
-
-        <Part href="/shop/display" aisle="Display" hit={[62, 98, 50, 68, 8]} tip={[px(86), py(0, 111, 8) - 16]}>
-          <Cyl cx={86} cy={118} r={7} z={8} top="var(--vc-gold)" />
-          <ellipse className="vc-led-halo" cx={px(86)} cy={py(0, 118, 8)} rx={7} ry={7 * DEPTH} fill="var(--vc-gold)" />
-          <Cyl cx={86} cy={146} r={7} z={8} />
-          <ellipse className="vc-led-blink" cx={px(86)} cy={py(0, 146, 8)} rx={7} ry={7 * DEPTH} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.3" />
-        </Part>
-
-        <Box x={168} y={140} w={13} h={26} z={10} />
-
-        <Part href="/shop/connectors" aisle="Connectors" hit={[8, 138, 54, 62, 14]} tip={[px(37), py(0, 144, 14) - 16]}>
-          <Box x={20} y={144} w={42} h={52} z={14} />
-          <Box x={12} y={157} w={14} h={26} z={9} fill="var(--vc-raised)" />
-        </Part>
-
-        {/* the crystal and its pads */}
-        <g transform={PLANE} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
-          <rect x="328" y="193" width="8" height="14" rx="1.5" vectorEffect="non-scaling-stroke" />
-          <rect x="388" y="193" width="8" height="14" rx="1.5" vectorEffect="non-scaling-stroke" />
-        </g>
-        <Box x={336} y={186} w={52} h={26} z={11} />
-        <g transform={at(11)}>
-          <rect x="342" y="191" width="40" height="16" rx="8" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" vectorEffect="non-scaling-stroke" />
+        {/* current, running the live and power nets out from the chip */}
+        <g fill="none" stroke="var(--vc-spark)" strokeLinecap="round" strokeLinejoin="round">
+          {LIVE.map((d, i) => (
+            <path
+              key={d}
+              className="vc-pulse"
+              d={d}
+              strokeWidth="3.2"
+              style={{ animationDelay: `${((i * 0.53) % 2.4).toFixed(2)}s` }}
+            />
+          ))}
+          {POWER.map((d, i) => (
+            <path
+              key={d}
+              className="vc-pulse"
+              d={d}
+              strokeWidth="4.2"
+              style={{ animationDelay: `${(0.35 + i * 0.44).toFixed(2)}s` }}
+            />
+          ))}
         </g>
 
-        <Cyl cx={112} cy={206} r={18} z={26} />
-        <Cyl cx={156} cy={206} r={18} z={26} />
+        {/* --------------------------------------- fixed hardware and passives */}
+        <g fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.5">
+          <circle cx="74" cy="74" r="8" />
+          <circle cx="446" cy="74" r="8" />
+          <circle cx="74" cy="366" r="8" />
+          <circle cx="446" cy="366" r="8" />
+        </g>
+        <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.2">
+          <circle cx="74" cy="74" r="3.5" />
+          <circle cx="446" cy="74" r="3.5" />
+          <circle cx="74" cy="366" r="3.5" />
+          <circle cx="446" cy="366" r="3.5" />
+        </g>
 
-        <Part href="/shop/microcontrollers" aisle="Microcontrollers" hit={[198, 166, 116, 104, 10]} tip={[px(256), py(0, 168, 10) - 16]}>
-          <g transform={PLANE} fill="var(--vc-muted)">
+        {/* stitching vias down each margin, tying the pour together */}
+        <g fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.2">
+          {STITCH_LEFT.map((y) => (
+            <circle key={`sl${y}`} cx="68" cy={y} r="2.7" />
+          ))}
+          {STITCH_RIGHT.map((y) => (
+            <circle key={`sr${y}`} cx="458" cy={y} r="2.7" />
+          ))}
+        </g>
+
+        {/* what a few of the header pins are */}
+        <g fill="var(--vc-faint)" fontFamily="var(--font-mono)" fontSize="8.5" textAnchor="middle">
+          {PIN_LABELS.map(([x, y, t]) => (
+            <text key={t} x={x} y={y}>{t}</text>
+          ))}
+        </g>
+
+        <Via x={176} y={188} />
+        <Via x={182} y={194} />
+        <Via x={178} y={230} />
+        <Via x={180} y={242} />
+        <Via x={332} y={188} />
+        <Via x={330} y={212} />
+
+        {/* passives: no aisle sells a bare capacitor or crystal, so these stay
+            drawing rather than pretending to be doors */}
+        <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6">
+          <circle cx="112" cy="206" r="18" />
+          <circle cx="156" cy="206" r="18" />
+          <rect x="336" y="186" width="52" height="26" rx="13" />
+          <rect x="342" y="191" width="40" height="16" rx="8" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
+          <rect x="328" y="193" width="8" height="14" rx="1.5" />
+          <rect x="388" y="193" width="8" height="14" rx="1.5" />
+          <rect x="168" y="140" width="13" height="26" rx="2" />
+        </g>
+        <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3">
+          <circle cx="112" cy="206" r="11" />
+          <circle cx="156" cy="206" r="11" />
+        </g>
+        <g stroke="var(--vc-line)" strokeWidth="1.4" fill="none">
+          <path d="M101 199a11 11 0 0 0 0 14" />
+          <path d="M145 199a11 11 0 0 0 0 14" />
+        </g>
+
+
+
+
+        {/* ------------------------------------------------- the parts, as doors */}
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 52, 291, 35]} tip={[270, 40]}>
+          {HEADER_X.map((x, i) => (
+            <Pad key={`t${x}`} x={x} y={64} first={i === 0} />
+          ))}
+        </Part>
+        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 347, 291, 35]} tip={[270, 390]}>
+          {HEADER_X.map((x, i) => (
+            <Pad key={`b${x}`} x={x} y={356} first={i === 0} />
+          ))}
+        </Part>
+
+        <Part href="/shop/connectors" aisle="Connectors" hit={[10, 140, 56, 60]} tip={[76, 216]}>
+          {/* the shell, then the mouth standing proud of it with the tongue
+              inside — a socket reads by its opening, not by its outline */}
+          <rect x="20" y="144" width="42" height="52" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M20 153h42M20 187h42" stroke="var(--vc-line)" strokeWidth="1.2" fill="none" />
+          <rect x="12" y="157" width="14" height="26" rx="7"
+                fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <rect x="31" y="163" width="24" height="14" rx="3"
+                fill="none" stroke="var(--vc-line)" strokeWidth="1.3" />
+        </Part>
+
+        <Part href="/shop/power" aisle="Power" hit={[8, 264, 58, 56]} tip={[64, 336]}>
+          {/* moved well clear of the usb, and drawn as a jack: the housing,
+              the barrel standing out of it, and the centre pin inside */}
+          <rect x="24" y="268" width="38" height="48" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M24 277h38M24 307h38" stroke="var(--vc-line)" strokeWidth="1.2" fill="none" />
+          <rect x="10" y="280" width="17" height="24" rx="8.5"
+                fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <circle cx="18" cy="292" r="4" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4" />
+        </Part>
+
+        <Part href="/shop/power" aisle="Power" hit={[94, 264, 72, 62]} tip={[129, 344]}>
+          <rect x="96" y="268" width="66" height="46" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M96 280h66" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" />
+          <g stroke="var(--vc-muted)" strokeWidth="2.2" fill="none">
+            <path d="M114 314v10M133 314v10M152 314v10" />
+          </g>
+        </Part>
+
+        <Part href="/shop/display" aisle="Display" hit={[70, 100, 36, 64]} tip={[86, 176]}>
+          <circle className="vc-led-halo" cx="86" cy="118" r="7" fill="var(--vc-gold)" />
+          <circle cx="86" cy="118" r="7" fill="var(--vc-gold)" />
+          <circle className="vc-led-blink" cx="86" cy="146" r="7"
+                  fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+
+        </Part>
+
+        <Part href="/shop/switches" aisle="Switches" hit={[106, 100, 54, 44]} tip={[132, 158]}>
+          {/* four legs and a round actuator: a tactile switch is known by its
+              legs, and without them this was just a square with a circle */}
+          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
+            <rect x="108" y="110" width="7" height="6" rx="1" />
+            <rect x="108" y="128" width="7" height="6" rx="1" />
+            <rect x="149" y="110" width="7" height="6" rx="1" />
+            <rect x="149" y="128" width="7" height="6" rx="1" />
+          </g>
+          <rect x="114" y="104" width="36" height="36" rx="2"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <circle cx="132" cy="122" r="10" fill="var(--vc-raised)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+          <circle cx="132" cy="122" r="4" fill="none" stroke="var(--vc-line)" strokeWidth="1.2" />
+        </Part>
+
+        <Part href="/shop/microcontrollers" aisle="Microcontrollers" hit={[188, 156, 136, 124]} tip={[256, 300]}>
+          <g fill="var(--vc-muted)">
             {CHIP_TOP_X.map((x) => (
               <rect key={`ct${x}`} x={x} y="160" width="4" height="8" rx="1" />
             ))}
@@ -524,119 +425,74 @@ export function HeroFigure() {
               <rect key={`cr${y}`} x="312" y={y} width="8" height="4" rx="1" />
             ))}
           </g>
-          <Box x={200} y={168} w={112} h={100} z={10} />
-          <g transform={at(10)} fill="none" stroke="var(--vc-muted)" strokeWidth="1.4">
-            <path d="M244 168a12 12 0 0 0 24 0" vectorEffect="non-scaling-stroke" />
-            <circle cx="213" cy="181" r="4.5" vectorEffect="non-scaling-stroke" />
-          </g>
+          <rect x="200" y="168" width="112" height="100" rx="5"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M244 168a12 12 0 0 0 24 0" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
+          <circle cx="213" cy="181" r="4.5" fill="none" stroke="var(--vc-muted)" strokeWidth="1.4" />
         </Part>
 
-        <Part href="/shop/sensors" aisle="Sensors" hit={[334, 224, 50, 64, 18]} tip={[px(359), py(0, 226, 18) - 16]}>
-          <g transform={PLANE} fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
+        <Part href="/shop/sensors" aisle="Sensors" hit={[326, 222, 56, 68]} tip={[352, 322]}>
+          {/* a vented package, the shape the temperature and humidity parts
+              come in — the grille is what makes it read as a sensor rather
+              than another chip */}
+          <g fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4">
             {[230, 240, 254, 264].map((y) => (
-              <rect key={y} x="330" y={y} width="6" height="4" rx="1" vectorEffect="non-scaling-stroke" />
+              <rect key={y} x="330" y={y} width="6" height="4" rx="1" />
             ))}
           </g>
-          <Box x={336} y={226} w={46} h={60} z={18} />
-          <g transform={at(18)}>
-            <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.2">
-              {[344, 353, 362, 371].map((x) => (
-                <rect key={x} x={x} y="238" width="5" height="32" rx="2.5" vectorEffect="non-scaling-stroke" />
+          <rect x="336" y="226" width="46" height="60" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <g fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.2">
+            {[344, 353, 362, 371].map((x) => (
+              <rect key={x} x={x} y="238" width="5" height="32" rx="2.5" />
+            ))}
+          </g>
+          <path d="M336 278h46" stroke="var(--vc-line)" strokeWidth="1.3" fill="none" />
+        </Part>
+
+        <Part href="/shop/accessories" aisle="Accessories" hit={[392, 102, 62, 35]} tip={[424, 152]}>
+          <rect x="396" y="110" width="56" height="18" rx="3"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <path d="M410 110v18M422 110v18M434 110v18" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" />
+        </Part>
+
+        <Part href="/shop/actuators" aisle="Actuators" hit={[384, 254, 68, 68]} tip={[418, 348]}>
+          <rect x="388" y="258" width="60" height="60" rx="6"
+                fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.6" />
+          <g fill="none" stroke="var(--vc-line)" strokeWidth="1.3">
+            <circle cx="395" cy="265" r="3.2" />
+            <circle cx="441" cy="265" r="3.2" />
+            <circle cx="395" cy="311" r="3.2" />
+            <circle cx="441" cy="311" r="3.2" />
+          </g>
+          <circle cx="418" cy="288" r="26" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3" />
+          {/* the translate stays on the wrapper: a CSS transform would replace it */}
+          <g transform="translate(418 288)">
+            <g className="vc-fan">
+              {BLADES.map((a) => (
+                <g key={a} transform={`rotate(${a})`}>
+                  <ellipse
+                    cx="0"
+                    cy="-16"
+                    rx="6.4"
+                    ry="10.5"
+                    transform="rotate(24 0 -16)"
+                    fill="var(--vc-sheet)"
+                    stroke="var(--vc-muted)"
+                    strokeWidth="1.4"
+                  />
+                </g>
               ))}
             </g>
-            <path d="M336 278h46" stroke="var(--vc-line)" strokeWidth="1.3" fill="none" vectorEffect="non-scaling-stroke" />
           </g>
+          <circle cx="418" cy="288" r="7" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.5" />
+          <circle cx="418" cy="288" r="2.5" fill="var(--vc-muted)" />
         </Part>
 
-        <Part href="/shop/power" aisle="Power" hit={[8, 258, 82, 68, 18]} tip={[px(36), py(0, 268, 18) - 16]}>
-          <Box x={24} y={268} w={38} h={48} z={18} />
-          <Box x={10} y={280} w={17} h={24} z={12} fill="var(--vc-raised)" />
-          <g transform={at(12)}>
-            <circle cx="18" cy="292" r="4" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
-          </g>
-        </Part>
-
-        <Part href="/shop/actuators" aisle="Actuators" hit={[388, 256, 60, 64, 16]} tip={[px(418), py(0, 258, 20) - 16]}>
-          <Box x={388} y={258} w={60} h={60} z={16} />
-          <g transform={at(16)}>
-            <g fill="none" stroke="var(--vc-line)" strokeWidth="1.3" vectorEffect="non-scaling-stroke">
-              <circle cx="395" cy="265" r="3.2" />
-              <circle cx="441" cy="265" r="3.2" />
-              <circle cx="395" cy="311" r="3.2" />
-              <circle cx="441" cy="311" r="3.2" />
-            </g>
-            <circle cx="418" cy="288" r="26" fill="var(--vc-raised)" stroke="var(--vc-line)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" />
-            {/* the blades turn in the board's plane, and are projected after */}
-            <g transform="translate(418 288)">
-              <g className="vc-fan">
-                {BLADES.map((a) => (
-                  <g key={a} transform={`rotate(${a})`}>
-                    <ellipse cx="0" cy="-16" rx="6.4" ry="10.5" transform="rotate(24 0 -16)" fill="var(--vc-sheet)" stroke="var(--vc-muted)" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
-                  </g>
-                ))}
-              </g>
-            </g>
-          </g>
-          <Cyl cx={418} cy={288} r={7} z={20} top="var(--vc-sheet)" />
-        </Part>
-
-        <Part href="/shop/power" aisle="Power" hit={[96, 266, 66, 56, 20]} tip={[px(129), py(0, 268, 20) - 16]}>
-          <g transform={PLANE} stroke="var(--vc-muted)" strokeWidth="2.2" fill="none">
-            <path d="M114 314v10M133 314v10M152 314v10" vectorEffect="non-scaling-stroke" />
-          </g>
-          <Box x={96} y={268} w={66} h={46} z={20} />
-          <g transform={at(20)}>
-            <path d="M96 280h66" stroke="var(--vc-line)" strokeWidth="1.4" fill="none" vectorEffect="non-scaling-stroke" />
-          </g>
-        </Part>
-
-        <Part href="/shop/connectors" aisle="Connectors" hit={[126, 336, 291, 56, 0]} tip={[px(266), py(0, 369) + 26]}>
-          <g transform={PLANE}>
-            {HEADER_X.map((x, i) => (
-              <g key={`b${x}`}>
-                <rect x={x} y="356" width="13" height="13" rx={i === 0 ? 1 : 6.5} fill="var(--vc-sheet)" stroke="var(--vc-line)" strokeWidth="1.3" vectorEffect="non-scaling-stroke" />
-                <circle cx={x + 6.5} cy="362.5" r="2.6" fill="var(--vc-ground)" vectorEffect="non-scaling-stroke" />
-              </g>
-            ))}
-          </g>
-        </Part>
-
-
-        {/* The arm stands beside the board and reaches over it, so it is drawn
-            after everything: what it passes above, it covers.
-
-            It is a chain, not a picture of one — each segment is hinged at the
-            joint above it and rotates about that joint, so the elbow carries
-            the forearm and the forearm carries the claw. The pivot lives in a
-            CSS custom property per joint, and the positioning translate sits on
-            the element as well as in the keyframes: a CSS transform replaces
-            the attribute outright, so if the translate lived only in the
-            animation, stopping the animation would collapse the arm onto the
-            origin. */}
-        <Part href="/shop/actuators" aisle="Actuators" hit={[450, 254, 106, 99, 51]} tip={[px(503), py(0, ARM_Y, 91)]}>
-          <g transform={`translate(0 ${BENCH.toFixed(2)})`}>
-            <Box x={492} y={262} w={56} h={44} z={7} />
-            <Cyl cx={520} cy={284} r={13} z={44} />
-          </g>
-          <g className="vc-arm-a" style={hinge([0, 0], ap(520, 44))}>
-            <Seg a={[0, 0]} b={ARM_UPPER} w={13} />
-            <g className="vc-arm-b" style={hinge([0, 0], ARM_UPPER)}>
-              <Seg a={[0, 0]} b={ARM_FORE} w={11} />
-              <g className="vc-arm-c" style={hinge([0, 0], ARM_FORE)}>
-                <Seg a={[0, 0]} b={[0, 7.1]} w={7} />
-                <g className="vc-jaw-l" style={hinge([0, 0], [0, 7.1])}>
-                  <Seg a={[0, 0]} b={[-10, 7.1]} w={5} />
-                </g>
-                <g className="vc-jaw-r" style={hinge([0, 0], [0, 7.1])}>
-                  <Seg a={[0, 0]} b={[10, 7.1]} w={5} />
-                </g>
-                <Joint p={[0, 0]} r={6} />
-              </g>
-              <Joint p={[0, 0]} r={7.5} />
-            </g>
-            <Joint p={[0, 0]} r={9} />
-          </g>
-        </Part>
+        {/* a dimension line, because the sheet always carries one */}
+        <g stroke="var(--vc-faint)" strokeWidth="1.2">
+          <path d="M44 416h432M44 410v12M476 410v12" />
+        </g>
       </svg>
     </div>
   );
