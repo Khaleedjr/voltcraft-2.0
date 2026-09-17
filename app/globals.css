@@ -18,59 +18,69 @@
 
 :root {
   color-scheme: light;
+  /* This palette sits at the gold's own hue (38), the way the dark one does.
+     It did not always: when the accent moved from red to gold, dark was rebuilt
+     warm so the gold would sit in it, and light was left on the prussian
+     blueprint palette it started with — hue 208, almost exactly the gold's
+     complement. So the accent echoed its ground in one theme and fought it in
+     the other, and only dark looked considered.
+
+     Each token keeps the lightness it had and only rotates, so the hierarchy
+     and nearly all the contrast survive the move: ink 13.4:1 on the ground,
+     muted 4.8:1, live 4.9:1, all inside the bands they were already in. */
   /* surfaces */
-  --vc-ground: #e9edef;
-  --vc-sheet: #f7f8f9;
-  --vc-raised: #ffffff;
+  --vc-ground: #f0eeea;
+  --vc-sheet: #f8f7f6;
+  --vc-raised: #fefdfc;
   /* type */
-  --vc-ink: #0e2233;
-  --vc-muted: #4e6577;
-  --vc-faint: #7a8c9a;
+  --vc-ink: #2a2317;
+  --vc-muted: #736752;
+  --vc-faint: #8a7f6a;
   /* structure */
-  /* Borders carry the prussian rather than a neutral grey, so an outline reads
-     as drawn on the sheet. -soft is for a frame nested inside an already
-     outlined card, which would otherwise be a box drawn inside a box. */
-  --vc-line: #b6c5d2;
-  --vc-line-soft: #dde5eb;
+  /* Borders carry the ground's own warmth rather than a neutral grey, so an
+     outline reads as drawn on the sheet. -soft is for a frame nested inside an
+     already outlined card, which would otherwise be a box drawn inside a box. */
+  --vc-line: #cfc6b5;
+  --vc-line-soft: #e9e5df;
   /* copper on the drawing sheet: a shade past --vc-line, so a board's
      trace work still reads once there is a lot of it in one place */
-  --vc-trace: #9cb0c1;
+  --vc-trace: #beb29d;
   /* the head of a current pulse. On the pale board a pulse has to go
      hotter than the trace to be seen at all — brighter would vanish */
   --vc-spark: #e06c00;
-  --vc-hairline: rgba(14, 34, 51, 0.06);
-  --vc-shadow: 14, 34, 51;  /* rgb parts, for translucent lift shadows */
+  --vc-hairline: rgba(42, 35, 23, 0.06);
+  --vc-shadow: 42, 35, 23;  /* rgb parts, for translucent lift shadows */
   --vc-sheen: rgba(255, 255, 255, 0.5);         /* inner highlight on a frame */
   --vc-sheen-lit: rgba(255, 255, 255, 0.6);     /* ...the same, on hover */
   /* The photo plate. Product shots are lit against white, so this stays light
      in BOTH themes — see the dark override on .vc-frame. Not derived from the
      surface tokens, which invert. */
   --vc-plate-a: #ffffff;
-  --vc-plate-b: #f1f4f6;
+  --vc-plate-b: #f4f2ee;
   /* accents — the brand gold, earth green
      --vc-gold is the gold off the logo (#ffbd59). It is a FILL colour only:
      against the page it manages 1.4:1, so it can carry dark text but can never
      be text itself. --vc-live is the same hue taken down until it reads as
-     type (4.9:1 on the ground, 5.7:1 on white) and is what text-live and
+     type (4.9:1 on the ground, 5.6:1 on a card) and is what text-live and
      border-live resolve to. On dark the two converge, because the bright gold
      reads perfectly well on a dark ground. */
   --vc-gold: #ffbd59;
   --vc-gold-hover: #f7ae3f;
   --vc-live: #915a08;
   --vc-live-hover: #7a4b06;
-  --vc-live-ink: #0e2233;
+  --vc-live-ink: #2a2317;
   --vc-earth: #2c6b4f;
   /* Low stock was amber, which the gold now owns; red is free and reads as
      urgency anyway. */
   --vc-warn: #b32d1f;
   /* inverted block, for the one or two panels that need to carry weight */
-  --vc-block: #0e2233;
-  --vc-block-ink: #e6edf2;
-  --vc-block-muted: #9fb3c2;
+  --vc-block: #30281a;
+  --vc-block-ink: #f2eee9;
+  --vc-block-muted: #beb6a7;
   --vc-block-line: rgba(255, 255, 255, 0.15);
   /* atmospheric washes — the tinted glows behind the hero and CTA panel */
   --vc-wash-live: rgba(255, 189, 89, 0.16);
-  --vc-wash-ink: rgba(14, 34, 51, 0.05);
+  --vc-wash-ink: rgba(42, 35, 23, 0.05);
   --vc-glow-live: rgba(255, 189, 89, 0.3);
 }
 
