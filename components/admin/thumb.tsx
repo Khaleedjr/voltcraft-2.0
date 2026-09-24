@@ -9,9 +9,10 @@ import { Icon } from "@/components/admin/icons";
  * optimiser may not be allowed to fetch — and if it will not load, it says so
  * with a drawn chip rather than a broken-image icon.
  */
-export function Thumb({ src, alt, size = 44 }: { src?: string; alt: string; size?: number }) {
+export function Thumb({ src, alt, size = 44, fill = false }: { src?: string; alt: string; size?: number; fill?: boolean }) {
   const [failed, setFailed] = useState(false);
-  const box = { width: size, height: size };
+  // fill: take the whole of a square parent instead of a fixed size
+  const box = fill ? { width: "100%", height: "100%" } : { width: size, height: size };
   if (!src || failed) {
     return (
       <span style={box} className="grid shrink-0 place-items-center border border-line-soft bg-sheet text-faint" title={src ? "Photo did not load" : "No photo"}>

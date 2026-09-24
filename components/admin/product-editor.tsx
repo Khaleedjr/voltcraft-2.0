@@ -243,7 +243,7 @@ function Photos({
         {images.map((src, i) => (
           <li key={src} className="border border-line bg-sheet p-2">
             <div className="grid aspect-square place-items-center bg-white">
-              <Thumb src={src} alt={`Photo ${i + 1}`} size={128} />
+              <Thumb src={src} alt={`Photo ${i + 1}`} size={128} fill />
             </div>
             <div className="mt-2 flex items-center justify-between gap-1">
               {i === 0 ? (
