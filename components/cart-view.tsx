@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useCart } from "@/components/cart-context";
+import { useCatalogue } from "@/components/catalogue-provider";
 import { maxOrderable } from "@/lib/catalogue";
 import { ProductImage } from "@/components/product-image";
 import { ButtonLink, Fig } from "@/components/ui";
@@ -11,7 +12,8 @@ import { SITE } from "@/lib/site";
 
 export function CartView() {
   const { lines, setQty, remove, ready } = useCart();
-  const order = priceOrder(lines);
+  const lookup = useCatalogue();
+  const order = priceOrder(lines, lookup);
 
   if (!ready) {
     return <p className="py-10 text-[0.92rem] text-muted">Loading your cart…</p>;

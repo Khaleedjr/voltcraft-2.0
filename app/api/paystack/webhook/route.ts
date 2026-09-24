@@ -1,5 +1,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
+import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
+import { PRODUCTS_TAG } from "@/lib/catalogue-data";
 import { isOrderStoreConfigured, settleOrder } from "@/lib/order-store";
 
 /**
@@ -104,6 +106,11 @@ export async function POST(request: Request) {
         outcome.order.paidAmount,
       );
     }
+
+    // A paid order moved stock. Expire the shop's cached catalogue so "only 3
+    // left" is true on the next page view. Done on "already" too: the callback
+    // page may have settled it first, and a page render cannot revalidate.
+    if (outcome.order.status === "paid") revalidateTag(PRODUCTS_TAG, { expire: 0 });
 
     return NextResponse.json({ ok: true, result: outcome.result });
   } catch (error) {

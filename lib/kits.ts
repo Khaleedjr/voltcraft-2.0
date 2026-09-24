@@ -1,4 +1,6 @@
-import { getProduct, type Product } from "@/lib/catalogue";
+import "server-only";
+import type { Product } from "@/lib/catalogue";
+import { getProduct } from "@/lib/catalogue-data";
 
 /**
  * A kit is a bill of materials for a project people actually build, priced from
@@ -40,16 +42,16 @@ export type ResolvedKit = Kit & {
   total: number;
 };
 
-export function resolveKit(kit: Kit): ResolvedKit {
-  const items = kit.lines.flatMap((line) => {
-    const product = getProduct(line.slug);
+export async function resolveKit(kit: Kit): Promise<ResolvedKit> {
+  const resolved = await Promise.all(kit.lines.map(async (line) => ({ line, product: await getProduct(line.slug) })));
+  const items = resolved.flatMap(({ line, product }) => {
     if (!product) return [];
     return [{ product, qty: line.qty, why: line.why, lineTotal: product.price * line.qty }];
   });
   return { ...kit, items, total: items.reduce((n, i) => n + i.lineTotal, 0) };
 }
 
-export function getKit(slug: string): ResolvedKit | undefined {
+export async function getKit(slug: string): Promise<ResolvedKit | undefined> {
   const kit = KITS.find((k) => k.slug === slug);
   return kit ? resolveKit(kit) : undefined;
 }

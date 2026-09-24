@@ -4,20 +4,20 @@ import { ProductCard } from "@/components/product-card";
 import { ProductImage } from "@/components/product-image";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink, Container, Section } from "@/components/ui";
-import {
-  categoryThumbnail,
-  countByCategory,
-  getCategories,
-  getOnSale,
-  getProducts,
-} from "@/lib/catalogue";
+import { getCategories } from "@/lib/catalogue";
+import { getCategoryCounts, getCategoryThumbnails, getOnSale, getProducts } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
-export default function HomePage() {
+export default async function HomePage() {
   const categories = getCategories();
-  const total = getProducts().length;
-  const onSale = getOnSale(8);
+  const [products, onSale, counts, thumbs] = await Promise.all([
+    getProducts(),
+    getOnSale(8),
+    getCategoryCounts(),
+    getCategoryThumbnails(),
+  ]);
+  const total = products.length;
 
   return (
     <>
@@ -86,7 +86,7 @@ export default function HomePage() {
           </div>
           <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {categories.map((c, i) => {
-              const thumb = categoryThumbnail(c.slug);
+              const thumb = thumbs[c.slug];
               return (
                 <li key={c.slug}>
                   <Reveal delay={(i % 3) * 70}>
@@ -104,7 +104,7 @@ export default function HomePage() {
                           {c.name}
                         </span>
                         <span className="vc-fig mt-1 block text-faint">
-                          {countByCategory(c.slug)} products
+                          {counts[c.slug]} products
                         </span>
                       </div>
                       <span className="vc-arrow ml-auto pr-1 text-muted group-hover:text-live" aria-hidden>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "@/components/cart-context";
+import { useCatalogue } from "@/components/catalogue-provider";
 import { ButtonLink, Button, Fig } from "@/components/ui";
 import { formatNaira } from "@/lib/format";
 import { priceOrder, STATES } from "@/lib/orders";
@@ -23,7 +24,8 @@ type CheckoutResponse = {
 export function CheckoutForm() {
   const router = useRouter();
   const { lines, ready, clear } = useCart();
-  const order = priceOrder(lines);
+  const lookup = useCatalogue();
+  const order = priceOrder(lines, lookup);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

@@ -502,3 +502,85 @@
     display: none;
   }
 }
+
+/* ------------------------------------------------------------------ admin */
+
+/* Selects draw their own chevron, in each theme's muted ink. */
+.vc-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23736752' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 8 5 5 5-5'/%3E%3C/svg%3E");
+}
+:root[data-theme="dark"] .vc-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23b3aa9c' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 8 5 5 5-5'/%3E%3C/svg%3E");
+}
+
+/* An admin confirmation rises into place, and simply appears under reduced motion. */
+.vc-toast {
+  animation: vc-toast-in 0.22s ease-out;
+}
+@keyframes vc-toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vc-toast {
+    animation: none;
+  }
+}
+
+/* Charts. Every colour here was run through the dataviz palette checks
+   (lightness band, chroma floor, contrast against the card) rather than
+   picked by eye, and all of them sit on the gold's own hue, OKLCH 75°, so a
+   chart reads as part of the same room.
+   - chart-1 is the series: amber, L 0.61 — 3.8:1 on a light card, 5.3:1 on
+     a dark one. The logo gold itself manages 1.6:1 on white, so it cannot
+     be a mark there.
+   - context is the grey for what is not the point: the previous period,
+     orders nobody paid for.
+   - seq is magnitude (the heatmap): one hue, pale to deep; its pale end is
+     meant to recede, since it means "almost none".
+   - ord is order (the pipeline's stages), stepped at least 0.06 apart in
+     lightness with the palest still 2:1 on the card.
+   Dark flips the anchor of both ramps: little is dim, much is bright. */
+:root {
+  --vc-chart-1: #b07600;
+  --vc-chart-context: #b2aa9c;
+  --vc-chart-grid: #ebe7e1;
+  --vc-chart-axis: #cfc6b5;
+  --vc-chart-empty: #f1eee9;
+  --vc-seq-1: #ffd7a0;
+  --vc-seq-2: #fcab00;
+  --vc-seq-3: #d38f00;
+  --vc-seq-4: #ac7300;
+  --vc-seq-5: #865900;
+  --vc-ord-1: #e39a00;
+  --vc-ord-2: #c38400;
+  --vc-ord-3: #a46e00;
+  --vc-ord-4: #865900;
+}
+:root[data-theme="dark"] {
+  --vc-chart-1: #c78600;
+  --vc-chart-context: #6a6255;
+  --vc-chart-grid: #312b22;
+  --vc-chart-axis: #4a4336;
+  --vc-chart-empty: #2c271f;
+  --vc-seq-1: #543600;
+  --vc-seq-2: #7b5100;
+  --vc-seq-3: #a46e00;
+  --vc-seq-4: #cf8c00;
+  --vc-seq-5: #f9ad26;
+  --vc-ord-1: #865900;
+  --vc-ord-2: #a46e00;
+  --vc-ord-3: #c38400;
+  --vc-ord-4: #e39a00;
+}
+
+/* While a new range loads, the report keeps its last picture, dimmed — no
+   skeleton, no jump. */
+.vc-report {
+  transition: opacity 0.2s ease;
+}
+.vc-report[aria-busy="true"] {
+  opacity: 0.55;
+}

@@ -1,7 +1,9 @@
+import { StoreShell } from "@/components/store-shell";
 import { ButtonLink, Container, Fig } from "@/components/ui";
 
 export default function NotFound() {
   return (
+    <StoreShell>
     <Container>
       <div className="py-20 sm:py-28">
         <Fig>Error 404 — open circuit</Fig>
@@ -19,5 +21,6 @@ export default function NotFound() {
         </div>
       </div>
     </Container>
+    </StoreShell>
   );
 }

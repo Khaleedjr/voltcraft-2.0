@@ -1,15 +1,11 @@
-import catalogue from "@/data/catalogue.json";
-
 /**
- * The VoltCraft catalogue, imported from the store's WooCommerce export.
+ * The catalogue's shape and the pure rules about it — types, the aisles, and
+ * helpers like stock labels and discounts.
  *
- * data/catalogue.json is generated — do not hand-edit it. To refresh:
- *
- *   Products → Export → CSV in WP Admin, then
- *   node scripts/import-woocommerce.mjs <export.csv>
- *
- * Everything in the app reads through the accessors at the bottom of this file,
- * so the data source can change without touching a single page.
+ * Nothing in this file touches data, so it is safe in the browser. The
+ * products themselves are loaded on the server by lib/catalogue-data.ts (from
+ * the database, or from the bundled data/catalogue.json until the database has
+ * been filled), and the browser gets a lean copy through CatalogueProvider.
  */
 
 export type CategorySlug =
@@ -35,6 +31,8 @@ export type Spec = { label: string; value: string };
 export type Variant = { label: string; price: number };
 
 export type Product = {
+  /** The database id. Absent while the shop is serving the bundled catalogue. */
+  id?: string;
   slug: string;
   name: string;
   sku: string;
@@ -52,6 +50,8 @@ export type Product = {
   images: string[];
   variants?: Variant[];
   featured?: boolean;
+  /** Counted lines at or below this read as "only N left". */
+  lowStockAt?: number;
 };
 
 export const CATEGORIES: Category[] = [
@@ -111,7 +111,37 @@ export const CATEGORIES: Category[] = [
   },
 ];
 
-export const PRODUCTS: Product[] = catalogue.products as Product[];
+/**
+ * The slice of a product the browser needs to draw and price a cart: no
+ * descriptions, specs or tags, and only the first photo. The whole shop's
+ * worth of these is small enough to hand to every page.
+ */
+export type LiteProduct = Pick<
+  Product,
+  "id" | "slug" | "name" | "sku" | "price" | "compareAt" | "inStock" | "stock" | "lowStockAt" | "categories" | "images"
+>;
+
+export function toLite(p: Product): LiteProduct {
+  return {
+    ...(p.id ? { id: p.id } : {}),
+    slug: p.slug,
+    name: p.name,
+    sku: p.sku,
+    price: p.price,
+    ...(p.compareAt != null ? { compareAt: p.compareAt } : {}),
+    inStock: p.inStock,
+    stock: p.stock,
+    ...(p.lowStockAt != null ? { lowStockAt: p.lowStockAt } : {}),
+    categories: p.categories,
+    images: p.images.slice(0, 1),
+  };
+}
+
+export const CATEGORY_SLUGS: CategorySlug[] = CATEGORIES.map((c) => c.slug);
+
+export function isCategorySlug(value: string): value is CategorySlug {
+  return (CATEGORY_SLUGS as string[]).includes(value);
+}
 
 // ------------------------------------------------------------------- accessors
 
@@ -129,86 +159,43 @@ export function getCategory(slug: string): Category | undefined {
   return CATEGORIES.find((c) => c.slug === slug);
 }
 
-export function getProducts(): Product[] {
-  return PRODUCTS;
-}
-
-export function getProduct(slug: string): Product | undefined {
-  return PRODUCTS.find((p) => p.slug === slug);
-}
-
-export function getProductsByCategory(slug: string): Product[] {
-  return PRODUCTS.filter((p) => p.categories.includes(slug as CategorySlug));
-}
-
 /** The aisle a product is filed under first — drives breadcrumbs and glyphs. */
-export function primaryCategory(product: Product): CategorySlug {
+export function primaryCategory(product: Pick<Product, "categories">): CategorySlug {
   return product.categories[0];
-}
-
-export function getFeaturedProducts(limit = 6): Product[] {
-  const featured = PRODUCTS.filter((p) => p.featured && p.images.length);
-  const pool = featured.length >= limit ? featured : PRODUCTS.filter((p) => p.images.length);
-  return pool.slice(0, limit);
-}
-
-export function countByCategory(slug: CategorySlug): number {
-  return PRODUCTS.reduce((n, p) => (p.categories.includes(slug) ? n + 1 : n), 0);
-}
-
-export function searchProducts(query: string): Product[] {
-  const q = query.trim().toLowerCase();
-  if (!q) return [];
-  const terms = q.split(/\s+/);
-  return PRODUCTS.filter((p) => {
-    const haystack = [p.name, p.sku, p.summary, ...p.categories, ...p.tags, ...p.specs.map((s) => s.value)]
-      .join(" ")
-      .toLowerCase();
-    return terms.every((t) => haystack.includes(t));
-  });
-}
-
-export function relatedProducts(product: Product, limit = 3): Product[] {
-  const primary = primaryCategory(product);
-  return PRODUCTS.filter((p) => p.slug !== product.slug && p.categories.includes(primary)).slice(0, limit);
 }
 
 /** How many of a line someone may order when the store tracks no count. */
 export const UNTRACKED_STOCK_CEILING = 20;
 
-export function maxOrderable(product: Product): number {
+/** A counted line that has oversold reads as zero, never as a negative. */
+export function maxOrderable(product: Pick<Product, "inStock" | "stock">): number {
   if (!product.inStock) return 0;
-  return product.stock ?? UNTRACKED_STOCK_CEILING;
+  return product.stock == null ? UNTRACKED_STOCK_CEILING : Math.max(product.stock, 0);
 }
 
+/** The level at which a counted line reads as low, unless the product sets its own. */
+export const DEFAULT_LOW_STOCK = 5;
+
 /** Low stock is a real signal — it decides whether someone orders today. */
-export function stockLabel(product: Product): { text: string; tone: "in" | "low" | "out" } {
+export function stockLabel(
+  product: Pick<Product, "inStock" | "stock" | "lowStockAt">,
+): { text: string; tone: "in" | "low" | "out" } {
   if (!product.inStock) return { text: "Out of stock", tone: "out" };
   if (product.stock != null && product.stock <= 0) return { text: "Out of stock", tone: "out" };
-  if (product.stock != null && product.stock <= 5) return { text: `Only ${product.stock} left`, tone: "low" };
+  if (product.stock != null && product.stock <= (product.lowStockAt ?? DEFAULT_LOW_STOCK)) {
+    return { text: `Only ${product.stock} left`, tone: "low" };
+  }
   return { text: "In stock", tone: "in" };
 }
 
 /** How much off, for merchandising. Null when the line is not discounted. */
-export function discountPercent(product: Product): number | null {
+export function discountPercent(product: Pick<Product, "price" | "compareAt">): number | null {
   if (!product.compareAt || product.compareAt <= product.price) return null;
   return Math.round((1 - product.price / product.compareAt) * 100);
 }
 
-/** Discounted lines, deepest cut first — the shop's strongest hook. */
-export function getOnSale(limit = 8): Product[] {
-  return PRODUCTS.filter((p) => discountPercent(p) !== null && p.images.length)
-    .sort((a, b) => (discountPercent(b) ?? 0) - (discountPercent(a) ?? 0))
-    .slice(0, limit);
-}
-
-/** One photographed product per aisle, for the category tiles. */
-export function categoryThumbnail(slug: CategorySlug): Product | undefined {
-  return PRODUCTS.find((p) => p.categories.includes(slug) && p.images.length);
-}
-
 /** Variable products show a range; the listed price is the cheapest option. */
-export function priceLabel(product: Product): string | null {
+export function priceLabel(product: Pick<Product, "variants">): string | null {
   if (!product.variants || product.variants.length < 2) return null;
   return "from";
 }

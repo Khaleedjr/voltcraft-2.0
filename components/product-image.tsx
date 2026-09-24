@@ -24,7 +24,7 @@ export function ProductImage({
   index = 0,
   pad = "p-4",
 }: {
-  product: Product;
+  product: Pick<Product, "name" | "images" | "categories">;
   ratio?: string;
   sizes?: string;
   priority?: boolean;

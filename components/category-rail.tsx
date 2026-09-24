@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { countByCategory, getCategories, getProducts } from "@/lib/catalogue";
+import { getCategories } from "@/lib/catalogue";
+import { getCategoryCounts, getProducts } from "@/lib/catalogue-data";
 
-export function CategoryRail({ active }: { active?: string }) {
+export async function CategoryRail({ active }: { active?: string }) {
   const categories = getCategories();
+  const [products, counts] = await Promise.all([getProducts(), getCategoryCounts()]);
   const isAll = !active;
   return (
     <nav aria-label="Product categories" className="-mx-4 overflow-x-auto px-4 sm:mx-0 sm:px-0">
@@ -19,7 +21,7 @@ export function CategoryRail({ active }: { active?: string }) {
           >
             All
             <span className="font-mono text-[0.7rem] opacity-70 tabular-nums">
-              {getProducts().length}
+              {products.length}
             </span>
           </Link>
         </li>
@@ -38,7 +40,7 @@ export function CategoryRail({ active }: { active?: string }) {
               >
                 {c.name}
                 <span className="font-mono text-[0.7rem] opacity-70 tabular-nums">
-                  {countByCategory(c.slug)}
+                  {counts[c.slug]}
                 </span>
               </Link>
             </li>

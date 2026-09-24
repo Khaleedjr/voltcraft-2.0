@@ -6,15 +6,17 @@ import {
   parseLines,
   priceOrder,
 } from "@/lib/orders";
-import { createPendingOrder, isOrderStoreConfigured } from "@/lib/order-store";
+import { getProductsForCheckout } from "@/lib/catalogue-data";
+import { createPendingOrder, isOrderStoreConfigured, snapshotLines } from "@/lib/order-store";
 import { initializeTransaction, isPaystackConfigured } from "@/lib/paystack";
 
 /**
  * Starts a checkout.
  *
  * The browser sends slugs and quantities only — never prices. The total is
- * recomputed here from the catalogue, so a tampered cart cannot change what
- * gets charged.
+ * recomputed here from the catalogue, read fresh rather than from the cache,
+ * so a tampered cart cannot change what gets charged and a price changed in
+ * the admin a minute ago is the price that is charged.
  *
  * The priced order is written to the database BEFORE the customer is sent to
  * Paystack, so a payment can never arrive for an order we have no record of.
@@ -38,7 +40,19 @@ export async function POST(request: Request) {
     );
   }
 
-  const order = priceOrder(parseLines(payload.lines));
+  const lines = parseLines(payload.lines);
+  let products;
+  try {
+    products = await getProductsForCheckout(lines.map((l) => l.slug));
+  } catch (error) {
+    console.error("[checkout] could not read the catalogue", error);
+    return NextResponse.json(
+      { ok: false, error: "We couldn't reach the catalogue just now. Please try again or call the counter." },
+      { status: 503 },
+    );
+  }
+  const bySlug = new Map(products.map((p) => [p.slug, p]));
+  const order = priceOrder(lines, (slug) => bySlug.get(slug));
   if (order.items.length === 0) {
     return NextResponse.json(
       { ok: false, error: "Your cart is empty, or those items are no longer in stock." },
@@ -50,14 +64,7 @@ export async function POST(request: Request) {
   const summary = {
     reference,
     customer,
-    lines: order.items.map((i) => ({
-      sku: i.product.sku,
-      slug: i.product.slug,
-      name: i.product.name,
-      qty: i.qty,
-      unitPrice: i.product.price,
-      lineTotal: i.lineTotal,
-    })),
+    lines: snapshotLines(order),
     subtotal: order.subtotal,
     delivery: order.delivery,
     total: order.total,

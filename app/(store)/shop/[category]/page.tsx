@@ -5,7 +5,8 @@ import { CategoryRail } from "@/components/category-rail";
 import { ProductCard } from "@/components/product-card";
 import { SortLinks, parseSort, sortProducts } from "@/components/sort-links";
 import { Container, Fig } from "@/components/ui";
-import { getCategories, getCategory, getProductsByCategory } from "@/lib/catalogue";
+import { getCategories, getCategory } from "@/lib/catalogue";
+import { getProductsByCategory } from "@/lib/catalogue-data";
 
 export function generateStaticParams() {
   return getCategories().map((c) => ({ category: c.slug }));
@@ -29,7 +30,7 @@ export default async function CategoryPage({
   if (!found) notFound();
 
   const sort = parseSort((await searchParams).sort);
-  const products = sortProducts(getProductsByCategory(found.slug), sort);
+  const products = sortProducts(await getProductsByCategory(found.slug), sort);
 
   return (
     <Container>

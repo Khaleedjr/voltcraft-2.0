@@ -1,4 +1,4 @@
-import { getProduct, maxOrderable, type Product } from "@/lib/catalogue";
+import { maxOrderable, type Product } from "@/lib/catalogue";
 import { SITE } from "@/lib/site";
 
 /** Flat national delivery fee, waived above the free-delivery threshold. */
@@ -6,10 +6,16 @@ export const DELIVERY_FEE = 3_500;
 
 export type OrderLineInput = { slug: string; qty: number };
 
-export type PricedLine = { product: Product; qty: number; lineTotal: number };
+/**
+ * Anything priceOrder can price: the full product on the server, the lean
+ * copy the browser holds for its cart.
+ */
+export type Priceable = Pick<Product, "slug" | "name" | "sku" | "price" | "inStock" | "stock">;
 
-export type PricedOrder = {
-  items: PricedLine[];
+export type PricedLine<P extends Priceable = Product> = { product: P; qty: number; lineTotal: number };
+
+export type PricedOrder<P extends Priceable = Product> = {
+  items: PricedLine<P>[];
   subtotal: number;
   delivery: number;
   total: number;
@@ -19,16 +25,27 @@ export type PricedOrder = {
 /**
  * The one place an order total is calculated. The cart UI and the payment
  * route both call this, so the browser never gets to tell the server what
- * something costs — prices always come from the catalogue.
+ * something costs — prices always come from the catalogue, through `lookup`.
+ *
+ * Lines for the same product are merged before the stock cap is applied, so
+ * listing a product twice cannot order past what is on the shelf.
  */
-export function priceOrder(lines: OrderLineInput[]): PricedOrder {
-  const items: PricedLine[] = [];
+export function priceOrder<P extends Priceable>(
+  lines: OrderLineInput[],
+  lookup: (slug: string) => P | undefined,
+): PricedOrder<P> {
+  const wanted = new Map<string, number>();
   for (const line of lines) {
-    const product = getProduct(line.slug);
-    if (!product) continue;
     const qty = Math.floor(line.qty);
     if (!Number.isFinite(qty) || qty <= 0) continue;
-    const capped = Math.min(qty, Math.max(maxOrderable(product), 0));
+    wanted.set(line.slug, (wanted.get(line.slug) ?? 0) + qty);
+  }
+
+  const items: PricedLine<P>[] = [];
+  for (const [slug, qty] of wanted) {
+    const product = lookup(slug);
+    if (!product) continue;
+    const capped = Math.min(qty, maxOrderable(product));
     if (capped <= 0) continue;
     items.push({ product, qty: capped, lineTotal: product.price * capped });
   }
@@ -83,13 +100,17 @@ export function parseCustomer(value: unknown): CustomerDetails | null {
   return out as CustomerDetails;
 }
 
+/** A cart holds tens of lines, not thousands: anything past this is not a real cart. */
+const MAX_LINES = 100;
+
 export function parseLines(value: unknown): OrderLineInput[] {
   if (!Array.isArray(value)) return [];
-  return value.flatMap((l) => {
+  return value.slice(0, MAX_LINES).flatMap((l) => {
     if (typeof l !== "object" || l === null) return [];
     const line = l as Record<string, unknown>;
-    if (typeof line.slug !== "string" || typeof line.qty !== "number") return [];
-    return [{ slug: line.slug, qty: line.qty }];
+    if (typeof line.slug !== "string" || line.slug.length > 200) return [];
+    if (typeof line.qty !== "number" || !Number.isFinite(line.qty)) return [];
+    return [{ slug: line.slug, qty: Math.min(line.qty, 10_000) }];
   });
 }
 

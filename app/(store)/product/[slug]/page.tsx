@@ -5,26 +5,18 @@ import { ProductBuy } from "@/components/product-buy";
 import { ProductCard } from "@/components/product-card";
 import { ProductGallery } from "@/components/product-gallery";
 import { Container, Fig, StockPill } from "@/components/ui";
-import {
-  getCategory,
-  getProduct,
-  getProducts,
-  maxOrderable,
-  primaryCategory,
-  priceLabel,
-  relatedProducts,
-  stockLabel,
-} from "@/lib/catalogue";
+import { getCategory, maxOrderable, primaryCategory, priceLabel, stockLabel } from "@/lib/catalogue";
+import { getProduct, getProducts, relatedProducts } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
-export function generateStaticParams() {
-  return getProducts().map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  return (await getProducts()).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/product/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProduct(slug);
   if (!product) return { title: "Product not found" };
   return {
     title: product.name,
@@ -35,12 +27,12 @@ export async function generateMetadata({ params }: PageProps<"/product/[slug]">)
 
 export default async function ProductPage({ params }: PageProps<"/product/[slug]">) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = await getProduct(slug);
   if (!product) notFound();
 
   const category = getCategory(primaryCategory(product));
   const stock = stockLabel(product);
-  const related = relatedProducts(product);
+  const related = await relatedProducts(product);
   const from = priceLabel(product);
   const freeDelivery = product.price >= SITE.freeDeliveryThreshold;
 

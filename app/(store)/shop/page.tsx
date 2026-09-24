@@ -4,7 +4,7 @@ import { CategoryRail } from "@/components/category-rail";
 import { ProductCard } from "@/components/product-card";
 import { SortLinks, parseSort, sortProducts } from "@/components/sort-links";
 import { Container, Fig } from "@/components/ui";
-import { getProducts, searchProducts } from "@/lib/catalogue";
+import { getProducts, searchProducts } from "@/lib/catalogue-data";
 
 export const metadata: Metadata = {
   title: "Shop",
@@ -18,7 +18,7 @@ export default async function ShopPage({ searchParams }: PageProps<"/shop">) {
   const query = rawQuery?.trim() ?? "";
   const sort = parseSort(params.sort);
 
-  const results = query ? searchProducts(query) : getProducts();
+  const results = query ? await searchProducts(query) : await getProducts();
   const products = sortProducts(results, sort);
 
   return (

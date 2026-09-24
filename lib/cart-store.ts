@@ -1,9 +1,12 @@
-import { getProduct, maxOrderable } from "@/lib/catalogue";
-
 /**
  * The cart lives in a module-level store rather than React state so that
  * `useSyncExternalStore` can read it directly. That keeps the server render and
  * the first client render in agreement, and avoids hydrating through an effect.
+ *
+ * It holds slugs and quantities only, and knows nothing about the catalogue:
+ * useCart() resolves lines against the products the page was rendered with and
+ * passes each line's stock ceiling in. A slug that is no longer on sale simply
+ * does not resolve, and drops out of the cart's items.
  */
 
 const STORAGE_KEY = "vc-cart";
@@ -35,8 +38,8 @@ function readStored(): CartLine[] {
         l !== null &&
         typeof (l as CartLine).slug === "string" &&
         typeof (l as CartLine).qty === "number" &&
-        (l as CartLine).qty > 0 &&
-        getProduct((l as CartLine).slug) !== undefined,
+        Number.isInteger((l as CartLine).qty) &&
+        (l as CartLine).qty > 0,
     );
     return lines.length ? lines : EMPTY;
   } catch {
@@ -83,10 +86,9 @@ export function getServerSnapshot(): CartSnapshot {
   return SERVER_SNAPSHOT;
 }
 
-export function addLine(slug: string, qty = 1) {
-  const product = getProduct(slug);
-  if (!product) return;
-  const ceiling = Math.max(maxOrderable(product), 1);
+/** `ceiling` is the most of this line anyone may hold — the caller knows the stock. */
+export function addLine(slug: string, qty: number, ceiling: number) {
+  if (ceiling <= 0 || qty <= 0) return;
   const existing = snapshot.lines.find((l) => l.slug === slug);
   const nextQty = Math.min((existing?.qty ?? 0) + qty, ceiling);
   commit(
@@ -96,14 +98,13 @@ export function addLine(slug: string, qty = 1) {
   );
 }
 
-export function setLineQty(slug: string, qty: number) {
-  const product = getProduct(slug);
-  if (!product) return;
+export function setLineQty(slug: string, qty: number, ceiling: number) {
   if (qty <= 0) {
     commit(snapshot.lines.filter((l) => l.slug !== slug));
     return;
   }
-  const capped = Math.min(qty, Math.max(maxOrderable(product), 1));
+  if (ceiling <= 0) return;
+  const capped = Math.min(qty, ceiling);
   commit(snapshot.lines.map((l) => (l.slug === slug ? { ...l, qty: capped } : l)));
 }
 

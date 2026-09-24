@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ButtonLink, Container, Fig, Section } from "@/components/ui";
-import { getProducts } from "@/lib/catalogue";
+import { getProducts } from "@/lib/catalogue-data";
 import { SITE } from "@/lib/site";
 
 /*
@@ -37,7 +37,8 @@ const PRINCIPLES = [
   },
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const lineCount = (await getProducts()).length;
   return (
     <Container>
       <div className="py-12 sm:py-16">
@@ -48,7 +49,7 @@ export default function AboutPage() {
         <p className="mt-6 max-w-[58ch] text-[1.05rem] leading-[1.7] text-muted">
           Building hardware in Nigeria has a specific tax on it, and it is not money — it is time.
           A part that costs a few thousand naira can cost you six weeks. VoltCraft exists to remove
-          that gap: {getProducts().length} lines of sensors, microcontrollers, displays, actuators
+          that gap: {lineCount} lines of sensors, microcontrollers, displays, actuators
           and components, held locally, priced in naira, and moving the same day you order.
         </p>
       </div>
