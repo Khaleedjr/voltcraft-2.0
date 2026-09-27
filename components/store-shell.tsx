@@ -12,14 +12,11 @@ export async function StoreShell({ children }: { children: React.ReactNode }) {
   const catalogue = await getLiteCatalogue();
   return (
     <CatalogueProvider products={catalogue}>
-      {/* .vc-store scopes the shop's own look (globals.css), so the admin keeps its own */}
-      <div className="vc-store">
-        <SiteHeader />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <SiteFooter />
-      </div>
+      <SiteHeader />
+      <main id="main" className="flex-1">
+        {children}
+      </main>
+      <SiteFooter />
     </CatalogueProvider>
   );
 }

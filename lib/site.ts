@@ -3,7 +3,7 @@ export const SITE = {
   name: "VoltCraft",
   tagline: "Hack it. Build it. Craft it.",
   description:
-    "Sensors, microcontrollers, displays, actuators and the parts that go with them, for makers, students and builders in Nigeria. Stocked in Kaduna, delivered nationwide.",
+    "Sensors, microcontrollers, displays, actuators and the components that go with them — for makers, students and builders in Nigeria. Stocked in Kaduna, delivered nationwide.",
   url: "https://voltcraft.org.ng",
   /** Separate service, separate site: custom 3D printing, quoted per job. */
   printingUrl: "https://quote.voltcraft.org.ng",
@@ -14,7 +14,7 @@ export const SITE = {
   whatsapp: "https://wa.me/2349036225266",
   city: "Kaduna, Nigeria",
   hours: [
-    { days: "Monday to Saturday", time: "9am to 6pm" },
+    { days: "Mon – Sat", time: "09:00 – 18:00" },
     { days: "Sunday", time: "Closed" },
   ],
   freeDeliveryThreshold: 25_000,
