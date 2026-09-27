@@ -8,6 +8,7 @@ import { Container, Fig, StockPill } from "@/components/ui";
 import { getCategory, maxOrderable, primaryCategory, priceLabel, stockLabel } from "@/lib/catalogue";
 import { getProduct, getProducts, relatedProducts } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
+import { creditsFor } from "@/lib/image-credits";
 import { SITE } from "@/lib/site";
 
 export async function generateStaticParams() {
@@ -54,7 +55,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
         </nav>
 
         <div className="grid gap-10 lg:grid-cols-[1fr_1fr] lg:gap-16">
-          <ProductGallery product={product} />
+          <ProductGallery product={product} credits={creditsFor(product.images)} />
 
           <div>
             <Fig>{category?.name ?? "Catalogue"}</Fig>

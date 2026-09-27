@@ -35,6 +35,8 @@ import { isSupabaseConfigured } from "@/lib/supabase";
 const SITE_IMAGES = [
   "https://voltcraft.org.ng/wp-content/uploads/",
   "https://www.voltcraft.org.ng/wp-content/uploads/",
+  // openly licensed photos bundled with the site, credited via data/image-credits.json
+  "/products/commons/",
 ];
 
 function imagePrefixes(): string[] {

@@ -2750,7 +2750,9 @@
       "tags": [
         "resistors"
       ],
-      "images": [],
+      "images": [
+        "/products/commons/resistor.jpg"
+      ],
       "variants": [
         {
           "label": "10Ω",
@@ -2912,7 +2914,9 @@
         "rectifier",
         "schottky"
       ],
-      "images": [],
+      "images": [
+        "/products/commons/diode.jpg"
+      ],
       "variants": [
         {
           "label": "1N4007",
@@ -2976,7 +2980,9 @@
         }
       ],
       "tags": [],
-      "images": [],
+      "images": [
+        "/products/commons/18650-battery-holder.jpg"
+      ],
       "variants": [
         {
           "label": "1 slot",
@@ -3024,7 +3030,9 @@
         "dupont",
         "jumper cables"
       ],
-      "images": [],
+      "images": [
+        "/products/commons/jumper-wires-pack-of-40.jpg"
+      ],
       "variants": [
         {
           "label": "Male to Male",
@@ -3068,7 +3076,9 @@
         "perfboard",
         "pcb"
       ],
-      "images": []
+      "images": [
+        "/products/commons/vero-board-9x5.jpg"
+      ]
     },
     {
       "slug": "mpu6050-gyroscope-accelerometer",
@@ -3110,7 +3120,9 @@
         "imu",
         "accelerometer"
       ],
-      "images": []
+      "images": [
+        "/products/commons/mpu6050-gyroscope-accelerometer.jpg"
+      ]
     },
     {
       "slug": "micro-sd-card",
@@ -3138,7 +3150,9 @@
         "memory card",
         "sd card"
       ],
-      "images": [],
+      "images": [
+        "/products/commons/micro-sd-card.jpg"
+      ],
       "variants": [
         {
           "label": "4GB",
@@ -3287,7 +3301,9 @@
       "tags": [
         "temperature"
       ],
-      "images": []
+      "images": [
+        "/products/commons/ds18b20-temperature-sensor.jpg"
+      ]
     },
     {
       "slug": "xh-m609-battery-protection-module",
@@ -3423,7 +3439,9 @@
         "mosfet",
         "transistor"
       ],
-      "images": []
+      "images": [
+        "/products/commons/irf520n-mosfet.jpg"
+      ]
     },
     {
       "slug": "soldering-iron-60w",
@@ -3451,7 +3469,9 @@
         "solder",
         "soldering"
       ],
-      "images": []
+      "images": [
+        "/products/commons/soldering-iron-60w.jpg"
+      ]
     },
     {
       "slug": "glass-fuse",
@@ -3486,7 +3506,9 @@
       "tags": [
         "fuses"
       ],
-      "images": [],
+      "images": [
+        "/products/commons/glass-fuse.jpg"
+      ],
       "variants": [
         {
           "label": "0.25A",
@@ -3565,7 +3587,9 @@
         "capacitors",
         "uf"
       ],
-      "images": [],
+      "images": [
+        "/products/commons/electrolytic-capacitor.jpg"
+      ],
       "variants": [
         {
           "label": "0.1µF 50V",
@@ -3695,7 +3719,9 @@
         "capacitors",
         "nf"
       ],
-      "images": [],
+      "images": [
+        "/products/commons/polypropylene-film-capacitor.jpg"
+      ],
       "variants": [
         {
           "label": "100nF",
@@ -3742,7 +3768,9 @@
         "b10k",
         "10k"
       ],
-      "images": []
+      "images": [
+        "/products/commons/10k-linear-potentiometer-with-knob.jpg"
+      ]
     },
     {
       "slug": "adaptable-box",
@@ -3854,7 +3882,9 @@
         "cable",
         "arduino"
       ],
-      "images": []
+      "images": [
+        "/products/commons/arduino-uno-usb-cable.jpg"
+      ]
     },
     {
       "slug": "mlx90614-infrared-temperature-sensor",
@@ -3926,7 +3956,9 @@
         "dc jack",
         "power connector"
       ],
-      "images": []
+      "images": [
+        "/products/commons/dc-barrel-jack-pair.jpg"
+      ]
     },
     {
       "slug": "pcb-screw-terminal-block",
@@ -3996,7 +4028,9 @@
         "headers",
         "header pins"
       ],
-      "images": [],
+      "images": [
+        "/products/commons/pin-header-single-row.jpg"
+      ],
       "variants": [
         {
           "label": "Male",
