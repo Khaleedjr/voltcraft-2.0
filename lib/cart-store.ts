@@ -3,15 +3,20 @@
  * `useSyncExternalStore` can read it directly. That keeps the server render and
  * the first client render in agreement, and avoids hydrating through an effect.
  *
- * It holds slugs and quantities only, and knows nothing about the catalogue:
+ * It holds slugs, chosen options and quantities only, and knows nothing about
+ * the catalogue:
  * useCart() resolves lines against the products the page was rendered with and
  * passes each line's stock ceiling in. A slug that is no longer on sale simply
  * does not resolve, and drops out of the cart's items.
  */
 
+import { lineKey } from "@/lib/orders";
+
 const STORAGE_KEY = "vc-cart";
 
-export type CartLine = { slug: string; qty: number };
+/** Which line: a product, and the option chosen if it is sold in options. */
+export type LineRef = { slug: string; variant?: string };
+export type CartLine = LineRef & { qty: number };
 export type CartSnapshot = { lines: CartLine[]; ready: boolean };
 
 /** Stable references — React compares snapshots by identity. */
@@ -37,6 +42,7 @@ function readStored(): CartLine[] {
         typeof l === "object" &&
         l !== null &&
         typeof (l as CartLine).slug === "string" &&
+        ((l as CartLine).variant === undefined || typeof (l as CartLine).variant === "string") &&
         typeof (l as CartLine).qty === "number" &&
         Number.isInteger((l as CartLine).qty) &&
         (l as CartLine).qty > 0,
@@ -87,29 +93,32 @@ export function getServerSnapshot(): CartSnapshot {
 }
 
 /** `ceiling` is the most of this line anyone may hold — the caller knows the stock. */
-export function addLine(slug: string, qty: number, ceiling: number) {
+export function addLine(ref: LineRef, qty: number, ceiling: number) {
   if (ceiling <= 0 || qty <= 0) return;
-  const existing = snapshot.lines.find((l) => l.slug === slug);
+  const key = lineKey(ref);
+  const existing = snapshot.lines.find((l) => lineKey(l) === key);
   const nextQty = Math.min((existing?.qty ?? 0) + qty, ceiling);
   commit(
     existing
-      ? snapshot.lines.map((l) => (l.slug === slug ? { ...l, qty: nextQty } : l))
-      : [...snapshot.lines, { slug, qty: nextQty }],
+      ? snapshot.lines.map((l) => (lineKey(l) === key ? { ...l, qty: nextQty } : l))
+      : [...snapshot.lines, { slug: ref.slug, ...(ref.variant ? { variant: ref.variant } : {}), qty: nextQty }],
   );
 }
 
-export function setLineQty(slug: string, qty: number, ceiling: number) {
+export function setLineQty(ref: LineRef, qty: number, ceiling: number) {
+  const key = lineKey(ref);
   if (qty <= 0) {
-    commit(snapshot.lines.filter((l) => l.slug !== slug));
+    commit(snapshot.lines.filter((l) => lineKey(l) !== key));
     return;
   }
   if (ceiling <= 0) return;
   const capped = Math.min(qty, ceiling);
-  commit(snapshot.lines.map((l) => (l.slug === slug ? { ...l, qty: capped } : l)));
+  commit(snapshot.lines.map((l) => (lineKey(l) === key ? { ...l, qty: capped } : l)));
 }
 
-export function removeLine(slug: string) {
-  commit(snapshot.lines.filter((l) => l.slug !== slug));
+export function removeLine(ref: LineRef) {
+  const key = lineKey(ref);
+  commit(snapshot.lines.filter((l) => lineKey(l) !== key));
 }
 
 export function clearCart() {

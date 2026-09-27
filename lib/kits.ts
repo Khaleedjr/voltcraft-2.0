@@ -1,13 +1,15 @@
 import "server-only";
 import type { Product } from "@/lib/catalogue";
 import { getProduct } from "@/lib/catalogue-data";
+import { unitPriceFor } from "@/lib/orders";
 
 /**
  * A kit is a bill of materials for a project people actually build, priced from
  * the live catalogue. It is the most useful thing a parts shop can publish:
  * it answers "what do I need to buy" rather than "what do you sell".
  */
-export type KitLine = { slug: string; qty: number; why: string };
+/** `variant` names the option to buy, for a product sold in options. */
+export type KitLine = { slug: string; variant?: string; qty: number; why: string };
 
 export type Kit = {
   slug: string;
@@ -32,21 +34,24 @@ export const KITS: Kit[] = [
       { slug: "18650-lithium-battery-3-7v", qty: 1, why: "The cell" },
       { slug: "3-7v-lithium-battery-charger", qty: 1, why: "Charging" },
       { slug: "breadboard-830-tie-points", qty: 1, why: "Build it before you solder it" },
-      { slug: "jumper-wires-pieces", qty: 20, why: "Wiring" },
+      { slug: "jumper-wires-pieces", variant: "Male to Male", qty: 10, why: "Breadboard wiring" },
+      { slug: "jumper-wires-pieces", variant: "Male to Female", qty: 10, why: "Board to sensor pins" },
     ],
   },
 ];
 
 export type ResolvedKit = Kit & {
-  items: { product: Product; qty: number; why: string; lineTotal: number }[];
+  items: { product: Product; variant?: string; qty: number; why: string; lineTotal: number }[];
   total: number;
 };
 
 export async function resolveKit(kit: Kit): Promise<ResolvedKit> {
   const resolved = await Promise.all(kit.lines.map(async (line) => ({ line, product: await getProduct(line.slug) })));
   const items = resolved.flatMap(({ line, product }) => {
-    if (!product) return [];
-    return [{ product, qty: line.qty, why: line.why, lineTotal: product.price * line.qty }];
+    const unitPrice = product ? unitPriceFor(product, line.variant) : null;
+    if (!product || unitPrice == null) return [];
+    const variant = line.variant ? { variant: line.variant } : {};
+    return [{ product, ...variant, qty: line.qty, why: line.why, lineTotal: unitPrice * line.qty }];
   });
   return { ...kit, items, total: items.reduce((n, i) => n + i.lineTotal, 0) };
 }

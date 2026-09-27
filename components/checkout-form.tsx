@@ -7,7 +7,7 @@ import { useCart } from "@/components/cart-context";
 import { useCatalogue } from "@/components/catalogue-provider";
 import { ButtonLink, Button, Fig } from "@/components/ui";
 import { formatNaira } from "@/lib/format";
-import { priceOrder, STATES } from "@/lib/orders";
+import { lineKey, priceOrder, STATES } from "@/lib/orders";
 import { SITE } from "@/lib/site";
 
 const fieldClass =
@@ -140,12 +140,13 @@ export function CheckoutForm() {
       <aside className="h-max border border-line bg-sheet p-6">
         <Fig>Your order</Fig>
         <ul className="mt-4 border-t border-line">
-          {order.items.map(({ product, qty, lineTotal }) => (
-            <li key={product.slug} className="flex justify-between gap-4 border-b border-line py-3 text-[0.88rem]">
+          {order.items.map(({ product, variant, qty, lineTotal }) => (
+            <li key={lineKey({ slug: product.slug, variant })} className="flex justify-between gap-4 border-b border-line py-3 text-[0.88rem]">
               <span className="min-w-0">
                 <Link href={`/product/${product.slug}`} className="hover:text-live">
                   {product.name}
                 </Link>
+                {variant ? <span className="mt-0.5 block text-muted">{variant}</span> : null}
                 <span className="vc-fig mt-1 block text-faint">×{qty}</span>
               </span>
               <span className="shrink-0 tabular-nums">{formatNaira(lineTotal)}</span>

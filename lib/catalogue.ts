@@ -118,7 +118,7 @@ export const CATEGORIES: Category[] = [
  */
 export type LiteProduct = Pick<
   Product,
-  "id" | "slug" | "name" | "sku" | "price" | "compareAt" | "inStock" | "stock" | "lowStockAt" | "categories" | "images"
+  "id" | "slug" | "name" | "sku" | "price" | "compareAt" | "inStock" | "stock" | "lowStockAt" | "categories" | "images" | "variants"
 >;
 
 export function toLite(p: Product): LiteProduct {
@@ -134,6 +134,7 @@ export function toLite(p: Product): LiteProduct {
     ...(p.lowStockAt != null ? { lowStockAt: p.lowStockAt } : {}),
     categories: p.categories,
     images: p.images.slice(0, 1),
+    ...(p.variants?.length ? { variants: p.variants } : {}),
   };
 }
 
@@ -197,5 +198,6 @@ export function discountPercent(product: Pick<Product, "price" | "compareAt">): 
 /** Variable products show a range; the listed price is the cheapest option. */
 export function priceLabel(product: Pick<Product, "variants">): string | null {
   if (!product.variants || product.variants.length < 2) return null;
-  return "from";
+  const first = product.variants[0].price;
+  return product.variants.some((v) => v.price !== first) ? "from" : null;
 }

@@ -4,15 +4,50 @@ import { SITE } from "@/lib/site";
 /** Flat national delivery fee, waived above the free-delivery threshold. */
 export const DELIVERY_FEE = 3_500;
 
-export type OrderLineInput = { slug: string; qty: number };
+/** `variant` is the label of the option chosen, for a product sold in options. */
+export type OrderLineInput = { slug: string; variant?: string; qty: number };
+
+/** One cart line per product and option: two resistor values are two lines. */
+export function lineKey(line: { slug: string; variant?: string }): string {
+  return line.variant ? `${line.slug}\u0000${line.variant}` : line.slug;
+}
+
+/**
+ * Which lines draw on the same shelf. A counted product has one shelf, so all
+ * its options share the count. An uncounted one has no shelf to share: each
+ * option line gets the per-line ceiling on its own, so thirty resistor values
+ * are not squeezed into one line's allowance.
+ */
+export function stockPool(product: Pick<Product, "slug" | "stock">, variant: string | undefined): string {
+  return product.stock == null ? lineKey({ slug: product.slug, variant }) : product.slug;
+}
 
 /**
  * Anything priceOrder can price: the full product on the server, the lean
  * copy the browser holds for its cart.
  */
-export type Priceable = Pick<Product, "slug" | "name" | "sku" | "price" | "inStock" | "stock">;
+export type Priceable = Pick<Product, "slug" | "name" | "sku" | "price" | "inStock" | "stock" | "variants">;
 
-export type PricedLine<P extends Priceable = Product> = { product: P; qty: number; lineTotal: number };
+export type PricedLine<P extends Priceable = Product> = {
+  product: P;
+  variant?: string;
+  unitPrice: number;
+  qty: number;
+  lineTotal: number;
+};
+
+/**
+ * What one unit costs. A product sold in options must be bought as one of
+ * them, at that option's price; a product without options has no option to
+ * name. Anything else — an option since removed, or never offered — is null,
+ * and the line is not sold.
+ */
+export function unitPriceFor(product: Pick<Product, "price" | "variants">, variant: string | undefined): number | null {
+  if (product.variants?.length) {
+    return product.variants.find((v) => v.label === variant)?.price ?? null;
+  }
+  return variant ? null : product.price;
+}
 
 export type PricedOrder<P extends Priceable = Product> = {
   items: PricedLine<P>[];
@@ -27,27 +62,36 @@ export type PricedOrder<P extends Priceable = Product> = {
  * route both call this, so the browser never gets to tell the server what
  * something costs — prices always come from the catalogue, through `lookup`.
  *
- * Lines for the same product are merged before the stock cap is applied, so
- * listing a product twice cannot order past what is on the shelf.
+ * Stock is counted per product, not per option, so for a counted product the
+ * cap applies to all its lines together: listing it twice, or in two options,
+ * cannot order past what is on the shelf. See stockPool.
  */
 export function priceOrder<P extends Priceable>(
   lines: OrderLineInput[],
   lookup: (slug: string) => P | undefined,
 ): PricedOrder<P> {
-  const wanted = new Map<string, number>();
+  const wanted = new Map<string, OrderLineInput>();
   for (const line of lines) {
     const qty = Math.floor(line.qty);
     if (!Number.isFinite(qty) || qty <= 0) continue;
-    wanted.set(line.slug, (wanted.get(line.slug) ?? 0) + qty);
+    const key = lineKey(line);
+    const merged = wanted.get(key);
+    wanted.set(key, { slug: line.slug, ...(line.variant ? { variant: line.variant } : {}), qty: (merged?.qty ?? 0) + qty });
   }
 
   const items: PricedLine<P>[] = [];
-  for (const [slug, qty] of wanted) {
+  const taken = new Map<string, number>();
+  for (const { slug, variant, qty } of wanted.values()) {
     const product = lookup(slug);
     if (!product) continue;
-    const capped = Math.min(qty, maxOrderable(product));
+    const unitPrice = unitPriceFor(product, variant);
+    if (unitPrice == null) continue;
+    const pool = stockPool(product, variant);
+    const already = taken.get(pool) ?? 0;
+    const capped = Math.min(qty, maxOrderable(product) - already);
     if (capped <= 0) continue;
-    items.push({ product, qty: capped, lineTotal: product.price * capped });
+    taken.set(pool, already + capped);
+    items.push({ product, ...(variant ? { variant } : {}), unitPrice, qty: capped, lineTotal: unitPrice * capped });
   }
   const subtotal = items.reduce((n, i) => n + i.lineTotal, 0);
   const freeDelivery = subtotal >= SITE.freeDeliveryThreshold;
@@ -110,7 +154,8 @@ export function parseLines(value: unknown): OrderLineInput[] {
     const line = l as Record<string, unknown>;
     if (typeof line.slug !== "string" || line.slug.length > 200) return [];
     if (typeof line.qty !== "number" || !Number.isFinite(line.qty)) return [];
-    return [{ slug: line.slug, qty: Math.min(line.qty, 10_000) }];
+    const variant = typeof line.variant === "string" && line.variant && line.variant.length <= 100 ? line.variant : undefined;
+    return [{ slug: line.slug, ...(variant ? { variant } : {}), qty: Math.min(line.qty, 10_000) }];
   });
 }
 

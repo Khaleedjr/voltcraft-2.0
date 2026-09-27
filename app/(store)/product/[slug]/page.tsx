@@ -80,32 +80,9 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
               <StockPill text={stock.text} tone={stock.tone} />
             </div>
 
-            {product.variants ? (
-              <div className="mt-6 border border-line bg-sheet">
-                <p className="vc-fig border-b border-line px-4 py-2.5 text-muted">Options</p>
-                <ul>
-                  {product.variants.map((v) => (
-                    <li
-                      key={v.label}
-                      className="flex items-baseline justify-between gap-4 border-b border-line px-4 py-2.5 text-[0.9rem] last:border-b-0"
-                    >
-                      <span>{v.label}</span>
-                      <span className="tabular-nums text-muted">{formatNaira(v.price)}</span>
-                    </li>
-                  ))}
-                </ul>
-                <p className="px-4 py-2.5 text-[0.8rem] leading-relaxed text-muted">
-                  Tell us which you need in the delivery notes at checkout, or{" "}
-                  <a href={SITE.whatsapp} target="_blank" rel="noreferrer" className="border-b border-muted hover:border-live hover:text-live">
-                    message us
-                  </a>
-                  .
-                </p>
-              </div>
-            ) : null}
 
             <div className="mt-6">
-              <ProductBuy slug={product.slug} stock={maxOrderable(product)} />
+              <ProductBuy slug={product.slug} stock={maxOrderable(product)} variants={product.variants} />
             </div>
 
             <ul className="mt-6 grid gap-2 border-t border-line pt-5 text-[0.86rem] text-muted">

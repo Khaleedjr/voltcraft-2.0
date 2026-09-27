@@ -1,19 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCart } from "@/components/cart-context";
 import { Button } from "@/components/ui";
+import type { Variant } from "@/lib/catalogue";
+import { formatNaira } from "@/lib/format";
 
-export function ProductBuy({ slug, stock }: { slug: string; stock: number }) {
+/**
+ * Quantity and add to cart, plus the option picker for a product sold in
+ * options. Nothing is chosen for the customer: a resistor bought in the wrong
+ * value is worse than a tap asking which one.
+ */
+export function ProductBuy({ slug, stock, variants }: { slug: string; stock: number; variants?: Variant[] }) {
   const { add } = useCart();
   const [qty, setQty] = useState(1);
-  const [added, setAdded] = useState(false);
+  const [added, setAdded] = useState<string | null>(null);
+  const [choice, setChoice] = useState<string | null>(variants?.length === 1 ? variants[0].label : null);
+  const [asking, setAsking] = useState(false);
+  const pickerRef = useRef<HTMLFieldSetElement>(null);
   const max = Math.max(stock, 1);
+  const options = variants?.length ? variants : null;
+  const priced = options ? options.some((v) => v.price !== options[0].price) : false;
 
   useEffect(() => {
-    if (!added) return;
-    const t = setTimeout(() => setAdded(false), 3000);
+    if (added === null) return;
+    const t = setTimeout(() => setAdded(null), 3000);
     return () => clearTimeout(t);
   }, [added]);
 
@@ -34,8 +46,52 @@ export function ProductBuy({ slug, stock }: { slug: string; stock: number }) {
     );
   }
 
+  function addToCart() {
+    if (options && !choice) {
+      setAsking(true);
+      pickerRef.current?.querySelector("input")?.focus();
+      return;
+    }
+    add({ slug, ...(choice ? { variant: choice } : {}) }, qty);
+    setAdded(choice ? `${qty} × ${choice}` : "");
+  }
+
   return (
     <div className="flex flex-col gap-3">
+      {options ? (
+        <fieldset ref={pickerRef} className="mb-2" aria-describedby={asking ? "option-ask" : undefined}>
+          <legend className="vc-fig text-muted">
+            Choose an option <span className="text-faint">· {options.length}</span>
+          </legend>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {options.map((v) => (
+              <label key={v.label} className="cursor-pointer">
+                <input
+                  type="radio"
+                  name={`option-${slug}`}
+                  value={v.label}
+                  checked={choice === v.label}
+                  onChange={() => {
+                    setChoice(v.label);
+                    setAsking(false);
+                  }}
+                  className="peer sr-only"
+                />
+                <span className="flex items-baseline gap-2 border border-line bg-raised px-3 py-2 text-[0.88rem] tabular-nums transition-colors hover:border-ink peer-checked:border-ink peer-checked:bg-ink peer-checked:text-ground peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-live">
+                  {v.label}
+                  {priced ? <span className="text-[0.8rem] opacity-70">{formatNaira(v.price)}</span> : null}
+                </span>
+              </label>
+            ))}
+          </div>
+          {asking ? (
+            <p id="option-ask" role="alert" className="mt-3 text-[0.85rem] text-warn">
+              Pick an option first, then add it to the cart.
+            </p>
+          ) : null}
+        </fieldset>
+      ) : null}
+
       <div className="flex flex-wrap items-stretch gap-3">
         <div className="flex items-center border border-line">
           <button
@@ -72,21 +128,14 @@ export function ProductBuy({ slug, stock }: { slug: string; stock: number }) {
             +
           </button>
         </div>
-        <Button
-          variant="live"
-          className="flex-1"
-          onClick={() => {
-            add(slug, qty);
-            setAdded(true);
-          }}
-        >
+        <Button variant="live" className="flex-1" onClick={addToCart}>
           Add to cart
         </Button>
       </div>
       <p aria-live="polite" className="min-h-5 text-[0.85rem] text-earth">
-        {added ? (
+        {added !== null ? (
           <>
-            Added.{" "}
+            Added{added ? ` ${added}` : ""}.{" "}
             <Link href="/cart" className="border-b border-earth hover:text-live hover:border-live">
               Go to cart →
             </Link>

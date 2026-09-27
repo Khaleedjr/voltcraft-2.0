@@ -172,7 +172,16 @@ export async function searchProducts(query: string): Promise<Product[]> {
   if (!q) return [];
   const terms = q.split(/\s+/);
   return (await getProducts()).filter((p) => {
-    const haystack = [p.name, p.sku, p.summary, ...p.categories, ...p.tags, ...p.specs.map((s) => s.value)]
+    const haystack = [
+      p.name,
+      p.sku,
+      p.summary,
+      ...p.categories,
+      ...p.tags,
+      ...p.specs.map((s) => s.value),
+      // Option labels are what people type: "1N4007", "4.7k", "16GB".
+      ...(p.variants ?? []).map((v) => v.label),
+    ]
       .join(" ")
       .toLowerCase();
     return terms.every((t) => haystack.includes(t));

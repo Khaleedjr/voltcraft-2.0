@@ -36,7 +36,12 @@ export function ProductCard({ product }: { product: Product }) {
             </span>
           ) : null}
         </div>
-        <AddToCart slug={product.slug} stock={maxOrderable(product)} size="compact" />
+        <AddToCart
+          slug={product.slug}
+          stock={maxOrderable(product)}
+          hasOptions={Boolean(product.variants?.length)}
+          size="compact"
+        />
       </div>
     </article>
   );

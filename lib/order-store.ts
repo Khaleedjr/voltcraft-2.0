@@ -58,7 +58,10 @@ export type StoredLine = {
   productId?: string;
   sku: string;
   slug: string;
+  /** The product's name, with the option chosen in brackets when it has one. */
   name: string;
+  /** The option chosen, for a product sold in options. */
+  variant?: string;
   image?: string;
   qty: number;
   unitPrice: number;
@@ -70,10 +73,11 @@ export function snapshotLines(order: PricedOrder): StoredLine[] {
     ...(i.product.id ? { productId: i.product.id } : {}),
     sku: i.product.sku,
     slug: i.product.slug,
-    name: i.product.name,
+    name: i.variant ? `${i.product.name} (${i.variant})` : i.product.name,
+    ...(i.variant ? { variant: i.variant } : {}),
     ...(i.product.images[0] ? { image: i.product.images[0] } : {}),
     qty: i.qty,
-    unitPrice: i.product.price,
+    unitPrice: i.unitPrice,
     lineTotal: i.lineTotal,
   }));
 }

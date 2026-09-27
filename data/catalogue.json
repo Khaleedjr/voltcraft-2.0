@@ -1525,8 +1525,7 @@
         "-Emitted color : Green",
         "-Voltage : 1.99 v"
       ],
-      "price": 1400,
-      "compareAt": 1800,
+      "price": 600,
       "inStock": true,
       "stock": null,
       "specs": [],
@@ -1552,8 +1551,7 @@
         "-Emitted color : Red",
         "-Voltage : 1.99 v"
       ],
-      "price": 1400,
-      "compareAt": 1800,
+      "price": 600,
       "inStock": true,
       "stock": null,
       "specs": [],
@@ -1621,7 +1619,7 @@
         "-I.C. compatiable.",
         "-Easy mounting on P.C. board or socke"
       ],
-      "price": 500,
+      "price": 800,
       "inStock": true,
       "stock": null,
       "specs": [],
@@ -1868,8 +1866,7 @@
       ],
       "summary": "PCF8574 LCD Display Adapter Module IIC 12C LCD1602 2004 IIC Serial Interface Board 5V",
       "description": [],
-      "price": 2000,
-      "compareAt": 2500,
+      "price": 1500,
       "inStock": true,
       "stock": null,
       "specs": [],
@@ -2717,6 +2714,1298 @@
       "tags": [],
       "images": [
         "https://voltcraft.org.ng/wp-content/uploads/2026/04/Screenshot_20260416_190429_AliExpress.png"
+      ]
+    },
+    {
+      "slug": "resistor",
+      "name": "Resistor",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Through-hole resistors in 30 common values, from 10Ω to 1MΩ. Pick the value you need.",
+      "description": [
+        "The values you reach for most: LED current limiting, pull-ups and pull-downs, voltage dividers and transistor biasing.",
+        "Choose a value, set how many you need and add it to the cart. Need several values? Add each one in turn.",
+        "Colour bands on every resistor mark its value."
+      ],
+      "price": 50,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Mounting",
+          "value": "Through-hole"
+        },
+        {
+          "label": "Values",
+          "value": "10Ω to 1MΩ, 30 values"
+        },
+        {
+          "label": "Sold",
+          "value": "Per piece"
+        }
+      ],
+      "tags": [
+        "resistors"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "10Ω",
+          "price": 50
+        },
+        {
+          "label": "22Ω",
+          "price": 50
+        },
+        {
+          "label": "47Ω",
+          "price": 50
+        },
+        {
+          "label": "100Ω",
+          "price": 50
+        },
+        {
+          "label": "150Ω",
+          "price": 50
+        },
+        {
+          "label": "200Ω",
+          "price": 50
+        },
+        {
+          "label": "220Ω",
+          "price": 50
+        },
+        {
+          "label": "270Ω",
+          "price": 50
+        },
+        {
+          "label": "330Ω",
+          "price": 50
+        },
+        {
+          "label": "470Ω",
+          "price": 50
+        },
+        {
+          "label": "510Ω",
+          "price": 50
+        },
+        {
+          "label": "680Ω",
+          "price": 50
+        },
+        {
+          "label": "1kΩ",
+          "price": 50
+        },
+        {
+          "label": "2kΩ",
+          "price": 50
+        },
+        {
+          "label": "2.2kΩ",
+          "price": 50
+        },
+        {
+          "label": "3.3kΩ",
+          "price": 50
+        },
+        {
+          "label": "4.7kΩ",
+          "price": 50
+        },
+        {
+          "label": "5.1kΩ",
+          "price": 50
+        },
+        {
+          "label": "6.8kΩ",
+          "price": 50
+        },
+        {
+          "label": "10kΩ",
+          "price": 50
+        },
+        {
+          "label": "20kΩ",
+          "price": 50
+        },
+        {
+          "label": "47kΩ",
+          "price": 50
+        },
+        {
+          "label": "51kΩ",
+          "price": 50
+        },
+        {
+          "label": "68kΩ",
+          "price": 50
+        },
+        {
+          "label": "100kΩ",
+          "price": 50
+        },
+        {
+          "label": "220kΩ",
+          "price": 50
+        },
+        {
+          "label": "300kΩ",
+          "price": 50
+        },
+        {
+          "label": "470kΩ",
+          "price": 50
+        },
+        {
+          "label": "680kΩ",
+          "price": 50
+        },
+        {
+          "label": "1MΩ",
+          "price": 50
+        }
+      ]
+    },
+    {
+      "slug": "diode",
+      "name": "Diode",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories",
+        "power"
+      ],
+      "summary": "Rectifier, Schottky, fast-recovery and switching diodes: eight common part numbers in one place.",
+      "description": [
+        "1N4007: 1A, 1000V general-purpose rectifier. The default for supply inputs, reverse-polarity protection and relay coils.",
+        "1N4148: fast small-signal switching diode, 100V. For logic, signal clamping and protection.",
+        "1N5819: 1A, 40V Schottky. A low voltage drop, good in low-voltage power paths.",
+        "1N5399: 1.5A, 1000V rectifier.",
+        "1N5408: 3A, 1000V rectifier, for heavier supplies.",
+        "1N5822: 3A, 40V Schottky, common in buck converter circuits.",
+        "FR107: 1A, 1000V fast-recovery rectifier, for switching supplies.",
+        "FR207: 2A, 1000V fast-recovery rectifier."
+      ],
+      "price": 100,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Mounting",
+          "value": "Through-hole"
+        },
+        {
+          "label": "Sold",
+          "value": "Per piece"
+        }
+      ],
+      "tags": [
+        "diodes",
+        "rectifier",
+        "schottky"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "1N4007",
+          "price": 100
+        },
+        {
+          "label": "1N4148",
+          "price": 100
+        },
+        {
+          "label": "1N5819",
+          "price": 100
+        },
+        {
+          "label": "1N5399",
+          "price": 100
+        },
+        {
+          "label": "1N5408",
+          "price": 100
+        },
+        {
+          "label": "1N5822",
+          "price": 100
+        },
+        {
+          "label": "FR107",
+          "price": 100
+        },
+        {
+          "label": "FR207",
+          "price": 100
+        }
+      ]
+    },
+    {
+      "slug": "18650-battery-holder",
+      "name": "18650 Battery Holder",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "power"
+      ],
+      "summary": "Holder for 18650 lithium cells, in one, two or three slots.",
+      "description": [
+        "Holds 18650 cells firmly for robots, power banks, torches and portable builds.",
+        "How the slots are wired together, in series or in parallel, can vary. Check with a multimeter, or ask us, before connecting anything that depends on the voltage.",
+        "Cells are sold separately."
+      ],
+      "price": 1000,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Cell size",
+          "value": "18650"
+        },
+        {
+          "label": "Slots",
+          "value": "1, 2 or 3"
+        }
+      ],
+      "tags": [],
+      "images": [],
+      "variants": [
+        {
+          "label": "1 slot",
+          "price": 1000
+        },
+        {
+          "label": "2 slots",
+          "price": 1500
+        },
+        {
+          "label": "3 slots",
+          "price": 1900
+        }
+      ]
+    },
+    {
+      "slug": "jumper-wires-pack-of-40",
+      "name": "Jumper Wires, Pack of 40",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "A ribbon of 40 Dupont jumper wires: male to male, male to female or female to female.",
+      "description": [
+        "Peel off one wire at a time, or keep a few together as a neat bus.",
+        "Male to male: breadboard to breadboard, and breadboard to Arduino headers.",
+        "Male to female: board pins to a breadboard, and sensor modules with male pins.",
+        "Female to female: module to module, such as a sensor straight onto a Raspberry Pi's pins."
+      ],
+      "price": 2800,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Wires per pack",
+          "value": "40"
+        },
+        {
+          "label": "Connector",
+          "value": "2.54mm Dupont"
+        }
+      ],
+      "tags": [
+        "dupont",
+        "jumper cables"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "Male to Male",
+          "price": 2800
+        },
+        {
+          "label": "Male to Female",
+          "price": 2800
+        },
+        {
+          "label": "Female to Female",
+          "price": 2800
+        }
+      ]
+    },
+    {
+      "slug": "vero-board-9x5",
+      "name": "Vero Board 9x5",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Prototyping board for soldering a circuit down once it works on the breadboard.",
+      "description": [
+        "Move a circuit off the breadboard and solder it in place, so it survives being carried around.",
+        "Standard 2.54mm hole spacing, so ICs, headers and modules fit straight in."
+      ],
+      "price": 1900,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Hole pitch",
+          "value": "2.54mm"
+        }
+      ],
+      "tags": [
+        "veroboard",
+        "stripboard",
+        "perfboard",
+        "pcb"
+      ],
+      "images": []
+    },
+    {
+      "slug": "mpu6050-gyroscope-accelerometer",
+      "name": "MPU6050 Gyroscope and Accelerometer Module",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Six-axis motion sensor: a three-axis gyroscope and a three-axis accelerometer on I2C.",
+      "description": [
+        "The standard sensor for self-balancing robots, drones, gesture control and tilt sensing.",
+        "Measures rotation and acceleration on three axes each, and talks to an Arduino or ESP32 over two I2C wires.",
+        "Widely supported by Arduino libraries, so readings come quickly."
+      ],
+      "price": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Chip",
+          "value": "MPU6050"
+        },
+        {
+          "label": "Interface",
+          "value": "I2C"
+        },
+        {
+          "label": "Gyroscope range",
+          "value": "±250 to ±2000 °/s"
+        },
+        {
+          "label": "Accelerometer range",
+          "value": "±2g to ±16g"
+        }
+      ],
+      "tags": [
+        "gyro",
+        "imu",
+        "accelerometer"
+      ],
+      "images": []
+    },
+    {
+      "slug": "micro-sd-card",
+      "name": "Micro SD Card",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Memory card for data logging, ESP32-CAM photos and audio projects.",
+      "description": [
+        "Store sensor logs, photos from an ESP32-CAM, or sound files for audio modules.",
+        "For SD card modules and the ESP32-CAM, format it as FAT32 before first use."
+      ],
+      "price": 4000,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Capacity",
+          "value": "4GB or 16GB"
+        }
+      ],
+      "tags": [
+        "memory card",
+        "sd card"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "4GB",
+          "price": 4000
+        },
+        {
+          "label": "16GB",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "slug": "sd-card-module",
+      "name": "SD Card Module",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Adds an SD card slot to an Arduino or ESP32 over SPI, for logging and file storage.",
+      "description": [
+        "Log sensor readings to a file, or read settings and sound files, with the standard Arduino SD library.",
+        "Mini takes micro SD cards. Large takes full-size SD cards."
+      ],
+      "price": 1300,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Interface",
+          "value": "SPI"
+        }
+      ],
+      "tags": [
+        "micro sd",
+        "data logger"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "Mini (micro SD)",
+          "price": 1300
+        },
+        {
+          "label": "Large (full-size SD)",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "slug": "traffic-light-led-module",
+      "name": "Traffic Light LED Module",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "display"
+      ],
+      "summary": "Red, yellow and green LEDs on one small board, for traffic-light and status projects.",
+      "description": [
+        "A favourite first Arduino project: sequence the three lights with delays, then add a pedestrian button.",
+        "Each colour has its own control pin, plus a shared ground."
+      ],
+      "price": 1500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Colours",
+          "value": "Red, yellow, green"
+        }
+      ],
+      "tags": [
+        "led",
+        "traffic light"
+      ],
+      "images": []
+    },
+    {
+      "slug": "tcrt5000-line-tracking-sensor",
+      "name": "TCRT5000 Line Tracking Sensor",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Infrared reflective sensor for line-following robots and close-range object detection.",
+      "description": [
+        "Shines infrared light down and measures how much comes back, so it can tell a black line from a light floor.",
+        "The small potentiometer on the board sets the point at which the output switches."
+      ],
+      "price": 1800,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Sensor",
+          "value": "TCRT5000"
+        },
+        {
+          "label": "Use",
+          "value": "Line following, close-range detection"
+        }
+      ],
+      "tags": [
+        "line follower",
+        "infrared",
+        "ir"
+      ],
+      "images": []
+    },
+    {
+      "slug": "ds18b20-temperature-sensor",
+      "name": "DS18B20 Temperature Sensor",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Digital temperature sensor on a one-wire bus, accurate to ±0.5°C between −10°C and +85°C.",
+      "description": [
+        "Measures from −55°C to +125°C and sends the reading as a digital value, so long wires don't spoil it.",
+        "Several sensors can share one data pin, each with its own address.",
+        "Put a 4.7kΩ pull-up resistor on the data line, unless your board already has one. It's among our resistor values."
+      ],
+      "price": 2900,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Range",
+          "value": "−55°C to +125°C"
+        },
+        {
+          "label": "Accuracy",
+          "value": "±0.5°C from −10°C to +85°C"
+        },
+        {
+          "label": "Interface",
+          "value": "1-Wire"
+        },
+        {
+          "label": "Supply",
+          "value": "3.0V to 5.5V"
+        }
+      ],
+      "tags": [
+        "temperature"
+      ],
+      "images": []
+    },
+    {
+      "slug": "xh-m609-battery-protection-module",
+      "name": "XH-M609 Battery Low-Voltage Protection Module",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "power"
+      ],
+      "summary": "Protects a 12V to 36V battery from over-discharge by cutting the load at a voltage you set.",
+      "description": [
+        "Set the cut-off voltage on its display, and it disconnects the load before the battery is drained far enough to be damaged.",
+        "Suited to solar setups, inverters and battery-powered projects."
+      ],
+      "price": 4500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Battery voltage",
+          "value": "12V to 36V"
+        },
+        {
+          "label": "Setting",
+          "value": "Digital display with buttons"
+        }
+      ],
+      "tags": [
+        "battery protection",
+        "undervoltage",
+        "xh-m609"
+      ],
+      "images": []
+    },
+    {
+      "slug": "3s-2a-lithium-battery-charger",
+      "name": "3S 2A Lithium Battery Charger Module",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "power"
+      ],
+      "summary": "Charges a three-cell (3S) lithium pack at up to 2A.",
+      "description": [
+        "For 3S packs: three lithium cells in series, 11.1V nominal and 12.6V when full, such as three 18650s in a three-slot holder."
+      ],
+      "price": 1900,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Cells",
+          "value": "3S, 11.1V nominal, 12.6V full"
+        },
+        {
+          "label": "Charge current",
+          "value": "Up to 2A"
+        }
+      ],
+      "tags": [
+        "lipo",
+        "charger",
+        "18650"
+      ],
+      "images": []
+    },
+    {
+      "slug": "self-reset-push-button",
+      "name": "Self-Reset Push Button",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "switches"
+      ],
+      "summary": "Momentary push button: on while pressed, springs back off when you let go.",
+      "description": [
+        "For start, reset, doorbell and menu buttons: anything that should act once per press.",
+        "On a microcontroller input, use a pull-up or pull-down resistor, or the Arduino's built-in INPUT_PULLUP."
+      ],
+      "price": 500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Action",
+          "value": "Momentary, self-reset"
+        }
+      ],
+      "tags": [
+        "push button",
+        "momentary",
+        "tactile"
+      ],
+      "images": []
+    },
+    {
+      "slug": "irf520n-mosfet",
+      "name": "IRF520N MOSFET",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "power",
+        "actuators"
+      ],
+      "summary": "N-channel power MOSFET rated 100V and 9.7A, for switching motors, LED strips and solenoids.",
+      "description": [
+        "Switches a DC load on and off from a small control signal.",
+        "The IRF520N is not a logic-level MOSFET: with 5V on the gate it only partly turns on, so from an Arduino pin it suits light loads. For heavier loads, drive the gate with 10V or more.",
+        "Put a diode, such as a 1N4007, across motors, relays and solenoids to protect it."
+      ],
+      "price": 700,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Type",
+          "value": "N-channel MOSFET"
+        },
+        {
+          "label": "Max voltage",
+          "value": "100V"
+        },
+        {
+          "label": "Max current",
+          "value": "9.7A"
+        },
+        {
+          "label": "Package",
+          "value": "TO-220"
+        }
+      ],
+      "tags": [
+        "mosfet",
+        "transistor"
+      ],
+      "images": []
+    },
+    {
+      "slug": "soldering-iron-60w",
+      "name": "Soldering Iron 60W",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "60W soldering iron for headers, wires and through-hole parts.",
+      "description": [
+        "Plenty of heat for joints on headers, wires and through-hole components.",
+        "Keep the tip tinned with solder and it lasts much longer. Pair it with our 0.8mm solder wire."
+      ],
+      "price": 4500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Power",
+          "value": "60W"
+        }
+      ],
+      "tags": [
+        "solder",
+        "soldering"
+      ],
+      "images": []
+    },
+    {
+      "slug": "glass-fuse",
+      "name": "Glass Fuse",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "power"
+      ],
+      "summary": "Glass cartridge fuses from 0.25A to 20A, to protect a circuit from overcurrent.",
+      "description": [
+        "Pick a rating a little above your circuit's normal current: the fuse blows before a fault can overheat wiring or damage parts.",
+        "Match the fuse size to your fuse holder."
+      ],
+      "price": 500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Type",
+          "value": "Glass cartridge"
+        },
+        {
+          "label": "Ratings",
+          "value": "0.25A to 20A"
+        },
+        {
+          "label": "Sold",
+          "value": "Per piece"
+        }
+      ],
+      "tags": [
+        "fuses"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "0.25A",
+          "price": 500
+        },
+        {
+          "label": "0.5A",
+          "price": 500
+        },
+        {
+          "label": "1A",
+          "price": 500
+        },
+        {
+          "label": "2A",
+          "price": 500
+        },
+        {
+          "label": "3A",
+          "price": 500
+        },
+        {
+          "label": "5A",
+          "price": 500
+        },
+        {
+          "label": "8A",
+          "price": 500
+        },
+        {
+          "label": "10A",
+          "price": 500
+        },
+        {
+          "label": "15A",
+          "price": 500
+        },
+        {
+          "label": "20A",
+          "price": 500
+        }
+      ]
+    },
+    {
+      "slug": "electrolytic-capacitor",
+      "name": "Electrolytic Capacitor",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Aluminium electrolytic capacitors in 24 common values, from 0.1µF to 1000µF.",
+      "description": [
+        "For smoothing power supplies, decoupling and timing circuits.",
+        "Electrolytics are polarised: the stripe on the can marks the negative leg, which is also the shorter one.",
+        "Each option shows the value and its rated voltage. Choose a rating comfortably above your circuit's voltage."
+      ],
+      "price": 100,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Type",
+          "value": "Aluminium electrolytic, through-hole"
+        },
+        {
+          "label": "Values",
+          "value": "0.1µF to 1000µF, 24 values"
+        },
+        {
+          "label": "Sold",
+          "value": "Per piece"
+        }
+      ],
+      "tags": [
+        "capacitors",
+        "uf"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "0.1µF 50V",
+          "price": 100
+        },
+        {
+          "label": "0.22µF 50V",
+          "price": 100
+        },
+        {
+          "label": "0.47µF 50V",
+          "price": 100
+        },
+        {
+          "label": "1µF 50V",
+          "price": 100
+        },
+        {
+          "label": "2.2µF 50V",
+          "price": 100
+        },
+        {
+          "label": "3.3µF 50V",
+          "price": 100
+        },
+        {
+          "label": "4.7µF 50V",
+          "price": 100
+        },
+        {
+          "label": "10µF 25V",
+          "price": 100
+        },
+        {
+          "label": "10µF 50V",
+          "price": 100
+        },
+        {
+          "label": "22µF 16V",
+          "price": 100
+        },
+        {
+          "label": "22µF 25V",
+          "price": 100
+        },
+        {
+          "label": "33µF 16V",
+          "price": 100
+        },
+        {
+          "label": "47µF 10V",
+          "price": 100
+        },
+        {
+          "label": "47µF 25V",
+          "price": 100
+        },
+        {
+          "label": "47µF 50V",
+          "price": 100
+        },
+        {
+          "label": "100µF 16V",
+          "price": 100
+        },
+        {
+          "label": "100µF 25V",
+          "price": 100
+        },
+        {
+          "label": "220µF 10V",
+          "price": 100
+        },
+        {
+          "label": "220µF 25V",
+          "price": 100
+        },
+        {
+          "label": "330µF 25V",
+          "price": 100
+        },
+        {
+          "label": "470µF 10V",
+          "price": 100
+        },
+        {
+          "label": "470µF 16V",
+          "price": 100
+        },
+        {
+          "label": "680µF 16V",
+          "price": 100
+        },
+        {
+          "label": "1000µF 16V",
+          "price": 100
+        }
+      ]
+    },
+    {
+      "slug": "polypropylene-film-capacitor",
+      "name": "Polypropylene Film Capacitor",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Polypropylene film capacitors in 100nF and 330nF.",
+      "description": [
+        "Film capacitors are stable and not polarised, so they fit either way round.",
+        "Common uses: filtering, snubbers and supply decoupling."
+      ],
+      "price": 500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Type",
+          "value": "Polypropylene film"
+        },
+        {
+          "label": "Polarity",
+          "value": "Not polarised"
+        }
+      ],
+      "tags": [
+        "capacitors",
+        "nf"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "100nF",
+          "price": 500
+        },
+        {
+          "label": "330nF",
+          "price": 500
+        }
+      ]
+    },
+    {
+      "slug": "10k-linear-potentiometer-with-knob",
+      "name": "10kΩ Linear Potentiometer with Knob",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Rotary 10kΩ potentiometer with a linear (B) taper, with a knob.",
+      "description": [
+        "Turn it to set brightness, speed, volume or a menu value, and read the position on an analogue pin.",
+        "Wire the outer pins to 5V and GND, and the middle pin to the analogue input."
+      ],
+      "price": 1000,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Resistance",
+          "value": "10kΩ"
+        },
+        {
+          "label": "Taper",
+          "value": "Linear (B)"
+        },
+        {
+          "label": "Knob",
+          "value": "Included"
+        }
+      ],
+      "tags": [
+        "pot",
+        "b10k",
+        "10k"
+      ],
+      "images": []
+    },
+    {
+      "slug": "adaptable-box",
+      "name": "Adaptable Box",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories"
+      ],
+      "summary": "Square enclosure for housing wiring, relays and finished projects.",
+      "description": [
+        "Gives a finished build a tidy, protected home. Drill it for cable glands, switches and displays.",
+        "Two sizes: 10cm and 15cm cubes."
+      ],
+      "price": 1500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Sizes",
+          "value": "10 × 10 × 10 cm, 15 × 15 × 15 cm"
+        }
+      ],
+      "tags": [
+        "enclosure",
+        "junction box",
+        "case"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "10 × 10 × 10 cm",
+          "price": 1500
+        },
+        {
+          "label": "15 × 15 × 15 cm",
+          "price": 1900
+        }
+      ]
+    },
+    {
+      "slug": "inmp441-i2s-microphone-module",
+      "name": "INMP441 I2S Microphone Module",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Digital MEMS microphone with an I2S output, a popular pairing with the ESP32.",
+      "description": [
+        "Sends audio as a digital I2S stream, so there is no analogue noise to fight.",
+        "For voice recognition, sound level meters, audio streaming and intercoms.",
+        "The Arduino Uno has no I2S port. Use an ESP32."
+      ],
+      "price": 3900,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Interface",
+          "value": "I2S"
+        },
+        {
+          "label": "Supply",
+          "value": "1.8V to 3.3V"
+        },
+        {
+          "label": "Signal-to-noise ratio",
+          "value": "61 dBA"
+        },
+        {
+          "label": "Pickup",
+          "value": "Omnidirectional"
+        }
+      ],
+      "tags": [
+        "microphone",
+        "mic",
+        "audio",
+        "esp32"
+      ],
+      "images": []
+    },
+    {
+      "slug": "arduino-uno-usb-cable",
+      "name": "USB Cable for Arduino Uno (Type A to B)",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "accessories",
+        "connectors"
+      ],
+      "summary": "USB A to B cable for programming and powering an Arduino Uno or Mega.",
+      "description": [
+        "The square USB B plug fits the Arduino Uno, the Mega 2560 and many printers.",
+        "Carries data as well as power, so you can upload sketches and use the serial monitor."
+      ],
+      "price": 1800,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Connectors",
+          "value": "USB Type A to USB Type B"
+        }
+      ],
+      "tags": [
+        "usb",
+        "cable",
+        "arduino"
+      ],
+      "images": []
+    },
+    {
+      "slug": "mlx90614-infrared-temperature-sensor",
+      "name": "MLX90614 Infrared Temperature Sensor",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "sensors"
+      ],
+      "summary": "Non-contact infrared thermometer: reads an object's temperature without touching it.",
+      "description": [
+        "Point it at a surface to measure its temperature, the way a forehead thermometer works.",
+        "Also reports its own temperature. Both readings come over I2C.",
+        "Works best close up: the farther away the object, the wider the area it averages."
+      ],
+      "price": 12000,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Part",
+          "value": "MLX90614ESF"
+        },
+        {
+          "label": "Object range",
+          "value": "−70°C to +380°C"
+        },
+        {
+          "label": "Ambient range",
+          "value": "−40°C to +125°C"
+        },
+        {
+          "label": "Interface",
+          "value": "I2C (SMBus)"
+        }
+      ],
+      "tags": [
+        "infrared",
+        "ir",
+        "thermometer",
+        "temperature",
+        "mxl90614"
+      ],
+      "images": []
+    },
+    {
+      "slug": "dc-barrel-jack-pair",
+      "name": "DC Barrel Jack, Male and Female Pair",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "Matching male and female DC power connectors, for joining a power supply to a project.",
+      "description": [
+        "Wire each one to a lead, then connect and disconnect power without rewiring.",
+        "The round plug style used by most DC power adapters."
+      ],
+      "price": 800,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Sold",
+          "value": "One male and one female"
+        }
+      ],
+      "tags": [
+        "dc jack",
+        "power connector"
+      ],
+      "images": []
+    },
+    {
+      "slug": "pcb-screw-terminal-block",
+      "name": "PCB Screw Terminal Block",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "Screw terminals that solder onto a board, so wires clamp in and come out without soldering.",
+      "description": [
+        "For power inputs, motor outputs and anything you may want to rewire later.",
+        "Strip the wire, push it in and tighten the screw."
+      ],
+      "price": 500,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Positions",
+          "value": "2 or 3"
+        }
+      ],
+      "tags": [
+        "terminal",
+        "screw terminal"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "2-pin",
+          "price": 500
+        },
+        {
+          "label": "3-pin",
+          "price": 600
+        }
+      ]
+    },
+    {
+      "slug": "pin-header-single-row",
+      "name": "Pin Header, Single Row",
+      "sku": "",
+      "wooId": "",
+      "categories": [
+        "connectors"
+      ],
+      "summary": "Single-row 2.54mm pin headers, male or female, for modules, shields and breakout boards.",
+      "description": [
+        "Male headers solder onto modules so they plug into breadboards and sockets. Snap off as many pins as you need.",
+        "Female headers make sockets on your own boards, so modules can be plugged in and swapped. Cut to length."
+      ],
+      "price": 600,
+      "inStock": true,
+      "stock": null,
+      "specs": [
+        {
+          "label": "Pitch",
+          "value": "2.54mm (0.1 inch)"
+        },
+        {
+          "label": "Rows",
+          "value": "Single"
+        }
+      ],
+      "tags": [
+        "headers",
+        "header pins"
+      ],
+      "images": [],
+      "variants": [
+        {
+          "label": "Male",
+          "price": 600
+        },
+        {
+          "label": "Female",
+          "price": 600
+        }
       ]
     }
   ]

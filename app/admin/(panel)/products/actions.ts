@@ -12,6 +12,7 @@ import {
   IMAGE_MAX_BYTES,
   IMAGE_TYPES,
   imageBucketUrl,
+  addMissingBundledProducts,
   importBundledCatalogue,
   isSlugTaken,
   removeOrphanImages,
@@ -167,6 +168,20 @@ export async function importCatalogue(): Promise<ActionResult> {
   } catch (error) {
     console.error("[admin] import", error);
     return fail(explain(error, "The import did not run. Nothing was changed."));
+  }
+}
+
+export async function addNewCatalogueProducts(): Promise<ActionResult> {
+  const admin = await requireAdmin();
+  if (!isSupabaseConfigured()) return noDatabase();
+  try {
+    const names = await addMissingBundledProducts(admin.email);
+    updateTag(PRODUCTS_TAG);
+    if (names.length === 0) return done("Nothing to add. Every product is already here.");
+    return done(`Added ${names.length} product${names.length === 1 ? "" : "s"}. They are live in the shop now.`);
+  } catch (error) {
+    console.error("[admin] add new products", error);
+    return fail(explain(error, "Nothing was added. Try again."));
   }
 }
 

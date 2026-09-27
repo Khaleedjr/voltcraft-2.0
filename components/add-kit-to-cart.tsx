@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useCart } from "@/components/cart-context";
 import { Button } from "@/components/ui";
 
-export function AddKitToCart({ lines }: { lines: { slug: string; qty: number }[] }) {
+export function AddKitToCart({ lines }: { lines: { slug: string; variant?: string; qty: number }[] }) {
   const { add } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -18,7 +18,7 @@ export function AddKitToCart({ lines }: { lines: { slug: string; qty: number }[]
     <Button
       variant="live"
       onClick={() => {
-        lines.forEach((l) => add(l.slug, l.qty));
+        lines.forEach((l) => add({ slug: l.slug, variant: l.variant }, l.qty));
         setAdded(true);
       }}
     >

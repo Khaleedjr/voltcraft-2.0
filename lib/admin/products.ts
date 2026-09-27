@@ -1,7 +1,7 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { BUNDLED_PRODUCTS, PRODUCT_COLUMNS, type ProductRow } from "@/lib/catalogue-data";
-import type { CategorySlug, Spec, Variant } from "@/lib/catalogue";
+import type { CategorySlug, Product, Spec, Variant } from "@/lib/catalogue";
 import { cleanSearch, likePattern } from "@/lib/admin/search";
 import { db } from "@/lib/supabase";
 
@@ -352,6 +352,89 @@ export async function importBundledCatalogue(actor: string): Promise<number> {
   const { data, error } = await db().rpc("import_products", { p_products: BUNDLED_PRODUCTS, p_actor: actor });
   if (error) throw new Error(`could not import catalogue: ${error.message}`);
   return data as number;
+}
+
+/**
+ * Products that ship with the site but the database has never had: lines added
+ * to data/catalogue.json after the first import. A product in the trash still
+ * counts as had, so nothing archived comes back on its own.
+ */
+export async function missingBundledProducts(): Promise<Product[]> {
+  const slugs = new Set<string>();
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await db().from("products").select("slug").order("slug").range(from, from + 999);
+    if (error) throw new Error(`could not list product slugs: ${error.message}`);
+    for (const row of data) slugs.add(row.slug as string);
+    if (data.length < 1000) break;
+  }
+  return BUNDLED_PRODUCTS.filter((p) => !slugs.has(p.slug));
+}
+
+/**
+ * Add the missing bundled products at the end of the catalogue, live, in one
+ * insert: all of them or none. Counted stock gets its opening ledger entry,
+ * the same as the first import.
+ */
+export async function addMissingBundledProducts(actor: string): Promise<string[]> {
+  const missing = await missingBundledProducts();
+  if (missing.length === 0) return [];
+
+  const { data: last, error: posError } = await db()
+    .from("products")
+    .select("position")
+    .order("position", { ascending: false })
+    .limit(1)
+    .maybeSingle<{ position: number }>();
+  if (posError) throw new Error(`could not read catalogue order: ${posError.message}`);
+  const start = last?.position ?? 0;
+
+  const { data, error } = await db()
+    .from("products")
+    .insert(
+      missing.map((p, i) => ({
+        slug: p.slug,
+        name: p.name,
+        sku: p.sku ?? "",
+        woo_id: p.wooId || null,
+        status: "active",
+        categories: p.categories,
+        summary: p.summary ?? "",
+        description: p.description ?? [],
+        price: p.price,
+        compare_at: p.compareAt ?? null,
+        stock: p.stock,
+        in_stock: p.inStock,
+        specs: p.specs ?? [],
+        tags: p.tags ?? [],
+        images: p.images ?? [],
+        variants: p.variants?.length ? p.variants : null,
+        featured: p.featured ?? false,
+        position: start + i + 1,
+      })),
+    )
+    .select("id,slug,name,stock");
+  if (error) throw new Error(`could not add products: ${error.message}`);
+
+  const rows = data as { id: string; slug: string; name: string; stock: number | null }[];
+  const counted = rows.filter((r) => r.stock != null);
+  if (counted.length) {
+    const { error: ledgerError } = await db()
+      .from("stock_movements")
+      .insert(
+        counted.map((r) => ({
+          product_id: r.id,
+          product_slug: r.slug,
+          product_name: r.name,
+          delta: r.stock,
+          stock_after: r.stock,
+          reason: "initial",
+          note: "Added from the catalogue",
+          actor,
+        })),
+      );
+    if (ledgerError) console.error("[admin] opening stock entries", ledgerError);
+  }
+  return rows.map((r) => r.name);
 }
 
 // -------------------------------------------------------------------- photos

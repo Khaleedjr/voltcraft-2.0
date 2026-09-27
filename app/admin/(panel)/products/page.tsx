@@ -8,14 +8,20 @@ import { Thumb } from "@/components/admin/thumb";
 import { EmptyState, field, FilterTabs, LinkButton, Notice, PageHeader, Pagination, table } from "@/components/admin/ui";
 import { requireAdmin } from "@/lib/admin/auth";
 import { formatRelative } from "@/lib/admin/format";
-import { listProducts, PRODUCT_SORTS, type ProductListParams, type ProductSort } from "@/lib/admin/products";
+import {
+  listProducts,
+  missingBundledProducts,
+  PRODUCT_SORTS,
+  type ProductListParams,
+  type ProductSort,
+} from "@/lib/admin/products";
 import { cleanSearch } from "@/lib/admin/search";
 import { hrefWith, pageParam, param } from "@/lib/admin/url";
 import { getCategories, getCategory, isCategorySlug } from "@/lib/catalogue";
 import { BUNDLED_PRODUCTS, isCatalogueImported } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { isSupabaseConfigured } from "@/lib/supabase";
-import { changeProductStatus, importCatalogue } from "./actions";
+import { addNewCatalogueProducts, changeProductStatus, importCatalogue } from "./actions";
 
 export const metadata: Metadata = { title: "Products" };
 
@@ -46,6 +52,13 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
   const listParams: ProductListParams = { view, q, category, sort, page };
   const [list, imported] = await Promise.all([listProducts(listParams), isCatalogueImported()]);
   const { rows, counts } = list;
+  // Lines shipped with a site update after the first import.
+  const arrivals = imported ? await missingBundledProducts() : [];
+  const arrivalNames = arrivals.map((p) => p.name);
+  const arrivalList =
+    arrivalNames.length > 12
+      ? `${arrivalNames.slice(0, 12).join(", ")} and ${arrivalNames.length - 12} more`
+      : arrivalNames.join(", ");
 
   const bulkActions =
     view === "archived"
@@ -106,6 +119,31 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
           }
         >
           Until then the shop shows the built-in list, and there is nothing here to edit.
+        </Notice>
+      ) : null}
+
+      {arrivals.length ? (
+        <Notice
+          title={`${arrivals.length} new product${arrivals.length === 1 ? "" : "s"} came with the latest site update`}
+          action={
+            <ConfirmAction
+              action={addNewCatalogueProducts}
+              fields={{}}
+              tone="primary"
+              triggerVariant="primary"
+              size="md"
+              trigger={
+                <>
+                  <Icon.Plus className="size-4" /> Add to the shop
+                </>
+              }
+              title={`Add ${arrivals.length} product${arrivals.length === 1 ? "" : "s"}?`}
+              body={`They go live in the shop straight away, at the end of the catalogue: ${arrivalList}. Products you already have are not touched.`}
+              confirmLabel="Add them"
+            />
+          }
+        >
+          {arrivalList}.
         </Notice>
       ) : null}
 
