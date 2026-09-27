@@ -1830,20 +1830,35 @@
       "categories": [
         "accessories"
       ],
-      "summary": "PCB Universal Board Single Side Yellow 5*7CM,7 X 9Cm, PCB Board Prototype Perforated Grid Board Kit, for DIY Soldering",
-      "description": [],
+      "summary": "Perforated prototyping boards for soldering a circuit down once it works on the breadboard, in 7x5cm, 7x9cm and 9x15cm.",
+      "description": [
+        "Move a circuit off the breadboard and solder it in place, so it survives being carried around.",
+        "Standard 2.54mm hole spacing, so ICs, headers and modules fit straight in.",
+        "The 9x15cm board gives room for a full project: a microcontroller, its sensors and the power circuit on one board."
+      ],
       "price": 500,
       "inStock": true,
       "stock": null,
       "specs": [
         {
           "label": "Size",
-          "value": "7x9cm, 7x5cm"
+          "value": "7x5cm, 7x9cm, 9x15cm"
+        },
+        {
+          "label": "Hole pitch",
+          "value": "2.54mm"
         }
       ],
-      "tags": [],
+      "tags": [
+        "vero board",
+        "veroboard",
+        "perfboard",
+        "stripboard",
+        "prototype board"
+      ],
       "images": [
-        "https://voltcraft.org.ng/wp-content/uploads/2025/08/2X3-Inches-General-Purpose-Zero-PCB-Printed-Circuit-Board.jpg"
+        "https://voltcraft.org.ng/wp-content/uploads/2025/08/2X3-Inches-General-Purpose-Zero-PCB-Printed-Circuit-Board.jpg",
+        "/products/commons/stripboard.jpg"
       ],
       "variants": [
         {
@@ -1853,6 +1868,10 @@
         {
           "label": "7x9cm",
           "price": 700
+        },
+        {
+          "label": "9x15cm",
+          "price": 1900
         }
       ]
     },
@@ -3046,38 +3065,6 @@
           "label": "Female to Female",
           "price": 2800
         }
-      ]
-    },
-    {
-      "slug": "vero-board-9x5",
-      "name": "Vero Board 9x5",
-      "sku": "",
-      "wooId": "",
-      "categories": [
-        "accessories"
-      ],
-      "summary": "Prototyping board for soldering a circuit down once it works on the breadboard.",
-      "description": [
-        "Move a circuit off the breadboard and solder it in place, so it survives being carried around.",
-        "Standard 2.54mm hole spacing, so ICs, headers and modules fit straight in."
-      ],
-      "price": 1900,
-      "inStock": true,
-      "stock": null,
-      "specs": [
-        {
-          "label": "Hole pitch",
-          "value": "2.54mm"
-        }
-      ],
-      "tags": [
-        "veroboard",
-        "stripboard",
-        "perfboard",
-        "pcb"
-      ],
-      "images": [
-        "/products/commons/vero-board-9x5.jpg"
       ]
     },
     {
