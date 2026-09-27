@@ -22,7 +22,7 @@ export function AddKitToCart({ lines }: { lines: { slug: string; variant?: strin
         setAdded(true);
       }}
     >
-      {added ? `Added ${lines.length} items ✓` : "Add the whole kit to cart"}
+      {added ? `Added ${lines.length} parts ✓` : "Add kit to cart"}
     </Button>
   );
 }

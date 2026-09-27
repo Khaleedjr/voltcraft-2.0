@@ -9,7 +9,7 @@ export function Container({
   className?: string;
 }) {
   return (
-    <div className={`mx-auto w-full max-w-[1140px] px-4 sm:px-8 lg:px-12 ${className}`}>
+    <div className={`mx-auto w-full max-w-[1240px] px-4 sm:px-6 lg:px-10 ${className}`}>
       {children}
     </div>
   );
@@ -44,14 +44,16 @@ export function DimensionRule({ children }: { children: ReactNode }) {
 
 type ButtonVariant = "live" | "outline" | "underline" | "block";
 
+// Every control in the shop is a pill (the shape system is in globals.css,
+// under .vc-store), and each one presses in slightly when clicked.
 const buttonBase =
-  "inline-flex items-center justify-center gap-2 text-[0.9rem] font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap text-[0.9rem] font-semibold transition-[background-color,border-color,color,transform] duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:active:scale-100";
 
 const buttonVariants: Record<ButtonVariant, string> = {
-  live: "bg-gold px-6 py-3.5 text-live-ink hover:bg-gold-hover",
-  outline: "border border-ink px-6 py-3.5 text-ink hover:bg-ink hover:text-ground",
+  live: "rounded-full bg-gold px-6 py-3.5 text-live-ink hover:bg-gold-hover",
+  outline: "rounded-full border border-line bg-raised px-6 py-3.5 text-ink hover:border-ink",
   underline: "border-b border-ink px-1 py-2 text-ink hover:border-live hover:text-live",
-  block: "bg-ink px-6 py-3.5 text-ground hover:bg-gold hover:text-live-ink",
+  block: "rounded-full bg-ink px-6 py-3.5 text-ground hover:bg-gold hover:text-live-ink",
 };
 
 export function ButtonLink({
