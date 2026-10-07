@@ -3845,7 +3845,9 @@
         "audio",
         "esp32"
       ],
-      "images": []
+      "images": [
+        "/products/own/inmp441-i2s-microphone-module.jpg"
+      ]
     },
     {
       "slug": "arduino-uno-usb-cable",
@@ -3921,7 +3923,9 @@
         "temperature",
         "mxl90614"
       ],
-      "images": []
+      "images": [
+        "/products/own/mlx90614-infrared-temperature-sensor.jpg"
+      ]
     },
     {
       "slug": "dc-barrel-jack-pair",
@@ -3979,7 +3983,9 @@
         "terminal",
         "screw terminal"
       ],
-      "images": [],
+      "images": [
+        "/products/own/pcb-screw-terminal-block.jpg"
+      ],
       "variants": [
         {
           "label": "2-pin",
