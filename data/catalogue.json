@@ -1858,7 +1858,7 @@
       ],
       "images": [
         "https://voltcraft.org.ng/wp-content/uploads/2025/08/2X3-Inches-General-Purpose-Zero-PCB-Printed-Circuit-Board.jpg",
-        "/products/commons/stripboard.jpg"
+        "/products/own/pcb-board-9x15.jpg"
       ],
       "variants": [
         {
@@ -3329,7 +3329,9 @@
         "undervoltage",
         "xh-m609"
       ],
-      "images": []
+      "images": [
+        "/products/own/xh-m609-battery-protection-module.jpg"
+      ]
     },
     {
       "slug": "3s-2a-lithium-battery-charger",
@@ -3354,6 +3356,10 @@
         {
           "label": "Charge current",
           "value": "Up to 2A"
+        },
+        {
+          "label": "Input",
+          "value": "USB-C"
         }
       ],
       "tags": [
@@ -3361,7 +3367,9 @@
         "charger",
         "18650"
       ],
-      "images": []
+      "images": [
+        "/products/own/3s-2a-lithium-battery-charger.jpg"
+      ]
     },
     {
       "slug": "self-reset-push-button",
@@ -3390,7 +3398,9 @@
         "momentary",
         "tactile"
       ],
-      "images": []
+      "images": [
+        "/products/own/self-reset-push-button.jpg"
+      ]
     },
     {
       "slug": "irf520n-mosfet",
@@ -3792,7 +3802,9 @@
         "junction box",
         "case"
       ],
-      "images": [],
+      "images": [
+        "/products/own/adaptable-box.jpg"
+      ],
       "variants": [
         {
           "label": "10 × 10 × 10 cm",

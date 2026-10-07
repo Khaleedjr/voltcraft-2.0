@@ -355,7 +355,15 @@ export async function importBundledCatalogue(actor: string): Promise<number> {
 }
 
 /** Photos shipped with the site itself, as opposed to ones uploaded in the admin. */
-const isSitePhoto = (src: string) => src.startsWith("/products/");
+/**
+ * Photos that came with the site rather than from the admin: the bundled ones,
+ * and the old shop's media library the catalogue was first imported with.
+ * Admin uploads live in the storage bucket, so they never match.
+ */
+const isSitePhoto = (src: string) =>
+  src.startsWith("/products/") ||
+  src.startsWith("https://voltcraft.org.ng/wp-content/uploads/") ||
+  src.startsWith("https://www.voltcraft.org.ng/wp-content/uploads/");
 
 export type PhotoUpdate = { id: string; name: string; from: string[]; images: string[] };
 
@@ -388,13 +396,13 @@ export async function addBundledPhotos(): Promise<string[]> {
   const todo = await bundledPhotosToAdd();
   for (const p of todo) {
     // Only if the photos are still the ones read above, so a photo changed in
-    // the admin in the meantime wins. Site photo paths hold no commas, quotes
-    // or braces, so the array literal needs no escaping.
+    // the admin in the meantime wins. Each element is quoted, so a URL with a
+    // comma or space still makes a valid array literal.
     const { error } = await db()
       .from("products")
       .update({ images: p.images })
       .eq("id", p.id)
-      .eq("images", `{${p.from.join(",")}}`);
+      .eq("images", `{${p.from.map((src) => `"${src.replace(/["\\]/g, "\\$&")}"`).join(",")}}`);
     if (error) throw new Error(`could not update photos of ${p.name}: ${error.message}`);
   }
   return todo.map((p) => p.name);
