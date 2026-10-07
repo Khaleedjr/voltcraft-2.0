@@ -5,14 +5,14 @@ import { ProductImage } from "@/components/product-image";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink, Container, Section } from "@/components/ui";
 import { getCategories } from "@/lib/catalogue";
-import { getCategoryCounts, getCategoryThumbnails, getOnSale } from "@/lib/catalogue-data";
+import { getCategoryCounts, getCategoryThumbnails, getFeaturedSale } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
 export default async function HomePage() {
   const categories = getCategories();
   const [onSale, counts, thumbs] = await Promise.all([
-    getOnSale(8),
+    getFeaturedSale(),
     getCategoryCounts(),
     getCategoryThumbnails(),
   ]);
@@ -53,9 +53,9 @@ export default async function HomePage() {
       {/* ------------------------------------------------------ value strip */}
       <div className="border-y border-line bg-sheet">
         <Container>
-          <ul className="vc-fig grid gap-y-3 py-4 text-muted sm:grid-cols-3">
+          <ul className="vc-fig grid gap-y-1.5 py-2.5 text-muted sm:grid-cols-3">
             <li className="flex items-center gap-2">
-              <Tag /> Priced in naira, stocked in Kaduna
+              <Tag /> Fully stocked
             </li>
             <li className="flex items-center gap-2 sm:justify-center">
               <Truck /> Free delivery over {formatNaira(SITE.freeDeliveryThreshold)}

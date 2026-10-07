@@ -7,6 +7,7 @@ import {
   CATEGORY_SLUGS,
   discountPercent,
   isCategorySlug,
+  maxOrderable,
   primaryCategory,
   toLite,
   type CategorySlug,
@@ -195,12 +196,18 @@ export async function relatedProducts(product: Product, limit = 3): Promise<Prod
     .slice(0, limit);
 }
 
-/** Discounted lines, deepest cut first — the shop's strongest hook. */
-export async function getOnSale(limit = 8): Promise<Product[]> {
-  return (await getProducts())
-    .filter((p) => discountPercent(p) !== null && p.images.length)
-    .sort((a, b) => (discountPercent(b) ?? 0) - (discountPercent(a) ?? 0))
-    .slice(0, limit);
+/**
+ * The home page's sale row: one row of four, led by the microcontrollers
+ * (the shop's headline lines) and filled with the highest-value items on
+ * sale, so it reads as the deals worth having rather than the cheapest bits.
+ */
+export async function getFeaturedSale(limit = 4, leadWith: CategorySlug = "microcontrollers", leaders = 3): Promise<Product[]> {
+  const onSale = (await getProducts())
+    .filter((p) => discountPercent(p) !== null && p.images.length && maxOrderable(p) > 0)
+    .sort((a, b) => b.price - a.price);
+  const lead = onSale.filter((p) => primaryCategory(p) === leadWith).slice(0, leaders);
+  const rest = onSale.filter((p) => !lead.includes(p));
+  return [...lead, ...rest].slice(0, limit);
 }
 
 /** One photographed product per aisle, for the category tiles. */

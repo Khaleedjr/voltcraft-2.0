@@ -20,6 +20,13 @@ const SECONDARY_NAV = [
   { href: "/delivery", label: "Delivery & returns" },
 ] as const;
 
+/** The mobile menu, in alphabetical order. 3D printing is its own site. */
+const MOBILE_NAV = [
+  { href: SITE.printingUrl, label: "3D printing", external: true },
+  ...SECONDARY_NAV.map((item) => ({ ...item, external: false })),
+  { href: "/shop", label: "Shop", external: false },
+].sort((a, b) => a.label.localeCompare(b.label));
+
 export function SiteHeader() {
   const pathname = usePathname();
   const router = useRouter();
@@ -152,26 +159,23 @@ export function SiteHeader() {
             </button>
           </form>
           <nav className="flex flex-col">
-            <Link href="/shop" className="border-b border-line py-3 text-[0.95rem] font-medium text-ink">
-              Shop
-            </Link>
-            {SECONDARY_NAV.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="border-b border-line py-3 text-[0.95rem] text-muted"
-              >
-                {item.label}
-              </Link>
-            ))}
-            <a
-              href={SITE.printingUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="border-b border-line py-3 text-[0.95rem] text-muted"
-            >
-              3D printing
-            </a>
+            {MOBILE_NAV.map((item) =>
+              item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="border-b border-line py-3 text-[0.95rem] text-ink"
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link key={item.href} href={item.href} className="border-b border-line py-3 text-[0.95rem] text-ink">
+                  {item.label}
+                </Link>
+              ),
+            )}
             <a
               href={SITE.whatsapp}
               target="_blank"
