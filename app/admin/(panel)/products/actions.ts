@@ -12,6 +12,7 @@ import {
   IMAGE_MAX_BYTES,
   IMAGE_TYPES,
   imageBucketUrl,
+  addBundledPhotos,
   addMissingBundledProducts,
   importBundledCatalogue,
   isSlugTaken,
@@ -37,6 +38,8 @@ const SITE_IMAGES = [
   "https://www.voltcraft.org.ng/wp-content/uploads/",
   // openly licensed photos bundled with the site, credited via data/image-credits.json
   "/products/commons/",
+  // the shop's own photos, bundled with the site
+  "/products/own/",
 ];
 
 function imagePrefixes(): string[] {
@@ -184,6 +187,20 @@ export async function addNewCatalogueProducts(): Promise<ActionResult> {
   } catch (error) {
     console.error("[admin] add new products", error);
     return fail(explain(error, "Nothing was added. Try again."));
+  }
+}
+
+export async function addNewCataloguePhotos(): Promise<ActionResult> {
+  await requireAdmin();
+  if (!isSupabaseConfigured()) return noDatabase();
+  try {
+    const names = await addBundledPhotos();
+    updateTag(PRODUCTS_TAG);
+    if (names.length === 0) return done("Nothing to add. Every product with a new photo already has one.");
+    return done(`Added photos to ${names.length} product${names.length === 1 ? "" : "s"}. They show in the shop now.`);
+  } catch (error) {
+    console.error("[admin] add photos", error);
+    return fail(explain(error, "No photos were added. Try again."));
   }
 }
 

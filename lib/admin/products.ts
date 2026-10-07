@@ -355,6 +355,37 @@ export async function importBundledCatalogue(actor: string): Promise<number> {
 }
 
 /**
+ * Products the database already has with no photo at all, for which the site
+ * now ships one. Only empty galleries count: a photo chosen in the admin is
+ * never replaced.
+ */
+export async function bundledPhotosToAdd(): Promise<{ id: string; name: string; images: string[] }[]> {
+  const bundled = new Map(BUNDLED_PRODUCTS.filter((p) => p.images.length).map((p) => [p.slug, p.images]));
+  const found: { id: string; name: string; images: string[] }[] = [];
+  for (let from = 0; ; from += 1000) {
+    const { data, error } = await db().from("products").select("id,slug,name,images").order("slug").range(from, from + 999);
+    if (error) throw new Error(`could not list product photos: ${error.message}`);
+    for (const row of data as { id: string; slug: string; name: string; images: string[] | null }[]) {
+      const images = bundled.get(row.slug);
+      if (images && !(row.images ?? []).length) found.push({ id: row.id, name: row.name, images });
+    }
+    if (data.length < 1000) break;
+  }
+  return found;
+}
+
+/** Give each product in bundledPhotosToAdd its photos. Returns their names. */
+export async function addBundledPhotos(): Promise<string[]> {
+  const todo = await bundledPhotosToAdd();
+  for (const p of todo) {
+    // Re-checked in the update itself, so a photo added in the meantime wins.
+    const { error } = await db().from("products").update({ images: p.images }).eq("id", p.id).eq("images", "{}");
+    if (error) throw new Error(`could not add photos to ${p.name}: ${error.message}`);
+  }
+  return todo.map((p) => p.name);
+}
+
+/**
  * Products that ship with the site but the database has never had: lines added
  * to data/catalogue.json after the first import. A product in the trash still
  * counts as had, so nothing archived comes back on its own.

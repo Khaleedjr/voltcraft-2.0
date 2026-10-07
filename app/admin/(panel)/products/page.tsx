@@ -9,6 +9,7 @@ import { EmptyState, field, FilterTabs, LinkButton, Notice, PageHeader, Paginati
 import { requireAdmin } from "@/lib/admin/auth";
 import { formatRelative } from "@/lib/admin/format";
 import {
+  bundledPhotosToAdd,
   listProducts,
   missingBundledProducts,
   PRODUCT_SORTS,
@@ -21,7 +22,7 @@ import { getCategories, getCategory, isCategorySlug } from "@/lib/catalogue";
 import { BUNDLED_PRODUCTS, isCatalogueImported } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { isSupabaseConfigured } from "@/lib/supabase";
-import { addNewCatalogueProducts, changeProductStatus, importCatalogue } from "./actions";
+import { addNewCatalogueProducts, addNewCataloguePhotos, changeProductStatus, importCatalogue } from "./actions";
 
 export const metadata: Metadata = { title: "Products" };
 
@@ -53,7 +54,8 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
   const [list, imported] = await Promise.all([listProducts(listParams), isCatalogueImported()]);
   const { rows, counts } = list;
   // Lines shipped with a site update after the first import.
-  const arrivals = imported ? await missingBundledProducts() : [];
+  const [arrivals, photos] = imported ? await Promise.all([missingBundledProducts(), bundledPhotosToAdd()]) : [[], []];
+  const photoList = photos.map((p) => p.name).join(", ");
   const arrivalNames = arrivals.map((p) => p.name);
   const arrivalList =
     arrivalNames.length > 12
@@ -144,6 +146,31 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
           }
         >
           {arrivalList}.
+        </Notice>
+      ) : null}
+
+      {photos.length ? (
+        <Notice
+          title={`New photos for ${photos.length} product${photos.length === 1 ? "" : "s"} came with the latest site update`}
+          action={
+            <ConfirmAction
+              action={addNewCataloguePhotos}
+              fields={{}}
+              tone="primary"
+              triggerVariant="primary"
+              size="md"
+              trigger={
+                <>
+                  <Icon.Plus className="size-4" /> Add the photos
+                </>
+              }
+              title={`Add photos to ${photos.length} product${photos.length === 1 ? "" : "s"}?`}
+              body={`Only products with no photo yet get one: ${photoList}. Photos you have set yourself are not touched.`}
+              confirmLabel="Add photos"
+            />
+          }
+        >
+          {photoList}.
         </Notice>
       ) : null}
 

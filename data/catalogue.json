@@ -3177,7 +3177,9 @@
         "micro sd",
         "data logger"
       ],
-      "images": [],
+      "images": [
+        "/products/own/sd-card-module-mini.jpg"
+      ],
       "variants": [
         {
           "label": "Mini (micro SD)",
@@ -3215,7 +3217,9 @@
         "led",
         "traffic light"
       ],
-      "images": []
+      "images": [
+        "/products/own/traffic-light-led-module.jpg"
+      ]
     },
     {
       "slug": "tcrt5000-line-tracking-sensor",
@@ -3248,7 +3252,9 @@
         "infrared",
         "ir"
       ],
-      "images": []
+      "images": [
+        "/products/own/tcrt5000-line-tracking-sensor.jpg"
+      ]
     },
     {
       "slug": "ds18b20-temperature-sensor",
