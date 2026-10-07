@@ -3050,7 +3050,7 @@
         "jumper cables"
       ],
       "images": [
-        "/products/commons/jumper-wires-pack-of-40.jpg"
+        "/products/own/jumper-wires-pack-of-40.jpg"
       ],
       "variants": [
         {
@@ -3295,7 +3295,7 @@
         "temperature"
       ],
       "images": [
-        "/products/commons/ds18b20-temperature-sensor.jpg"
+        "/products/own/ds18b20-temperature-sensor.jpg"
       ]
     },
     {
@@ -3954,7 +3954,8 @@
         "power connector"
       ],
       "images": [
-        "/products/commons/dc-barrel-jack-pair.jpg"
+        "/products/own/dc-barrel-jack-female.jpg",
+        "/products/own/dc-barrel-jack-male.jpg"
       ]
     },
     {

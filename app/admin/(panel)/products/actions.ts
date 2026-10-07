@@ -196,11 +196,11 @@ export async function addNewCataloguePhotos(): Promise<ActionResult> {
   try {
     const names = await addBundledPhotos();
     updateTag(PRODUCTS_TAG);
-    if (names.length === 0) return done("Nothing to add. Every product with a new photo already has one.");
-    return done(`Added photos to ${names.length} product${names.length === 1 ? "" : "s"}. They show in the shop now.`);
+    if (names.length === 0) return done("Nothing to update. Every product already has its latest photos.");
+    return done(`Updated photos on ${names.length} product${names.length === 1 ? "" : "s"}. They show in the shop now.`);
   } catch (error) {
     console.error("[admin] add photos", error);
-    return fail(explain(error, "No photos were added. Try again."));
+    return fail(explain(error, "No photos were changed. Try again."));
   }
 }
 

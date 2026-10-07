@@ -354,33 +354,48 @@ export async function importBundledCatalogue(actor: string): Promise<number> {
   return data as number;
 }
 
+/** Photos shipped with the site itself, as opposed to ones uploaded in the admin. */
+const isSitePhoto = (src: string) => src.startsWith("/products/");
+
+export type PhotoUpdate = { id: string; name: string; from: string[]; images: string[] };
+
 /**
- * Products the database already has with no photo at all, for which the site
- * now ships one. Only empty galleries count: a photo chosen in the admin is
- * never replaced.
+ * Products in the database whose photos the latest site update improves on:
+ * those with no photo at all, and those still showing an older photo the site
+ * shipped, now replaced. A product with any photo uploaded in the admin is
+ * never touched.
  */
-export async function bundledPhotosToAdd(): Promise<{ id: string; name: string; images: string[] }[]> {
+export async function bundledPhotosToAdd(): Promise<PhotoUpdate[]> {
   const bundled = new Map(BUNDLED_PRODUCTS.filter((p) => p.images.length).map((p) => [p.slug, p.images]));
-  const found: { id: string; name: string; images: string[] }[] = [];
+  const found: PhotoUpdate[] = [];
   for (let from = 0; ; from += 1000) {
     const { data, error } = await db().from("products").select("id,slug,name,images").order("slug").range(from, from + 999);
     if (error) throw new Error(`could not list product photos: ${error.message}`);
     for (const row of data as { id: string; slug: string; name: string; images: string[] | null }[]) {
       const images = bundled.get(row.slug);
-      if (images && !(row.images ?? []).length) found.push({ id: row.id, name: row.name, images });
+      const current = row.images ?? [];
+      if (!images || !current.every(isSitePhoto)) continue;
+      if (current.length === images.length && current.every((src, i) => src === images[i])) continue;
+      found.push({ id: row.id, name: row.name, from: current, images });
     }
     if (data.length < 1000) break;
   }
   return found;
 }
 
-/** Give each product in bundledPhotosToAdd its photos. Returns their names. */
+/** Apply bundledPhotosToAdd. Returns the names of the products updated. */
 export async function addBundledPhotos(): Promise<string[]> {
   const todo = await bundledPhotosToAdd();
   for (const p of todo) {
-    // Re-checked in the update itself, so a photo added in the meantime wins.
-    const { error } = await db().from("products").update({ images: p.images }).eq("id", p.id).eq("images", "{}");
-    if (error) throw new Error(`could not add photos to ${p.name}: ${error.message}`);
+    // Only if the photos are still the ones read above, so a photo changed in
+    // the admin in the meantime wins. Site photo paths hold no commas, quotes
+    // or braces, so the array literal needs no escaping.
+    const { error } = await db()
+      .from("products")
+      .update({ images: p.images })
+      .eq("id", p.id)
+      .eq("images", `{${p.from.join(",")}}`);
+    if (error) throw new Error(`could not update photos of ${p.name}: ${error.message}`);
   }
   return todo.map((p) => p.name);
 }

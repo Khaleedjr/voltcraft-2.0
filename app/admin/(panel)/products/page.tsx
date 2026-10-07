@@ -161,12 +161,12 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
               size="md"
               trigger={
                 <>
-                  <Icon.Plus className="size-4" /> Add the photos
+                  <Icon.Plus className="size-4" /> Update the photos
                 </>
               }
-              title={`Add photos to ${photos.length} product${photos.length === 1 ? "" : "s"}?`}
-              body={`Only products with no photo yet get one: ${photoList}. Photos you have set yourself are not touched.`}
-              confirmLabel="Add photos"
+              title={`Update photos on ${photos.length} product${photos.length === 1 ? "" : "s"}?`}
+              body={`${photoList} get the photos that came with the site. Any photo you have uploaded yourself is not touched.`}
+              confirmLabel="Update photos"
             />
           }
         >
