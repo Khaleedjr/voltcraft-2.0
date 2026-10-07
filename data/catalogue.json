@@ -3739,13 +3739,13 @@
     },
     {
       "slug": "10k-linear-potentiometer-with-knob",
-      "name": "10kΩ Linear Potentiometer with Knob",
+      "name": "10kΩ Linear Potentiometer",
       "sku": "",
       "wooId": "",
       "categories": [
         "accessories"
       ],
-      "summary": "Rotary 10kΩ potentiometer with a linear (B) taper, with a knob.",
+      "summary": "Rotary 10kΩ potentiometer with a linear (B) taper.",
       "description": [
         "Turn it to set brightness, speed, volume or a menu value, and read the position on an analogue pin.",
         "Wire the outer pins to 5V and GND, and the middle pin to the analogue input."
@@ -3761,10 +3761,6 @@
         {
           "label": "Taper",
           "value": "Linear (B)"
-        },
-        {
-          "label": "Knob",
-          "value": "Included"
         }
       ],
       "tags": [
