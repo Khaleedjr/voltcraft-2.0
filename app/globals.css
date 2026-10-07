@@ -336,203 +336,156 @@
   .vc-wash-block {
     background: radial-gradient(60% 120% at 88% 10%, var(--vc-glow-live), transparent 55%);
   }
-}
 
-/* ------------------------------------------------------------- the workshop
-   The hero figure prints a robot on an 11s cycle, all on one clock: the panel
-   over the model lifts and the gantry climbs together (0-64%), the finished
-   robot wakes (64-84%), the print clears (84-88%) and the gantry homes
-   (88-100%). The hotend's sweep and the arm run on their own shorter clocks,
-   so the scene never loops in lockstep. CSS transforms on SVG take user units
-   as px, and every origin is given in the drawing's own coordinates. */
-.vc-print-cover,
-.vc-print-gantry,
-.vc-print-x,
-.vc-print-progress,
-.vc-arm-shoulder,
-.vc-arm-elbow,
-.vc-jaw {
-  transform-box: view-box;
-}
-.vc-print-cover {
-  transform-origin: 0 228px;
-  animation: vc-print-reveal 11s linear infinite;
-}
-@keyframes vc-print-reveal {
-  0% {
-    transform: scaleY(1);
+  /* --- the aisle index ---------------------------------------------------
+     Small screens and touch: rows divided by hairlines, a photo beside each
+     name. With a pointer and room: the names set large and flowing like an
+     index, a gold slash between them; hovering one lifts a photo off the line
+     and dims the rest. */
+  .vc-aisles {
+    border-top: 1px solid var(--vc-line);
   }
-  64%,
-  100% {
-    transform: scaleY(0);
+  .vc-aisle-item {
+    border-bottom: 1px solid var(--vc-line);
   }
-}
-.vc-print-gantry {
-  animation: vc-print-z 11s linear infinite;
-}
-@keyframes vc-print-z {
-  0% {
-    transform: translateY(0);
+  .vc-aisle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem 0;
   }
-  64% {
-    transform: translateY(-160px);
+  .vc-aisle-thumb {
+    width: 3.25rem;
+    flex: none;
   }
-  /* done: the head lifts clear of the print before it homes */
-  68%,
-  88% {
-    transform: translateY(-176px);
+  .vc-aisle-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    background: linear-gradient(var(--vc-gold), var(--vc-gold)) 0 92% / 0 0.09em no-repeat;
+    transition:
+      color 0.2s ease,
+      background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  100% {
-    transform: translateY(0);
+  .vc-aisle-count {
+    align-self: flex-start;
+    margin-top: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--vc-faint);
   }
-}
-.vc-print-x {
-  animation: vc-print-sweep 1.15s ease-in-out infinite alternate;
-}
-@keyframes vc-print-sweep {
-  from {
-    transform: translateX(-56px);
+  .vc-aisle-arrow {
+    margin-left: auto;
+    color: var(--vc-muted);
   }
-  to {
-    transform: translateX(56px);
+  .vc-aisle-pop {
+    display: none;
   }
-}
-.vc-print-model {
-  animation: vc-print-clear 11s linear infinite;
-}
-@keyframes vc-print-clear {
-  0%,
-  84% {
-    opacity: 1;
+  .vc-aisle:hover .vc-aisle-name,
+  .vc-aisle:focus-visible .vc-aisle-name {
+    color: var(--vc-live);
+    background-size: 100% 0.09em;
   }
-  88%,
-  100% {
-    opacity: 0;
+
+  @media (hover: hover) and (min-width: 768px) {
+    .vc-aisles {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      row-gap: 0.12em;
+      border: 0;
+      font-size: clamp(2.3rem, 4.6vw, 4.1rem);
+    }
+    .vc-aisle-item {
+      display: flex;
+      align-items: baseline;
+      border: 0;
+    }
+    .vc-aisle-item:not(:last-child)::after {
+      content: "/";
+      margin: 0 0.32em 0 0.28em;
+      font-family: var(--font-display);
+      font-weight: 300;
+      color: var(--vc-gold);
+    }
+    .vc-aisle {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0;
+      padding: 0;
+      transition: opacity 0.25s ease;
+    }
+    .vc-aisle-thumb,
+    .vc-aisle-arrow {
+      display: none;
+    }
+    .vc-aisle-name {
+      font-size: 1em;
+    }
+    .vc-aisle-count {
+      margin: 0.3em 0 0 0.25em;
+      font-size: 0.2em;
+    }
+    .vc-aisles:has(.vc-aisle:hover) .vc-aisle:not(:hover) {
+      opacity: 0.28;
+    }
+    .vc-aisle-pop {
+      display: block;
+      position: absolute;
+      z-index: 20;
+      left: 50%;
+      bottom: 88%;
+      width: 10.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 14px) rotate(-6deg) scale(0.9);
+      transition:
+        opacity 0.2s ease,
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 18px 26px rgba(var(--vc-shadow), 0.28));
+    }
+    .vc-aisle:hover .vc-aisle-pop,
+    .vc-aisle:focus-visible .vc-aisle-pop {
+      opacity: 1;
+      transform: translate(-50%, 0) rotate(-3deg) scale(1);
+    }
   }
-}
-.vc-print-progress {
-  transform-origin: 78px 0;
-  animation: vc-print-progress 11s linear infinite;
-}
-@keyframes vc-print-progress {
-  0% {
-    transform: scaleX(0);
+
+  /* --- the sale ticker ----------------------------------------------------
+     Two identical runs side by side, slid left by one run's width, so the
+     loop has no seam. It pauses under the pointer so a link can be taken. */
+  .vc-ticker {
+    overflow: hidden;
   }
-  64%,
-  88% {
-    transform: scaleX(1);
+  .vc-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: vc-ticker 42s linear infinite;
   }
-  100% {
-    transform: scaleX(0);
+  .vc-ticker:hover .vc-ticker-track {
+    animation-play-state: paused;
   }
-}
-/* the finished robot opens its eyes, blinks once, and its antenna lights */
-.vc-bot-eye,
-.vc-bot-led {
-  animation: vc-bot-wake 11s steps(1, end) infinite;
-}
-@keyframes vc-bot-wake {
-  0% {
-    fill: var(--vc-sheet);
-  }
-  66% {
-    fill: var(--vc-gold);
-  }
-  74% {
-    fill: var(--vc-sheet);
-  }
-  75% {
-    fill: var(--vc-gold);
-  }
-  86%,
-  100% {
-    fill: var(--vc-sheet);
-  }
-}
-.vc-print-status {
-  animation: vc-print-status 1.1s steps(1, end) infinite;
-}
-@keyframes vc-print-status {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.25;
-  }
-}
-.vc-nozzle-glow {
-  animation: vc-nozzle 1.4s ease-in-out infinite;
-}
-@keyframes vc-nozzle {
-  0%,
-  100% {
-    opacity: 0.35;
-  }
-  50% {
-    opacity: 0.9;
-  }
-}
-.vc-spool {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: vc-spool 9s linear infinite;
-}
-@keyframes vc-spool {
-  to {
-    transform: rotate(-360deg);
-  }
-}
-/* the arm idles: shoulder and elbow on unrelated periods, the gripper working */
-.vc-arm-shoulder {
-  transform-origin: 525px 410px;
-  animation: vc-arm-shoulder 5.2s ease-in-out infinite alternate;
-}
-@keyframes vc-arm-shoulder {
-  from {
-    transform: rotate(-6deg);
-  }
-  to {
-    transform: rotate(5deg);
-  }
-}
-.vc-arm-elbow {
-  transform-origin: 525px 296px;
-  animation: vc-arm-elbow 3.7s ease-in-out infinite alternate;
-}
-@keyframes vc-arm-elbow {
-  from {
-    transform: rotate(9deg);
-  }
-  to {
-    transform: rotate(-11deg);
-  }
-}
-.vc-jaw-a {
-  transform-origin: 436px 289px;
-  animation: vc-jaw-a 1.8s ease-in-out infinite alternate;
-}
-.vc-jaw-b {
-  transform-origin: 436px 303px;
-  animation: vc-jaw-b 1.8s ease-in-out infinite alternate;
-}
-@keyframes vc-jaw-a {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(14deg);
-  }
-}
-@keyframes vc-jaw-b {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(-14deg);
+  .vc-ticker-run {
+    display: flex;
+    gap: 2.5rem;
+    padding: 0.7rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
   }
 }
 
-/* Parts of the board are doors into the aisles. The hit rect is filled
+@keyframes vc-ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Parts of a hero drawing are doors into the aisles. The hit rect is filled
    transparent, not none — `none` takes no pointer events, so an outlined part
    would only be clickable along its own strokes. */
 .vc-part {
@@ -568,9 +521,6 @@
   stroke-dasharray: 5 3;
 }
 
-.vc-workshop:hover .vc-print-x {
-  animation-duration: 0.6s;
-}
 
 
 @media (prefers-reduced-motion: reduce) {
@@ -589,24 +539,16 @@
   .group:hover .vc-frame-img {
     transform: none !important;
   }
-  /* the blanket rule above only makes an infinite animation fast, which would
-     leave the scene frozen at a random frame; stop it and hold the finished
-     print instead: model revealed, gantry up, eyes lit */
-  .vc-workshop * {
+  /* the ticker stands still; it wraps instead so every deal is still there */
+  .vc-ticker-track {
     animation: none !important;
+    width: auto;
   }
-  .vc-print-cover {
-    transform: scaleY(0);
+  .vc-ticker-run {
+    flex-wrap: wrap;
   }
-  .vc-print-gantry {
-    transform: translateY(-176px);
-  }
-  .vc-print-progress {
-    transform: scaleX(1);
-  }
-  .vc-bot-eye,
-  .vc-bot-led {
-    fill: var(--vc-gold);
+  .vc-ticker-run[aria-hidden] {
+    display: none;
   }
 }
 
