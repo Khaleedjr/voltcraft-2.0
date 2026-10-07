@@ -3178,7 +3178,8 @@
         "data logger"
       ],
       "images": [
-        "/products/own/sd-card-module-mini.jpg"
+        "/products/own/sd-card-module-mini.jpg",
+        "/products/own/sd-card-module-large.jpg"
       ],
       "variants": [
         {
@@ -3772,7 +3773,7 @@
         "10k"
       ],
       "images": [
-        "/products/commons/10k-linear-potentiometer-with-knob.jpg"
+        "/products/own/10k-linear-potentiometer-with-knob.jpg"
       ]
     },
     {
