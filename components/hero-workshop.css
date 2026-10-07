@@ -1,0 +1,406 @@
+/* ------------------------------------------------------------- the workshop
+   The hero figure (components/hero-workshop.tsx) on one 12s clock:
+
+     0-3%    the head comes in from where it parks
+     3-36%   the print: the bed drops 114 units, a layer at a time, while the
+             head races over each layer and the fresh layer glows (4s)
+     36-46%  the head parks, the bed lowers to the floor of the chamber
+     46-52%  the door swings open
+     51-56%  the robot wakes, eyes then antenna
+     56-90%  it steps toward us, hops down to the floor, walks off and waves
+     85-91%  the door shuts; 92-100% the bed comes back up
+
+   CSS transforms on SVG take user units as px, and every origin is in the
+   drawing's coordinates. The head's passes, the walk and the wave at the
+   bottom are generated, step by step, rather than written by hand. */
+
+.vc-workshop {
+  --vc-ws: 12s;
+  /* the machine is dark in either theme, as the real ones are */
+  --ws-body: #25272b;
+  --ws-side: #191a1d;
+  --ws-top: #303237;
+  --ws-edge: #131417;
+  --ws-edge-hi: #4c4f55;
+  --ws-flange: #3a3d42;
+  --ws-mark: #9a9ea6;
+  /* the robot, printed in the brand gold, face and chest in a dark second colour */
+  --ws-pla: #f2b04a;
+  --ws-pla-edge: #b37a25;
+  --ws-pla-line: rgba(140, 90, 20, 0.32);
+  --ws-face: #2b2419;
+  --ws-eye-off: #5a4a30;
+  --ws-eye-on: #fff1cf;
+}
+/* on the dark sheet, a lit edge keeps the dark machine from sinking into it */
+[data-theme="dark"] .vc-workshop {
+  --ws-edge: #4a4d53;
+  --ws-side: #1f2023;
+}
+
+.vc-workshop .vc-bed,
+.vc-workshop .vc-print-x,
+.vc-workshop .vc-print-heat,
+.vc-workshop .vc-print-progress,
+.vc-workshop .vc-door,
+.vc-workshop .vc-door-open,
+.vc-workshop .vc-bot,
+.vc-workshop .vc-bot-leg-l,
+.vc-workshop .vc-bot-leg-r {
+  transform-box: view-box;
+}
+/* only the printer is a link; what is drawn over it lets the pointer through */
+.vc-workshop > :not(.vc-part) {
+  pointer-events: none;
+}
+
+/* The printer is a door to the print service. The hit rect is filled
+   transparent, not none, which would take no pointer events. */
+.vc-part {
+  cursor: pointer;
+}
+.vc-hit {
+  fill: transparent;
+}
+.vc-part-body {
+  transition: filter 0.16s ease;
+}
+.vc-part:hover .vc-part-body,
+.vc-part:focus-visible .vc-part-body {
+  filter: drop-shadow(0 0 6px var(--vc-gold)) drop-shadow(0 0 1.5px var(--vc-gold));
+}
+.vc-tip {
+  opacity: 0;
+  transition: opacity 0.16s ease;
+}
+.vc-workshop:has(.vc-part:hover) .vc-tip,
+.vc-workshop:has(.vc-part:focus-visible) .vc-tip {
+  opacity: 1;
+}
+/* the glow alone is not a focus indicator, so keyboard focus also rings it */
+.vc-part:focus {
+  outline: none;
+}
+.vc-part:focus-visible .vc-hit {
+  stroke: var(--vc-live);
+  stroke-width: 2;
+  stroke-dasharray: 5 3;
+}
+
+/* the bed: down a layer at a time while it prints, then to the floor */
+.vc-bed {
+  animation: vc-ws-bed var(--vc-ws) infinite;
+}
+@keyframes vc-ws-bed {
+  0%, 3% { transform: translateY(0); animation-timing-function: linear; }
+  36%, 40% { transform: translateY(113.76px); animation-timing-function: ease-in-out; }
+  46%, 92% { transform: translateY(159px); animation-timing-function: ease-in-out; }
+  100% { transform: translateY(0); }
+}
+
+/* the fresh layer stays at the nozzle while the robot drops past it */
+.vc-print-heat {
+  animation: vc-ws-heat var(--vc-ws) linear infinite;
+}
+@keyframes vc-ws-heat {
+  0% { transform: translateY(0); opacity: 0; }
+  3% { transform: translateY(0); opacity: 1; }
+  36% { transform: translateY(-158px); opacity: 1; }
+  39%, 100% { transform: translateY(-158px); opacity: 0; }
+}
+
+.vc-print-x {
+  animation: vc-ws-sweep var(--vc-ws) ease-in-out infinite;
+}
+
+.vc-nozzle-glow {
+  animation: vc-ws-nozzle var(--vc-ws) linear infinite;
+}
+@keyframes vc-ws-nozzle {
+  0%, 2% { opacity: 0; }
+  3%, 36% { opacity: 0.9; }
+  38%, 100% { opacity: 0; }
+}
+.vc-tool-led {
+  animation: vc-ws-tool-led var(--vc-ws) steps(1, end) infinite;
+}
+@keyframes vc-ws-tool-led {
+  0% { opacity: 0.35; }
+  3% { opacity: 1; }
+  36%, 100% { opacity: 0.35; }
+}
+
+.vc-print-progress {
+  transform-origin: 113px 0;
+  animation: vc-ws-progress var(--vc-ws) linear infinite;
+}
+@keyframes vc-ws-progress {
+  0%, 3% { transform: scaleX(0); }
+  36%, 92% { transform: scaleX(1); }
+  94%, 100% { transform: scaleX(0); }
+}
+
+.vc-print-status {
+  animation: vc-ws-status 0.8s steps(1, end) infinite;
+}
+@keyframes vc-ws-status {
+  0% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+/* the gold spool feeds the print */
+.vc-spool {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vc-ws-spool var(--vc-ws) linear infinite;
+}
+@keyframes vc-ws-spool {
+  0%, 3% { transform: rotate(0deg); }
+  36%, 100% { transform: rotate(-720deg); }
+}
+
+/* the door: the glass folds to its hinge, then shows edge on, and back */
+.vc-door {
+  transform-origin: 96px 0;
+  animation: vc-ws-door var(--vc-ws) infinite;
+}
+@keyframes vc-ws-door {
+  0%, 46% { transform: scaleX(1); opacity: 1; animation-timing-function: ease-in; }
+  49.5% { transform: scaleX(0); opacity: 0; }
+  87% { transform: scaleX(0); opacity: 0; animation-timing-function: ease-out; }
+  91%, 100% { transform: scaleX(1); opacity: 1; }
+}
+.vc-door-open {
+  transform-origin: 96px 0;
+  animation: vc-ws-door-open var(--vc-ws) infinite;
+}
+@keyframes vc-ws-door-open {
+  0%, 49.5% { transform: scaleX(0); opacity: 0; animation-timing-function: ease-out; }
+  51.5% { transform: scaleX(1); opacity: 1; }
+  85% { transform: scaleX(1); opacity: 1; animation-timing-function: ease-in; }
+  87%, 100% { transform: scaleX(0); opacity: 0; }
+}
+
+/* the robot wakes: eyes, a blink, then the antenna */
+.vc-bot-eye {
+  animation: vc-ws-eyes var(--vc-ws) steps(1, end) infinite;
+}
+@keyframes vc-ws-eyes {
+  0% { fill: var(--ws-eye-off); }
+  51% { fill: var(--ws-eye-on); }
+  52.5% { fill: var(--ws-eye-off); }
+  53.2% { fill: var(--ws-eye-on); }
+  91%, 100% { fill: var(--ws-eye-off); }
+}
+.vc-bot-led {
+  animation: vc-ws-led var(--vc-ws) steps(1, end) infinite;
+}
+@keyframes vc-ws-led {
+  0% { fill: var(--ws-pla); }
+  53.5% { fill: var(--ws-eye-on); }
+  91%, 100% { fill: var(--ws-pla); }
+}
+.vc-bot-spark {
+  opacity: 0;
+  animation: vc-ws-spark var(--vc-ws) linear infinite;
+}
+@keyframes vc-ws-spark {
+  0%, 53.4% { opacity: 0; }
+  53.5%, 55% { opacity: 1; }
+  56.5%, 100% { opacity: 0; }
+}
+
+.vc-ws-dust {
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center bottom;
+  animation: vc-ws-dust var(--vc-ws) ease-out infinite;
+}
+@keyframes vc-ws-dust {
+  0%, 63.8% { opacity: 0; transform: scale(0.6); }
+  64.2% { opacity: 0.9; transform: scale(1); }
+  67%, 100% { opacity: 0; transform: scale(1.5); }
+}
+
+.vc-bot {
+  animation:
+    vc-ws-bot var(--vc-ws) linear infinite,
+    vc-ws-gone var(--vc-ws) linear infinite;
+}
+@keyframes vc-ws-gone {
+  0%, 88% { opacity: 1; }
+  90.5%, 100% { opacity: 0; }
+}
+.vc-bot-leg-l {
+  animation: vc-ws-leg-l var(--vc-ws) linear infinite;
+}
+.vc-bot-leg-r {
+  animation: vc-ws-leg-r var(--vc-ws) linear infinite;
+}
+.vc-bot-wave {
+  transform-box: fill-box;
+  transform-origin: 50% 10%;
+  animation: vc-ws-wave var(--vc-ws) ease-in-out infinite;
+}
+
+/* Reduced motion: the blanket rule in globals only makes an infinite
+   animation fast, which would freeze the scene at a random frame. Stop it
+   and hold the end of the print instead: the robot on the bed, awake, the
+   head parked, the door shut. */
+@media (prefers-reduced-motion: reduce) {
+  .vc-workshop * {
+    animation: none !important;
+  }
+  .vc-bed {
+    transform: translateY(113.76px);
+  }
+  .vc-print-x {
+    transform: translateX(112px);
+  }
+  .vc-print-progress {
+    transform: scaleX(1);
+  }
+  .vc-print-heat,
+  .vc-nozzle-glow,
+  .vc-bot-spark,
+  .vc-ws-dust,
+  .vc-door-open {
+    opacity: 0;
+  }
+  .vc-bot-eye {
+    fill: var(--ws-eye-on);
+  }
+  .vc-bot-led {
+    fill: var(--ws-eye-on);
+  }
+}
+
+/* --- generated by scripts/hero-workshop-keyframes.mjs: do not edit by hand -- */
+@keyframes vc-ws-sweep {
+  0% { transform: translateX(112px); }
+  3% { transform: translateX(-25.2px); }
+  4% { transform: translateX(25.2px); }
+  5% { transform: translateX(-21.6px); }
+  6% { transform: translateX(21.6px); }
+  7% { transform: translateX(-36px); }
+  8% { transform: translateX(36px); }
+  9% { transform: translateX(-36px); }
+  10% { transform: translateX(47.52px); }
+  11% { transform: translateX(-47.52px); }
+  12% { transform: translateX(47.52px); }
+  13% { transform: translateX(-47.52px); }
+  14% { transform: translateX(47.52px); }
+  15% { transform: translateX(-47.52px); }
+  16% { transform: translateX(47.52px); }
+  17% { transform: translateX(-47.52px); }
+  18% { transform: translateX(36px); }
+  19% { transform: translateX(-8.64px); }
+  20% { transform: translateX(8.64px); }
+  21% { transform: translateX(-27.36px); }
+  22% { transform: translateX(27.36px); }
+  23% { transform: translateX(-27.36px); }
+  24% { transform: translateX(31.68px); }
+  25% { transform: translateX(-31.68px); }
+  26% { transform: translateX(31.68px); }
+  27% { transform: translateX(-31.68px); }
+  28% { transform: translateX(27.36px); }
+  29% { transform: translateX(-27.36px); }
+  30% { transform: translateX(27.36px); }
+  31% { transform: translateX(-1.44px); }
+  32% { transform: translateX(1.44px); }
+  33% { transform: translateX(-1.44px); }
+  34% { transform: translateX(4.32px); }
+  35% { transform: translateX(-4.32px); }
+  36% { transform: translateX(4.32px); }
+  40% { transform: translateX(112px); }
+  100% { transform: translateX(112px); }
+}
+
+@keyframes vc-ws-bot {
+  0% { transform: translate(0px, 0px) scale(1); }
+  56% { transform: translate(0px, 0px) scale(1); }
+  57% { transform: translate(0px, -1.8px) scale(1.02); }
+  58% { transform: translate(0px, 6.4px) scale(1.04); }
+  59% { transform: translate(0px, 4.6px) scale(1.06); }
+  60% { transform: translate(0px, 12.8px) scale(1.08); }
+  61% { transform: translate(0px, 16px) scale(1.1); }
+  62.5% { transform: translate(6px, -26px) scale(1.16); }
+  64% { transform: translate(12px, 174px) scale(1.25); }
+  66% { transform: translate(38.46px, 169px) scale(1.25); }
+  67% { transform: translate(64.92px, 174px) scale(1.25); }
+  68% { transform: translate(91.38px, 169px) scale(1.25); }
+  69% { transform: translate(117.85px, 174px) scale(1.25); }
+  70% { transform: translate(144.31px, 169px) scale(1.25); }
+  71% { transform: translate(170.77px, 174px) scale(1.25); }
+  72% { transform: translate(197.23px, 169px) scale(1.25); }
+  73% { transform: translate(223.69px, 174px) scale(1.25); }
+  74% { transform: translate(250.15px, 169px) scale(1.25); }
+  75% { transform: translate(276.62px, 174px) scale(1.25); }
+  76% { transform: translate(303.08px, 169px) scale(1.25); }
+  77% { transform: translate(329.54px, 174px) scale(1.25); }
+  78% { transform: translate(356px, 174px) scale(1.25); }
+  100% { transform: translate(356px, 174px) scale(1.25); }
+}
+
+@keyframes vc-ws-leg-l {
+  0% { transform: translateY(0px); }
+  56% { transform: translateY(0px); }
+  57% { transform: translateY(-6px); }
+  58% { transform: translateY(0px); }
+  59% { transform: translateY(-6px); }
+  60% { transform: translateY(0px); }
+  61% { transform: translateY(0px); }
+  64% { transform: translateY(0px); }
+  66% { transform: translateY(-6px); }
+  67% { transform: translateY(0px); }
+  68% { transform: translateY(-6px); }
+  69% { transform: translateY(0px); }
+  70% { transform: translateY(-6px); }
+  71% { transform: translateY(0px); }
+  72% { transform: translateY(-6px); }
+  73% { transform: translateY(0px); }
+  74% { transform: translateY(-6px); }
+  75% { transform: translateY(0px); }
+  76% { transform: translateY(-6px); }
+  77% { transform: translateY(0px); }
+  78% { transform: translateY(0px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes vc-ws-leg-r {
+  0% { transform: translateY(0px); }
+  56% { transform: translateY(0px); }
+  57% { transform: translateY(0px); }
+  58% { transform: translateY(-6px); }
+  59% { transform: translateY(0px); }
+  60% { transform: translateY(-6px); }
+  61% { transform: translateY(0px); }
+  64% { transform: translateY(0px); }
+  66% { transform: translateY(0px); }
+  67% { transform: translateY(-6px); }
+  68% { transform: translateY(0px); }
+  69% { transform: translateY(-6px); }
+  70% { transform: translateY(0px); }
+  71% { transform: translateY(-6px); }
+  72% { transform: translateY(0px); }
+  73% { transform: translateY(-6px); }
+  74% { transform: translateY(0px); }
+  75% { transform: translateY(-6px); }
+  76% { transform: translateY(0px); }
+  77% { transform: translateY(-6px); }
+  78% { transform: translateY(0px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes vc-ws-wave {
+  0% { transform: rotate(0deg); }
+  79% { transform: rotate(0deg); }
+  80.5% { transform: rotate(-150deg); }
+  81.5% { transform: rotate(-120deg); }
+  82.5% { transform: rotate(-150deg); }
+  83.5% { transform: rotate(-120deg); }
+  84.5% { transform: rotate(-150deg); }
+  85.5% { transform: rotate(-120deg); }
+  87% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
