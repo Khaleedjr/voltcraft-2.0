@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeroFigure } from "@/components/hero-figure";
+import { HeroWorkshop } from "@/components/hero-workshop";
 import { ProductCard } from "@/components/product-card";
 import { ProductImage } from "@/components/product-image";
 import { Reveal } from "@/components/reveal";
@@ -44,7 +44,7 @@ export default async function HomePage() {
             </div>
 
             <div className="pt-2 sm:pt-6 lg:pt-0">
-              <HeroFigure />
+              <HeroWorkshop />
             </div>
           </div>
         </Container>
