@@ -1,0 +1,264 @@
+[
+  {
+    "slug": "1ch-channel-relay-module",
+    "was": {
+      "categories": [
+        "power",
+        "switches"
+      ]
+    },
+    "set": {
+      "categories": [
+        "switches",
+        "power"
+      ]
+    }
+  },
+  {
+    "slug": "5v-2-channel-relay-module",
+    "was": {
+      "categories": [
+        "power"
+      ]
+    },
+    "set": {
+      "categories": [
+        "switches",
+        "power"
+      ]
+    }
+  },
+  {
+    "slug": "5-2v-2-channel-relay-module",
+    "was": {
+      "categories": [
+        "connectors"
+      ]
+    },
+    "set": {
+      "categories": [
+        "switches",
+        "power"
+      ]
+    }
+  },
+  {
+    "slug": "7805-voltage-regulator",
+    "was": {
+      "categories": [
+        "accessories"
+      ]
+    },
+    "set": {
+      "categories": [
+        "power"
+      ]
+    }
+  },
+  {
+    "slug": "lm7805-voltage-regulator",
+    "was": {
+      "categories": [
+        "accessories"
+      ]
+    },
+    "set": {
+      "categories": [
+        "power"
+      ]
+    }
+  },
+  {
+    "slug": "a4988-driver-cnc-shield-v3",
+    "was": {
+      "categories": [
+        "accessories"
+      ]
+    },
+    "set": {
+      "categories": [
+        "actuators"
+      ]
+    }
+  },
+  {
+    "slug": "a4988-stepper-motor-driver",
+    "was": {
+      "categories": [
+        "accessories"
+      ]
+    },
+    "set": {
+      "categories": [
+        "actuators"
+      ]
+    }
+  },
+  {
+    "slug": "l298n-motor-driver",
+    "was": {
+      "categories": [
+        "switches"
+      ]
+    },
+    "set": {
+      "categories": [
+        "actuators"
+      ]
+    }
+  },
+  {
+    "slug": "4x4-keypad",
+    "was": {
+      "categories": [
+        "accessories"
+      ]
+    },
+    "set": {
+      "categories": [
+        "switches"
+      ]
+    }
+  },
+  {
+    "slug": "dual-axis-xy-joystick",
+    "was": {
+      "categories": [
+        "accessories"
+      ]
+    },
+    "set": {
+      "categories": [
+        "switches"
+      ]
+    }
+  },
+  {
+    "slug": "gt2-pulley-20-teeth-bore-2mm",
+    "was": {
+      "categories": [
+        "accessories"
+      ]
+    },
+    "set": {
+      "categories": [
+        "actuators",
+        "accessories"
+      ]
+    }
+  },
+  {
+    "slug": "neo-6m-gps-module",
+    "was": {
+      "categories": [
+        "connectors"
+      ]
+    },
+    "set": {
+      "categories": [
+        "sensors"
+      ]
+    }
+  },
+  {
+    "slug": "sim800l-gprs-module",
+    "was": {
+      "categories": [
+        "connectors"
+      ]
+    },
+    "set": {
+      "categories": [
+        "sensors"
+      ]
+    }
+  },
+  {
+    "slug": "sim800l-gsm-module",
+    "was": {
+      "categories": [
+        "connectors"
+      ]
+    },
+    "set": {
+      "categories": [
+        "sensors"
+      ]
+    }
+  },
+  {
+    "slug": "active-piezo-buzzer",
+    "was": {
+      "categories": [
+        "sensors"
+      ]
+    },
+    "set": {
+      "categories": [
+        "display"
+      ]
+    }
+  },
+  {
+    "slug": "thermoelectric-power-generator-sp1848",
+    "was": {
+      "categories": [
+        "sensors"
+      ]
+    },
+    "set": {
+      "categories": [
+        "power"
+      ]
+    }
+  },
+  {
+    "slug": "tip-122-darlington-transistor",
+    "was": {
+      "categories": [
+        "accessories"
+      ]
+    },
+    "set": {
+      "categories": [
+        "power",
+        "actuators"
+      ]
+    }
+  },
+  {
+    "slug": "10k-linear-potentiometer-with-knob",
+    "was": {
+      "name": "10kΩ Linear Potentiometer with Knob",
+      "summary": "Rotary 10kΩ potentiometer with a linear (B) taper, with a knob.",
+      "specs": [
+        {
+          "label": "Resistance",
+          "value": "10kΩ"
+        },
+        {
+          "label": "Taper",
+          "value": "Linear (B)"
+        },
+        {
+          "label": "Knob",
+          "value": "Included"
+        }
+      ]
+    },
+    "set": {
+      "name": "10kΩ Linear Potentiometer",
+      "summary": "Rotary 10kΩ potentiometer with a linear (B) taper.",
+      "specs": [
+        {
+          "label": "Resistance",
+          "value": "10kΩ"
+        },
+        {
+          "label": "Taper",
+          "value": "Linear (B)"
+        }
+      ]
+    }
+  }
+]

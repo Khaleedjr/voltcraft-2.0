@@ -111,8 +111,8 @@
       "sku": "",
       "wooId": "345",
       "categories": [
-        "power",
-        "switches"
+        "switches",
+        "power"
       ],
       "summary": "12V low level trigger 1 Channel Relay Module interface Board Shield For PIC AVR DSP ARM MCU Arduino",
       "description": [
@@ -318,7 +318,7 @@
       "sku": "",
       "wooId": "5203",
       "categories": [
-        "accessories"
+        "switches"
       ],
       "summary": "4*4 Matrix Array/Matrix Keyboard",
       "description": [],
@@ -338,7 +338,8 @@
       "sku": "",
       "wooId": "5102",
       "categories": [
-        "connectors"
+        "switches",
+        "power"
       ],
       "summary": "12v way relay module for  channel relay module with optocoupler Relay Output",
       "description": [],
@@ -425,6 +426,7 @@
       "sku": "",
       "wooId": "5415",
       "categories": [
+        "switches",
         "power"
       ],
       "summary": "5V Relay Module with Optocoupler Low Level Trigger Expansion Board Compatible with R3 MEGA 2560 1280 DSP ARM",
@@ -544,7 +546,7 @@
       "sku": "",
       "wooId": "5241",
       "categories": [
-        "accessories"
+        "power"
       ],
       "summary": "",
       "description": [
@@ -587,7 +589,7 @@
       "sku": "",
       "wooId": "5431",
       "categories": [
-        "accessories"
+        "actuators"
       ],
       "summary": "",
       "description": [
@@ -617,7 +619,7 @@
       "sku": "",
       "wooId": "5434",
       "categories": [
-        "accessories"
+        "actuators"
       ],
       "summary": "A4988 DRV8825 Stepper Motor Driver With Heat sink Carrier Reprap RAMPS",
       "description": [],
@@ -731,7 +733,7 @@
       "sku": "",
       "wooId": "5015",
       "categories": [
-        "sensors"
+        "display"
       ],
       "summary": "Active Buzzer 5V Magnetic Long Continous Beep Tone Alarm Ringer 12*9.5mm Mini Active Piezo Buzzers, for Arduino",
       "description": [
@@ -1070,7 +1072,7 @@
       "sku": "",
       "wooId": "5421",
       "categories": [
-        "accessories"
+        "switches"
       ],
       "summary": "Joystick Module Higher Quality PS2 Joystick Control Lever Sensor KY-023",
       "description": [
@@ -1223,6 +1225,7 @@
       "sku": "",
       "wooId": "5451",
       "categories": [
+        "actuators",
         "accessories"
       ],
       "summary": "Packing list: 1 x GT2-6mm 2meter 2 x GT2 Pulley 5mm 2X Idler 20teeth 5mm 4 xTorsion spring",
@@ -1417,7 +1420,7 @@
       "sku": "",
       "wooId": "5182",
       "categories": [
-        "switches"
+        "actuators"
       ],
       "summary": "",
       "description": [
@@ -1655,7 +1658,7 @@
       "sku": "",
       "wooId": "5553",
       "categories": [
-        "accessories"
+        "power"
       ],
       "summary": "",
       "description": [],
@@ -1738,7 +1741,7 @@
       "sku": "",
       "wooId": "5135",
       "categories": [
-        "connectors"
+        "sensors"
       ],
       "summary": "Gps Module Arduino Neo 6m Flight Control Gps Module With Flight Control",
       "description": [
@@ -2195,7 +2198,7 @@
       "sku": "",
       "wooId": "5133",
       "categories": [
-        "connectors"
+        "sensors"
       ],
       "summary": "SIM800L GPRS GSM Module Micro SIM Card Core BOard Quad-band TTL Serial Port for arduino",
       "description": [],
@@ -2215,7 +2218,7 @@
       "sku": "",
       "wooId": "5080",
       "categories": [
-        "connectors"
+        "sensors"
       ],
       "summary": "SIM800L GPRS GSM Module Micro SIM Card Core Board Quad-band TTL Serial Port for arduino",
       "description": [],
@@ -2456,7 +2459,7 @@
       "sku": "",
       "wooId": "5075",
       "categories": [
-        "sensors"
+        "power"
       ],
       "summary": "SP1848-27145 Thermoelectric Power Generator Cooler Peltier 120Celsius 40x40mm High Temperature Generation Elemente Module",
       "description": [
@@ -2491,7 +2494,8 @@
       "sku": "",
       "wooId": "5245",
       "categories": [
-        "accessories"
+        "power",
+        "actuators"
       ],
       "summary": "",
       "description": [

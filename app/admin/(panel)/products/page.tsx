@@ -11,6 +11,7 @@ import { formatRelative } from "@/lib/admin/format";
 import {
   bundledPhotosToAdd,
   listProducts,
+  pendingCatalogueFixes,
   missingBundledProducts,
   PRODUCT_SORTS,
   type ProductListParams,
@@ -22,7 +23,13 @@ import { getCategories, getCategory, isCategorySlug } from "@/lib/catalogue";
 import { BUNDLED_PRODUCTS, isCatalogueImported } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { isSupabaseConfigured } from "@/lib/supabase";
-import { addNewCatalogueProducts, addNewCataloguePhotos, changeProductStatus, importCatalogue } from "./actions";
+import {
+  addNewCatalogueProducts,
+  addNewCataloguePhotos,
+  applyCatalogueCorrections,
+  changeProductStatus,
+  importCatalogue,
+} from "./actions";
 
 export const metadata: Metadata = { title: "Products" };
 
@@ -54,7 +61,10 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
   const [list, imported] = await Promise.all([listProducts(listParams), isCatalogueImported()]);
   const { rows, counts } = list;
   // Lines shipped with a site update after the first import.
-  const [arrivals, photos] = imported ? await Promise.all([missingBundledProducts(), bundledPhotosToAdd()]) : [[], []];
+  const [arrivals, photos, fixes] = imported
+    ? await Promise.all([missingBundledProducts(), bundledPhotosToAdd(), pendingCatalogueFixes()])
+    : [[], [], []];
+  const fixList = fixes.map((f) => f.name).join(", ");
   const photoList = photos.map((p) => p.name).join(", ");
   const arrivalNames = arrivals.map((p) => p.name);
   const arrivalList =
@@ -146,6 +156,31 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
           }
         >
           {arrivalList}.
+        </Notice>
+      ) : null}
+
+      {fixes.length ? (
+        <Notice
+          title={`Corrections for ${fixes.length} product${fixes.length === 1 ? "" : "s"} came with the latest site update`}
+          action={
+            <ConfirmAction
+              action={applyCatalogueCorrections}
+              fields={{}}
+              tone="primary"
+              triggerVariant="primary"
+              size="md"
+              trigger={
+                <>
+                  <Icon.Plus className="size-4" /> Apply the corrections
+                </>
+              }
+              title={`Correct ${fixes.length} product${fixes.length === 1 ? "" : "s"}?`}
+              body={`Aisles and names are corrected on ${fixList}. A product you have edited yourself is not touched.`}
+              confirmLabel="Apply corrections"
+            />
+          }
+        >
+          {fixList}.
         </Notice>
       ) : null}
 

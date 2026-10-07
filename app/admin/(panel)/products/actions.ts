@@ -13,6 +13,7 @@ import {
   IMAGE_TYPES,
   imageBucketUrl,
   addBundledPhotos,
+  applyCatalogueFixes,
   addMissingBundledProducts,
   importBundledCatalogue,
   isSlugTaken,
@@ -201,6 +202,20 @@ export async function addNewCataloguePhotos(): Promise<ActionResult> {
   } catch (error) {
     console.error("[admin] add photos", error);
     return fail(explain(error, "No photos were changed. Try again."));
+  }
+}
+
+export async function applyCatalogueCorrections(): Promise<ActionResult> {
+  await requireAdmin();
+  if (!isSupabaseConfigured()) return noDatabase();
+  try {
+    const names = await applyCatalogueFixes();
+    updateTag(PRODUCTS_TAG);
+    if (names.length === 0) return done("Nothing to correct. Every product is up to date.");
+    return done(`Corrected ${names.length} product${names.length === 1 ? "" : "s"}. The shop shows the changes now.`);
+  } catch (error) {
+    console.error("[admin] catalogue corrections", error);
+    return fail(explain(error, "The corrections did not run. Try again."));
   }
 }
 

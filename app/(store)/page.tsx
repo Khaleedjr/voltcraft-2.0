@@ -5,19 +5,17 @@ import { ProductImage } from "@/components/product-image";
 import { Reveal } from "@/components/reveal";
 import { ButtonLink, Container, Section } from "@/components/ui";
 import { getCategories } from "@/lib/catalogue";
-import { getCategoryCounts, getCategoryThumbnails, getOnSale, getProducts } from "@/lib/catalogue-data";
+import { getCategoryCounts, getCategoryThumbnails, getOnSale } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
 export default async function HomePage() {
   const categories = getCategories();
-  const [products, onSale, counts, thumbs] = await Promise.all([
-    getProducts(),
+  const [onSale, counts, thumbs] = await Promise.all([
     getOnSale(8),
     getCategoryCounts(),
     getCategoryThumbnails(),
   ]);
-  const total = products.length;
 
   return (
     <>
@@ -36,11 +34,11 @@ export default async function HomePage() {
               </h1>
               <div className="mt-8 flex flex-wrap items-center gap-4">
                 <ButtonLink href="/shop" className="group">
-                  Shop all {total} products
+                  Shop all products
                   <span className="vc-arrow ml-1" aria-hidden>→</span>
                 </ButtonLink>
-                <ButtonLink href="/shop/sensors" variant="underline" className="group">
-                  Sensors <span className="vc-arrow" aria-hidden>→</span>
+                <ButtonLink href={SITE.printingUrl} target="_blank" rel="noreferrer" variant="underline" className="group">
+                  3D Printing <span className="vc-arrow" aria-hidden>→</span>
                 </ButtonLink>
               </div>
             </div>

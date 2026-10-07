@@ -1,6 +1,7 @@
 import "server-only";
 import { randomUUID } from "node:crypto";
 import { BUNDLED_PRODUCTS, PRODUCT_COLUMNS, type ProductRow } from "@/lib/catalogue-data";
+import catalogueFixes from "@/data/catalogue-fixes.json";
 import type { CategorySlug, Product, Spec, Variant } from "@/lib/catalogue";
 import { cleanSearch, likePattern } from "@/lib/admin/search";
 import { db } from "@/lib/supabase";
@@ -406,6 +407,68 @@ export async function addBundledPhotos(): Promise<string[]> {
     if (error) throw new Error(`could not update photos of ${p.name}: ${error.message}`);
   }
   return todo.map((p) => p.name);
+}
+
+// ----------------------------------------------------- catalogue corrections
+
+/** The fields a correction may change, by their name in the database. */
+const FIXABLE = { name: "name", summary: "summary", categories: "categories", specs: "specs" } as const;
+type Fixable = keyof typeof FIXABLE;
+type CatalogueFix = { slug: string; was: Partial<Record<Fixable, unknown>>; set: Partial<Record<Fixable, unknown>> };
+
+export type PendingFix = { id: string; slug: string; name: string; updatedAt: string; set: Record<string, unknown> };
+
+const same = (a: unknown, b: unknown) => JSON.stringify(a) === JSON.stringify(b);
+
+/**
+ * Corrections shipped with the site (data/catalogue-fixes.json: an aisle
+ * moved, a name fixed) for products already in the database. Each applies
+ * only while the product still reads exactly as it did before the correction,
+ * so anything edited in the admin since is left as it is.
+ */
+export async function pendingCatalogueFixes(): Promise<PendingFix[]> {
+  const fixes = catalogueFixes as CatalogueFix[];
+  if (fixes.length === 0) return [];
+  const { data, error } = await db()
+    .from("products")
+    .select("id,slug,name,summary,categories,specs,updated_at")
+    .in("slug", fixes.map((f) => f.slug));
+  if (error) throw new Error(`could not read products to correct: ${error.message}`);
+  const rows = new Map((data as Record<string, unknown>[]).map((r) => [r.slug as string, r]));
+  const pending: PendingFix[] = [];
+  for (const fix of fixes) {
+    const row = rows.get(fix.slug);
+    if (!row) continue;
+    const fields = Object.keys(fix.set) as Fixable[];
+    if (fields.every((k) => same(row[FIXABLE[k]], fix.set[k]))) continue; // already done
+    if (!fields.every((k) => same(row[FIXABLE[k]], fix.was[k]))) continue; // edited since: theirs wins
+    pending.push({
+      id: row.id as string,
+      slug: fix.slug,
+      name: row.name as string,
+      updatedAt: row.updated_at as string,
+      set: Object.fromEntries(fields.map((k) => [FIXABLE[k], fix.set[k]])),
+    });
+  }
+  return pending;
+}
+
+/** Apply pendingCatalogueFixes. Returns the names of the products corrected. */
+export async function applyCatalogueFixes(): Promise<string[]> {
+  const pending = await pendingCatalogueFixes();
+  const done: string[] = [];
+  for (const fix of pending) {
+    // Only if the row is untouched since it was read above.
+    const { data, error } = await db()
+      .from("products")
+      .update(fix.set)
+      .eq("id", fix.id)
+      .eq("updated_at", fix.updatedAt)
+      .select("id");
+    if (error) throw new Error(`could not correct ${fix.name}: ${error.message}`);
+    if (data.length) done.push(fix.name);
+  }
+  return done;
 }
 
 /**
