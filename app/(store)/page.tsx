@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { HeroWorkshop } from "@/components/hero-workshop";
+import { HeroPrinter3D } from "@/components/hero-printer-3d";
 import { AisleIndex } from "@/components/aisle-index";
 import { Reveal } from "@/components/reveal";
 import { SaleShowcase, SaleTicker } from "@/components/sale-showcase";
@@ -45,7 +45,7 @@ export default async function HomePage() {
             </div>
 
             <div className="pt-2 sm:pt-6 lg:pt-0">
-              <HeroWorkshop />
+              <HeroPrinter3D />
             </div>
           </div>
         </Container>
