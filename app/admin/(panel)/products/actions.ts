@@ -41,6 +41,8 @@ const SITE_IMAGES = [
   "/products/commons/",
   // the shop's own photos, bundled with the site
   "/products/own/",
+  // the old shop's photos, copied off it before the domain moved
+  "/products/site/",
 ];
 
 function imagePrefixes(): string[] {
