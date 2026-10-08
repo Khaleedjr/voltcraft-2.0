@@ -753,3 +753,84 @@
     animation: none !important;
   }
 }
+
+/* ===================================================== backgrounds
+   Five alternatives to the drawing-sheet grid, picked with the second row of
+   the switcher (components/home-v/background-picker.tsx), which sets
+   <html data-bg="1..5">. Each takes the grid off the body and lays its own
+   pattern on a fixed layer behind the page, so the page scrolls over it like
+   a desk mat. Patterns are masks filled with a theme token, so they follow
+   the theme. The files are in public/bg/. */
+html[data-bg] body {
+  background-image: none;
+}
+html[data-bg] body::before,
+html[data-bg="5"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* A · perfboard: a dot every 22px, a copper pad every fifth */
+html[data-bg="1"] body::before {
+  background-image:
+    radial-gradient(circle, color-mix(in srgb, var(--vc-gold) 70%, transparent) 2.6px, transparent 3.2px),
+    radial-gradient(circle, var(--vc-trace) 1.15px, transparent 1.6px);
+  background-size: 110px 110px, 22px 22px;
+  opacity: 0.6;
+}
+
+/* B · circuit: traces, vias and a chip, faint */
+html[data-bg="2"] body::before {
+  background-color: var(--vc-trace);
+  -webkit-mask: url("/bg/circuit.svg") 0 0 / 240px 240px repeat;
+  mask: url("/bg/circuit.svg") 0 0 / 240px 240px repeat;
+  opacity: 0.5;
+}
+
+/* C · isometric: the triangle grid of a CAD view or a build plate */
+html[data-bg="3"] body::before {
+  background-color: var(--vc-line);
+  -webkit-mask: url("/bg/iso.svg") 0 0 / 83.14px 48px repeat;
+  mask: url("/bg/iso.svg") 0 0 / 83.14px 48px repeat;
+  opacity: 0.55;
+}
+
+/* D · contours: lines like a map's, or a print's layers */
+html[data-bg="4"] body::before {
+  background-color: var(--vc-trace);
+  -webkit-mask: url("/bg/contours.svg") 0 0 / 720px 720px repeat;
+  mask: url("/bg/contours.svg") 0 0 / 720px 720px repeat;
+  opacity: 0.55;
+}
+
+/* E · glow: no lines at all; soft light drifting slowly, with a little grain */
+html[data-bg="5"] body::before {
+  inset: -20%;
+  background:
+    radial-gradient(34% 30% at 78% 18%, var(--vc-glow-live), transparent 70%),
+    radial-gradient(30% 34% at 14% 62%, var(--vc-wash-live), transparent 70%),
+    radial-gradient(26% 26% at 60% 88%, var(--vc-glow-live), transparent 70%),
+    radial-gradient(40% 40% at 30% 10%, var(--vc-wash-ink), transparent 70%);
+  animation: bg-drift 36s ease-in-out infinite alternate;
+}
+html[data-bg="5"] body::after {
+  background-image: url("/bg/grain.svg");
+  opacity: 0.07;
+}
+:root[data-theme="dark"][data-bg="5"] body::after {
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+}
+@keyframes bg-drift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-4%, 3%) rotate(6deg); }
+  100% { transform: translate(3%, -2%) rotate(-4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-bg="5"] body::before {
+    animation: none !important;
+  }
+}

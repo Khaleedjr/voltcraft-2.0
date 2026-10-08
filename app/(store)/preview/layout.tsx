@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { BG_SCRIPT } from "@/components/home-v/background-picker";
 import "@/components/home-v/home-v.css";
 
 /**
@@ -11,5 +12,10 @@ export const metadata: Metadata = {
 };
 
 export default function PreviewLayout({ children }: LayoutProps<"/preview">) {
-  return children;
+  return (
+    <>
+      <script dangerouslySetInnerHTML={{ __html: BG_SCRIPT }} />
+      {children}
+    </>
+  );
 }
