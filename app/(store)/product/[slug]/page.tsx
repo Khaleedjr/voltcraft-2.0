@@ -151,7 +151,7 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
 
         {related.length ? (
           <section className="mt-16 border-t border-line pt-10">
-            <Fig>Same aisle</Fig>
+            <Fig>Same category</Fig>
             <h2 className="mt-3 font-display text-[1.6rem] leading-tight tracking-[-0.022em]">
               Usually bought alongside
             </h2>

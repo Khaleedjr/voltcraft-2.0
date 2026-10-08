@@ -353,7 +353,7 @@ function AislePicker({
   const categories = getCategories();
   const error = useFieldError("categories");
   return (
-    <Panel title="Aisles">
+    <Panel title="Categories">
       <div className="grid gap-4">
         <div>
           <label htmlFor="primary-aisle" className={field.label}>
@@ -366,7 +366,7 @@ function AislePicker({
             aria-invalid={error ? true : undefined}
             className={field.select}
           >
-            <option value="">Choose an aisle…</option>
+            <option value="">Choose a category…</option>
             {categories.map((c) => (
               <option key={c.slug} value={c.slug}>
                 {c.name}

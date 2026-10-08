@@ -66,7 +66,7 @@ export function HomeV2({ d }: { d: HomeData }) {
                 <dd className="font-display text-[clamp(1.5rem,3vw,2.2rem)] leading-none">
                   <CountUp to={d.categories.length} />
                 </dd>
-                <dt className="vc-fig mt-2 text-faint">Aisles</dt>
+                <dt className="vc-fig mt-2 text-faint">Categories</dt>
               </div>
               <div className="py-5">
                 <dd className="font-display text-[clamp(1.5rem,3vw,2.2rem)] leading-none">
@@ -83,9 +83,9 @@ export function HomeV2({ d }: { d: HomeData }) {
       <Section divide={false} className="overflow-hidden">
         <Container>
           <div className="mb-10 text-center">
-            <p className="vc-fig text-live">Shop by aisle</p>
+            <p className="vc-fig text-live">Shop by category</p>
             <h2 className="mt-3 font-display text-[clamp(1.8rem,4vw,3rem)] leading-tight tracking-[-0.03em]">
-              {d.categories.length} aisles. One order.
+              {d.categories.length} categories. One order.
             </h2>
           </div>
         </Container>

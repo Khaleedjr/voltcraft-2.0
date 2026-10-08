@@ -10,7 +10,7 @@ import { KitPanel, LEDE, off, Talk } from "./parts";
 import { ScrollSpy } from "./scroll-spy";
 
 const SECTIONS = [
-  { id: "aisles", label: "Shop by aisle" },
+  { id: "aisles", label: "Shop by category" },
   { id: "sale", label: "On sale now" },
   { id: "kit", label: "A kit in one order" },
   { id: "talk", label: "Buying in quantity" },
@@ -49,7 +49,7 @@ export function HomeV3({ d }: { d: HomeData }) {
         <div className="lg:border-l lg:border-line lg:pl-14">
           {/* -------------------------------------------- aisles, as fans */}
           <section id="aisles" className="scroll-mt-24 border-t border-line py-12 lg:border-t-0 lg:py-16">
-            <Head n="01" title="Shop by aisle" href="/shop" action="All products" />
+            <Head n="01" title="Shop by category" href="/shop" action="All products" />
             <ul className="mt-8">
               {d.categories.map((c, i) => {
                 const shots = (d.shots[c.slug] ?? []).slice(0, 3);

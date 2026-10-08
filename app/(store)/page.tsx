@@ -79,7 +79,7 @@ export default async function HomePage() {
       <Container>
         <Section divide={false}>
           <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 sm:mb-10">
-            <h2 className="vc-fig text-faint">Shop by aisle</h2>
+            <h2 className="vc-fig text-faint">Shop by category</h2>
             <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
               All products <span className="vc-arrow" aria-hidden>→</span>
             </Link>

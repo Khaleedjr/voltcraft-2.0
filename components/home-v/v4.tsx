@@ -58,7 +58,7 @@ export function HomeV4({ d }: { d: HomeData }) {
       <Container>
         <Section divide={false}>
           <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
-            <h2 className="font-display text-[clamp(1.8rem,3.6vw,2.7rem)] leading-tight tracking-[-0.03em]">Pick an aisle</h2>
+            <h2 className="font-display text-[clamp(1.8rem,3.6vw,2.7rem)] leading-tight tracking-[-0.03em]">Pick a category</h2>
             <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
               All products <span className="vc-arrow" aria-hidden>→</span>
             </Link>

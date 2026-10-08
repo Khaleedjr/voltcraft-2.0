@@ -56,7 +56,7 @@ export function HomeV1({ d }: { d: HomeData }) {
               </dd>
             </div>
             <div>
-              <dt>Aisles</dt>
+              <dt>Categories</dt>
               <dd>
                 <CountUp to={d.categories.length} />
               </dd>
@@ -78,7 +78,7 @@ export function HomeV1({ d }: { d: HomeData }) {
         <Section divide={false}>
           <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
-              <p className="vc-fig text-live">Fig. 2 · Shop by aisle</p>
+              <p className="vc-fig text-live">Fig. 2 · Shop by category</p>
               <h2 className="mt-3 font-display text-[clamp(1.7rem,3.2vw,2.5rem)] leading-tight tracking-[-0.025em]">Bill of materials</h2>
             </div>
             <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
@@ -87,7 +87,7 @@ export function HomeV1({ d }: { d: HomeData }) {
           </div>
           <div className="hv1-bom-head vc-fig hidden text-faint md:grid">
             <span>No.</span>
-            <span>Aisle</span>
+            <span>Category</span>
             <span>What is in it</span>
             <span className="text-right">Parts</span>
             <span />
