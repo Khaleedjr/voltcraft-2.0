@@ -190,14 +190,14 @@ function ArmJoints({ upper, fore, children }: { upper?: React.ReactNode; fore?: 
   );
 }
 
-export function HeroWorkshop() {
+export function HeroWorkshop({ className = "max-w-[500px]" }: { className?: string }) {
   const ink = { fill: "var(--vc-sheet)", stroke: "var(--vc-muted)", strokeWidth: 1.8 } as const;
   const raised = { fill: "var(--vc-raised)", stroke: "var(--vc-muted)", strokeWidth: 1.6 } as const;
   const line = { fill: "none", stroke: "var(--vc-line)", strokeWidth: 1.2 } as const;
   const digits = Array.from({ length: 11 }, (_, i) => `${i * 10}%`);
 
   return (
-    <div className="mx-auto w-full max-w-[500px]">
+    <div className={`mx-auto w-full ${className}`}>
       <svg
         viewBox="0 0 700 560"
         className="vc-workshop w-full"
