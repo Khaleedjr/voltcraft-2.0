@@ -8,6 +8,7 @@ import { getCategories } from "@/lib/catalogue";
 import { getCategoryCounts, getCategoryThumbnails, getFeaturedSale } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
+import { FREE_IN_KADUNA } from "@/lib/delivery";
 
 export default async function HomePage() {
   const categories = getCategories();
@@ -59,7 +60,7 @@ export default async function HomePage() {
               <Tag /> Fully stocked
             </li>
             <li className="flex items-center gap-2 sm:justify-center">
-              <Truck /> Free delivery over {formatNaira(SITE.freeDeliveryThreshold)}
+              <Truck /> Free delivery in Kaduna over {formatNaira(FREE_IN_KADUNA)}
             </li>
             <li className="sm:text-right">
               <a

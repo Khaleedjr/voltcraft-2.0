@@ -10,6 +10,7 @@ import type { HomeData } from "@/lib/home-data";
 import { SITE } from "@/lib/site";
 import { Lamp } from "./lamp";
 import { AisleIcon, LEDE, off, Talk } from "./parts";
+import { FREE_IN_KADUNA } from "@/lib/delivery";
 
 /**
  * Version 4, night shift. The hero is the workshop after hours, dark in
@@ -43,7 +44,7 @@ export function HomeV4({ d }: { d: HomeData }) {
               </div>
               <p className="vc-fig mt-10 flex flex-wrap gap-x-6 gap-y-2 text-faint">
                 <span>{d.inStock} parts in stock</span>
-                <span>Free delivery over {formatNaira(SITE.freeDeliveryThreshold)}</span>
+                <span>Free delivery in Kaduna over {formatNaira(FREE_IN_KADUNA)}</span>
               </p>
             </div>
             <div className="hv4-art">

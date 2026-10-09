@@ -18,7 +18,11 @@ import { initializeTransaction, isPaystackConfigured } from "@/lib/paystack";
  * so a tampered cart cannot change what gets charged and a price changed in
  * the admin a minute ago is the price that is charged.
  *
- * The priced order is written to the database BEFORE the customer is sent to
+ * Delivery is priced from the state in the delivery address (lib/delivery.ts),
+ * here as in the browser, so the fee shown is the fee charged.
+ *
+ * Every order is paid through Paystack: there is no pay-later route. The
+ * priced order is written to the database BEFORE the customer is sent to
  * Paystack, so a payment can never arrive for an order we have no record of.
  * Whether it was actually paid is decided later, by the webhook — see
  * app/api/paystack/webhook/route.ts.
@@ -29,6 +33,16 @@ export async function POST(request: Request) {
     body = await request.json();
   } catch {
     return NextResponse.json({ ok: false, error: "Malformed request." }, { status: 400 });
+  }
+
+  // Without Paystack there is no way to pay, and an order nobody pays for is
+  // not an order: send people to WhatsApp rather than take one.
+  if (!isPaystackConfigured()) {
+    console.error("[checkout] PAYSTACK_SECRET_KEY is not set; refusing to take an unpaid order");
+    return NextResponse.json(
+      { ok: false, error: "Online payment isn't available right now, so we can't take the order here. Please order on WhatsApp instead." },
+      { status: 503 },
+    );
   }
 
   const payload = body as { lines?: unknown; customer?: unknown };
@@ -52,7 +66,7 @@ export async function POST(request: Request) {
     );
   }
   const bySlug = new Map(products.map((p) => [p.slug, p]));
-  const order = priceOrder(lines, (slug) => bySlug.get(slug));
+  const order = priceOrder(lines, (slug) => bySlug.get(slug), customer.state);
   if (order.items.length === 0) {
     return NextResponse.json(
       { ok: false, error: "Your cart is empty, or those items are no longer in stock." },
@@ -61,33 +75,7 @@ export async function POST(request: Request) {
   }
 
   const reference = createOrderReference();
-  const summary = {
-    reference,
-    customer,
-    lines: snapshotLines(order),
-    subtotal: order.subtotal,
-    delivery: order.delivery,
-    total: order.total,
-  };
-  if (!isPaystackConfigured()) {
-    // No payments configured: record the order if we can, and let the counter
-    // follow it up. Nothing is being charged, so logging is an acceptable
-    // floor here in a way it would not be once money is moving.
-    if (isOrderStoreConfigured()) {
-      try {
-        await createPendingOrder({ reference, customer, order });
-      } catch (error) {
-        console.error("[checkout] could not record manual order", error);
-      }
-    }
-    console.info("[checkout] order placed (manual)", JSON.stringify(summary));
-    return NextResponse.json({
-      ok: true,
-      mode: "manual" as const,
-      reference,
-      total: order.total,
-    });
-  }
+  const lineSnapshot = snapshotLines(order);
 
   // Taking money with nowhere to put the order is how a paid order vanishes.
   // Refuse rather than risk it.
@@ -122,7 +110,7 @@ export async function POST(request: Request) {
         phone: customer.phone,
         address: `${customer.address}, ${customer.city}, ${customer.state}`,
         notes: customer.notes ?? "",
-        items: summary.lines,
+        items: lineSnapshot,
       },
     });
     return NextResponse.json({

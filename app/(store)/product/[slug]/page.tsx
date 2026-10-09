@@ -10,6 +10,7 @@ import { getProduct, getProducts, relatedProducts } from "@/lib/catalogue-data";
 import { formatNaira } from "@/lib/format";
 import { creditsFor } from "@/lib/image-credits";
 import { SITE } from "@/lib/site";
+import { FREE_ELSEWHERE, FREE_IN_KADUNA } from "@/lib/delivery";
 
 export async function generateStaticParams() {
   return (await getProducts()).map((p) => ({ slug: p.slug }));
@@ -35,7 +36,6 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
   const stock = stockLabel(product);
   const related = await relatedProducts(product);
   const from = priceLabel(product);
-  const freeDelivery = product.price >= SITE.freeDeliveryThreshold;
 
   return (
     <Container>
@@ -89,9 +89,11 @@ export default async function ProductPage({ params }: PageProps<"/product/[slug]
             <ul className="mt-6 grid gap-2 border-t border-line pt-5 text-[0.86rem] text-muted">
               <li className="flex gap-2.5">
                 <span className="text-live" aria-hidden>→</span>
-                {freeDelivery
-                  ? "Free nationwide delivery on this item."
-                  : `Free delivery once your order passes ${formatNaira(SITE.freeDeliveryThreshold)}.`}
+                {product.price >= FREE_ELSEWHERE
+                  ? "Free delivery anywhere in Nigeria on this item."
+                  : product.price >= FREE_IN_KADUNA
+                    ? `Free delivery to Kaduna on this item; anywhere else once your order comes to ${formatNaira(FREE_ELSEWHERE)}.`
+                    : `Free delivery in Kaduna from ${formatNaira(FREE_IN_KADUNA)}, and anywhere else from ${formatNaira(FREE_ELSEWHERE)}.`}
               </li>
               <li className="flex gap-2.5">
                 <span className="text-live" aria-hidden>→</span>

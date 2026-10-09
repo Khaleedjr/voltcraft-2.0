@@ -1,18 +1,22 @@
 import type { Metadata } from "next";
 import { Container, Fig, Section } from "@/components/ui";
+import { deliveryTable, FREE_ELSEWHERE, FREE_IN_KADUNA } from "@/lib/delivery";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
 /*
- * TODO(voltcraft): these are draft policies written to a sensible default, not
- * VoltCraft's actual commitments. Confirm every figure — zones, timings, the
- * returns window and the warranty terms — before this page goes live.
+ * The fees (Table 1) come from lib/delivery.ts, the same table the checkout
+ * charges from, so this page cannot disagree with it.
+ *
+ * TODO(voltcraft): the timings, the returns window and the warranty terms are
+ * still draft policies written to a sensible default, not VoltCraft's actual
+ * commitments. Confirm them before relying on this page.
  */
 
 export const metadata: Metadata = {
   title: "Delivery & returns",
   description:
-    "Dispatch times, delivery estimates across Nigeria, the free delivery threshold, and how returns and warranty claims work.",
+    "Delivery fees for every Nigerian state, free delivery amounts, dispatch times, and how returns and warranty claims work.",
 };
 
 const ZONES = [
@@ -33,13 +37,55 @@ export default function DeliveryPage() {
         </h1>
         <p className="mt-6 max-w-[56ch] text-[1.02rem] leading-[1.7] text-muted">
           Orders placed before 2pm on a working day are picked and dispatched the same day. Anything
-          after that goes out the next morning. Delivery is free once an order passes{" "}
-          {formatNaira(SITE.freeDeliveryThreshold)}.
+          after that goes out the next morning. Delivery is one flat fee for your state, however
+          much you order, and free in Kaduna once an order comes to {formatNaira(FREE_IN_KADUNA)}
+          {" "}(anywhere else from {formatNaira(FREE_ELSEWHERE)}).
         </p>
       </div>
 
       <Section>
-        <Fig>Table 1 — Delivery estimates</Fig>
+        <Fig>Table 1 — Delivery fees</Fig>
+        <h2 className="mt-3 font-display text-[1.6rem] leading-tight tracking-[-0.022em]">
+          What delivery costs, by state
+        </h2>
+        <div className="mt-7 overflow-x-auto border border-line bg-sheet">
+          <table className="w-full min-w-[560px] text-[0.92rem]">
+            <thead>
+              <tr>
+                {["Fee", "States", "Free from"].map((h) => (
+                  <th
+                    key={h}
+                    scope="col"
+                    className="vc-fig border-b border-line px-5 py-3.5 text-left font-medium text-muted"
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {deliveryTable().map((row) => (
+                <tr key={`${row.fee}-${row.freeFrom}`} className="border-b border-line align-top last:border-b-0">
+                  <td className="whitespace-nowrap px-5 py-3.5 font-display text-[1.15rem] tabular-nums">
+                    {formatNaira(row.fee)}
+                  </td>
+                  <td className="px-5 py-3.5 leading-relaxed">{row.states.join(", ")}</td>
+                  <td className="whitespace-nowrap px-5 py-3.5 tabular-nums text-muted">
+                    {formatNaira(row.freeFrom)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-4 max-w-[60ch] text-[0.86rem] leading-relaxed text-muted">
+          The fee is set by the state in your delivery address, and checkout shows it before you
+          pay. Payment is through Paystack: card, bank transfer or USSD.
+        </p>
+      </Section>
+
+      <Section>
+        <Fig>Table 2 — Delivery estimates</Fig>
         <h2 className="mt-3 font-display text-[1.6rem] leading-tight tracking-[-0.022em]">
           Time from dispatch
         </h2>

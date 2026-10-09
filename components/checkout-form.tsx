@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useCart } from "@/components/cart-context";
 import { useCatalogue } from "@/components/catalogue-provider";
 import { ButtonLink, Button, Fig } from "@/components/ui";
+import { DELIVERY_RATES, isNigerianState } from "@/lib/delivery";
 import { formatNaira } from "@/lib/format";
 import { lineKey, priceOrder, STATES } from "@/lib/orders";
 import { SITE } from "@/lib/site";
@@ -16,16 +16,17 @@ const fieldClass =
 type CheckoutResponse = {
   ok?: boolean;
   error?: string;
-  mode?: "manual" | "paystack";
   reference?: string;
   authorizationUrl?: string;
 };
 
 export function CheckoutForm() {
-  const router = useRouter();
-  const { lines, ready, clear } = useCart();
+  const { lines, ready } = useCart();
   const lookup = useCatalogue();
-  const order = priceOrder(lines, lookup);
+  // delivery is priced by state, so the summary follows the state picked below
+  const [state, setState] = useState("Kaduna");
+  const order = priceOrder(lines, lookup, state);
+  const rate = isNigerianState(state) ? DELIVERY_RATES[state] : null;
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -64,13 +65,14 @@ export function CheckoutForm() {
         setBusy(false);
         return;
       }
-      if (json.mode === "paystack" && json.authorizationUrl) {
-        // The cart is cleared on the callback page, once payment is confirmed.
+      if (json.authorizationUrl) {
+        // On to Paystack. The cart is cleared on the callback page, once
+        // payment is confirmed.
         window.location.href = json.authorizationUrl;
         return;
       }
-      clear();
-      router.push(`/checkout/received?ref=${encodeURIComponent(json.reference ?? "")}`);
+      setError("We couldn't start the payment. Please try again.");
+      setBusy(false);
     } catch {
       setError("Network problem — please try again.");
       setBusy(false);
@@ -119,7 +121,14 @@ export function CheckoutForm() {
               <label htmlFor="co-state" className="vc-fig mb-2 block text-muted">
                 State
               </label>
-              <select id="co-state" name="state" required defaultValue="Kaduna" className={fieldClass}>
+              <select
+                id="co-state"
+                name="state"
+                required
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                className={fieldClass}
+              >
                 {STATES.map((s) => (
                   <option key={s} value={s}>
                     {s}
@@ -159,11 +168,17 @@ export function CheckoutForm() {
             <dd className="tabular-nums">{formatNaira(order.subtotal)}</dd>
           </div>
           <div className="flex justify-between gap-4">
-            <dt className="text-muted">Delivery</dt>
+            <dt className="text-muted">Delivery to {state}</dt>
             <dd className="tabular-nums">
               {order.freeDelivery ? <span className="text-earth">Free</span> : formatNaira(order.delivery)}
             </dd>
           </div>
+          {rate && !order.freeDelivery ? (
+            <p className="text-[0.8rem] leading-relaxed text-muted">
+              Free to {state} once your order comes to {formatNaira(rate.freeFrom)}: add{" "}
+              {formatNaira(rate.freeFrom - order.subtotal)} more.
+            </p>
+          ) : null}
           <div className="mt-2 flex items-baseline justify-between gap-4 border-t border-line pt-3.5">
             <dt className="font-semibold">Total</dt>
             <dd className="font-display text-[1.6rem] tabular-nums">{formatNaira(order.total)}</dd>
