@@ -30,7 +30,7 @@ export function CategoryFans({
                   </span>
                 ))}
               </span>
-              <span className="min-w-0">
+              <span className="vc-fan-text min-w-0">
                 <span className="flex items-baseline gap-3">
                   <span className="font-display text-[1.45rem] leading-tight tracking-[-0.02em] group-hover:text-live">{c.name}</span>
                   <span className="font-mono text-[0.78rem] tabular-nums text-faint">{counts[c.slug] ?? 0}</span>

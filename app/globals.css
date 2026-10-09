@@ -669,6 +669,27 @@ html:not([data-bg]) body.vc-glow-ground::after {
 .vc-fan-row:hover .vc-fan-card-0 { transform: translate(-10px, -4px) rotate(-14deg); }
 .vc-fan-row:hover .vc-fan-card-1 { transform: translate(6px, -10px) rotate(0deg); }
 .vc-fan-row:hover .vc-fan-card-2 { transform: translate(24px, -2px) rotate(14deg); }
+/* the name and blurb sit above the cards, so a card can never cover them */
+.vc-fan-text {
+  position: relative;
+  z-index: 4;
+}
+/* On a phone the fan's column is narrower, so the cards are smaller and
+   closer, and spread less: tilted, the last card still ends short of the
+   name, which starts at 118px (104px column + 14px gap). */
+@media (max-width: 479px) {
+  .vc-fan {
+    height: 72px;
+  }
+  .vc-fan-card {
+    width: 60px;
+  }
+  .vc-fan-card-1 { left: 16px; }
+  .vc-fan-card-2 { left: 32px; }
+  .vc-fan-row:hover .vc-fan-card-0 { transform: translate(-6px, -3px) rotate(-12deg); }
+  .vc-fan-row:hover .vc-fan-card-1 { transform: translate(4px, -6px) rotate(0deg); }
+  .vc-fan-row:hover .vc-fan-card-2 { transform: translate(10px, -2px) rotate(12deg); }
+}
 
 /* ------------------------------------------------------------------
    The sale on the home page: price tags hanging from a wire, each on its
