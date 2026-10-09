@@ -59,7 +59,6 @@ key is missing.
 | `ADMIN_SESSION_SECRET` | Signs the admin session cookie (32+ characters) | Same as above |
 | `PAYSTACK_SECRET_KEY` | Checkout initialises a real Paystack transaction; the webhook and the return page both verify it server-side | Checkout records the order and tells the customer the counter will call to arrange payment |
 | `NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY` | Reserved for a future inline checkout | Unused |
-| `CONTACT_WEBHOOK_URL` | Contact form POSTs the message as JSON to this endpoint (mail service, Slack/Discord webhook, CRM) | The form tells the sender to email or call instead of silently dropping the message |
 
 The service-role key bypasses row-level security, so it is server-only: it has
 no `NEXT_PUBLIC_` prefix and `lib/supabase.ts` imports `server-only`. Every
@@ -118,7 +117,6 @@ app/
   admin/(panel)/              overview, orders, products, stock, customers, analytics
   api/checkout/               starts a payment; reprices the cart server-side
   api/paystack/webhook/       confirms payments; verified against the raw body
-  api/contact/                contact form delivery
 components/                   the shop's UI
 components/admin/             the admin's UI: forms, tables, badges, charts
 lib/
