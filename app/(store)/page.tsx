@@ -1,23 +1,16 @@
 import Link from "next/link";
+import { CategoryFans } from "@/components/category-fans";
 import { HeroWorkshop } from "@/components/hero-workshop";
-import { AisleIndex } from "@/components/aisle-index";
 import { Reveal } from "@/components/reveal";
-import { SaleShowcase, SaleTicker } from "@/components/sale-showcase";
+import { SaleTags } from "@/components/sale-tags";
 import { ButtonLink, Container, Section } from "@/components/ui";
-import { getCategories } from "@/lib/catalogue";
-import { getCategoryCounts, getCategoryThumbnails, getFeaturedSale } from "@/lib/catalogue-data";
-import { formatNaira } from "@/lib/format";
-import { SITE } from "@/lib/site";
 import { FREE_IN_KADUNA } from "@/lib/delivery";
+import { formatNaira } from "@/lib/format";
+import { getHomeData } from "@/lib/home-data";
+import { SITE } from "@/lib/site";
 
 export default async function HomePage() {
-  const categories = getCategories();
-  const [onSale, ticker, counts, thumbs] = await Promise.all([
-    getFeaturedSale(),
-    getFeaturedSale(12),
-    getCategoryCounts(),
-    getCategoryThumbnails(),
-  ]);
+  const { categories, counts, shots, sale } = await getHomeData();
 
   return (
     <>
@@ -76,37 +69,36 @@ export default async function HomePage() {
         </Container>
       </div>
 
-      {/* ------------------------------------------------------- the aisles */}
+      {/* -------------------------------------------------- the categories */}
       <Container>
         <Section divide={false}>
           <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 sm:mb-10">
-            <h2 className="vc-fig text-faint">Shop by category</h2>
+            <h2 className="font-display text-[clamp(1.6rem,3vw,2.3rem)] leading-tight tracking-[-0.025em]">Shop by category</h2>
             <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
               All products <span className="vc-arrow" aria-hidden>→</span>
             </Link>
           </div>
-          <AisleIndex categories={categories} counts={counts} thumbs={thumbs} />
+          <CategoryFans categories={categories} counts={counts} shots={shots} />
         </Section>
       </Container>
 
-      {/* ------------------------------------------------------------ sale */}
-      {onSale.length ? (
-        <>
-          <SaleTicker products={ticker} />
+      {/* --------------------------------------- the sale, tags on a wire */}
+      {sale.length ? (
+        <div className="overflow-hidden border-y border-line bg-sheet">
           <Container>
             <Section divide={false}>
-              <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 sm:mb-10">
-                <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.022em] sm:text-[2.05rem]">
-                  Sale items
-                </h2>
+              <div className="flex flex-wrap items-baseline justify-between gap-4">
+                <h2 className="font-display text-[clamp(1.6rem,3vw,2.3rem)] leading-tight tracking-[-0.025em]">Price tags are down</h2>
                 <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
                   See everything <span className="vc-arrow" aria-hidden>→</span>
                 </Link>
               </div>
-              <SaleShowcase products={onSale} />
+              <div className="mt-6">
+                <SaleTags products={sale} />
+              </div>
             </Section>
           </Container>
-        </>
+        </div>
       ) : null}
 
       {/* -------------------------------------------------------------- cta */}

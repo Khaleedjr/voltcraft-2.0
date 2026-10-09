@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export const BACKGROUNDS = [
-  { key: "", label: "Grid", name: "Grid (as now)" },
+  { key: "", label: "Site", name: "Site (glow)" },
   { key: "1", label: "A", name: "Perfboard" },
   { key: "2", label: "B", name: "Circuit" },
   { key: "3", label: "C", name: "Isometric" },
