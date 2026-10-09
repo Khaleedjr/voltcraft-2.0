@@ -4,7 +4,7 @@ import { HeroWorkshop } from "@/components/hero-workshop";
 import { Reveal } from "@/components/reveal";
 import { SaleTags } from "@/components/sale-tags";
 import { ButtonLink, Container, Section } from "@/components/ui";
-import { FREE_IN_KADUNA } from "@/lib/delivery";
+import { FREE_DELIVERY_FROM } from "@/lib/delivery";
 import { formatNaira } from "@/lib/format";
 import { getHomeData } from "@/lib/home-data";
 import { SITE } from "@/lib/site";
@@ -53,7 +53,7 @@ export default async function HomePage() {
               <Tag /> Fully stocked
             </li>
             <li className="flex items-center gap-2 sm:justify-center">
-              <Truck /> Free delivery in Kaduna over {formatNaira(FREE_IN_KADUNA)}
+              <Truck /> Free delivery over {formatNaira(FREE_DELIVERY_FROM)}
             </li>
             <li className="sm:text-right">
               <a

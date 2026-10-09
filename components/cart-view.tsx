@@ -7,7 +7,7 @@ import { maxOrderable } from "@/lib/catalogue";
 import { ProductImage } from "@/components/product-image";
 import { ButtonLink, Fig } from "@/components/ui";
 import { formatNaira } from "@/lib/format";
-import { FREE_ELSEWHERE, FREE_IN_KADUNA, LOWEST_DELIVERY_FEE } from "@/lib/delivery";
+import { FREE_DELIVERY_FROM, LOWEST_DELIVERY_FEE } from "@/lib/delivery";
 import { lineKey, priceOrder, stockPool } from "@/lib/orders";
 import { SITE } from "@/lib/site";
 
@@ -35,8 +35,7 @@ export function CartView() {
   }
 
   // the state, and so the delivery fee, is only known at checkout
-  const freeEverywhere = order.subtotal >= FREE_ELSEWHERE;
-  const freeInKaduna = order.subtotal >= FREE_IN_KADUNA;
+  const freeEverywhere = order.subtotal >= FREE_DELIVERY_FROM;
   // A counted product's options all draw on the same shelf.
   const held = new Map<string, number>();
   for (const i of order.items) {
@@ -138,9 +137,8 @@ export function CartView() {
 
         {!freeEverywhere ? (
           <p className="mt-4 border-l-2 border-live pl-3 text-[0.85rem] leading-relaxed text-muted">
-            {freeInKaduna
-              ? `Delivery to Kaduna is free. Add ${formatNaira(FREE_ELSEWHERE - order.subtotal)} more for free delivery anywhere in Nigeria.`
-              : `Free delivery in Kaduna from ${formatNaira(FREE_IN_KADUNA)} (add ${formatNaira(FREE_IN_KADUNA - order.subtotal)}), and everywhere else from ${formatNaira(FREE_ELSEWHERE)}.`}
+            Add {formatNaira(FREE_DELIVERY_FROM - order.subtotal)} more and delivery is free, anywhere in
+            Nigeria.
           </p>
         ) : null}
 

@@ -10,7 +10,7 @@ import type { HomeData } from "@/lib/home-data";
 import { SITE } from "@/lib/site";
 import { CountUp } from "./count-up";
 import { KitPanel, LEDE, off, saving, Talk } from "./parts";
-import { FREE_IN_KADUNA } from "@/lib/delivery";
+import { FREE_DELIVERY_FROM } from "@/lib/delivery";
 
 /**
  * Version 1, the drawing sheet. The workshop is the drawing, framed as a
@@ -64,7 +64,7 @@ export function HomeV1({ d }: { d: HomeData }) {
             </div>
             <div>
               <dt>Delivery</dt>
-              <dd className="text-[1.05rem]!">Free in Kaduna over {formatNaira(FREE_IN_KADUNA)}</dd>
+              <dd className="text-[1.05rem]!">Free over {formatNaira(FREE_DELIVERY_FROM)}</dd>
             </div>
             <div>
               <dt>Drawn in</dt>

@@ -188,8 +188,8 @@ bucket in Supabase Storage.
 
 - **`lib/site.ts`** — phone number, email, WhatsApp link, opening hours and
   social links.
-- **`lib/delivery.ts`** — delivery fees by state and the free-delivery amounts,
-  taken from the old shop's checkout. The old shop did not deliver to nine
+- **`lib/delivery.ts`** — delivery fees by state, taken from the old shop's
+  checkout, and free delivery from ₦100,000 to every state (the owner's rule). The old shop did not deliver to nine
   states; their fees (marked `assumed`) follow their neighbours and need
   confirming.
 - **`app/(store)/delivery/page.tsx`** — delivery timings, the 7-day returns

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Container, Fig, Section } from "@/components/ui";
-import { deliveryTable, FREE_ELSEWHERE, FREE_IN_KADUNA } from "@/lib/delivery";
+import { deliveryTable, FREE_DELIVERY_FROM } from "@/lib/delivery";
 import { formatNaira } from "@/lib/format";
 import { SITE } from "@/lib/site";
 
@@ -38,8 +38,8 @@ export default function DeliveryPage() {
         <p className="mt-6 max-w-[56ch] text-[1.02rem] leading-[1.7] text-muted">
           Orders placed before 2pm on a working day are picked and dispatched the same day. Anything
           after that goes out the next morning. Delivery is one flat fee for your state, however
-          much you order, and free in Kaduna once an order comes to {formatNaira(FREE_IN_KADUNA)}
-          {" "}(anywhere else from {formatNaira(FREE_ELSEWHERE)}).
+          much you order, and free to every state once an order comes to{" "}
+          {formatNaira(FREE_DELIVERY_FROM)}.
         </p>
       </div>
 
@@ -49,10 +49,10 @@ export default function DeliveryPage() {
           What delivery costs, by state
         </h2>
         <div className="mt-7 overflow-x-auto border border-line bg-sheet">
-          <table className="w-full min-w-[560px] text-[0.92rem]">
+          <table className="w-full min-w-[480px] text-[0.92rem]">
             <thead>
               <tr>
-                {["Fee", "States", "Free from"].map((h) => (
+                {["Fee", "States"].map((h) => (
                   <th
                     key={h}
                     scope="col"
@@ -65,14 +65,11 @@ export default function DeliveryPage() {
             </thead>
             <tbody>
               {deliveryTable().map((row) => (
-                <tr key={`${row.fee}-${row.freeFrom}`} className="border-b border-line align-top last:border-b-0">
+                <tr key={row.fee} className="border-b border-line align-top last:border-b-0">
                   <td className="whitespace-nowrap px-5 py-3.5 font-display text-[1.15rem] tabular-nums">
                     {formatNaira(row.fee)}
                   </td>
                   <td className="px-5 py-3.5 leading-relaxed">{row.states.join(", ")}</td>
-                  <td className="whitespace-nowrap px-5 py-3.5 tabular-nums text-muted">
-                    {formatNaira(row.freeFrom)}
-                  </td>
                 </tr>
               ))}
             </tbody>
@@ -80,7 +77,8 @@ export default function DeliveryPage() {
         </div>
         <p className="mt-4 max-w-[60ch] text-[0.86rem] leading-relaxed text-muted">
           The fee is set by the state in your delivery address, and checkout shows it before you
-          pay. Payment is through Paystack: card, bank transfer or USSD.
+          pay. Orders of {formatNaira(FREE_DELIVERY_FROM)} or more go free, to any state. Payment
+          is through Paystack: card, bank transfer or USSD.
         </p>
       </Section>
 

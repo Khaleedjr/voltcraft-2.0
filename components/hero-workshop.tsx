@@ -49,36 +49,18 @@ function Door({
   label,
   external = false,
   hit,
-  tip,
   children,
 }: {
   href: string;
   label: string;
   external?: boolean;
   hit: [number, number, number, number];
-  tip: [number, number];
   children: React.ReactNode;
 }) {
-  const text = label.toUpperCase();
-  const w = text.length * 6.1 + 13;
   const inner = (
     <>
       <rect className="vc-hit" x={hit[0]} y={hit[1]} width={hit[2]} height={hit[3]} rx="6" />
       <g className="vc-part-body">{children}</g>
-      <g className="vc-tip">
-        <rect x={tip[0] - w / 2} y={tip[1] - 10.5} width={w} height="15" rx="3" fill="var(--vc-ink)" />
-        <text
-          x={tip[0]}
-          y={tip[1]}
-          textAnchor="middle"
-          fill="var(--vc-ground)"
-          fontFamily="var(--font-mono)"
-          fontSize="8.6"
-          letterSpacing="0.9"
-        >
-          {text}
-        </text>
-      </g>
     </>
   );
   return external ? (
@@ -244,7 +226,7 @@ export function HeroWorkshop({ className = "max-w-[500px]" }: { className?: stri
         <ellipse cx="468" cy="490" rx="62" ry="5" fill="var(--vc-ink)" opacity="0.08" />
 
         {/* ------------------------------------------------------- printer */}
-        <Door href={SITE.printingUrl} external label="3D printing" hit={[34, 6, 352, 490]} tip={[210, 516]}>
+        <Door href={SITE.printingUrl} external label="3D printing" hit={[34, 6, 352, 490]}>
           {/* the spool on its holder, the filament into the extruder */}
           <path d="M300 70V48" stroke="var(--vc-muted)" strokeWidth="2.4" />
           <g className="vc-spool">
@@ -315,7 +297,7 @@ export function HeroWorkshop({ className = "max-w-[500px]" }: { className?: stri
         </Door>
 
         {/* ----------------------------------------------------------- arm */}
-        <Door href="/shop/actuators" label="Actuators" hit={[396, 150, 150, 340]} tip={[468, 516]}>
+        <Door href="/shop/actuators" label="Actuators" hit={[396, 150, 150, 340]}>
           <rect x="420" y="474" width="96" height="16" rx="4" {...ink} />
           <circle cx="432" cy="482" r="2.6" fill="var(--vc-muted)" />
           <circle cx="504" cy="482" r="2.6" fill="var(--vc-muted)" />

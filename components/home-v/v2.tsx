@@ -10,7 +10,7 @@ import { SITE } from "@/lib/site";
 import { CountUp } from "./count-up";
 import { LEDE, Talk } from "./parts";
 import { Spotlight } from "./spotlight";
-import { FREE_ELSEWHERE, FREE_IN_KADUNA, LOWEST_DELIVERY_FEE } from "@/lib/delivery";
+import { FREE_DELIVERY_FROM, LOWEST_DELIVERY_FEE } from "@/lib/delivery";
 
 /**
  * Version 2, centre stage. The headline set large and centred, the workshop
@@ -71,9 +71,9 @@ export function HomeV2({ d }: { d: HomeData }) {
               </div>
               <div className="py-5">
                 <dd className="font-display text-[clamp(1.5rem,3vw,2.2rem)] leading-none">
-                  ₦<CountUp to={FREE_IN_KADUNA / 1000} />k
+                  ₦<CountUp to={FREE_DELIVERY_FROM / 1000} />k
                 </dd>
-                <dt className="vc-fig mt-2 text-faint">Free delivery in Kaduna over</dt>
+                <dt className="vc-fig mt-2 text-faint">Free delivery over</dt>
               </div>
             </dl>
           </Container>
@@ -123,7 +123,7 @@ export function HomeV2({ d }: { d: HomeData }) {
               <Step
                 n="03"
                 title="Delivered"
-                text={`Anywhere in Nigeria, from ${formatNaira(LOWEST_DELIVERY_FEE)}. Free from ${formatNaira(FREE_IN_KADUNA)} in Kaduna and ${formatNaira(FREE_ELSEWHERE)} elsewhere.`}
+                text={`Anywhere in Nigeria, from ${formatNaira(LOWEST_DELIVERY_FEE)}. Free over ${formatNaira(FREE_DELIVERY_FROM)}.`}
               />
             </ol>
           </Reveal>

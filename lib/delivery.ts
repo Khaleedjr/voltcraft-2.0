@@ -1,10 +1,11 @@
 /**
  * Delivery fees, by the state the order goes to.
  *
- * These are the old WooCommerce shop's rates, read from its own checkout
- * (October 2026): one flat fee per state, however much is in the order, and
- * free once the goods come to a set amount, which is lower in Kaduna, where
- * the shop is. The city within a state makes no difference.
+ * The fees are the old WooCommerce shop's, read from its own checkout
+ * (October 2026): one flat fee per state, however much is in the order; the
+ * city within a state makes no difference. Delivery is free everywhere once
+ * the goods come to ₦100,000: the owner's rule (the old shop only waived it
+ * at that amount in Kaduna, and at ₦150,000 elsewhere).
  *
  * The old shop offered no delivery at all to nine states. They are marked
  * `assumed` below with the fee of their neighbours, so an order from there
@@ -15,8 +16,8 @@
  * table.
  */
 
-export const FREE_IN_KADUNA = 100_000;
-export const FREE_ELSEWHERE = 150_000;
+/** Free delivery, to every state, once the goods in an order come to this. */
+export const FREE_DELIVERY_FROM = 100_000;
 
 export const NIGERIAN_STATES = [
   "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",
@@ -30,10 +31,10 @@ export type NigerianState = (typeof NIGERIAN_STATES)[number];
 
 export type DeliveryRate = { fee: number; freeFrom: number; assumed?: true };
 
-const kaduna: DeliveryRate = { fee: 1_500, freeFrom: FREE_IN_KADUNA };
-const near: DeliveryRate = { fee: 2_000, freeFrom: FREE_ELSEWHERE };
-const north: DeliveryRate = { fee: 3_000, freeFrom: FREE_ELSEWHERE };
-const south: DeliveryRate = { fee: 4_000, freeFrom: FREE_ELSEWHERE };
+const kaduna: DeliveryRate = { fee: 1_500, freeFrom: FREE_DELIVERY_FROM };
+const near: DeliveryRate = { fee: 2_000, freeFrom: FREE_DELIVERY_FROM };
+const north: DeliveryRate = { fee: 3_000, freeFrom: FREE_DELIVERY_FROM };
+const south: DeliveryRate = { fee: 4_000, freeFrom: FREE_DELIVERY_FROM };
 /** Not served by the old shop: the fee of the neighbouring states, until the owner says otherwise. */
 const assumedNorth: DeliveryRate = { ...north, assumed: true };
 const assumedSouth: DeliveryRate = { ...south, assumed: true };
