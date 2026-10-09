@@ -6,7 +6,8 @@ import { formatNaira } from "@/lib/format";
 
 /**
  * The sale as price tags hanging from a wire, each on its string, tilted a
- * little either way, and swinging when touched (.vc-tag* in globals.css).
+ * little either way and swaying on its own beat, swinging harder when touched
+ * or tapped (.vc-tag* in globals.css).
  * They run across the page on a wide screen and scroll sideways on a phone.
  */
 export function SaleTags({ products }: { products: Product[] }) {
@@ -14,7 +15,16 @@ export function SaleTags({ products }: { products: Product[] }) {
     <div className="vc-wire">
       <ul className="-mx-4 flex snap-x gap-5 overflow-x-auto px-4 pb-6 sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-5 lg:overflow-visible lg:px-0">
         {products.map((p, i) => (
-          <li key={p.slug} className="vc-tag-hang w-[230px] shrink-0 snap-start lg:w-auto" style={{ ["--tilt" as string]: `${i % 2 ? 2 : -2}deg` }}>
+          <li
+            key={p.slug}
+            className="vc-tag-hang w-[230px] shrink-0 snap-start lg:w-auto"
+            style={{
+              ["--tilt" as string]: `${i % 2 ? 2 : -2}deg`,
+              // each tag on its own beat, so they never sway in step
+              ["--sway" as string]: `${4 + (i % 3) * 0.7}s`,
+              ["--sway-delay" as string]: `${-i * 1.3}s`,
+            }}
+          >
             <span className="vc-tag-string" aria-hidden />
             <article className="vc-tag">
               <span className="vc-tag-hole" aria-hidden />

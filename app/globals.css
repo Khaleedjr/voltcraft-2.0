@@ -672,7 +672,9 @@ html:not([data-bg]) body.vc-glow-ground::after {
 
 /* ------------------------------------------------------------------
    The sale on the home page: price tags hanging from a wire, each on its
-   string, which swing when touched (components/sale-tags).
+   string (components/sale-tags). They sway on their own, each on its own
+   beat and out of step with the next, like tags in a breeze; touched or
+   tapped, one swings harder and settles back into the sway.
    ------------------------------------------------------------------ */
 .vc-wire {
   position: relative;
@@ -693,9 +695,14 @@ html:not([data-bg]) body.vc-glow-ground::after {
   padding-top: 30px;
   transform-origin: 50% 0;
   transform: rotate(var(--tilt));
-  transition: transform 0.3s ease;
+  animation: vc-tag-sway var(--sway, 4.4s) ease-in-out var(--sway-delay, 0s) infinite alternate;
 }
-.vc-tag-hang:hover {
+@keyframes vc-tag-sway {
+  from { transform: rotate(calc(var(--tilt) - 2.2deg)); }
+  to { transform: rotate(calc(var(--tilt) + 2.2deg)); }
+}
+.vc-tag-hang:hover,
+.vc-tag-hang:active {
   animation: vc-tag-swing 1.4s ease-out;
 }
 @keyframes vc-tag-swing {
@@ -735,7 +742,9 @@ html:not([data-bg]) body.vc-glow-ground::after {
 
 @media (prefers-reduced-motion: reduce) {
   html:not([data-bg]) body.vc-glow-ground::before,
-  .vc-tag-hang:hover {
+  .vc-tag-hang,
+  .vc-tag-hang:hover,
+  .vc-tag-hang:active {
     animation: none !important;
   }
 }
