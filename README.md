@@ -57,9 +57,8 @@ key is missing.
 | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` | Products, stock and orders are read from and written to the database; the admin works | The shop serves the bundled catalogue; the admin explains what to set up; checkout will not take payments |
 | `ADMIN_ACCOUNTS` | These people can sign in at `/admin` | Nobody can; the sign-in page says the admin is not set up |
 | `ADMIN_SESSION_SECRET` | Signs the admin session cookie (32+ characters) | Same as above |
-| `PAYSTACK_SECRET_KEY` | Checkout initialises a real Paystack transaction; the webhook and the return page both verify it server-side | Checkout records the order and tells the customer the counter will call to arrange payment |
+| `PAYSTACK_SECRET_KEY` | Checkout initialises a real Paystack transaction; the webhook and the return page both verify it server-side | Checkout takes no orders (there is no pay-later route) and points the customer to WhatsApp |
 | `NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY` | Reserved for a future inline checkout | Unused |
-| `CONTACT_WEBHOOK_URL` | Contact form POSTs the message as JSON to this endpoint (mail service, Slack/Discord webhook, CRM) | The form tells the sender to email or call instead of silently dropping the message |
 
 The service-role key bypasses row-level security, so it is server-only: it has
 no `NEXT_PUBLIC_` prefix and `lib/supabase.ts` imports `server-only`. Every
@@ -118,7 +117,6 @@ app/
   admin/(panel)/              overview, orders, products, stock, customers, analytics
   api/checkout/               starts a payment; reprices the cart server-side
   api/paystack/webhook/       confirms payments; verified against the raw body
-  api/contact/                contact form delivery
 components/                   the shop's UI
 components/admin/             the admin's UI: forms, tables, badges, charts
 lib/
@@ -180,22 +178,23 @@ imported into the database (Admin → Products), the shop serves this file.
 
 ## Product photography
 
-Imported products keep the store's own images, served from the existing
-WordPress media library at `voltcraft.org.ng/wp-content/uploads/`, which
-`next.config.ts` allows under `images.remotePatterns`. Photos added in the
-admin go to the `product-images` bucket in Supabase Storage.
-
-To stop depending on the old site — before switching WordPress off — pull the
-old images local with `node scripts/download-images.mjs`, or re-upload them
-through the admin.
+The old shop's product photos were copied into `public/products/site/`
+(resized, as WebP) so nothing depends on the WordPress site any more; a
+database imported before that is moved across with "Update the photos" on the
+admin's Products page. Photos added in the admin go to the `product-images`
+bucket in Supabase Storage.
 
 ## What still needs real data
 
-- **`lib/site.ts`** — phone number, email, WhatsApp link, opening hours, social
-  links, and the ₦25,000 free-delivery threshold.
-- **`app/(store)/delivery/page.tsx`** — delivery zones and timings, the 7-day
-  returns window and the 30-day fault window. These are commercial
-  commitments; confirm every one.
+- **`lib/site.ts`** — phone number, email, WhatsApp link, opening hours and
+  social links.
+- **`lib/delivery.ts`** — delivery fees by state, taken from the old shop's
+  checkout, and free delivery from ₦100,000 to every state (the owner's rule). The old shop did not deliver to nine
+  states; their fees (marked `assumed`) follow their neighbours and need
+  confirming.
+- **`app/(store)/delivery/page.tsx`** — delivery timings, the 7-day returns
+  window and the 30-day fault window. These are commercial commitments;
+  confirm every one.
 - **`app/(store)/about/page.tsx`** — contains no founding date, founder name or
   history, because none was supplied.
 

@@ -17,7 +17,6 @@ export const SITE = {
     { days: "Mon – Sat", time: "09:00 – 18:00" },
     { days: "Sunday", time: "Closed" },
   ],
-  freeDeliveryThreshold: 100_000,
   socials: [
     { label: "Instagram", handle: "voltcraftrobotics", href: "https://instagram.com/voltcraftrobotics", icon: "instagram" },
     { label: "WhatsApp", handle: "0903 622 5266", href: "https://wa.me/2349036225266", icon: "whatsapp" },

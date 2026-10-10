@@ -66,7 +66,7 @@ export function parseProductForm(fd: FormData, { imagePrefixes }: { imagePrefixe
   const status = statusRaw === "draft" ? "draft" : "active";
 
   const categories = [...new Set(all(fd, "categories"))].filter(isCategorySlug) as CategorySlug[];
-  if (categories.length === 0) errors.categories = "Choose at least one aisle.";
+  if (categories.length === 0) errors.categories = "Choose at least one category.";
 
   // ---- pricing
   const price = parseNaira(text(fd, "price"));

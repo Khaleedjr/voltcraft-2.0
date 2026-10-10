@@ -175,7 +175,7 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
                 </>
               }
               title={`Correct ${fixes.length} product${fixes.length === 1 ? "" : "s"}?`}
-              body={`Aisles and names are corrected on ${fixList}. A product you have edited yourself is not touched.`}
+              body={`Categories and names are corrected on ${fixList}. A product you have edited yourself is not touched.`}
               confirmLabel="Apply corrections"
             />
           }
@@ -235,9 +235,9 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
               <input name="q" defaultValue={q} placeholder="Search name, SKU or URL" className={`${field.input} pl-9`} />
             </label>
             <label className="w-full sm:w-auto">
-              <span className="sr-only">Aisle</span>
+              <span className="sr-only">Category</span>
               <AutoSubmitSelect name="category" defaultValue={category ?? ""} className={`${field.select} sm:w-48`}>
-                <option value="">All aisles</option>
+                <option value="">All categories</option>
                 {getCategories().map((c) => (
                   <option key={c.slug} value={c.slug}>
                     {c.name}
@@ -279,7 +279,7 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
                 ) : null
               }
             >
-              {filtered ? "Try a shorter search, or another aisle." : null}
+              {filtered ? "Try a shorter search, or another category." : null}
             </EmptyState>
             ) : (
               <div className={table.wrap}>
@@ -290,7 +290,7 @@ export default async function ProductsPage({ searchParams }: PageProps<"/admin/p
                         <SelectAll />
                       </th>
                       <th className={table.th}>Product</th>
-                      <th className={table.th}>Aisle</th>
+                      <th className={table.th}>Category</th>
                       <th className={table.th}>Stock</th>
                       <th className={table.thRight}>Price</th>
                       <th className={table.th}>Status</th>

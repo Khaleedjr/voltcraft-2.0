@@ -1,53 +1,45 @@
 "use client";
 
 import { useState } from "react";
+import { WhatsAppIcon } from "@/components/social-icons";
 import { Button } from "@/components/ui";
 import { SITE } from "@/lib/site";
-
-type Status =
-  | { kind: "idle" }
-  | { kind: "sending" }
-  | { kind: "sent" }
-  | { kind: "error"; message: string };
 
 const fieldClass =
   "w-full border border-line bg-raised px-3.5 py-2.5 text-[0.92rem] text-ink outline-none transition-colors placeholder:text-faint focus:border-ink";
 
+/** The message as it lands in the counter's WhatsApp. */
+function compose(name: string, subject: string, message: string): string {
+  const lines = [`Hello VoltCraft, I'm ${name}.`];
+  if (subject) lines.push(`Subject: ${subject}`);
+  lines.push("", message);
+  return lines.join("\n");
+}
+
+/**
+ * The contact form hands the message to WhatsApp rather than to a mail
+ * service: submitting opens a chat with the counter's number with the message
+ * already typed, and the sender only has to press send. Nothing goes through
+ * this site's server, so there is nothing to configure and nothing to lose.
+ *
+ * The chat opens in a new tab where the browser allows it (the shop stays
+ * open behind it); on a phone, wa.me hands over to the WhatsApp app. A link
+ * to the same chat stays under the form in case nothing opened.
+ */
 export function ContactForm() {
-  const [status, setStatus] = useState<Status>({ kind: "idle" });
+  const [opened, setOpened] = useState<string | null>(null);
 
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+  function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const form = event.currentTarget;
-    const data = Object.fromEntries(new FormData(form).entries());
-    setStatus({ kind: "sending" });
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      const json: { ok?: boolean; error?: string } = await res.json();
-      if (res.ok && json.ok) {
-        setStatus({ kind: "sent" });
-        form.reset();
-      } else {
-        setStatus({ kind: "error", message: json.error ?? "Something went wrong." });
-      }
-    } catch {
-      setStatus({ kind: "error", message: "Network problem — please try again." });
-    }
-  }
-
-  if (status.kind === "sent") {
-    return (
-      <div className="border border-earth bg-sheet p-6">
-        <p className="font-display text-[1.3rem] tracking-[-0.018em]">Message sent.</p>
-        <p className="mt-2 text-[0.92rem] leading-relaxed text-muted">
-          We reply during counter hours, usually the same working day.
-        </p>
-      </div>
-    );
+    const data = new FormData(event.currentTarget);
+    const field = (k: string) => String(data.get(k) ?? "").trim();
+    const url = `${SITE.whatsapp}?text=${encodeURIComponent(compose(field("name"), field("subject"), field("message")))}`;
+    const tab = window.open(url, "_blank");
+    if (tab) tab.opener = null;
+    // wa.me is an external site, not a route of this app
+    // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+    else window.location.href = url;
+    setOpened(url);
   }
 
   return (
@@ -60,43 +52,42 @@ export function ContactForm() {
           <input id="cf-name" name="name" required maxLength={120} className={fieldClass} placeholder="Ada Okoro" />
         </div>
         <div>
-          <label htmlFor="cf-email" className="vc-fig mb-2 block text-muted">
-            Email
+          <label htmlFor="cf-subject" className="vc-fig mb-2 block text-muted">
+            Subject <span className="normal-case tracking-normal text-faint">(optional)</span>
           </label>
-          <input id="cf-email" name="email" type="email" required maxLength={200} className={fieldClass} placeholder="you@example.com" />
+          <input id="cf-subject" name="subject" maxLength={200} className={fieldClass} placeholder="Stock request — STM32 boards" />
         </div>
-      </div>
-      <div>
-        <label htmlFor="cf-subject" className="vc-fig mb-2 block text-muted">
-          Subject
-        </label>
-        <input id="cf-subject" name="subject" required maxLength={200} className={fieldClass} placeholder="Stock request — STM32 boards" />
       </div>
       <div>
         <label htmlFor="cf-message" className="vc-fig mb-2 block text-muted">
           Message
         </label>
-        <textarea id="cf-message" name="message" required rows={6} maxLength={5000} className={`${fieldClass} resize-y`} placeholder="What are you building, and what do you need?" />
+        <textarea
+          id="cf-message"
+          name="message"
+          required
+          rows={6}
+          maxLength={2000}
+          className={`${fieldClass} resize-y`}
+          placeholder="What are you building, and what do you need?"
+        />
       </div>
 
-      {status.kind === "error" ? (
-        <p role="alert" className="border-l-2 border-live bg-sheet px-4 py-3 text-[0.88rem] leading-relaxed text-muted">
-          {status.message}{" "}
-          <a href={`mailto:${SITE.email}`} className="border-b border-live text-ink hover:text-live">
-            {SITE.email}
-          </a>{" "}
-          ·{" "}
-          <a href={SITE.phoneHref} className="border-b border-live text-ink hover:text-live">
-            {SITE.phone}
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+        <Button type="submit">
+          <WhatsAppIcon className="size-4" /> Send on WhatsApp
+        </Button>
+        <p className="text-[0.82rem] text-muted">Opens WhatsApp with your message ready to send to {SITE.phone}.</p>
+      </div>
+
+      {opened ? (
+        <p role="status" className="border-l-2 border-earth bg-sheet px-4 py-3 text-[0.88rem] leading-relaxed text-muted">
+          WhatsApp should now be open with your message. Just press send.{" "}
+          <a href={opened} target="_blank" rel="noreferrer" className="border-b border-live font-semibold text-ink hover:text-live">
+            Didn&apos;t open? Tap here
           </a>
         </p>
       ) : null}
-
-      <div>
-        <Button type="submit" disabled={status.kind === "sending"}>
-          {status.kind === "sending" ? "Sending…" : "Send message"}
-        </Button>
-      </div>
     </form>
   );
 }

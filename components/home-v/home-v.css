@@ -1,0 +1,836 @@
+/* ------------------------------------------------------------------
+   The five home page versions (components/home-v/v1..v5.tsx). Each
+   version's rules carry its number: hv1-, hv2-... Everything goes through
+   the site's tokens, so both themes work, and every motion stands still
+   under reduced motion (bottom of this file).
+   ------------------------------------------------------------------ */
+
+/* ============================================================ 1 · sheet */
+.hv1-sheet {
+  box-shadow: 0 30px 60px -40px rgba(var(--vc-shadow), 0.35);
+}
+.hv1-sheet::before,
+.hv1-sheet::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: var(--vc-ink);
+  border-style: solid;
+}
+.hv1-sheet::before {
+  top: -1px;
+  left: -1px;
+  border-width: 2px 0 0 2px;
+}
+.hv1-sheet::after {
+  right: -1px;
+  bottom: -1px;
+  border-width: 0 2px 2px 0;
+}
+.hv1-sheet-tag {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  color: var(--vc-faint);
+}
+
+/* the callouts on the drawing: they come in one after another, and lift
+   when pointed at */
+.hv1-callout {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  max-width: 180px;
+  border: 1px solid var(--vc-ink);
+  background: var(--vc-raised);
+  padding: 8px 10px;
+  box-shadow: 4px 4px 0 var(--vc-gold);
+  animation: hv1-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hv1-callout:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--vc-gold);
+}
+.hv1-callout::before {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--vc-ink);
+  background: var(--vc-gold);
+  border-radius: 50%;
+}
+.hv1-c1 { top: -24px; left: 3%; animation-delay: 0.4s; }
+.hv1-c1::before { right: 22px; bottom: -22px; }
+.hv1-c2 { top: 16%; right: -5%; animation-delay: 0.7s; }
+.hv1-c2::before { left: -22px; bottom: 4px; }
+.hv1-c3 { bottom: -22px; left: 40%; animation-delay: 1s; }
+.hv1-c3::before { left: 26px; top: -22px; }
+@keyframes hv1-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@media (max-width: 639px) {
+  .hv1-callout { display: none; }
+}
+
+/* the word under a gold highlighter, drawn across once */
+.hv1-mark {
+  background: linear-gradient(var(--vc-gold), var(--vc-gold)) no-repeat 0 88% / 0% 0.32em;
+  animation: hv1-mark 0.9s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes hv1-mark {
+  to { background-size: 100% 0.32em; }
+}
+
+.hv1-title > div {
+  padding: 14px 18px;
+  border-color: var(--vc-line);
+}
+.hv1-title > div:not(:last-child) {
+  border-right: 1px solid var(--vc-line);
+}
+.hv1-title > div:nth-child(-n + 2) {
+  border-bottom: 1px solid var(--vc-line);
+}
+@media (min-width: 1024px) {
+  .hv1-title > div:nth-child(-n + 2) { border-bottom: 0; }
+}
+@media (max-width: 1023px) {
+  .hv1-title > div:nth-child(2) { border-right: 0; }
+}
+.hv1-title dt {
+  font-family: var(--font-mono);
+  font-size: 0.656rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--vc-faint);
+}
+.hv1-title dd {
+  margin-top: 4px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.4rem, 2.6vw, 2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* the bill of materials: rows that fill with gold from the left on hover,
+   with a photo from the aisle lifting beside the count */
+.hv1-bom-head,
+.hv1-bom-row {
+  grid-template-columns: 2.5rem minmax(0, 1fr) auto 1.5rem;
+  gap: 1rem;
+  align-items: center;
+}
+@media (min-width: 768px) {
+  .hv1-bom-head,
+  .hv1-bom-row {
+    grid-template-columns: 3.5rem minmax(0, 0.9fr) minmax(0, 1.4fr) 4rem 2rem;
+  }
+}
+.hv1-bom-head {
+  padding: 0 12px 10px;
+}
+.hv1-bom-row {
+  position: relative;
+  display: grid;
+  padding: 18px 12px;
+  isolation: isolate;
+}
+.hv1-bom-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--vc-wash-live);
+  border-left: 3px solid var(--vc-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hv1-bom-row:hover::before {
+  transform: scaleX(1);
+}
+.hv1-bom-pop {
+  position: absolute;
+  right: 7rem;
+  top: 50%;
+  width: 104px;
+  z-index: 3;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-40%) rotate(-4deg) scale(0.9);
+  transition: opacity 0.2s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 18px 30px -16px rgba(var(--vc-shadow), 0.5);
+}
+.hv1-bom-row:hover .hv1-bom-pop {
+  opacity: 1;
+  transform: translateY(-50%) rotate(-4deg) scale(1);
+}
+@media (hover: none), (max-width: 767px) {
+  .hv1-bom-pop { display: none; }
+}
+
+/* a part with dimension ticks at two corners of its photo */
+.hv1-tick {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: var(--vc-live);
+  border-style: solid;
+  transition: transform 0.25s ease;
+}
+.hv1-tick-a { top: -5px; left: -5px; border-width: 1.5px 0 0 1.5px; }
+.hv1-tick-b { bottom: -5px; right: -5px; border-width: 0 1.5px 1.5px 0; }
+.hv1-part:hover .hv1-tick-a { transform: translate(-3px, -3px); }
+.hv1-part:hover .hv1-tick-b { transform: translate(3px, 3px); }
+.hv1-rail {
+  scrollbar-width: thin;
+}
+
+/* ============================================================ 2 · stage */
+.hv2-light {
+  background:
+    radial-gradient(40% 50% at 50% 62%, var(--vc-glow-live), transparent 70%),
+    radial-gradient(60% 40% at 50% 0%, var(--vc-wash-ink), transparent 70%);
+}
+.hv2-title {
+  animation: hv2-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes hv2-rise {
+  from { opacity: 0; transform: translateY(24px); letter-spacing: -0.02em; }
+  to { opacity: 1; transform: none; }
+}
+/* real parts floating round the stage, each on its own slow beat */
+.hv2-float {
+  position: absolute;
+  z-index: 2;
+  width: 112px;
+  display: none;
+  animation: hv2-bob 6s ease-in-out infinite;
+  box-shadow: 0 20px 30px -18px rgba(var(--vc-shadow), 0.45);
+}
+@media (min-width: 1024px) {
+  .hv2-float { display: block; }
+}
+.hv2-float-0 { left: 0; top: 8%; --r: -6deg; }
+.hv2-float-1 { left: 5%; bottom: 14%; --r: 5deg; animation-duration: 7.5s; animation-delay: -2s; }
+.hv2-float-2 { right: 1%; top: 4%; --r: 6deg; animation-duration: 6.8s; animation-delay: -4s; }
+.hv2-float-3 { right: 4%; bottom: 20%; --r: -4deg; animation-duration: 8s; animation-delay: -1s; }
+@keyframes hv2-bob {
+  0%, 100% { transform: translateY(0) rotate(var(--r)); }
+  50% { transform: translateY(-14px) rotate(calc(var(--r) * -0.5)); }
+}
+.hv2-float:hover {
+  animation-play-state: paused;
+}
+.hv2-float-tag {
+  position: absolute;
+  left: 50%;
+  bottom: -10px;
+  transform: translateX(-50%);
+  background: var(--vc-ink);
+  color: var(--vc-ground);
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+/* as it scrolls up, the stage comes forward a little, where the browser can */
+@supports (animation-timeline: view()) {
+  .hv2-stage {
+    animation: hv2-forward linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 45%;
+  }
+  @keyframes hv2-forward {
+    from { transform: scale(0.94); opacity: 0.6; }
+    to { transform: scale(1); opacity: 1; }
+  }
+}
+
+/* the aisles, two rows sliding past each other; pointed at, they stop */
+.hv2-marquee {
+  overflow: hidden;
+  padding: 8px 0;
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.hv2-marquee + .hv2-marquee {
+  margin-top: 6px;
+}
+.hv2-track {
+  display: flex;
+  width: max-content;
+  animation: hv2-slide 48s linear infinite;
+}
+.hv2-marquee.is-reverse .hv2-track {
+  animation-direction: reverse;
+  animation-duration: 56s;
+}
+.hv2-marquee:hover .hv2-track,
+.hv2-marquee:focus-within .hv2-track {
+  animation-play-state: paused;
+}
+.hv2-run {
+  display: flex;
+  gap: 14px;
+  padding-right: 14px;
+}
+@keyframes hv2-slide {
+  to { transform: translateX(-50%); }
+}
+.hv2-chip {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--vc-line);
+  background: var(--vc-raised);
+  padding: 10px 22px 10px 10px;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, transform 0.25s ease;
+}
+.hv2-chip:hover {
+  border-color: var(--vc-ink);
+  transform: translateY(-3px);
+}
+
+/* the spotlight: each deal comes in from the side */
+.hv2-spot-photo,
+.hv2-spot-text {
+  animation: hv2-swap 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.hv2-spot-text {
+  animation-delay: 0.06s;
+}
+@keyframes hv2-swap {
+  from { opacity: 0; transform: translateX(18px); }
+  to { opacity: 1; transform: none; }
+}
+.hv2-tab {
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+}
+.hv2-tab:hover,
+.hv2-tab.is-on {
+  opacity: 1;
+}
+.hv2-tab-bar {
+  display: block;
+  height: 2px;
+  margin-top: 6px;
+  background: var(--vc-line);
+  position: relative;
+  overflow: hidden;
+}
+.hv2-tab.is-on .hv2-tab-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--vc-gold);
+  transform-origin: left;
+  animation: hv2-fill 5s linear both;
+  animation-play-state: inherit;
+}
+@keyframes hv2-fill {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* three steps, joined by a line that draws across when they come in */
+.hv2-line {
+  position: absolute;
+  top: 28px;
+  left: 16%;
+  right: 16%;
+  height: 0;
+  border-top: 2px dashed var(--vc-line);
+  display: none;
+  transform-origin: left;
+}
+@media (min-width: 768px) {
+  .hv2-line { display: block; }
+}
+.reveal-init .hv2-line { transform: scaleX(0); }
+.reveal-in .hv2-line { transform: scaleX(1); transition: transform 1.2s 0.2s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* ============================================================ 3 · split */
+.hv3-spy {
+  transition: color 0.2s ease;
+}
+.hv3-spy:hover,
+.hv3-spy[aria-current="true"] {
+  color: var(--vc-ink);
+}
+.hv3-spy-bar {
+  height: 2px;
+  width: 0;
+  background: var(--vc-gold);
+  transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hv3-spy[aria-current="true"] .hv3-spy-bar {
+  width: 48px;
+}
+
+/* an aisle as a fan of three of its parts, which spreads when pointed at */
+.hv3-aisle {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 4px;
+}
+@media (max-width: 479px) {
+  .hv3-aisle { grid-template-columns: 104px minmax(0, 1fr) auto; gap: 14px; }
+}
+.hv3-fan {
+  position: relative;
+  height: 84px;
+}
+.hv3-card {
+  position: absolute;
+  top: 6px;
+  width: 72px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 10px 18px -12px rgba(var(--vc-shadow), 0.5);
+}
+.hv3-card-0 { left: 0; transform: rotate(-8deg); z-index: 1; }
+.hv3-card-1 { left: 22px; transform: rotate(2deg); z-index: 2; }
+.hv3-card-2 { left: 44px; transform: rotate(10deg); z-index: 3; }
+.hv3-aisle:hover .hv3-card-0 { transform: translate(-10px, -4px) rotate(-14deg); }
+.hv3-aisle:hover .hv3-card-1 { transform: translate(6px, -10px) rotate(0deg); }
+.hv3-aisle:hover .hv3-card-2 { transform: translate(24px, -2px) rotate(14deg); }
+
+.hv3-deal {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border: 1px solid var(--vc-line);
+  background: var(--vc-raised);
+  padding: 12px;
+  transition: border-color 0.2s ease, transform 0.25s ease;
+}
+.hv3-deal:hover {
+  border-color: var(--vc-ink);
+  transform: translateX(4px);
+}
+.hv3-bar {
+  position: relative;
+  flex: 1;
+  max-width: 200px;
+  height: 6px;
+  background: var(--vc-line-soft);
+  overflow: hidden;
+}
+.hv3-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: var(--off);
+  background: var(--vc-gold);
+  transform-origin: left;
+}
+.reveal-init .hv3-bar::after { transform: scaleX(0); }
+.reveal-in .hv3-bar::after { transform: scaleX(1); transition: transform 0.9s 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* ============================================================ 4 · night */
+/* the workshop after hours: dark in either theme */
+.hv4-night {
+  --vc-ground: #15120e;
+  --vc-sheet: #1c1813;
+  --vc-raised: #242019;
+  --vc-ink: #f0ece5;
+  --vc-muted: #b3aa9c;
+  --vc-faint: #8f8778;
+  --vc-line: #3d372d;
+  --vc-line-soft: #272219;
+  --vc-trace: #6b6152;
+  --vc-hairline: rgba(255, 216, 150, 0.06);
+  --vc-live: #ffbd59;
+  --vc-live-ink: #23190a;
+  --vc-gold-hover: #ffd08a;
+  background: #15120e;
+  color: var(--vc-ink);
+}
+.hv4-lamp {
+  --mx: 70%;
+  --my: 40%;
+}
+.hv4-lamp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(420px circle at var(--mx) var(--my), rgba(255, 189, 89, 0.16), transparent 70%);
+  transition: background 0.1s linear;
+}
+.hv4-art .vc-workshop {
+  filter: drop-shadow(0 0 18px rgba(255, 189, 89, 0.12));
+}
+.hv4-glow {
+  color: var(--vc-gold);
+  text-shadow: 0 0 28px rgba(255, 189, 89, 0.45);
+  animation: hv4-flicker 5s steps(1, end) infinite;
+}
+@keyframes hv4-flicker {
+  0%, 100% { opacity: 1; }
+  91% { opacity: 0.55; }
+  92% { opacity: 1; }
+  94% { opacity: 0.7; }
+  95% { opacity: 1; }
+}
+.hv4-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #6ec489;
+  box-shadow: 0 0 0 0 rgba(110, 196, 137, 0.6);
+  animation: hv4-ping 2s ease-out infinite;
+}
+@keyframes hv4-ping {
+  to { box-shadow: 0 0 0 10px rgba(110, 196, 137, 0); }
+}
+.hv4-pulse {
+  stroke-dasharray: 70 930;
+  animation: hv4-run 3.2s linear infinite;
+  filter: drop-shadow(0 0 4px var(--vc-gold));
+}
+@keyframes hv4-run {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* the aisles as a board: cells share their hairlines; a pad at each corner;
+   pointed at, a cell lights and its icon traces itself in again */
+.hv4-board {
+  border-top: 1px solid var(--vc-line);
+  border-left: 1px solid var(--vc-line);
+}
+.hv4-board > li {
+  border-right: 1px solid var(--vc-line);
+  border-bottom: 1px solid var(--vc-line);
+}
+.hv4-cell {
+  position: relative;
+  display: block;
+  height: 100%;
+  padding: 28px 26px;
+  transition: background-color 0.25s ease;
+}
+.hv4-cell::before,
+.hv4-cell::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid var(--vc-trace);
+  background: var(--vc-ground);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.hv4-cell::before { top: -4px; left: -4px; }
+.hv4-cell::after { bottom: -4px; right: -4px; }
+.hv4-cell:hover {
+  background: var(--vc-wash-live);
+}
+.hv4-cell:hover::before,
+.hv4-cell:hover::after {
+  background: var(--vc-gold);
+  border-color: var(--vc-live);
+}
+.hv4-icon {
+  color: var(--vc-live);
+}
+.hv4-icon path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 0;
+}
+.hv4-cell:hover .hv4-icon path {
+  animation: hv4-draw 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+@keyframes hv4-draw {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* price tags on a wire */
+.hv4-wire {
+  position: relative;
+  padding-top: 18px;
+}
+.hv4-wire::before {
+  content: "";
+  position: absolute;
+  left: -100vw;
+  right: -100vw;
+  top: 18px;
+  height: 2px;
+  background: var(--vc-muted);
+  opacity: 0.6;
+}
+.hv4-hang {
+  position: relative;
+  padding-top: 30px;
+  transform-origin: 50% 0;
+  transform: rotate(var(--tilt));
+  transition: transform 0.3s ease;
+}
+.hv4-hang:hover {
+  animation: hv4-swing 1.4s ease-out;
+}
+@keyframes hv4-swing {
+  0% { transform: rotate(var(--tilt)); }
+  20% { transform: rotate(7deg); }
+  40% { transform: rotate(-5deg); }
+  60% { transform: rotate(3deg); }
+  80% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(0deg); }
+}
+.hv4-string {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1.5px;
+  height: 34px;
+  background: var(--vc-muted);
+}
+.hv4-tag {
+  position: relative;
+  border: 1px solid var(--vc-line);
+  background: var(--vc-raised);
+  padding: 22px 14px 14px;
+  box-shadow: 0 16px 30px -20px rgba(var(--vc-shadow), 0.5);
+}
+.hv4-hole {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--vc-muted);
+  background: var(--vc-sheet);
+}
+
+/* ============================================================ 5 · window */
+/* three deals in the window, each 4s of a 12s turn */
+.hv5-slide {
+  opacity: 0;
+  visibility: hidden;
+  animation: hv5-turn 12s infinite;
+}
+@keyframes hv5-turn {
+  0% { opacity: 0; visibility: hidden; transform: scale(0.985); }
+  3% { opacity: 1; visibility: visible; transform: none; }
+  31% { opacity: 1; visibility: visible; transform: none; }
+  34%, 100% { opacity: 0; visibility: hidden; transform: scale(1.01); }
+}
+.hv5-pip {
+  position: relative;
+  height: 3px;
+  background: var(--vc-line);
+  overflow: hidden;
+}
+/* each pip fills while its deal is in the window; the delay comes from the
+   pip's inline style, the same as its slide's */
+.hv5-pip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--vc-gold);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: hv5-pip 12s linear infinite;
+  animation-delay: inherit;
+}
+@keyframes hv5-pip {
+  0% { transform: scaleX(0); }
+  33% { transform: scaleX(1); }
+  33.01%, 100% { transform: scaleX(0); }
+}
+.hv5-stamp {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background: var(--vc-gold);
+  color: var(--vc-live-ink);
+  border: 2px dashed var(--vc-live-ink);
+  outline: 4px solid var(--vc-gold);
+  transform: rotate(-12deg);
+  text-align: center;
+  align-content: center;
+}
+
+/* the aisles, a mosaic of photographs: the two biggest large, the next wide, six small */
+.hv5-mosaic {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 170px;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .hv5-mosaic {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-auto-rows: 190px;
+    grid-auto-flow: dense;
+  }
+  .hv5-big { grid-column: span 2; grid-row: span 2; }
+  .hv5-wide { grid-column: span 2; }
+}
+.hv5-tile {
+  position: relative;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+.hv5-tile .vc-frame {
+  border-radius: 0;
+}
+.hv5-label {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: var(--vc-raised);
+  border-top: 1px solid var(--vc-line);
+  border-right: 1px solid var(--vc-line);
+  padding: 10px 14px;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hv5-tile:hover .hv5-label {
+  background: var(--vc-gold);
+  color: var(--vc-live-ink);
+}
+.hv5-tile:hover .hv5-label .text-faint {
+  color: var(--vc-live-ink);
+}
+
+/* ===================================================== reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .hv1-callout,
+  .hv2-title,
+  .hv2-float,
+  .hv2-track,
+  .hv2-stage,
+  .hv2-spot-photo,
+  .hv2-spot-text,
+  .hv4-glow,
+  .hv4-dot,
+  .hv4-pulse,
+  .hv4-hang:hover,
+  .hv4-cell:hover .hv4-icon path {
+    animation: none !important;
+  }
+  .hv1-mark {
+    animation: none;
+    background-size: 100% 0.32em;
+  }
+  .hv2-track {
+    flex-wrap: wrap;
+    width: auto;
+  }
+  .hv2-run[aria-hidden] {
+    display: none;
+  }
+  /* the window shows its first deal and stays on it */
+  .hv5-slide {
+    animation: none !important;
+  }
+  .hv5-slide:first-child {
+    opacity: 1;
+    visibility: visible;
+  }
+  .hv5-pip::after {
+    animation: none !important;
+  }
+}
+
+/* ===================================================== backgrounds
+   Five alternatives to the drawing-sheet grid, picked with the second row of
+   the switcher (components/home-v/background-picker.tsx), which sets
+   <html data-bg="1..5">. Each takes the grid off the body and lays its own
+   pattern on a fixed layer behind the page, so the page scrolls over it like
+   a desk mat. Patterns are masks filled with a theme token, so they follow
+   the theme. The files are in public/bg/. */
+html[data-bg] body {
+  background-image: none;
+}
+html[data-bg] body::before,
+html[data-bg="5"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* A · perfboard: a dot every 22px, a copper pad every fifth */
+html[data-bg="1"] body::before {
+  background-image:
+    radial-gradient(circle, color-mix(in srgb, var(--vc-gold) 70%, transparent) 2.6px, transparent 3.2px),
+    radial-gradient(circle, var(--vc-trace) 1.15px, transparent 1.6px);
+  background-size: 110px 110px, 22px 22px;
+  opacity: 0.6;
+}
+
+/* B · circuit: traces, vias and a chip, faint */
+html[data-bg="2"] body::before {
+  background-color: var(--vc-trace);
+  -webkit-mask: url("/bg/circuit.svg") 0 0 / 240px 240px repeat;
+  mask: url("/bg/circuit.svg") 0 0 / 240px 240px repeat;
+  opacity: 0.5;
+}
+
+/* C · isometric: the triangle grid of a CAD view or a build plate */
+html[data-bg="3"] body::before {
+  background-color: var(--vc-line);
+  -webkit-mask: url("/bg/iso.svg") 0 0 / 83.14px 48px repeat;
+  mask: url("/bg/iso.svg") 0 0 / 83.14px 48px repeat;
+  opacity: 0.55;
+}
+
+/* D · contours: lines like a map's, or a print's layers */
+html[data-bg="4"] body::before {
+  background-color: var(--vc-trace);
+  -webkit-mask: url("/bg/contours.svg") 0 0 / 720px 720px repeat;
+  mask: url("/bg/contours.svg") 0 0 / 720px 720px repeat;
+  opacity: 0.55;
+}
+
+/* E · glow: no lines at all; soft light drifting slowly, with a little grain */
+html[data-bg="5"] body::before {
+  inset: -20%;
+  background:
+    radial-gradient(34% 30% at 78% 18%, var(--vc-glow-live), transparent 70%),
+    radial-gradient(30% 34% at 14% 62%, var(--vc-wash-live), transparent 70%),
+    radial-gradient(26% 26% at 60% 88%, var(--vc-glow-live), transparent 70%),
+    radial-gradient(40% 40% at 30% 10%, var(--vc-wash-ink), transparent 70%);
+  animation: bg-drift 36s ease-in-out infinite alternate;
+}
+html[data-bg="5"] body::after {
+  background-image: url("/bg/grain.svg");
+  opacity: 0.07;
+}
+:root[data-theme="dark"][data-bg="5"] body::after {
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+}
+@keyframes bg-drift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-4%, 3%) rotate(6deg); }
+  100% { transform: translate(3%, -2%) rotate(-4deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[data-bg="5"] body::before {
+    animation: none !important;
+  }
+}

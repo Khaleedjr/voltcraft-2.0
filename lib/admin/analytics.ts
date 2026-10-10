@@ -534,7 +534,7 @@ export function buildReport(input: {
     previous,
     series,
     products: productRows,
-    categories: fold(shareLines(aisles, totals.productRevenue), 7, "Other aisles"),
+    categories: fold(shareLines(aisles, totals.productRevenue), 7, "Other categories"),
     states: fold(shareLines(places, totals.revenue), 7, "Other states"),
     channels: fold(shareLines(channels, totals.revenue), 5, "Other ways"),
     customers: [...buyers.values()]

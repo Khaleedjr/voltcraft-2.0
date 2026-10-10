@@ -160,7 +160,7 @@ export default async function AnalyticsPage({ searchParams }: PageProps<"/admin/
           <Panel title="Best sellers" aside={<span className="text-[0.76rem] text-faint">By revenue</span>} flush>
             <TopProducts report={report} />
           </Panel>
-          <Panel title="Aisles" aside={<span className="text-[0.76rem] text-faint">Product revenue</span>}>
+          <Panel title="Categories" aside={<span className="text-[0.76rem] text-faint">Product revenue</span>}>
             <BarList
               lines={report.categories.map((c) => ({
                 key: c.key,

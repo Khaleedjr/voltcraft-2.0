@@ -7,7 +7,8 @@ import { maxOrderable } from "@/lib/catalogue";
 import { ProductImage } from "@/components/product-image";
 import { ButtonLink, Fig } from "@/components/ui";
 import { formatNaira } from "@/lib/format";
-import { DELIVERY_FEE, lineKey, priceOrder, stockPool } from "@/lib/orders";
+import { FREE_DELIVERY_FROM, LOWEST_DELIVERY_FEE } from "@/lib/delivery";
+import { lineKey, priceOrder, stockPool } from "@/lib/orders";
 import { SITE } from "@/lib/site";
 
 export function CartView() {
@@ -33,7 +34,8 @@ export function CartView() {
     );
   }
 
-  const shortfall = SITE.freeDeliveryThreshold - order.subtotal;
+  // the state, and so the delivery fee, is only known at checkout
+  const freeEverywhere = order.subtotal >= FREE_DELIVERY_FROM;
   // A counted product's options all draw on the same shelf.
   const held = new Map<string, number>();
   for (const i of order.items) {
@@ -116,20 +118,27 @@ export function CartView() {
           </div>
           <div className="flex justify-between gap-4">
             <dt className="text-muted">Delivery</dt>
-            <dd className="tabular-nums">
-              {order.freeDelivery ? <span className="text-earth">Free</span> : formatNaira(order.delivery)}
+            <dd className="text-right tabular-nums">
+              {freeEverywhere ? (
+                <span className="text-earth">Free</span>
+              ) : (
+                <>
+                  From {formatNaira(LOWEST_DELIVERY_FEE)}
+                  <span className="block text-[0.78rem] text-muted">by state, at checkout</span>
+                </>
+              )}
             </dd>
           </div>
           <div className="mt-2 flex items-baseline justify-between gap-4 border-t border-line pt-4">
-            <dt className="font-semibold">Total</dt>
+            <dt className="font-semibold">{freeEverywhere ? "Total" : "Total before delivery"}</dt>
             <dd className="font-display text-[1.6rem] tabular-nums">{formatNaira(order.total)}</dd>
           </div>
         </dl>
 
-        {!order.freeDelivery && shortfall > 0 ? (
+        {!freeEverywhere ? (
           <p className="mt-4 border-l-2 border-live pl-3 text-[0.85rem] leading-relaxed text-muted">
-            Add {formatNaira(shortfall)} more and delivery drops from {formatNaira(DELIVERY_FEE)} to
-            free.
+            Add {formatNaira(FREE_DELIVERY_FROM - order.subtotal)} more and delivery is free, anywhere in
+            Nigeria.
           </p>
         ) : null}
 

@@ -1,8 +1,6 @@
 import { maxOrderable, type Product } from "@/lib/catalogue";
+import { deliveryFor, isNigerianState, NIGERIAN_STATES } from "@/lib/delivery";
 import { SITE } from "@/lib/site";
-
-/** Flat national delivery fee, waived above the free-delivery threshold. */
-export const DELIVERY_FEE = 3_500;
 
 /** `variant` is the label of the option chosen, for a product sold in options. */
 export type OrderLineInput = { slug: string; variant?: string; qty: number };
@@ -52,9 +50,12 @@ export function unitPriceFor(product: Pick<Product, "price" | "variants">, varia
 export type PricedOrder<P extends Priceable = Product> = {
   items: PricedLine<P>[];
   subtotal: number;
+  /** Zero until the state is known, and when delivery there is free. */
   delivery: number;
   total: number;
   freeDelivery: boolean;
+  /** Whether delivery is in the total: false while no state has been given (the cart). */
+  deliveryKnown: boolean;
 };
 
 /**
@@ -65,10 +66,14 @@ export type PricedOrder<P extends Priceable = Product> = {
  * Stock is counted per product, not per option, so for a counted product the
  * cap applies to all its lines together: listing it twice, or in two options,
  * cannot order past what is on the shelf. See stockPool.
+ *
+ * Delivery depends on the state it goes to (lib/delivery.ts). Without one, as
+ * in the cart, it is left out of the total and `deliveryKnown` is false.
  */
 export function priceOrder<P extends Priceable>(
   lines: OrderLineInput[],
   lookup: (slug: string) => P | undefined,
+  state?: string,
 ): PricedOrder<P> {
   const wanted = new Map<string, OrderLineInput>();
   for (const line of lines) {
@@ -94,9 +99,16 @@ export function priceOrder<P extends Priceable>(
     items.push({ product, ...(variant ? { variant } : {}), unitPrice, qty: capped, lineTotal: unitPrice * capped });
   }
   const subtotal = items.reduce((n, i) => n + i.lineTotal, 0);
-  const freeDelivery = subtotal >= SITE.freeDeliveryThreshold;
-  const delivery = items.length === 0 || freeDelivery ? 0 : DELIVERY_FEE;
-  return { items, subtotal, delivery, total: subtotal + delivery, freeDelivery };
+  const rate = state && items.length ? deliveryFor(state, subtotal) : null;
+  const delivery = rate?.fee ?? 0;
+  return {
+    items,
+    subtotal,
+    delivery,
+    total: subtotal + delivery,
+    freeDelivery: rate?.free ?? false,
+    deliveryKnown: items.length === 0 || rate !== null,
+  };
 }
 
 /** Human-readable, sortable, and safe to show a customer over the phone. */
@@ -116,14 +128,6 @@ export type CustomerDetails = {
   notes?: string;
 };
 
-const NIGERIAN_STATES = [
-  "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno",
-  "Cross River", "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT — Abuja", "Gombe",
-  "Imo", "Jigawa", "Kaduna", "Kano", "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos",
-  "Nasarawa", "Niger", "Ogun", "Ondo", "Osun", "Oyo", "Plateau", "Rivers", "Sokoto",
-  "Taraba", "Yobe", "Zamfara",
-] as const;
-
 export const STATES: readonly string[] = NIGERIAN_STATES;
 
 export function parseCustomer(value: unknown): CustomerDetails | null {
@@ -140,6 +144,8 @@ export function parseCustomer(value: unknown): CustomerDetails | null {
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(out.email)) return null;
   if (out.phone.replace(/\D/g, "").length < 10) return null;
+  // delivery is priced by state, so it has to be one we have a price for
+  if (!isNigerianState(out.state)) return null;
   if (typeof v.notes === "string" && v.notes.length <= 1000) out.notes = v.notes.trim();
   return out as CustomerDetails;
 }

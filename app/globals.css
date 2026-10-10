@@ -336,143 +336,154 @@
   .vc-wash-block {
     background: radial-gradient(60% 120% at 88% 10%, var(--vc-glow-live), transparent 55%);
   }
+
+  /* --- the aisle index ---------------------------------------------------
+     Small screens and touch: rows divided by hairlines, a photo beside each
+     name. With a pointer and room: the names set large and flowing like an
+     index, a gold slash between them; hovering one lifts a photo off the line
+     and dims the rest. */
+  .vc-aisles {
+    border-top: 1px solid var(--vc-line);
+  }
+  .vc-aisle-item {
+    border-bottom: 1px solid var(--vc-line);
+  }
+  .vc-aisle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.7rem 0;
+  }
+  .vc-aisle-thumb {
+    width: 3.25rem;
+    flex: none;
+  }
+  .vc-aisle-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    background: linear-gradient(var(--vc-gold), var(--vc-gold)) 0 92% / 0 0.09em no-repeat;
+    transition:
+      color 0.2s ease,
+      background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .vc-aisle-count {
+    align-self: flex-start;
+    margin-top: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--vc-faint);
+  }
+  .vc-aisle-arrow {
+    margin-left: auto;
+    color: var(--vc-muted);
+  }
+  .vc-aisle-pop {
+    display: none;
+  }
+  .vc-aisle:hover .vc-aisle-name,
+  .vc-aisle:focus-visible .vc-aisle-name {
+    color: var(--vc-live);
+    background-size: 100% 0.09em;
+  }
+
+  @media (hover: hover) and (min-width: 768px) {
+    .vc-aisles {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      row-gap: 0.12em;
+      border: 0;
+      font-size: clamp(2.3rem, 4.6vw, 4.1rem);
+    }
+    .vc-aisle-item {
+      display: flex;
+      align-items: baseline;
+      border: 0;
+    }
+    .vc-aisle-item:not(:last-child)::after {
+      content: "/";
+      margin: 0 0.32em 0 0.28em;
+      font-family: var(--font-display);
+      font-weight: 300;
+      color: var(--vc-gold);
+    }
+    .vc-aisle {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0;
+      padding: 0;
+      transition: opacity 0.25s ease;
+    }
+    .vc-aisle-thumb,
+    .vc-aisle-arrow {
+      display: none;
+    }
+    .vc-aisle-name {
+      font-size: 1em;
+    }
+    .vc-aisle-count {
+      margin: 0.3em 0 0 0.25em;
+      font-size: 0.2em;
+    }
+    .vc-aisles:has(.vc-aisle:hover) .vc-aisle:not(:hover) {
+      opacity: 0.28;
+    }
+    .vc-aisle-pop {
+      display: block;
+      position: absolute;
+      z-index: 20;
+      left: 50%;
+      bottom: 88%;
+      width: 10.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 14px) rotate(-6deg) scale(0.9);
+      transition:
+        opacity 0.2s ease,
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      filter: drop-shadow(0 18px 26px rgba(var(--vc-shadow), 0.28));
+    }
+    .vc-aisle:hover .vc-aisle-pop,
+    .vc-aisle:focus-visible .vc-aisle-pop {
+      opacity: 1;
+      transform: translate(-50%, 0) rotate(-3deg) scale(1);
+    }
+  }
+
+  /* --- the sale ticker ----------------------------------------------------
+     Two identical runs side by side, slid left by one run's width, so the
+     loop has no seam. It pauses under the pointer so a link can be taken. */
+  .vc-ticker {
+    overflow: hidden;
+  }
+  .vc-ticker-track {
+    display: flex;
+    width: max-content;
+    animation: vc-ticker 42s linear infinite;
+  }
+  .vc-ticker:hover .vc-ticker-track {
+    animation-play-state: paused;
+  }
+  .vc-ticker-run {
+    display: flex;
+    gap: 2.5rem;
+    padding: 0.7rem 1.25rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
 }
 
-/* ---------------------------------------------------------------- the board
-   The hero figure is a powered board, not a picture of one: the indicator
-   breathes, the status LED blinks, the fan turns, and pulses of current run
-   the live nets. It is all CSS on SVG, so there is no script and nothing to
-   hydrate, and hovering the board winds it up.
-
-   Note for the fan: a CSS transform REPLACES an element's transform
-   attribute rather than composing with it, so the spinning group carries no
-   attribute of its own — its wrapper holds the translate — and it turns about
-   its own bounding box via transform-box. */
-/* TX and RX, flickering against each other the way a board's serial pair does
-   while it is being talked to. steps(1) because an indicator is on or off,
-   never halfway, and the two are offset so they never agree. */
-.vc-led-tx,
-.vc-led-rx {
-  animation: vc-led-serial 1.9s steps(1, end) infinite;
-}
-.vc-led-rx {
-  animation-delay: 0.62s;
-  animation-duration: 1.45s;
-}
-@keyframes vc-led-serial {
-  0%,
-  7% {
-    fill: var(--vc-gold);
-  }
-  8%,
-  19% {
-    fill: var(--vc-sheet);
-  }
-  20%,
-  24% {
-    fill: var(--vc-gold);
-  }
-  25%,
-  31% {
-    fill: var(--vc-sheet);
-  }
-  32%,
-  38% {
-    fill: var(--vc-gold);
-  }
-  39%,
-  100% {
-    fill: var(--vc-sheet);
-  }
-}
-
-/* one dash per period, so a pulse crosses the net and then the net rests */
-.vc-pulse {
-  stroke-dasharray: 14 200;
-  stroke-dashoffset: 214;
-  animation: vc-pulse-run 2.4s linear infinite;
-}
-@keyframes vc-pulse-run {
+@keyframes vc-ticker {
   to {
-    stroke-dashoffset: 0;
+    transform: translateX(-50%);
   }
 }
-
-.vc-led-halo {
-  transform-box: fill-box;
-  transform-origin: center;
-  animation: vc-led-breathe 2.6s ease-in-out infinite;
-}
-@keyframes vc-led-breathe {
-  0%,
-  100% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  55% {
-    transform: scale(2.2);
-    opacity: 0;
-  }
-}
-
-.vc-led-blink {
-  animation: vc-led-blink 3.1s ease-in-out infinite;
-}
-@keyframes vc-led-blink {
-  0%,
-  58% {
-    fill: var(--vc-sheet);
-  }
-  64%,
-  76% {
-    fill: var(--vc-gold);
-  }
-  82%,
-  100% {
-    fill: var(--vc-sheet);
-  }
-}
-
-/* Parts of the board are doors into the aisles. The hit rect is filled
-   transparent, not none — `none` takes no pointer events, so an outlined part
-   would only be clickable along its own strokes. */
-.vc-part {
-  cursor: pointer;
-}
-.vc-hit {
-  fill: transparent;
-}
-.vc-part-body {
-  transition: filter 0.16s ease;
-}
-.vc-part:hover .vc-part-body,
-.vc-part:focus-visible .vc-part-body {
-  filter: drop-shadow(0 0 5px var(--vc-gold)) drop-shadow(0 0 1.5px var(--vc-gold));
-}
-.vc-tip {
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.16s ease;
-}
-.vc-part:hover .vc-tip,
-.vc-part:focus-visible .vc-tip {
-  opacity: 1;
-}
-/* the glow alone is not a focus indicator, so keyboard focus also rings the
-   part's own hit area */
-.vc-part:focus {
-  outline: none;
-}
-.vc-part:focus-visible .vc-hit {
-  stroke: var(--vc-live);
-  stroke-width: 2;
-  stroke-dasharray: 5 3;
-}
-
-.vc-board:hover .vc-pulse {
-  animation-duration: 1.1s;
-}
-
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -490,15 +501,15 @@
   .group:hover .vc-frame-img {
     transform: none !important;
   }
-  /* the blanket rule above only makes an infinite animation fast, which would
-     leave a pulse frozen mid-net; stop them and drop what only motion earned */
-  .vc-led-blink,
-  .vc-led-tx,
-  .vc-led-rx {
+  /* the ticker stands still; it wraps instead so every deal is still there */
+  .vc-ticker-track {
     animation: none !important;
+    width: auto;
   }
-  .vc-pulse,
-  .vc-led-halo {
+  .vc-ticker-run {
+    flex-wrap: wrap;
+  }
+  .vc-ticker-run[aria-hidden] {
     display: none;
   }
 }
@@ -583,4 +594,178 @@
 }
 .vc-report[aria-busy="true"] {
   opacity: 0.55;
+}
+
+/* ------------------------------------------------------------------
+   The page background: soft gold light drifting slowly behind
+   everything, with a little film grain over it. It sits on two fixed
+   layers behind the page (z-index -1), so the page scrolls over it.
+   Tokenised, so it follows the theme. (The home page versions under
+   /preview set their own backgrounds with <html data-bg>, hence the
+   :not.)
+   ------------------------------------------------------------------ */
+html:not([data-bg]) body.vc-glow-ground::before,
+html:not([data-bg]) body.vc-glow-ground::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  pointer-events: none;
+}
+html:not([data-bg]) body.vc-glow-ground::before {
+  inset: -20%;
+  background:
+    radial-gradient(34% 30% at 78% 18%, var(--vc-glow-live), transparent 70%),
+    radial-gradient(30% 34% at 14% 62%, var(--vc-wash-live), transparent 70%),
+    radial-gradient(26% 26% at 60% 88%, var(--vc-glow-live), transparent 70%),
+    radial-gradient(40% 40% at 30% 10%, var(--vc-wash-ink), transparent 70%);
+  animation: vc-glow-drift 36s ease-in-out infinite alternate;
+}
+html:not([data-bg]) body.vc-glow-ground::after {
+  inset: 0;
+  background-image: url("/bg/grain.svg");
+  opacity: 0.07;
+}
+:root[data-theme="dark"]:not([data-bg]) body.vc-glow-ground::after {
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+}
+@keyframes vc-glow-drift {
+  0% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(-4%, 3%) rotate(6deg); }
+  100% { transform: translate(3%, -2%) rotate(-4deg); }
+}
+
+/* ------------------------------------------------------------------
+   Categories on the home page: each row led by a fan of three of its
+   parts, which spreads apart when pointed at (components/category-fans).
+   ------------------------------------------------------------------ */
+.vc-fan-row {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 4px;
+}
+@media (max-width: 479px) {
+  .vc-fan-row {
+    grid-template-columns: 104px minmax(0, 1fr) auto;
+    gap: 14px;
+  }
+}
+.vc-fan {
+  position: relative;
+  height: 84px;
+}
+.vc-fan-card {
+  position: absolute;
+  top: 6px;
+  width: 72px;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 0 10px 18px -12px rgba(var(--vc-shadow), 0.5);
+}
+.vc-fan-card-0 { left: 0; transform: rotate(-8deg); z-index: 1; }
+.vc-fan-card-1 { left: 22px; transform: rotate(2deg); z-index: 2; }
+.vc-fan-card-2 { left: 44px; transform: rotate(10deg); z-index: 3; }
+.vc-fan-row:hover .vc-fan-card-0 { transform: translate(-10px, -4px) rotate(-14deg); }
+.vc-fan-row:hover .vc-fan-card-1 { transform: translate(6px, -10px) rotate(0deg); }
+.vc-fan-row:hover .vc-fan-card-2 { transform: translate(24px, -2px) rotate(14deg); }
+/* the name and blurb sit above the cards, so a card can never cover them */
+.vc-fan-text {
+  position: relative;
+  z-index: 4;
+}
+/* On a phone the fan's column is narrower, so the cards are smaller and
+   closer, and spread less: tilted, the last card still ends short of the
+   name, which starts at 118px (104px column + 14px gap). */
+@media (max-width: 479px) {
+  .vc-fan {
+    height: 72px;
+  }
+  .vc-fan-card {
+    width: 60px;
+  }
+  .vc-fan-card-1 { left: 16px; }
+  .vc-fan-card-2 { left: 32px; }
+  .vc-fan-row:hover .vc-fan-card-0 { transform: translate(-6px, -3px) rotate(-12deg); }
+  .vc-fan-row:hover .vc-fan-card-1 { transform: translate(4px, -6px) rotate(0deg); }
+  .vc-fan-row:hover .vc-fan-card-2 { transform: translate(10px, -2px) rotate(12deg); }
+}
+
+/* ------------------------------------------------------------------
+   The sale on the home page: price tags hanging from a wire, each on its
+   string (components/sale-tags). They sway on their own, each on its own
+   beat and out of step with the next, like tags in a breeze; touched or
+   tapped, one swings harder and settles back into the sway.
+   ------------------------------------------------------------------ */
+.vc-wire {
+  position: relative;
+  padding-top: 18px;
+}
+.vc-wire::before {
+  content: "";
+  position: absolute;
+  left: -100vw;
+  right: -100vw;
+  top: 18px;
+  height: 2px;
+  background: var(--vc-muted);
+  opacity: 0.6;
+}
+.vc-tag-hang {
+  position: relative;
+  padding-top: 30px;
+  transform-origin: 50% 0;
+  transform: rotate(var(--tilt));
+  animation: vc-tag-sway var(--sway, 4.4s) ease-in-out var(--sway-delay, 0s) infinite alternate;
+}
+@keyframes vc-tag-sway {
+  from { transform: rotate(calc(var(--tilt) - 2.2deg)); }
+  to { transform: rotate(calc(var(--tilt) + 2.2deg)); }
+}
+.vc-tag-hang:hover,
+.vc-tag-hang:active {
+  animation: vc-tag-swing 1.4s ease-out;
+}
+@keyframes vc-tag-swing {
+  0% { transform: rotate(var(--tilt)); }
+  20% { transform: rotate(7deg); }
+  40% { transform: rotate(-5deg); }
+  60% { transform: rotate(3deg); }
+  80% { transform: rotate(-1.5deg); }
+  100% { transform: rotate(0deg); }
+}
+.vc-tag-string {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1.5px;
+  height: 34px;
+  background: var(--vc-muted);
+}
+.vc-tag {
+  position: relative;
+  border: 1px solid var(--vc-line);
+  background: var(--vc-raised);
+  padding: 22px 14px 14px;
+  box-shadow: 0 16px 30px -20px rgba(var(--vc-shadow), 0.5);
+}
+.vc-tag-hole {
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  border-radius: 50%;
+  border: 1.5px solid var(--vc-muted);
+  background: var(--vc-sheet);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not([data-bg]) body.vc-glow-ground::before,
+  .vc-tag-hang,
+  .vc-tag-hang:hover,
+  .vc-tag-hang:active {
+    animation: none !important;
+  }
 }

@@ -1,21 +1,16 @@
 import Link from "next/link";
-import { HeroFigure } from "@/components/hero-figure";
-import { ProductCard } from "@/components/product-card";
-import { ProductImage } from "@/components/product-image";
+import { CategoryFans } from "@/components/category-fans";
+import { HeroWorkshop } from "@/components/hero-workshop";
 import { Reveal } from "@/components/reveal";
+import { SaleTags } from "@/components/sale-tags";
 import { ButtonLink, Container, Section } from "@/components/ui";
-import { getCategories } from "@/lib/catalogue";
-import { getCategoryCounts, getCategoryThumbnails, getFeaturedSale } from "@/lib/catalogue-data";
+import { FREE_DELIVERY_FROM } from "@/lib/delivery";
 import { formatNaira } from "@/lib/format";
+import { getHomeData } from "@/lib/home-data";
 import { SITE } from "@/lib/site";
 
 export default async function HomePage() {
-  const categories = getCategories();
-  const [onSale, counts, thumbs] = await Promise.all([
-    getFeaturedSale(),
-    getCategoryCounts(),
-    getCategoryThumbnails(),
-  ]);
+  const { categories, counts, shots, sale } = await getHomeData();
 
   return (
     <>
@@ -44,7 +39,7 @@ export default async function HomePage() {
             </div>
 
             <div className="pt-2 sm:pt-6 lg:pt-0">
-              <HeroFigure />
+              <HeroWorkshop />
             </div>
           </div>
         </Container>
@@ -58,7 +53,7 @@ export default async function HomePage() {
               <Tag /> Fully stocked
             </li>
             <li className="flex items-center gap-2 sm:justify-center">
-              <Truck /> Free delivery over {formatNaira(SITE.freeDeliveryThreshold)}
+              <Truck /> Free delivery over {formatNaira(FREE_DELIVERY_FROM)}
             </li>
             <li className="sm:text-right">
               <a
@@ -74,70 +69,36 @@ export default async function HomePage() {
         </Container>
       </div>
 
-      {/* ------------------------------------------------------- categories */}
+      {/* -------------------------------------------------- the categories */}
       <Container>
         <Section divide={false}>
-          <div className="flex flex-wrap items-baseline justify-end gap-4">
+          <div className="mb-8 flex flex-wrap items-baseline justify-between gap-4 sm:mb-10">
+            <h2 className="font-display text-[clamp(1.6rem,3vw,2.3rem)] leading-tight tracking-[-0.025em]">Shop by category</h2>
             <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
               All products <span className="vc-arrow" aria-hidden>→</span>
             </Link>
           </div>
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {categories.map((c, i) => {
-              const thumb = thumbs[c.slug];
-              return (
-                <li key={c.slug}>
-                  <Reveal delay={(i % 3) * 70}>
-                    <Link
-                      href={`/shop/${c.slug}`}
-                      className="vc-lift group flex items-center gap-4 border border-line bg-raised p-3"
-                    >
-                      <div className="w-16 shrink-0">
-                        {thumb ? (
-                          <ProductImage product={thumb} ratio="aspect-square" sizes="64px" pad="p-2" />
-                        ) : null}
-                      </div>
-                      <div className="min-w-0">
-                        <span className="block font-display text-[1.05rem] tracking-[-0.015em] transition-colors group-hover:text-live">
-                          {c.name}
-                        </span>
-                        <span className="vc-fig mt-1 block text-faint">
-                          {counts[c.slug]} products
-                        </span>
-                      </div>
-                      <span className="vc-arrow ml-auto pr-1 text-muted group-hover:text-live" aria-hidden>
-                        →
-                      </span>
-                    </Link>
-                  </Reveal>
-                </li>
-              );
-            })}
-          </ul>
+          <CategoryFans categories={categories} counts={counts} shots={shots} />
         </Section>
       </Container>
 
-      {/* ---------------------------------------------------------- on sale */}
-      {onSale.length ? (
-        <Container>
-          <Section>
-            <div className="flex flex-wrap items-baseline justify-between gap-4">
-              <h2 className="font-display text-[1.65rem] leading-tight tracking-[-0.022em] sm:text-[2.05rem]">
-                Sale items
-              </h2>
-              <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
-                See everything <span className="vc-arrow" aria-hidden>→</span>
-              </Link>
-            </div>
-            <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-              {onSale.map((p, i) => (
-                <Reveal key={p.slug} delay={(i % 4) * 60}>
-                  <ProductCard product={p} />
-                </Reveal>
-              ))}
-            </div>
-          </Section>
-        </Container>
+      {/* --------------------------------------- the sale, tags on a wire */}
+      {sale.length ? (
+        <div className="overflow-hidden border-y border-line bg-sheet">
+          <Container>
+            <Section divide={false}>
+              <div className="flex flex-wrap items-baseline justify-between gap-4">
+                <h2 className="font-display text-[clamp(1.6rem,3vw,2.3rem)] leading-tight tracking-[-0.025em]">Price tags are down</h2>
+                <Link href="/shop" className="group border-b border-ink pb-1 text-[0.9rem] font-semibold hover:border-live hover:text-live">
+                  See everything <span className="vc-arrow" aria-hidden>→</span>
+                </Link>
+              </div>
+              <div className="mt-6">
+                <SaleTags products={sale} />
+              </div>
+            </Section>
+          </Container>
+        </div>
       ) : null}
 
       {/* -------------------------------------------------------------- cta */}
